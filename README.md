@@ -4,6 +4,7 @@
 ```
 npm install
 daniel skrev
+marius skrev test
 ```
 
 ### Compiles and hot-reloads for development
