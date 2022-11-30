@@ -1,6 +1,6 @@
 <template>
   <div>
-    Poll link: 
+    Poll link:
     <input type="text" v-model="pollId">
     <button v-on:click="createPoll">
       Create poll
@@ -28,11 +28,36 @@
     {{data}}
     <router-link v-bind:to="'/result/'+pollId">Check result</router-link>
   </div>
+
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+
+  <div id="questionDiv" @click="questionPress" v-if="answerButtonBool==false">
+    {{questionArray[questionPosition]}}
+  </div>
+  <div id="answerDiv" @click="answerPress" v-if="answerButtonBool==true">
+  {{answerArray[questionPosition]}}
+  </div>
+
+  <div>
+    <button @click="previousCLick" id="previousButton"> Previous </button> {{questionPosition}} <button @click="nextClick" id="nextButton"> Next </button>
+  </div>
 </template>
 
 <script>
 import io from 'socket.io-client';
 const socket = io();
+
+
+//var questionArray = ["Sverige", "Norge", "Finland", "Danmark"];
+//var answerArray   = ["Sthlm", "Oslo", "Helsingfors", "CBH"];
+
+
 
 export default {
   name: 'CreateView',
@@ -44,7 +69,11 @@ export default {
       answers: ["", ""],
       questionNumber: 0,
       data: {},
-      uiLabels: {}
+      uiLabels: {},
+      questionArray: ["Sverige", "Norge", "Finland", "Danmark"],
+      answerArray: ["Sthlm", "Oslo", "Helsingfors", "CBH"],
+      questionPosition: 0,
+      answerButtonBool: false,
     }
   },
   created: function () {
@@ -71,7 +100,37 @@ export default {
     },
     runQuestion: function () {
       socket.emit("runQuestion", {pollId: this.pollId, questionNumber: this.questionNumber})
+    },
+    questionPress: function(){
+      this.answerButtonBool = true;
+      console.log("du clickade på knappen")
+    },
+    answerPress: function(){
+      this.answerButtonBool = false;
+    },
+    previousCLick: function(){
+      --this.questionPosition;
+    },
+    nextClick: function(){
+      ++this.questionPosition;
     }
   }
 }
 </script>
+
+
+<style scoped>
+
+#questionDiv{
+  background-color: aqua;
+}
+
+#answerDiv{
+  background-color: brown;
+}
+
+#nextButton{
+  margin: 40px;
+}
+
+</style>
