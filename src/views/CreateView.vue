@@ -38,10 +38,10 @@
   <br>
 
   <div id="questionDiv" @click="questionPress" v-if="answerButtonBool==false">
-    {{questionArray[questionPosition]}}
+    {{questionObject.questionArray[questionPosition]}}
   </div>
   <div id="answerDiv" @click="answerPress" v-if="answerButtonBool==true">
-  {{answerArray[questionPosition]}}
+  {{questionObject.answerArray[questionPosition]}}
   </div>
 
   <div>
@@ -70,8 +70,9 @@ export default {
       questionNumber: 0,
       data: {},
       uiLabels: {},
-      questionArray: ["Sverige", "Norge", "Finland", "Danmark"],
-      answerArray: ["Sthlm", "Oslo", "Helsingfors", "CBH"],
+      questionObject: {"id": "Sveriges huvudstäder",
+        "questionArray": ["Sverige", "Norge", "Finland", "Danmark"],
+        "answerArray": ["Sthlm", "Oslo", "Helsingfors", "CBH"]},
       questionPosition: 0,
       answerButtonBool: false,
     }
@@ -109,10 +110,16 @@ export default {
       this.answerButtonBool = false;
     },
     previousCLick: function(){
-      --this.questionPosition;
+      if (this.questionPosition>0) {
+        --this.questionPosition;
+        this.answerButtonBool = false;
+      }
     },
     nextClick: function(){
-      ++this.questionPosition;
+      if (this.questionPosition < 3) {
+        ++this.questionPosition;
+        this.answerButtonBool = false;
+      }
     }
   }
 }
@@ -123,10 +130,12 @@ export default {
 
 #questionDiv{
   background-color: aqua;
+  font-size: 80px;
 }
 
 #answerDiv{
   background-color: brown;
+  font-size: 80px;
 }
 
 #nextButton{
