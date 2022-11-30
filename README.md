@@ -3,6 +3,7 @@
 ## Project setup
 ```
 npm install
+daniel skrev
 ```
 
 ### Compiles and hot-reloads for development
