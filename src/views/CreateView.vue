@@ -51,12 +51,10 @@
 
 <script>
 import io from 'socket.io-client';
+import Decks from "../assetts/Decks.json";
 const socket = io();
 
-
-//var questionArray = ["Sverige", "Norge", "Finland", "Danmark"];
-//var answerArray   = ["Sthlm", "Oslo", "Helsingfors", "CBH"];
-
+console.log(Decks);
 
 
 export default {
