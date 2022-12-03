@@ -1,5 +1,5 @@
 <template>
-  <div>
+ <!-- <div>
     Poll link:
     <input type="text" v-model="pollId">
     <button v-on:click="createPoll">
@@ -27,7 +27,45 @@
     </button>
     {{data}}
     <router-link v-bind:to="'/result/'+pollId">Check result</router-link>
+  </div> -->
+
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+
+  <div>
+    <form>
+      <input type="text" v-model="quizName">
+      {{quizName}}
+      <button @click="nameDeck(quizName)" >Döp</button> Vad vill du döpa quizen till?
+    </form>
   </div>
+  <div>
+    <form>
+      <input type="text" v-model="questionField">
+      {{questionField}}
+      <button @click="questionsToDeck(questionField)"> add question
+      </button>
+      <br>
+      <input type="text" v-model="answerField">
+      {{answerField}}
+      <button @click="answersToDeck(answerField)"> answer to question
+      </button>
+    </form>
+  </div>
+
+  <br>
+  <br>
+  <br>
+
+  <div>
+    <form>
+      <button @click="say" >Klar</button> Är du klar med din quiz? Klicka på knappen
+    </form>
+  </div>
+
 
   <br>
   <br>
@@ -54,13 +92,22 @@ import io from 'socket.io-client';
 import Decks from "../assetts/Decks.json";
 const socket = io();
 
-console.log(Decks);
+
+
+let testObj = JSON.stringify(Decks);
+localStorage.setItem("theDeckObject", testObj)
+//console.log(testObj);
+let myObj_deserialized = JSON.parse(localStorage.getItem("theDeckObject"));
+console.log(myObj_deserialized);
+
+
 
 
 export default {
   name: 'CreateView',
   data: function () {
     return {
+      quizName: "",
       lang: "",
       pollId: "",
       question: "",
@@ -73,6 +120,10 @@ export default {
         "answerArray": ["Sthlm", "Oslo", "Helsingfors", "CBH"]},
       questionPosition: 0,
       answerButtonBool: false,
+      questionField: "",
+      answerField: "",
+      quizQuestions: [],
+      quizAnswers: []
     }
   },
   created: function () {
@@ -118,7 +169,28 @@ export default {
         ++this.questionPosition;
         this.answerButtonBool = false;
       }
-    }
+    },
+    say: function(){
+      console.log("du klickade på en knapp med say()")
+    },
+    nameDeck: function(namingTheDeck){
+      let id = "'id'" +":" + "'" + namingTheDeck + "'" + ",\n";
+      console.log(id)
+      localStorage.setItem(namingTheDeck, id)
+      //let myObj_deserialized = JSON.parse(localStorage.getItem(namingTheDeck));
+      //console.log(myObj_deserialized);
+    },
+    questionsToDeck: function(questionToAdd){
+      this.quizQuestions.push(questionToAdd);
+      console.log(this.quizQuestions);
+      //console.log(this.quizQuestions);
+      //let myObj_deserialized = JSON.parse(localStorage.getItem(namingTheDeck));
+      //console.log(myObj_deserialized);
+    },
+    answersToDeck: function(answerToAdd){
+      this.quizAnswers.push(answerToAdd);
+      console.log(this.quizAnswers);
+    },
   }
 }
 </script>
