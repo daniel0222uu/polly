@@ -1,33 +1,33 @@
 <template>
- <!-- <div>
-    Poll link:
-    <input type="text" v-model="pollId">
-    <button v-on:click="createPoll">
-      Create poll
-    </button>
-    <div>
-      {{uiLabels.question}}:
-      <input type="text" v-model="question">
-      <div>
-        Answers:
-        <input v-for="(_, i) in answers" 
-               v-model="answers[i]" 
-               v-bind:key="'answer'+i">
-        <button v-on:click="addAnswer">
-          Add answer alternative
-        </button>
-      </div>
-    </div>
-    <button v-on:click="addQuestion">
-      Add question
-    </button>
-    <input type="number" v-model="questionNumber">
-    <button v-on:click="runQuestion">
-      Run question
-    </button>
-    {{data}}
-    <router-link v-bind:to="'/result/'+pollId">Check result</router-link>
-  </div> -->
+  <!-- <div>
+     Poll link:
+     <input type="text" v-model="pollId">
+     <button v-on:click="createPoll">
+       Create poll
+     </button>
+     <div>
+       {{uiLabels.question}}:
+       <input type="text" v-model="question">
+       <div>
+         Answers:
+         <input v-for="(_, i) in answers"
+                v-model="answers[i]"
+                v-bind:key="'answer'+i">
+         <button v-on:click="addAnswer">
+           Add answer alternative
+         </button>
+       </div>
+     </div>
+     <button v-on:click="addQuestion">
+       Add question
+     </button>
+     <input type="number" v-model="questionNumber">
+     <button v-on:click="runQuestion">
+       Run question
+     </button>
+     {{data}}
+     <router-link v-bind:to="'/result/'+pollId">Check result</router-link>
+   </div> -->
 
   <br>
   <br>
@@ -81,25 +81,30 @@
     {{questionObject.questionArray[questionPosition]}}
   </div>
   <div id="answerDiv" @click="answerPress" v-if="answerButtonBool==true">
-  {{questionObject.answerArray[questionPosition]}}
+    {{questionObject.answerArray[questionPosition]}}
   </div>
 
   <div>
     <button @click="previousCLick" id="previousButton"> Previous </button> {{questionPosition}} <button @click="nextClick" id="nextButton"> Next </button>
   </div>
 
+  <button @click="getDecks">Get Decks</button>
   <div>
     <select name="drinks" required>
       <option value="" disabled selected hidden>Choose a drink</option>
-      <option value="coffee">Coffee</option>
-    <!--  <option v-for="fraga in selectorList" :value="fraga">{{ fraga.id }}<option> -->
+      <option value="coffee">coffee</option>
+      <!--  <option v-for="fraga in selectorList" :value="fraga">{{ fraga.id }}<option> -->
     </select>
 
     <select required v-model="selectorList">
       <option value="">Testar om man kan välja</option>
     </select>
   </div>
+  <br>
 
+
+
+  {{selectorList}}
 
 </template>
 
@@ -108,21 +113,14 @@
 import io from 'socket.io-client';
 import Decks from "../assetts/Decks.json";
 const socket = io();
-
 //const items = {localStorage};
 //console.log(items);
-
 console.log(Decks);
-
-
 //let testObj = JSON.stringify(Decks);
 //localStorage.setItem("theDeckObject", testObj)
 //console.log(testObj);
 //let myObj_deserialized = JSON.parse(localStorage.getItem("theDeckObject"));
 //console.log(myObj_deserialized);
-
-
-
 export default {
   name: 'CreateView',
   data: function () {
@@ -146,7 +144,7 @@ export default {
       deckName: "",
       quizQuestions: [],
       quizAnswers: [],
-      selectorList: localStorage,
+      selectorList:[],
       //completeDeck: {"id":this.deckName, "questionArray": this.quizQuestions, "answerArray":this.quizAnswers}
     }
   },
@@ -157,10 +155,10 @@ export default {
       this.uiLabels = labels
     })
     socket.on("dataUpdate", (data) =>
-      this.data = data
+        this.data = data
     )
     socket.on("pollCreated", (data) =>
-      this.data = data)
+        this.data = data)
   },
   methods: {
     createPoll: function () {
@@ -201,6 +199,15 @@ export default {
       console.log(completeDeck);
       localStorage.setItem(completeDeck.id, JSON.stringify(completeDeck));
     },
+    getDecks: function () {
+      let listToFill = [];
+      for (var i =0, len = localStorage.length; i< len; ++i ) {
+        listToFill.push(localStorage.key(i));
+        console.log( localStorage.key(i)  );
+      }
+      this.selectorList = listToFill;
+    }
+    ,
     nameDeck: function(namingTheDeck){
       //let id =  '{"id" :' + '"' + namingTheDeck + '" \n  }';
       console.log(namingTheDeck)
@@ -229,19 +236,15 @@ export default {
 
 
 <style scoped>
-
 #questionDiv{
   background-color: aqua;
   font-size: 80px;
 }
-
 #answerDiv{
   background-color: brown;
   font-size: 80px;
 }
-
 #nextButton{
   margin: 40px;
 }
-
 </style>
