@@ -88,10 +88,11 @@
     <button @click="previousCLick" id="previousButton"> Previous </button> {{questionPosition}} <button @click="nextClick" id="nextButton"> Next </button>
   </div>
 
+<button @click="getDecks">Get Decks</button>
   <div>
     <select name="drinks" required>
       <option value="" disabled selected hidden>Choose a drink</option>
-      <option value="coffee">Coffee</option>
+      <option value="coffee">coffee</option>
     <!--  <option v-for="fraga in selectorList" :value="fraga">{{ fraga.id }}<option> -->
     </select>
 
@@ -99,7 +100,11 @@
       <option value="">Testar om man kan välja</option>
     </select>
   </div>
+  <br>
+ 
 
+
+{{selectorList}}
 
 </template>
 
@@ -146,7 +151,7 @@ export default {
       deckName: "",
       quizQuestions: [],
       quizAnswers: [],
-      selectorList: localStorage,
+      selectorList:[],
       //completeDeck: {"id":this.deckName, "questionArray": this.quizQuestions, "answerArray":this.quizAnswers}
     }
   },
@@ -200,7 +205,21 @@ export default {
       //defined on render. Inte bra vet inte varför.
       console.log(completeDeck);
       localStorage.setItem(completeDeck.id, JSON.stringify(completeDeck));
+
+
+
+
     },
+    getDecks: function () {
+      let listToFill = [];
+      for (var i =0, len = localStorage.length; i< len; ++i ) {
+        listToFill.push(localStorage.key(i));
+        console.log( localStorage.key(i)  );
+      }
+      this.selectorList = listToFill;
+      }
+
+    ,
     nameDeck: function(namingTheDeck){
       //let id =  '{"id" :' + '"' + namingTheDeck + '" \n  }';
       console.log(namingTheDeck)
@@ -224,7 +243,7 @@ export default {
       console.log(this.quizAnswers);
     },
   }
-}
+} 
 </script>
 
 
