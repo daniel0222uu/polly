@@ -74,7 +74,7 @@
   <br>
   <br>
   <br>
-
+  {{questionObject.id}}
   <div id="questionDiv" @click="questionPress" v-if="answerButtonBool==false">
     {{questionObject.questionArray[questionPosition]}}
   </div>
@@ -85,20 +85,39 @@
   <div>
     <button @click="previousCLick" id="previousButton"> Previous </button> {{questionPosition}} <button @click="nextClick" id="nextButton"> Next </button>
   </div>
+
+  <div>
+    <select name="drinks" required>
+      <option value="" disabled selected hidden>Choose a drink</option>
+      <option value="coffee">Coffee</option>
+    <!--  <option v-for="fraga in selectorList" :value="fraga">{{ fraga.id }}<option> -->
+    </select>
+
+    <select required v-model="selectorList">
+      <option value="">Testar om man kan välja</option>
+    </select>
+  </div>
+
+
 </template>
+
 
 <script>
 import io from 'socket.io-client';
 import Decks from "../assetts/Decks.json";
 const socket = io();
 
+//const items = {localStorage};
+//console.log(items);
+
+console.log(Decks);
 
 
-let testObj = JSON.stringify(Decks);
-localStorage.setItem("theDeckObject", testObj)
+//let testObj = JSON.stringify(Decks);
+//localStorage.setItem("theDeckObject", testObj)
 //console.log(testObj);
-let myObj_deserialized = JSON.parse(localStorage.getItem("theDeckObject"));
-console.log(myObj_deserialized);
+//let myObj_deserialized = JSON.parse(localStorage.getItem("theDeckObject"));
+//console.log(myObj_deserialized);
 
 
 
@@ -115,15 +134,15 @@ export default {
       questionNumber: 0,
       data: {},
       uiLabels: {},
-      questionObject: {"id": "Sveriges huvudstäder",
-        "questionArray": ["Sverige", "Norge", "Finland", "Danmark"],
-        "answerArray": ["Sthlm", "Oslo", "Helsingfors", "CBH"]},
+      questionObject: Decks, //Nu gjorde vi om så att objektet inte är i en lista, fungerar
+      //att hämta från singulär objekt.
       questionPosition: 0,
       answerButtonBool: false,
       questionField: "",
       answerField: "",
       quizQuestions: [],
-      quizAnswers: []
+      quizAnswers: [],
+      selectorList: localStorage
     }
   },
   created: function () {
@@ -174,10 +193,13 @@ export default {
       console.log("du klickade på en knapp med say()")
     },
     nameDeck: function(namingTheDeck){
-      let id = "'id'" +":" + "'" + namingTheDeck + "'" + ",\n";
+      let id =  '{"id" :' + '"' + namingTheDeck + '" \n  }';
       console.log(id)
-      localStorage.setItem(namingTheDeck, id)
+      let deSerializedid = JSON.parse(id);
+      console.log(deSerializedid);
+      //localStorage.setItem(namingTheDeck, id)
       //let myObj_deserialized = JSON.parse(localStorage.getItem(namingTheDeck));
+      localStorage.setItem(namingTheDeck,id);
       //console.log(myObj_deserialized);
     },
     questionsToDeck: function(questionToAdd){

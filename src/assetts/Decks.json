@@ -1,7 +1,5 @@
-[
-  {
-    "id": "Sveriges huvudstäder",
+
+  {"id": "Sveriges huvudstäder",
     "questionArray": ["Sverige", "Norge", "Finland", "Danmark"],
-    "answerArray": ["Sthlm", "Oslo", "Helsingfors", "CBH"]
-  }
-]
+    "answerArray": ["Sthlm", "Oslo", "Helsingfors", "CBH"]}
+
