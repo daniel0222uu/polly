@@ -40,21 +40,23 @@
       <input type="text" v-model="quizName">
       {{quizName}}
       <button @click="nameDeck(quizName)" >Döp</button> Vad vill du döpa quizen till?
+      {{deckName}}
     </form>
   </div>
   <div>
     <form>
       <input type="text" v-model="questionField">
-      {{questionField}}
+      {{quizQuestions}}
       <button @click="questionsToDeck(questionField)"> add question
       </button>
       <br>
       <input type="text" v-model="answerField">
-      {{answerField}}
+      {{quizAnswers}}
       <button @click="answersToDeck(answerField)"> answer to question
       </button>
     </form>
   </div>
+  {{completeDeck}}
 
   <br>
   <br>
@@ -62,7 +64,7 @@
 
   <div>
     <form>
-      <button @click="say" >Klar</button> Är du klar med din quiz? Klicka på knappen
+      <button @click="saveDeck" >Klar</button> Är du klar med din quiz? Klicka på knappen
     </form>
   </div>
 
@@ -121,7 +123,6 @@ console.log(Decks);
 
 
 
-
 export default {
   name: 'CreateView',
   data: function () {
@@ -134,15 +135,19 @@ export default {
       questionNumber: 0,
       data: {},
       uiLabels: {},
-      questionObject: Decks, //Nu gjorde vi om så att objektet inte är i en lista, fungerar
+      questionObject:   {"id": "Sveriges huvudstäder",
+        "questionArray": ["Sverige", "Norge", "Finland", "Danmark"],
+        "answerArray": ["Sthlm", "Oslo", "Helsingfors", "CBH"]}, //Nu gjorde vi om så att objektet inte är i en lista, fungerar
       //att hämta från singulär objekt.
       questionPosition: 0,
       answerButtonBool: false,
       questionField: "",
       answerField: "",
+      deckName: "",
       quizQuestions: [],
       quizAnswers: [],
-      selectorList: localStorage
+      selectorList: localStorage,
+      //completeDeck: {"id":this.deckName, "questionArray": this.quizQuestions, "answerArray":this.quizAnswers}
     }
   },
   created: function () {
@@ -189,17 +194,22 @@ export default {
         this.answerButtonBool = false;
       }
     },
-    say: function(){
+    saveDeck: function(){
       console.log("du klickade på en knapp med say()")
+      let completeDeck = {"id": this.deckName,"questionArray": this.quizQuestions,"answerArray": this.quizAnswers};
+      //defined on render. Inte bra vet inte varför.
+      console.log(completeDeck);
+      localStorage.setItem(completeDeck.id, JSON.stringify(completeDeck));
     },
     nameDeck: function(namingTheDeck){
-      let id =  '{"id" :' + '"' + namingTheDeck + '" \n  }';
-      console.log(id)
-      let deSerializedid = JSON.parse(id);
-      console.log(deSerializedid);
+      //let id =  '{"id" :' + '"' + namingTheDeck + '" \n  }';
+      console.log(namingTheDeck)
+      this.deckName = namingTheDeck;
+      //let deSerializedid = JSON.parse(id);
+      //console.log(deSerializedid);
       //localStorage.setItem(namingTheDeck, id)
       //let myObj_deserialized = JSON.parse(localStorage.getItem(namingTheDeck));
-      localStorage.setItem(namingTheDeck,id);
+      //localStorage.setItem(namingTheDeck,id);
       //console.log(myObj_deserialized);
     },
     questionsToDeck: function(questionToAdd){
