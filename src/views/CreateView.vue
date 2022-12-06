@@ -106,6 +106,20 @@
 
   {{selectorList}}
 
+  <div>
+
+  </div>
+
+  <br>
+  {{testingObject.id}}
+  <div id="questionDiv" @click="questionPress" v-if="answerButtonBool==false">
+    {{testingObject.questionArray[questionPosition]}}
+  </div>
+  <div id="answerDiv" @click="answerPress" v-if="answerButtonBool==true">
+    {{testingObject.answerArray[questionPosition]}}
+  </div> <!-- fungerar med att ta objekten som skapas och göra flashcards här, man läser in olika objekt
+   -->
+
 </template>
 
 
@@ -121,10 +135,17 @@ console.log(Decks);
 //console.log(testObj);
 //let myObj_deserialized = JSON.parse(localStorage.getItem("theDeckObject"));
 //console.log(myObj_deserialized);
+
+console.log(JSON.parse(localStorage.getItem("daniel")));
+
+
+
+
 export default {
   name: 'CreateView',
   data: function () {
     return {
+      options:["Mangoo","Apple","Orange","Melon","Pineapple","Lecy","Blueberry"],
       quizName: "",
       lang: "",
       pollId: "",
@@ -145,8 +166,12 @@ export default {
       quizQuestions: [],
       quizAnswers: [],
       selectorList:[],
+      testingObject: JSON.parse(localStorage.getItem("marius")),
       //completeDeck: {"id":this.deckName, "questionArray": this.quizQuestions, "answerArray":this.quizAnswers}
     }
+  },
+  components:{
+
   },
   created: function () {
     this.lang = this.$route.params.lang;
@@ -203,11 +228,9 @@ export default {
       let listToFill = [];
       for (var i =0, len = localStorage.length; i< len; ++i ) {
         listToFill.push(localStorage.key(i));
-        console.log( localStorage.key(i)  );
       }
       this.selectorList = listToFill;
-    }
-    ,
+    },
     nameDeck: function(namingTheDeck){
       //let id =  '{"id" :' + '"' + namingTheDeck + '" \n  }';
       console.log(namingTheDeck)
