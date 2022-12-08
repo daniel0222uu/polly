@@ -166,7 +166,7 @@ export default {
       quizQuestions: [],
       quizAnswers: [],
       selectorList:[],
-      testingObject: JSON.parse(localStorage.getItem("marius")),
+      testingObject: JSON.parse(localStorage.getItem("daniel")),
       //completeDeck: {"id":this.deckName, "questionArray": this.quizQuestions, "answerArray":this.quizAnswers}
     }
   },
