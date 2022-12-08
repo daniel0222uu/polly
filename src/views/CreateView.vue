@@ -101,6 +101,7 @@
 
 
 
+
   {{selectorList}}
 
   <div>
@@ -134,6 +135,11 @@ console.log(Decks);
 //console.log(myObj_deserialized);
 
 console.log(JSON.parse(localStorage.getItem("daniel")));
+
+
+
+
+
 
 
 
