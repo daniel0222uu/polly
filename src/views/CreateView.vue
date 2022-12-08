@@ -92,13 +92,10 @@
   <div>
     <select name="drinks" required>
       <option value="" disabled selected hidden>Choose a drink</option>
-      <option value="coffee">coffee</option>
+      <option v-for="drink in options" v-bind:key="drink">{{ drink }}</option>
       <!--  <option v-for="fraga in selectorList" :value="fraga">{{ fraga.id }}<option> -->
     </select>
 
-    <select required v-model="selectorList">
-      <option value="">Testar om man kan välja</option>
-    </select>
   </div>
   <br>
 
@@ -166,7 +163,7 @@ export default {
       quizQuestions: [],
       quizAnswers: [],
       selectorList:[],
-      testingObject: JSON.parse(localStorage.getItem("daniel")),
+      testingObject: JSON.parse(localStorage.getItem("marius")),
       //completeDeck: {"id":this.deckName, "questionArray": this.quizQuestions, "answerArray":this.quizAnswers}
     }
   },
