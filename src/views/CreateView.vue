@@ -68,6 +68,9 @@
     </form>
   </div>
 
+  <br>
+  <br>
+  b
 
   <br>
   <br>
@@ -78,16 +81,38 @@
 
   <button @click="getDecks">Get Decks</button>
   <div>
-    <select name="drinks" required>
+    <select v-model="selectedDeck" name="drinks" required>
       <option value="" disabled selected hidden>Choose a drink</option>
-      <option v-for="drink in options" v-bind:key="drink">{{ drink }}</option>
+      <option v-for="drink in selectorList" v-bind:key="drink">{{ drink }}</option>
       <!--  <option v-for="fraga in selectorList" :value="fraga">{{ fraga.id }}<option> -->
-    </select>
+    </select> {{selectedDeck}}
+    {{selectorList}}
+  </div>
+
+  <br>
+  <br>
+  <br>
+
+  <div>
+    <input class="qeustionEditingFields" id="questionField" type="text" v-model="questionField">
+    {{questionField}}
+    <br>
+    <br>
+    <input class="qeustionEditingFields"  id="answerField" type="text" v-model="answerField">
+    {{answerField}}
   </div>
 
   <div>
-
+    <button @click="loadDeck">Load deck</button>
   </div>
+  <div>
+    <button @click="previousCLick" id="previousButton"> Previous </button> {{questionIndex}} <button @click="nextClick" id="nextButton"> Next </button>
+
+
+    <br>
+    <br>
+    <button @click="savingCurrentQuestion" style="width: 200px; height: 150px">Save button</button>
+  </div> <!-- Kom ihåg att det kan kallas som komponent istället för duplikation. -->
 
 </template>
 
@@ -119,20 +144,20 @@ export default {
   name: 'CreateView',
   data: function () {
     return {
+      selectedDeck: "",
       options:["Mangoo","Apple","Orange","Melon","Pineapple","Lecy","Blueberry"],
       quizName: "",
       lang: "",
       pollId: "",
       question: "",
       answers: ["", ""],
-      questionNumber: 0,
+      questionIndex: 0,
       data: {},
       uiLabels: {},
       questionObject:   {"id": "Sveriges huvudstäder",
         "questionArray": ["Sverige", "Norge", "Finland", "Danmark"],
         "answerArray": ["Sthlm", "Oslo", "Helsingfors", "CBH"]}, //Nu gjorde vi om så att objektet inte är i en lista, fungerar
       //att hämta från singulär objekt.
-      questionPosition: 0,
       answerButtonBool: false,
       questionField: "",
       answerField: "",
@@ -185,6 +210,8 @@ export default {
         listToFill.push(localStorage.key(i));
       }
       this.selectorList = listToFill;
+      //this.answerField = this.questionObject.answerArray[this.questionIndex];
+      //this.questionField = this.questionObject.questionArray[this.questionIndex];
     },
     nameDeck: function(namingTheDeck){
       //let id =  '{"id" :' + '"' + namingTheDeck + '" \n  }';
@@ -208,6 +235,40 @@ export default {
       this.quizAnswers.push(answerToAdd);
       console.log(this.quizAnswers);
     },
+    loadDeck: function(){
+      console.log("du klickade på en knapp med loadDeck()")
+      let myObj_deserialized = JSON.parse(localStorage.getItem(this.selectedDeck));
+      console.log(myObj_deserialized);
+      //this.questionObject = myObj_deserialized;
+      //this.answerField = this.questionObject.answerArray[this.questionIndex];
+      //this.questionField = this.questionObject.questionArray[this.questionIndex];
+      this.answerField = myObj_deserialized.answerArray[this.questionIndex];
+      this.questionField = myObj_deserialized.questionArray[this.questionIndex];
+      this.questionObject = myObj_deserialized;
+    },
+    previousCLick: function(){
+      if(this.questionIndex > 0){
+        this.questionIndex = this.questionIndex - 1;
+      }
+      this.answerField = this.questionObject.answerArray[this.questionIndex];
+      this.questionField = this.questionObject.questionArray[this.questionIndex];
+    },
+    nextClick: function(){
+      if(this.questionIndex < this.questionObject.questionArray.length - 1) {
+        this.questionIndex = this.questionIndex + 1;
+      }
+      this.answerField = this.questionObject.answerArray[this.questionIndex];
+      this.questionField = this.questionObject.questionArray[this.questionIndex];
+    },
+    savingCurrentQuestion: function(){
+      let question = this.questionField;
+      let answer = this.answerField;
+      console.log(question);
+      console.log(answer);
+      this.questionObject.questionArray[this.questionIndex] = question;
+      this.questionObject.answerArray[this.questionIndex] = answer;
+      localStorage.setItem(this.questionObject.id, JSON.stringify(this.questionObject));
+    }, //detta fungerar men känns jätteupplagt för bugggar. Vi får hålla koll på detta.
   }
 }
 </script>
@@ -224,5 +285,9 @@ export default {
 }
 #nextButton{
   margin: 40px;
+}
+.qeustionEditingFields{
+  font-size: 80px;
+  text-align: center;
 }
 </style>
