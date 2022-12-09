@@ -75,18 +75,6 @@
   <br>
   <br>
   <br>
-  <br>
-  {{questionObject.id}}
-  <div id="questionDiv" @click="questionPress" v-if="answerButtonBool==false">
-    {{questionObject.questionArray[questionPosition]}}
-  </div>
-  <div id="answerDiv" @click="answerPress" v-if="answerButtonBool==true">
-    {{questionObject.answerArray[questionPosition]}}
-  </div>
-
-  <div>
-    <button @click="previousCLick" id="previousButton"> Previous </button> {{questionPosition}} <button @click="nextClick" id="nextButton"> Next </button>
-  </div>
 
   <button @click="getDecks">Get Decks</button>
   <div>
@@ -95,28 +83,11 @@
       <option v-for="drink in options" v-bind:key="drink">{{ drink }}</option>
       <!--  <option v-for="fraga in selectorList" :value="fraga">{{ fraga.id }}<option> -->
     </select>
-
   </div>
-  <br>
-
-
-
-
-  {{selectorList}}
 
   <div>
 
   </div>
-
-  <br>
-  {{testingObject.id}}
-  <div id="questionDiv" @click="questionPress" v-if="answerButtonBool==false">
-    {{testingObject.questionArray[questionPosition]}}
-  </div>
-  <div id="answerDiv" @click="answerPress" v-if="answerButtonBool==true">
-    {{testingObject.answerArray[questionPosition]}}
-  </div> <!-- fungerar med att ta objekten som skapas och göra flashcards här, man läser in olika objekt
-   -->
 
 </template>
 
@@ -134,7 +105,7 @@ console.log(Decks);
 //let myObj_deserialized = JSON.parse(localStorage.getItem("theDeckObject"));
 //console.log(myObj_deserialized);
 
-console.log(JSON.parse(localStorage.getItem("daniel")));
+//console.log(JSON.parse(localStorage.getItem("daniel")));
 
 
 
@@ -169,7 +140,7 @@ export default {
       quizQuestions: [],
       quizAnswers: [],
       selectorList:[],
-      testingObject: JSON.parse(localStorage.getItem("marius")),
+      //testingObject: JSON.parse(localStorage.getItem("daniel")),
       //completeDeck: {"id":this.deckName, "questionArray": this.quizQuestions, "answerArray":this.quizAnswers}
     }
   },
@@ -200,25 +171,6 @@ export default {
     },
     runQuestion: function () {
       socket.emit("runQuestion", {pollId: this.pollId, questionNumber: this.questionNumber})
-    },
-    questionPress: function(){
-      this.answerButtonBool = true;
-      console.log("du clickade på knappen")
-    },
-    answerPress: function(){
-      this.answerButtonBool = false;
-    },
-    previousCLick: function(){
-      if (this.questionPosition>0) {
-        --this.questionPosition;
-        this.answerButtonBool = false;
-      }
-    },
-    nextClick: function(){
-      if (this.questionPosition < 3) {
-        ++this.questionPosition;
-        this.answerButtonBool = false;
-      }
     },
     saveDeck: function(){
       console.log("du klickade på en knapp med say()")

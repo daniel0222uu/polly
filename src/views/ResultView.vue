@@ -4,7 +4,23 @@
   </div>
   <BarsComponent v-bind:data="submittedAnswers"/>
 
-  <span>{{submittedAnswers}}</span>
+  <div>
+    Testing the div
+  </div>
+
+  <br>
+  {{questionObject.id}}
+  <div id="questionDiv" @click="questionPress" v-if="answerButtonBool==false">
+    {{questionObject.questionArray[questionPosition]}}
+  </div>
+
+  <div id="answerDiv" @click="answerPress" v-if="answerButtonBool==true">
+    {{questionObject.answerArray[questionPosition]}}
+  </div>
+  <div>
+    <button @click="previousCLick" id="previousButton"> Previous </button> {{questionPosition}} <button @click="nextClick" id="nextButton"> Next </button>
+  </div>
+
 </template>
 
 <script>
@@ -22,8 +38,33 @@ export default {
     return {
       question: "",
       submittedAnswers: {
-      }
+      },
+      questionObject:   {"id": "Sveriges huvudstäder",
+        "questionArray": ["Sverige", "Norge", "Finland", "Danmark"],
+        "answerArray": ["Sthlm", "Oslo", "Helsingfors", "CBH"]},
+      answerButtonBool: false,
+      questionPosition: 0,
+
+
     }
+  },
+  methods: {
+    questionPress: function(){
+      this.answerButtonBool = true;
+    },
+    answerPress: function(){
+      this.answerButtonBool = false;
+    },
+    previousCLick: function(){
+      if(this.questionPosition > 0){
+        this.questionPosition = this.questionPosition - 1;
+      }
+    },
+    nextClick: function(){
+      if(this.questionPosition < this.questionObject.questionArray.length - 1){
+        this.questionPosition = this.questionPosition + 1;
+      }
+    },
   },
   created: function () {
     this.pollId = this.$route.params.id
@@ -39,3 +80,18 @@ export default {
   }
 }
 </script>
+
+
+<style scoped>
+#questionDiv{
+  background-color: aqua;
+  font-size: 80px;
+}
+#answerDiv{
+  background-color: brown;
+  font-size: 80px;
+}
+#nextButton{
+  margin: 40px;
+}
+</style>
