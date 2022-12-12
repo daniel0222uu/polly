@@ -8,8 +8,12 @@
 	--background-color: green;
 }
 body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   margin: 0;
   padding: 0;
+  background-color: lightblue;
 }
 #app {
   font-family: Helvetica, Arial, sans-serif;

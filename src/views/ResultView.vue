@@ -1,15 +1,11 @@
 <template>
-  <div>
-    {{question}}
+  <body id="wholeSite">
+  <div id="questionHeader">
+    {{questionObject.id}}
   </div>
   <BarsComponent v-bind:data="submittedAnswers"/>
-
-  <div>
-    Testing the div
-  </div>
-
   <br>
-  {{questionObject.id}}
+
   <div id="questionDiv" @click="questionPress" v-if="answerButtonBool==false">
     {{questionObject.questionArray[questionPosition]}}
   </div>
@@ -20,7 +16,7 @@
   <div>
     <button @click="previousCLick" id="previousButton"> Previous </button> {{questionPosition}} <button @click="nextClick" id="nextButton"> Next </button>
   </div>
-
+  </body>
 </template>
 
 <script>
@@ -64,6 +60,7 @@ export default {
       if(this.questionPosition < this.questionObject.questionArray.length - 1){
         this.questionPosition = this.questionPosition + 1;
       }
+      this.answerButtonBool = false;
     },
   },
   created: function () {
@@ -85,13 +82,26 @@ export default {
 <style scoped>
 #questionDiv{
   background-color: aqua;
-  font-size: 80px;
+  font-size: 160px;
+  margin-left: 180px;
+  margin-right: 180px
 }
 #answerDiv{
   background-color: brown;
-  font-size: 80px;
+  font-size: 160px;
+  margin-left: 180px;
+  margin-right: 180px
 }
 #nextButton{
   margin: 40px;
+}
+#questionHeader{
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 30px;
+  padding-top: 100px;
+  margin-left: 180px;
+  margin-right: 180px;
+  text-align: center;
 }
 </style>
