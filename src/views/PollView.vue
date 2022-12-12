@@ -1,4 +1,4 @@
-<template>
+  <template>
   <div>
     {{pollId}}
     <QuestionComponent v-bind:question="question"

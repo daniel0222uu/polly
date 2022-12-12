@@ -29,82 +29,43 @@
      <router-link v-bind:to="'/result/'+pollId">Check result</router-link>
    </div> -->
 
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-
-  <div>
-    <form>
-      <input type="text" v-model="quizName">
-      {{quizName}}
-      <button @click="nameDeck(quizName)" >Döp</button> Vad vill du döpa quizen till?
-      {{deckName}}
-    </form>
-  </div>
-  <div>
-    <form>
-      <input type="text" v-model="questionField">
-      {{quizQuestions}}
-      <button @click="questionsToDeck(questionField)"> add question
-      </button>
-      <br>
-      <input type="text" v-model="answerField">
-      {{quizAnswers}}
-      <button @click="answersToDeck(answerField)"> answer to question
-      </button>
-    </form>
-  </div>
-  {{completeDeck}}
-
-  <br>
-  <br>
-  <br>
-
-  <div>
-    <form>
-      <button @click="saveDeck" >Klar</button> Är du klar med din quiz? Klicka på knappen
-    </form>
-  </div>
-
-
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  {{questionObject.id}}
-  <div id="questionDiv" @click="questionPress" v-if="answerButtonBool==false">
-    {{questionObject.questionArray[questionPosition]}}
-  </div>
-  <div id="answerDiv" @click="answerPress" v-if="answerButtonBool==true">
-    {{questionObject.answerArray[questionPosition]}}
-  </div>
-
-  <div>
-    <button @click="previousCLick" id="previousButton"> Previous </button> {{questionPosition}} <button @click="nextClick" id="nextButton"> Next </button>
-  </div>
 
   <button @click="getDecks">Get Decks</button>
   <div>
-    <select name="drinks" required>
+    <select v-model="selectedDeck" name="drinks" required>
       <option value="" disabled selected hidden>Choose a drink</option>
-      <option value="coffee">coffee</option>
+      <option v-for="drink in selectorList" v-bind:key="drink">{{ drink }}</option>
       <!--  <option v-for="fraga in selectorList" :value="fraga">{{ fraga.id }}<option> -->
-    </select>
-
-    <select required v-model="selectorList">
-      <option value="">Testar om man kan välja</option>
-    </select>
+    </select> {{selectedDeck}}
+    {{selectorList}}
   </div>
-  <br>
+
+  <div>
+    <header id="questionNumberHeader" v-if="!addingQuestionBool"> QUESTION {{questionIndex+1}} </header>
+    <header id="questionNumberHeader" v-if="addingQuestionBool"> QUESTION TO ADD </header>
+    <input class="qeustionEditingFields" id="questionField" type="text" v-model="questionField">
+    {{questionField}}
+    <br>
+    <br>
+    <input class="qeustionEditingFields"  id="answerField" type="text" v-model="answerField">
+    {{answerField}}
+  </div>
+
+  <div>
+    <button @click="loadDeck">Load deck</button>
+
+    <button @click="addingNewQuestion">Add new question</button>
+
+    <button @click="savingAddedQustion">Save the added question</button>
+  </div>
+  <div>
+    <button @click="previousCLick" id="previousButton"> Previous </button> {{questionIndex}} <button @click="nextClick" id="nextButton"> Next </button>
 
 
-
-  {{selectorList}}
+    <br>
+    <br>
+    <button @click="savingCurrentQuestion" style="width: 200px; height: 150px">Save button</button>
+  </div> <!-- Kom ihåg att det kan kallas som komponent istället för duplikation. -->
 
 </template>
 
@@ -121,33 +82,50 @@ console.log(Decks);
 //console.log(testObj);
 //let myObj_deserialized = JSON.parse(localStorage.getItem("theDeckObject"));
 //console.log(myObj_deserialized);
+
+//console.log(JSON.parse(localStorage.getItem("daniel")));
+
+
+
+
+
+
+
+
+
 export default {
   name: 'CreateView',
   data: function () {
     return {
+      selectedDeck: "",
+      options: ["Mangoo", "Apple", "Orange", "Melon", "Pineapple", "Lecy", "Blueberry"],
       quizName: "",
       lang: "",
       pollId: "",
       question: "",
       answers: ["", ""],
-      questionNumber: 0,
+      questionIndex: 0,
       data: {},
       uiLabels: {},
-      questionObject:   {"id": "Sveriges huvudstäder",
+      questionObject: {
+        "id": "Sveriges huvudstäder",
         "questionArray": ["Sverige", "Norge", "Finland", "Danmark"],
-        "answerArray": ["Sthlm", "Oslo", "Helsingfors", "CBH"]}, //Nu gjorde vi om så att objektet inte är i en lista, fungerar
+        "answerArray": ["Sthlm", "Oslo", "Helsingfors", "CBH"]
+      }, //Nu gjorde vi om så att objektet inte är i en lista, fungerar
       //att hämta från singulär objekt.
-      questionPosition: 0,
       answerButtonBool: false,
       questionField: "",
       answerField: "",
       deckName: "",
       quizQuestions: [],
       quizAnswers: [],
-      selectorList:[],
+      selectorList: [],
+      addingQuestionBool: false,
+      //testingObject: JSON.parse(localStorage.getItem("daniel")),
       //completeDeck: {"id":this.deckName, "questionArray": this.quizQuestions, "answerArray":this.quizAnswers}
     }
   },
+  components: {},
   created: function () {
     this.lang = this.$route.params.lang;
     socket.emit("pageLoaded", this.lang);
@@ -162,10 +140,10 @@ export default {
   },
   methods: {
     createPoll: function () {
-      socket.emit("createPoll", {pollId: this.pollId, lang: this.lang })
+      socket.emit("createPoll", {pollId: this.pollId, lang: this.lang})
     },
     addQuestion: function () {
-      socket.emit("addQuestion", {pollId: this.pollId, q: this.question, a: this.answers } )
+      socket.emit("addQuestion", {pollId: this.pollId, q: this.question, a: this.answers})
     },
     addAnswer: function () {
       this.answers.push("");
@@ -173,42 +151,23 @@ export default {
     runQuestion: function () {
       socket.emit("runQuestion", {pollId: this.pollId, questionNumber: this.questionNumber})
     },
-    questionPress: function(){
-      this.answerButtonBool = true;
-      console.log("du clickade på knappen")
-    },
-    answerPress: function(){
-      this.answerButtonBool = false;
-    },
-    previousCLick: function(){
-      if (this.questionPosition>0) {
-        --this.questionPosition;
-        this.answerButtonBool = false;
-      }
-    },
-    nextClick: function(){
-      if (this.questionPosition < 3) {
-        ++this.questionPosition;
-        this.answerButtonBool = false;
-      }
-    },
-    saveDeck: function(){
+    saveDeck: function () {
       console.log("du klickade på en knapp med say()")
-      let completeDeck = {"id": this.deckName,"questionArray": this.quizQuestions,"answerArray": this.quizAnswers};
+      let completeDeck = {"id": this.deckName, "questionArray": this.quizQuestions, "answerArray": this.quizAnswers};
       //defined on render. Inte bra vet inte varför.
       console.log(completeDeck);
       localStorage.setItem(completeDeck.id, JSON.stringify(completeDeck));
     },
     getDecks: function () {
       let listToFill = [];
-      for (var i =0, len = localStorage.length; i< len; ++i ) {
+      for (var i = 0, len = localStorage.length; i < len; ++i) {
         listToFill.push(localStorage.key(i));
-        console.log( localStorage.key(i)  );
       }
       this.selectorList = listToFill;
-    }
-    ,
-    nameDeck: function(namingTheDeck){
+      //this.answerField = this.questionObject.answerArray[this.questionIndex];
+      //this.questionField = this.questionObject.questionArray[this.questionIndex];
+    },
+    nameDeck: function (namingTheDeck) {
       //let id =  '{"id" :' + '"' + namingTheDeck + '" \n  }';
       console.log(namingTheDeck)
       this.deckName = namingTheDeck;
@@ -219,18 +178,71 @@ export default {
       //localStorage.setItem(namingTheDeck,id);
       //console.log(myObj_deserialized);
     },
-    questionsToDeck: function(questionToAdd){
+    questionsToDeck: function (questionToAdd) {
       this.quizQuestions.push(questionToAdd);
       console.log(this.quizQuestions);
       //console.log(this.quizQuestions);
       //let myObj_deserialized = JSON.parse(localStorage.getItem(namingTheDeck));
       //console.log(myObj_deserialized);
     },
-    answersToDeck: function(answerToAdd){
+    answersToDeck: function (answerToAdd) {
       this.quizAnswers.push(answerToAdd);
       console.log(this.quizAnswers);
     },
+<<<<<<< HEAD
 
+=======
+    loadDeck: function () {
+      console.log("du klickade på en knapp med loadDeck()")
+      let myObj_deserialized = JSON.parse(localStorage.getItem(this.selectedDeck));
+      console.log(myObj_deserialized);
+      //this.questionObject = myObj_deserialized;
+      //this.answerField = this.questionObject.answerArray[this.questionIndex];
+      //this.questionField = this.questionObject.questionArray[this.questionIndex];
+      this.answerField = myObj_deserialized.answerArray[this.questionIndex];
+      this.questionField = myObj_deserialized.questionArray[this.questionIndex];
+      this.questionObject = myObj_deserialized;
+    },
+    previousCLick: function () {
+      if (this.questionIndex > 0) {
+        this.questionIndex = this.questionIndex - 1;
+      }
+      this.answerField = this.questionObject.answerArray[this.questionIndex];
+      this.questionField = this.questionObject.questionArray[this.questionIndex];
+    },
+    nextClick: function () {
+      if (this.questionIndex < this.questionObject.questionArray.length - 1) {
+        this.questionIndex = this.questionIndex + 1;
+      }
+      this.answerField = this.questionObject.answerArray[this.questionIndex];
+      this.questionField = this.questionObject.questionArray[this.questionIndex];
+    },
+    savingCurrentQuestion: function () {
+      let question = this.questionField;
+      let answer = this.answerField;
+      console.log(question);
+      console.log(answer);
+      this.questionObject.questionArray[this.questionIndex] = question;
+      this.questionObject.answerArray[this.questionIndex] = answer;
+      localStorage.setItem(this.questionObject.id, JSON.stringify(this.questionObject));
+    }, //detta fungerar men känns jätteupplagt för bugggar. Vi får hålla koll på detta.
+    addingNewQuestion: function () {
+      this.questionIndex = this.questionObject.questionArray.length;
+      this.questionField = "";
+      this.answerField = "";
+      this.addingQuestionBool = true;
+    },
+    savingAddedQustion: function () {
+      let question = this.questionField;
+      let answer = this.answerField;
+      console.log(question);
+      console.log(answer);
+      this.questionObject.questionArray.push(question);
+      this.questionObject.answerArray.push(answer);
+      localStorage.setItem(this.questionObject.id, JSON.stringify(this.questionObject));
+      this.addingQuestionBool = false;
+    }
+>>>>>>> 4039304491519ed7637619266e56a8ccc21db9d1
   }
 }
 </script>
@@ -247,5 +259,15 @@ export default {
 }
 #nextButton{
   margin: 40px;
+}
+.qeustionEditingFields{
+  font-size: 80px;
+  text-align: center;
+}
+
+#questionNumberHeader{
+  font-size: 80px;
+  text-align: center;
+  font-family: "Arial Black";
 }
 </style>

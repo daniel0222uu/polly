@@ -4,5 +4,6 @@
 	"createPoll": "Create poll",
 	"participatePoll": "Participate in poll",
 	"question": "Question",
-	"changeLanguage": "Byt till svenska"
+	"changeLanguage": "Byt till svenska",
+	"results": "Results"
 }
