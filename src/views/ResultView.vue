@@ -1,4 +1,18 @@
 <template>
+  <header>
+    <div v-bind:class="['hamburger', {'close': !hideNav}]"
+         v-on:click="toggleNav">
+    </div>
+    <div class="logo"><img src="/img/logo.png">Polly polling tool</div>
+  </header>
+  <ResponsiveNav v-bind:hideNav="hideNav">
+    <button v-on:click="switchLanguage">{{uiLabels.changeLanguage}}</button>
+    <router-link v-bind:to="'/create/'+lang">{{uiLabels.createPoll}}</router-link>
+    <router-link v-bind:to="'/result/'+lang">{{uiLabels.results}}</router-link>
+    <a href="">Pricing</a>
+    <a href="">About</a>
+    <a href="">FAQ</a>
+  </ResponsiveNav>
   <body id="wholeSite">
   <div id="questionHeader">
     {{questionObject.id}}
@@ -31,6 +45,7 @@
 <script>
 // @ is an alias to /src
 import BarsComponent from '@/components/BarsComponent.vue';
+import ResponsiveNav from '@/components/ResponsiveNav.vue';
 import io from 'socket.io-client';
 const socket = io();
 
@@ -42,10 +57,14 @@ for (var i =0, len = localStorage.length; i< len; ++i ) {
 export default {
   name: 'ResultView',
   components: {
+    ResponsiveNav,
     BarsComponent
   },
   data: function () {
     return {
+      uiLabels: {},
+      lang: "en",
+      hideNav: true,
       selectorList:listToFill,
       selectedDeck: "",
       question: "",
@@ -61,6 +80,16 @@ export default {
     }
   },
   methods: {
+    switchLanguage: function() {
+      if (this.lang === "en")
+        this.lang = "sv"
+      else
+        this.lang = "en"
+      socket.emit("switchLanguage", this.lang)
+    },
+    toggleNav: function () {
+      this.hideNav = ! this.hideNav;
+    },
     questionPress: function(){
       this.answerButtonBool = true;
     },
@@ -88,7 +117,7 @@ export default {
       this.questionObject = myObj_deserialized;
     },
   },
-  created: function () {
+  /*created: function () {
     this.pollId = this.$route.params.id
     socket.emit('joinPoll', this.pollId)
     socket.on("dataUpdate", (update) => {
@@ -99,7 +128,12 @@ export default {
       this.question = update.q;
       this.data = {};
     })
-  }
+  }*/
+  created: function () {
+    socket.on("init", (labels) => {
+      this.uiLabels = labels
+    })
+  },
 }
 </script>
 
@@ -128,5 +162,55 @@ export default {
   margin-left: 180px;
   margin-right: 180px;
   text-align: center;
+}
+
+header {
+  background-color: gray;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 2em auto;
+}
+.logo {
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
+  font-size: 2.5rem;
+  color: white;
+  padding-top:0.2em;
+}
+.logo img {
+  height:2.5rem;
+  vertical-align: bottom;
+  margin-right: 0.5rem;
+}
+.hamburger {
+  color:white;
+  width:1em;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  padding:0.5rem;
+  top:0;
+  left:0;
+  height: 2rem;
+  cursor: pointer;
+  font-size: 1.5rem;
+}
+
+@media screen and (max-width:50em) {
+  .logo {
+    font-size: 5vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .hamburger::before {
+    content: "☰";
+  }
+  .close::before {
+    content: "✕";
+  }
+  .hide {
+    left:-12em;
+  }
 }
 </style>
