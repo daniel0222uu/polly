@@ -94,6 +94,7 @@
   <br>
 
   <div>
+    <header id="questionNumberHeader"> QUESTION {{questionIndex+1}} </header>
     <input class="qeustionEditingFields" id="questionField" type="text" v-model="questionField">
     {{questionField}}
     <br>
@@ -104,6 +105,10 @@
 
   <div>
     <button @click="loadDeck">Load deck</button>
+
+    <button @click="addingNewQuestion">Add new question</button>
+
+    <button @click="savingAddedQustion">Save the added question</button>
   </div>
   <div>
     <button @click="previousCLick" id="previousButton"> Previous </button> {{questionIndex}} <button @click="nextClick" id="nextButton"> Next </button>
@@ -269,6 +274,20 @@ export default {
       this.questionObject.answerArray[this.questionIndex] = answer;
       localStorage.setItem(this.questionObject.id, JSON.stringify(this.questionObject));
     }, //detta fungerar men känns jätteupplagt för bugggar. Vi får hålla koll på detta.
+    addingNewQuestion: function(){
+    this.questionIndex = this.questionObject.questionArray.length;
+    this.questionField = "";
+    this.answerField   = "";
+  },
+  savingAddedQustion: function(){
+    let question = this.questionField;
+    let answer = this.answerField;
+    console.log(question);
+    console.log(answer);
+    this.questionObject.questionArray.push(question);
+    this.questionObject.answerArray.push(answer);
+    localStorage.setItem(this.questionObject.id, JSON.stringify(this.questionObject));
+  }
   }
 }
 </script>
@@ -289,5 +308,11 @@ export default {
 .qeustionEditingFields{
   font-size: 80px;
   text-align: center;
+}
+
+#questionNumberHeader{
+  font-size: 80px;
+  text-align: center;
+  font-family: "Arial Black";
 }
 </style>
