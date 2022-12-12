@@ -29,55 +29,6 @@
      <router-link v-bind:to="'/result/'+pollId">Check result</router-link>
    </div> -->
 
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-
-  <div>
-    <form>
-      <input type="text" v-model="quizName">
-      {{quizName}}
-      <button @click="nameDeck(quizName)" >Döp</button> Vad vill du döpa quizen till?
-      {{deckName}}
-    </form>
-  </div>
-  <div>
-    <form>
-      <input type="text" v-model="questionField">
-      {{quizQuestions}}
-      <button @click="questionsToDeck(questionField)"> add question
-      </button>
-      <br>
-      <input type="text" v-model="answerField">
-      {{quizAnswers}}
-      <button @click="answersToDeck(answerField)"> answer to question
-      </button>
-    </form>
-  </div>
-  {{completeDeck}}
-
-  <br>
-  <br>
-  <br>
-
-  <div>
-    <form>
-      <button @click="saveDeck" >Klar</button> Är du klar med din quiz? Klicka på knappen
-    </form>
-  </div>
-
-  <br>
-  <br>
-  b
-
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
 
   <button @click="getDecks">Get Decks</button>
   <div>
@@ -89,12 +40,9 @@
     {{selectorList}}
   </div>
 
-  <br>
-  <br>
-  <br>
-
   <div>
-    <header id="questionNumberHeader"> QUESTION {{questionIndex+1}} </header>
+    <header id="questionNumberHeader" v-if="!addingQuestionBool"> QUESTION {{questionIndex+1}} </header>
+    <header id="questionNumberHeader" v-if="addingQuestionBool"> QUESTION TO ADD </header>
     <input class="qeustionEditingFields" id="questionField" type="text" v-model="questionField">
     {{questionField}}
     <br>
@@ -150,7 +98,7 @@ export default {
   data: function () {
     return {
       selectedDeck: "",
-      options:["Mangoo","Apple","Orange","Melon","Pineapple","Lecy","Blueberry"],
+      options: ["Mangoo", "Apple", "Orange", "Melon", "Pineapple", "Lecy", "Blueberry"],
       quizName: "",
       lang: "",
       pollId: "",
@@ -159,9 +107,11 @@ export default {
       questionIndex: 0,
       data: {},
       uiLabels: {},
-      questionObject:   {"id": "Sveriges huvudstäder",
+      questionObject: {
+        "id": "Sveriges huvudstäder",
         "questionArray": ["Sverige", "Norge", "Finland", "Danmark"],
-        "answerArray": ["Sthlm", "Oslo", "Helsingfors", "CBH"]}, //Nu gjorde vi om så att objektet inte är i en lista, fungerar
+        "answerArray": ["Sthlm", "Oslo", "Helsingfors", "CBH"]
+      }, //Nu gjorde vi om så att objektet inte är i en lista, fungerar
       //att hämta från singulär objekt.
       answerButtonBool: false,
       questionField: "",
@@ -169,14 +119,13 @@ export default {
       deckName: "",
       quizQuestions: [],
       quizAnswers: [],
-      selectorList:[],
+      selectorList: [],
+      addingQuestionBool: false,
       //testingObject: JSON.parse(localStorage.getItem("daniel")),
       //completeDeck: {"id":this.deckName, "questionArray": this.quizQuestions, "answerArray":this.quizAnswers}
     }
   },
-  components:{
-
-  },
+  components: {},
   created: function () {
     this.lang = this.$route.params.lang;
     socket.emit("pageLoaded", this.lang);
@@ -191,10 +140,10 @@ export default {
   },
   methods: {
     createPoll: function () {
-      socket.emit("createPoll", {pollId: this.pollId, lang: this.lang })
+      socket.emit("createPoll", {pollId: this.pollId, lang: this.lang})
     },
     addQuestion: function () {
-      socket.emit("addQuestion", {pollId: this.pollId, q: this.question, a: this.answers } )
+      socket.emit("addQuestion", {pollId: this.pollId, q: this.question, a: this.answers})
     },
     addAnswer: function () {
       this.answers.push("");
@@ -202,23 +151,23 @@ export default {
     runQuestion: function () {
       socket.emit("runQuestion", {pollId: this.pollId, questionNumber: this.questionNumber})
     },
-    saveDeck: function(){
+    saveDeck: function () {
       console.log("du klickade på en knapp med say()")
-      let completeDeck = {"id": this.deckName,"questionArray": this.quizQuestions,"answerArray": this.quizAnswers};
+      let completeDeck = {"id": this.deckName, "questionArray": this.quizQuestions, "answerArray": this.quizAnswers};
       //defined on render. Inte bra vet inte varför.
       console.log(completeDeck);
       localStorage.setItem(completeDeck.id, JSON.stringify(completeDeck));
     },
     getDecks: function () {
       let listToFill = [];
-      for (var i =0, len = localStorage.length; i< len; ++i ) {
+      for (var i = 0, len = localStorage.length; i < len; ++i) {
         listToFill.push(localStorage.key(i));
       }
       this.selectorList = listToFill;
       //this.answerField = this.questionObject.answerArray[this.questionIndex];
       //this.questionField = this.questionObject.questionArray[this.questionIndex];
     },
-    nameDeck: function(namingTheDeck){
+    nameDeck: function (namingTheDeck) {
       //let id =  '{"id" :' + '"' + namingTheDeck + '" \n  }';
       console.log(namingTheDeck)
       this.deckName = namingTheDeck;
@@ -229,18 +178,18 @@ export default {
       //localStorage.setItem(namingTheDeck,id);
       //console.log(myObj_deserialized);
     },
-    questionsToDeck: function(questionToAdd){
+    questionsToDeck: function (questionToAdd) {
       this.quizQuestions.push(questionToAdd);
       console.log(this.quizQuestions);
       //console.log(this.quizQuestions);
       //let myObj_deserialized = JSON.parse(localStorage.getItem(namingTheDeck));
       //console.log(myObj_deserialized);
     },
-    answersToDeck: function(answerToAdd){
+    answersToDeck: function (answerToAdd) {
       this.quizAnswers.push(answerToAdd);
       console.log(this.quizAnswers);
     },
-    loadDeck: function(){
+    loadDeck: function () {
       console.log("du klickade på en knapp med loadDeck()")
       let myObj_deserialized = JSON.parse(localStorage.getItem(this.selectedDeck));
       console.log(myObj_deserialized);
@@ -251,21 +200,21 @@ export default {
       this.questionField = myObj_deserialized.questionArray[this.questionIndex];
       this.questionObject = myObj_deserialized;
     },
-    previousCLick: function(){
-      if(this.questionIndex > 0){
+    previousCLick: function () {
+      if (this.questionIndex > 0) {
         this.questionIndex = this.questionIndex - 1;
       }
       this.answerField = this.questionObject.answerArray[this.questionIndex];
       this.questionField = this.questionObject.questionArray[this.questionIndex];
     },
-    nextClick: function(){
-      if(this.questionIndex < this.questionObject.questionArray.length - 1) {
+    nextClick: function () {
+      if (this.questionIndex < this.questionObject.questionArray.length - 1) {
         this.questionIndex = this.questionIndex + 1;
       }
       this.answerField = this.questionObject.answerArray[this.questionIndex];
       this.questionField = this.questionObject.questionArray[this.questionIndex];
     },
-    savingCurrentQuestion: function(){
+    savingCurrentQuestion: function () {
       let question = this.questionField;
       let answer = this.answerField;
       console.log(question);
@@ -274,20 +223,22 @@ export default {
       this.questionObject.answerArray[this.questionIndex] = answer;
       localStorage.setItem(this.questionObject.id, JSON.stringify(this.questionObject));
     }, //detta fungerar men känns jätteupplagt för bugggar. Vi får hålla koll på detta.
-    addingNewQuestion: function(){
-    this.questionIndex = this.questionObject.questionArray.length;
-    this.questionField = "";
-    this.answerField   = "";
-  },
-  savingAddedQustion: function(){
-    let question = this.questionField;
-    let answer = this.answerField;
-    console.log(question);
-    console.log(answer);
-    this.questionObject.questionArray.push(question);
-    this.questionObject.answerArray.push(answer);
-    localStorage.setItem(this.questionObject.id, JSON.stringify(this.questionObject));
-  }
+    addingNewQuestion: function () {
+      this.questionIndex = this.questionObject.questionArray.length;
+      this.questionField = "";
+      this.answerField = "";
+      this.addingQuestionBool = true;
+    },
+    savingAddedQustion: function () {
+      let question = this.questionField;
+      let answer = this.answerField;
+      console.log(question);
+      console.log(answer);
+      this.questionObject.questionArray.push(question);
+      this.questionObject.answerArray.push(answer);
+      localStorage.setItem(this.questionObject.id, JSON.stringify(this.questionObject));
+      this.addingQuestionBool = false;
+    }
   }
 }
 </script>
