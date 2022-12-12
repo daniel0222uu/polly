@@ -230,6 +230,7 @@ export default {
       this.quizAnswers.push(answerToAdd);
       console.log(this.quizAnswers);
     },
+
   }
 }
 </script>
