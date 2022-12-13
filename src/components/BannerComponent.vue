@@ -3,15 +3,17 @@
     <div v-bind:class="['hamburger', {'close': !hideNav}]" 
          v-on:click="toggleNav">
     </div>
-    <div class="logo"><img src="/img/logo.png">Polly polling tool</div>
+    <div class="logo"> <a href=""><img src="/img/logo.png"></a>Quiz quizzing</div>
   </header>
   <ResponsiveNav v-bind:hideNav="hideNav">
+    <a href="">Home/Hem</a>
+    
+    <router-link v-on:click="keepLanguage" v-bind:to="'/create/'+lang">{{uiLabels.createPoll}}</router-link>
+    <router-link v-on:click="keepLanguage" v-bind:to="'/result/'+lang">{{uiLabels.results}}</router-link>
+    <a href="https://www.google.com/">Pricing</a>
+    <a href="https://www.google.com/">About</a>
+    <a href="https://www.google.com/">Settings</a>
     <button v-on:click="switchLanguage">{{uiLabels.changeLanguage}}</button>
-    <router-link v-bind:to="'/create/'+lang">{{uiLabels.createPoll}}</router-link>
-    <router-link v-bind:to="'/result/'+lang">{{uiLabels.results}}</router-link>
-    <a href="">Pricing</a>
-    <a href="">About</a>
-    <a href="">FAQ</a>
   </ResponsiveNav>
 
 </template>
@@ -48,6 +50,10 @@ export default {
       else
         this.lang = "en"
       socket.emit("switchLanguage", this.lang)
+    },
+    keepLanguage: function() {
+      socket.emit("switchLanguage", this.lang)
+
     },
     toggleNav: function () {
       this.hideNav = ! this.hideNav;
