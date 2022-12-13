@@ -66,6 +66,8 @@
     <br>
     <button @click="savingCurrentQuestion" style="width: 200px; height: 150px">Save button</button>
   </div> -->
+  <BannerComponent>§
+  </BannerComponent>
 
   <div>
     <EditAndCreateComponent>
@@ -83,6 +85,7 @@ import io from 'socket.io-client';
 import Decks from "../assetts/Decks.json";
 import EditAndCreateComponent from "@/components/EditAndCreateComponent";
 const socket = io();
+import BannerComponent from '@/components/BannerComponent.vue';
 //const items = {localStorage};
 //console.log(items);
 console.log(Decks);
@@ -135,6 +138,7 @@ export default {
     }
   },
   components: {
+    BannerComponent,
     EditAndCreateComponent
   },
   created: function () {
