@@ -1,4 +1,5 @@
 <template>
+  <BannerComponent />
   <!-- <div>
      Poll link:
      <input type="text" v-model="pollId">
@@ -66,11 +67,14 @@
     <br>
     <button @click="savingCurrentQuestion" style="width: 200px; height: 150px">Save button</button>
   </div> -->
-
-  <div>
+<!--
+   <div>
     <EditAndCreateComponent>
     </EditAndCreateComponent>
   </div>
+
+-->
+ 
 
 
   </body>
@@ -81,7 +85,8 @@
 <script>
 import io from 'socket.io-client';
 import Decks from "../assetts/Decks.json";
-import EditAndCreateComponent from "@/components/EditAndCreateComponent";
+import BannerComponent from '@/components/BannerComponent.vue';
+//import EditAndCreateComponent from "@/components/EditAndCreateComponent";
 const socket = io();
 //const items = {localStorage};
 //console.log(items);
@@ -135,7 +140,8 @@ export default {
     }
   },
   components: {
-    EditAndCreateComponent
+    //EditAndCreateComponent,
+    BannerComponent
   },
   created: function () {
     this.lang = this.$route.params.lang;

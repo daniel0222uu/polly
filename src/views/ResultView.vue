@@ -1,18 +1,5 @@
 <template>
-  <header>
-    <div v-bind:class="['hamburger', {'close': !hideNav}]"
-         v-on:click="toggleNav">
-    </div>
-    <div class="logo"><img src="/img/logo.png">Polly polling tool</div>
-  </header>
-  <ResponsiveNav v-bind:hideNav="hideNav">
-    <button v-on:click="switchLanguage">{{uiLabels.changeLanguage}}</button>
-    <router-link v-bind:to="'/create/'+lang">{{uiLabels.createPoll}}</router-link>
-    <router-link v-bind:to="'/result/'+lang">{{uiLabels.results}}</router-link>
-    <a href="">Pricing</a>
-    <a href="">About</a>
-    <a href="">FAQ</a>
-  </ResponsiveNav>
+  <BannerComponent />
   <body id="wholeSite">
   <div id="questionHeader">
     {{questionObject.id}}
@@ -44,7 +31,7 @@
 <script>
 // @ is an alias to /src
 import BarsComponent from '@/components/BarsComponent.vue';
-import ResponsiveNav from '@/components/ResponsiveNav.vue';
+import BannerComponent from '@/components/BannerComponent.vue';
 import io from 'socket.io-client';
 const socket = io();
 
@@ -56,7 +43,7 @@ for (var i =0, len = localStorage.length; i< len; ++i ) {
 export default {
   name: 'ResultView',
   components: {
-    ResponsiveNav,
+    BannerComponent,
     BarsComponent
   },
   data: function () {

@@ -1,18 +1,5 @@
 <template>
-  <header>
-    <div v-bind:class="['hamburger', {'close': !hideNav}]" 
-         v-on:click="toggleNav">
-    </div>
-    <div class="logo"><img src="/img/logo.png">Polly polling tool</div>
-  </header>
-    <ResponsiveNav v-bind:hideNav="hideNav">
-    <button v-on:click="switchLanguage">{{uiLabels.changeLanguage}}</button>
-    <router-link v-bind:to="'/create/'+lang">{{uiLabels.createPoll}}</router-link>
-    <router-link v-bind:to="'/result/'+lang">{{uiLabels.results}}</router-link>
-    <a href="">Pricing</a>
-    <a href="">About</a>
-    <a href="">FAQ</a>
-  </ResponsiveNav>
+  <BannerComponent />
   <h1>Welcome!</h1>
   <label>
     Write poll id: 
@@ -22,14 +9,14 @@
 </template>
 
 <script>
-import ResponsiveNav from '@/components/ResponsiveNav.vue';
+import BannerComponent from '@/components/BannerComponent.vue';
 import io from 'socket.io-client';
 const socket = io();
 
 export default {
   name: 'StartView',
   components: {
-    ResponsiveNav
+    BannerComponent
   },
   data: function () {
     return {
