@@ -28,14 +28,14 @@
      {{data}}
      <router-link v-bind:to="'/result/'+pollId">Check result</router-link>
    </div> -->
-
-
-  <button @click="getDecks">Get Decks</button>
+  <body>
+  <!--
   <div>
+  <button @click="getDecks">Get Decks</button>
+
     <select v-model="selectedDeck" name="drinks" required>
       <option value="" disabled selected hidden>Choose a drink</option>
       <option v-for="drink in selectorList" v-bind:key="drink">{{ drink }}</option>
-      <!--  <option v-for="fraga in selectorList" :value="fraga">{{ fraga.id }}<option> -->
     </select> {{selectedDeck}}
     {{selectorList}}
   </div>
@@ -52,6 +52,7 @@
   </div>
 
   <div>
+
     <button @click="loadDeck">Load deck</button>
 
     <button @click="addingNewQuestion">Add new question</button>
@@ -61,11 +62,18 @@
   <div>
     <button @click="previousCLick" id="previousButton"> Previous </button> {{questionIndex}} <button @click="nextClick" id="nextButton"> Next </button>
 
-
     <br>
     <br>
     <button @click="savingCurrentQuestion" style="width: 200px; height: 150px">Save button</button>
-  </div> <!-- Kom ihåg att det kan kallas som komponent istället för duplikation. -->
+  </div> -->
+
+  <div>
+    <EditAndCreateComponent>
+    </EditAndCreateComponent>
+  </div>
+
+
+  </body>
 
 </template>
 
@@ -73,6 +81,7 @@
 <script>
 import io from 'socket.io-client';
 import Decks from "../assetts/Decks.json";
+import EditAndCreateComponent from "@/components/EditAndCreateComponent";
 const socket = io();
 //const items = {localStorage};
 //console.log(items);
@@ -125,7 +134,9 @@ export default {
       //completeDeck: {"id":this.deckName, "questionArray": this.quizQuestions, "answerArray":this.quizAnswers}
     }
   },
-  components: {},
+  components: {
+    EditAndCreateComponent
+  },
   created: function () {
     this.lang = this.$route.params.lang;
     socket.emit("pageLoaded", this.lang);
@@ -189,9 +200,6 @@ export default {
       this.quizAnswers.push(answerToAdd);
       console.log(this.quizAnswers);
     },
-<<<<<<< HEAD
-
-=======
     loadDeck: function () {
       console.log("du klickade på en knapp med loadDeck()")
       let myObj_deserialized = JSON.parse(localStorage.getItem(this.selectedDeck));
@@ -242,7 +250,6 @@ export default {
       localStorage.setItem(this.questionObject.id, JSON.stringify(this.questionObject));
       this.addingQuestionBool = false;
     }
->>>>>>> 4039304491519ed7637619266e56a8ccc21db9d1
   }
 }
 </script>
