@@ -5,7 +5,7 @@
     </div>
     <div class="logo"><img src="/img/logo.png">Polly polling tool</div>
   </header>
-  <ResponsiveNav v-bind:hideNav="hideNav">
+    <ResponsiveNav v-bind:hideNav="hideNav">
     <button v-on:click="switchLanguage">{{uiLabels.changeLanguage}}</button>
     <router-link v-bind:to="'/create/'+lang">{{uiLabels.createPoll}}</router-link>
     <router-link v-bind:to="'/result/'+lang">{{uiLabels.results}}</router-link>

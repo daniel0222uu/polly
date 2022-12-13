@@ -23,7 +23,6 @@
     <select v-model="selectedDeck" name="drinks" required>
       <option value="" disabled selected hidden>Choose a drink</option>
       <option v-for="drink in selectorList" v-bind:key="drink">{{ drink }}</option>
-      <!--  <option v-for="fraga in selectorList" :value="fraga">{{ fraga.id }}<option> -->
     </select> {{selectedDeck}}
     {{selectorList}}
     <button @click="loadDeck">Load deck</button>
