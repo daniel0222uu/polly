@@ -46,12 +46,12 @@ export default {
 }
 </script>
 <style scoped>
-  header {
+  /*header {
     background-color: gray;
     width: 100%;
     display: grid;
     grid-template-columns: 2em auto;
-  }
+  } */
   .logo {
     text-transform: uppercase;
     letter-spacing: 0.25em;

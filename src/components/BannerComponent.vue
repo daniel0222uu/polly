@@ -3,16 +3,16 @@
     <div v-bind:class="['hamburger', {'close': !hideNav}]" 
          v-on:click="toggleNav">
     </div>
-    <div class="logo"> <a href=""><img src="/img/logo.png"></a>Quiz quizzing</div>
+    <div class="logo"> <a href=""><img src="/img/logo2.jfif"></a>Quiz quizzing</div>
   </header>
   <ResponsiveNav v-bind:hideNav="hideNav">
     <a href="">Home/Hem</a>
     
     <router-link v-on:click="keepLanguage" v-bind:to="'/create/'+lang">{{uiLabels.createPoll}}</router-link>
     <router-link v-on:click="keepLanguage" v-bind:to="'/result/'+lang">{{uiLabels.results}}</router-link>
-    <a href="https://www.google.com/">Pricing</a>
-    <a href="https://www.google.com/">About</a>
-    <a href="https://www.google.com/">Settings</a>
+    <a href="">Pricing</a>
+    <a href="">About</a>
+    <a href="">Settings</a>
     <button v-on:click="switchLanguage">{{uiLabels.changeLanguage}}</button>
   </ResponsiveNav>
 
@@ -64,30 +64,34 @@ export default {
 
 
 <style scoped>
+
 header {
     background-color: gray;
     width: 100%;
     display: grid;
     grid-template-columns: 2em auto;
   }
-  .logo {
+  
+   .logo {
     text-transform: uppercase;
     letter-spacing: 0.25em;
     font-size: 2.5rem;
     color: white;
     padding-top:0.2em;
   }
+  
   .logo img {
-    height:2.5rem;
-    vertical-align: bottom;
+    height:5rem;
+    vertical-align: bottom;  
     margin-right: 0.5rem; 
   }
+  
   .hamburger {
     color:white;
     width:1em;
     display: flex;
-    align-items: center;
-    justify-content: left;
+    align-items: center; 
+    justify-content: left; 
     padding:0.5rem;
     top:0;
     left:0;
@@ -100,8 +104,9 @@ header {
   .logo {
     font-size: 5vw;
     display: flex;
+    /*
     align-items: center;
-    justify-content: center;
+    justify-content: center; */
   }
   .hamburger::before {
     content: "☰";
