@@ -3,12 +3,6 @@
   <body>
 
   <div>
-    <h1>Name your quiz please</h1>
-    <p><input class="qeustionEditingFields"  id="namingDeckField" type="text" v-model="deckName"></p>
-    <p><button @click="nameDeck(deckName)">Save deck name</button></p>
-  </div>
-
-  <div>
     <EditAndCreateComponent
       />
 
