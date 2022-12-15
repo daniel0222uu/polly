@@ -30,11 +30,26 @@
      <router-link v-bind:to="'/result/'+pollId">Check result</router-link>
    </div> -->
   <body>
-  <div>
+  <div v-if="!addingQuestionBool">
     <h1>Name your quiz please</h1>
     <p><input class="qeustionEditingFields"  id="namingDeckField" type="text" v-model="deckName"></p>
-    <p><button @click="nameDeck(deckName)">Save deck name</button></p>
+    <p><button @click="nameDeck(deckName)">Name my deck</button></p> {{questionObject.id}}
   </div>
+
+  <div v-if="addingQuestionBool">
+    <h2 id="quizName">Now creating: {{questionObject.id}}</h2>
+    <h3> Add your questions</h3>
+    <input class="qeustionEditingFields" id="questionField" type="text" v-model="questionField">{{questionField}}
+    <br>
+    <br>
+    <input class="qeustionEditingFields"  id="answerField" type="text" v-model="answerField">{{answerField}}
+    <div>
+     <!-- <button @click="previousCLick"> Previous Question</button> -->
+      <button @click="savingAddedQustion">Add this question and answer</button>
+    </div>
+  </div>
+
+
 
   <!--
   <div>
@@ -74,12 +89,10 @@
     <button @click="savingCurrentQuestion" style="width: 200px; height: 150px">Save button</button>
   </div> -->
 
-  <div>
+  <!--<div>
     <EditAndCreateComponent />
    
-  </div>
-
--->
+  </div> -->
  
 
 
@@ -92,7 +105,7 @@
 import io from 'socket.io-client';
 import Decks from "../assetts/Decks.json";
 import BannerComponent from '@/components/BannerComponent.vue';
-import EditAndCreateComponent from "@/components/EditAndCreateComponent";
+//import EditAndCreateComponent from "@/components/EditAndCreateComponent"; not using it
 const socket = io();
 //const items = {localStorage};
 //console.log(items);
@@ -128,9 +141,9 @@ export default {
       data: {},
       uiLabels: {},
       questionObject: {
-        "id": "Sveriges huvudstäder",
-        "questionArray": ["Sverige", "Norge", "Finland", "Danmark"],
-        "answerArray": ["Sthlm", "Oslo", "Helsingfors", "CBH"]
+        "id": "",
+        "questionArray": [],
+        "answerArray": []
       }, //Nu gjorde vi om så att objektet inte är i en lista, fungerar
       //att hämta från singulär objekt.
       answerButtonBool: false,
@@ -147,7 +160,7 @@ export default {
   },
   components: {
     BannerComponent,
-    EditAndCreateComponent
+    //EditAndCreateComponent Not using it for now
   },
   created: function () {
     this.lang = this.$route.params.lang;
@@ -168,9 +181,6 @@ export default {
     addQuestion: function () {
       socket.emit("addQuestion", {pollId: this.pollId, q: this.question, a: this.answers})
     },
-    addAnswer: function () {
-      this.answers.push("");
-    },
     runQuestion: function () {
       socket.emit("runQuestion", {pollId: this.pollId, questionNumber: this.questionNumber})
     },
@@ -181,19 +191,12 @@ export default {
       console.log(completeDeck);
       localStorage.setItem(completeDeck.id, JSON.stringify(completeDeck));
     },
-    getDecks: function () {
-      let listToFill = [];
-      for (var i = 0, len = localStorage.length; i < len; ++i) {
-        listToFill.push(localStorage.key(i));
-      }
-      this.selectorList = listToFill;
-      //this.answerField = this.questionObject.answerArray[this.questionIndex];
-      //this.questionField = this.questionObject.questionArray[this.questionIndex];
-    },
     nameDeck: function (namingTheDeck) {
       //let id =  '{"id" :' + '"' + namingTheDeck + '" \n  }';
       console.log(namingTheDeck)
       this.deckName = namingTheDeck;
+      this.questionObject.id = namingTheDeck;
+      this.addingQuestionBool = true;
       //let deSerializedid = JSON.parse(id);
       //console.log(deSerializedid);
       //localStorage.setItem(namingTheDeck, id)
@@ -208,31 +211,9 @@ export default {
       //let myObj_deserialized = JSON.parse(localStorage.getItem(namingTheDeck));
       //console.log(myObj_deserialized);
     },
-    answersToDeck: function (answerToAdd) {
-      this.quizAnswers.push(answerToAdd);
-      console.log(this.quizAnswers);
-    },
-    loadDeck: function () {
-      console.log("du klickade på en knapp med loadDeck()")
-      let myObj_deserialized = JSON.parse(localStorage.getItem(this.selectedDeck));
-      console.log(myObj_deserialized);
-      //this.questionObject = myObj_deserialized;
-      //this.answerField = this.questionObject.answerArray[this.questionIndex];
-      //this.questionField = this.questionObject.questionArray[this.questionIndex];
-      this.answerField = myObj_deserialized.answerArray[this.questionIndex];
-      this.questionField = myObj_deserialized.questionArray[this.questionIndex];
-      this.questionObject = myObj_deserialized;
-    },
     previousCLick: function () {
       if (this.questionIndex > 0) {
         this.questionIndex = this.questionIndex - 1;
-      }
-      this.answerField = this.questionObject.answerArray[this.questionIndex];
-      this.questionField = this.questionObject.questionArray[this.questionIndex];
-    },
-    nextClick: function () {
-      if (this.questionIndex < this.questionObject.questionArray.length - 1) {
-        this.questionIndex = this.questionIndex + 1;
       }
       this.answerField = this.questionObject.answerArray[this.questionIndex];
       this.questionField = this.questionObject.questionArray[this.questionIndex];
@@ -259,8 +240,11 @@ export default {
       console.log(answer);
       this.questionObject.questionArray.push(question);
       this.questionObject.answerArray.push(answer);
+      console.log(this.questionObject);
       localStorage.setItem(this.questionObject.id, JSON.stringify(this.questionObject));
-      this.addingQuestionBool = false;
+      this.questionField = "";
+      this.answerField = "";
+      this.questionIndex = this.questionIndex + 1;
     }
   }
 }
@@ -286,6 +270,12 @@ export default {
 
 #questionNumberHeader{
   font-size: 80px;
+  text-align: center;
+  font-family: "Arial Black";
+}
+
+#quizName {
+  font-size: 100px;
   text-align: center;
   font-family: "Arial Black";
 }

@@ -1,6 +1,6 @@
 <template>
 
-  <body> <!-- lägger till en kommentar och testar. -->
+  <body>
   <div>
 
     <select v-model="selectedDeck" name="drinks" required>
