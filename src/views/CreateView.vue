@@ -30,14 +30,22 @@
      <router-link v-bind:to="'/result/'+pollId">Check result</router-link>
    </div> -->
   <body>
+  <div id="questionsCreated">
+    <p> Scroll throught the questions of {{questionObject.id}}</p>
+    <p style="font-weight: bold">Question {{questionIndex+1}}</p>
+    <p>{{questionObject.questionArray}}</p>
+    <p style="font-weight: bold">Answer</p>
+    <p>{{questionObject.answerArray}}</p>
+  </div>
   <div v-if="!addingQuestionBool">
     <h1>Name your quiz please</h1>
     <p><input class="qeustionEditingFields"  id="namingDeckField" type="text" v-model="deckName"></p>
     <p><button @click="nameDeck(deckName)">Name my deck</button></p> {{questionObject.id}}
+
   </div>
 
   <div v-if="addingQuestionBool">
-    <h2 id="quizName">Now creating: {{questionObject.id}}</h2>
+    <h2 id="quizName">Now creating: {{questionObject.id}}</h2> {{questionIndex+1}}
     <h3> Add your questions</h3>
     <input class="qeustionEditingFields" id="questionField" type="text" v-model="questionField">{{questionField}}
     <br>
@@ -135,8 +143,6 @@ export default {
       quizName: "",
       lang: "",
       pollId: "",
-      question: "",
-      answers: ["", ""],
       questionIndex: 0,
       data: {},
       uiLabels: {},
@@ -144,8 +150,7 @@ export default {
         "id": "",
         "questionArray": [],
         "answerArray": []
-      }, //Nu gjorde vi om så att objektet inte är i en lista, fungerar
-      //att hämta från singulär objekt.
+      },
       answerButtonBool: false,
       questionField: "",
       answerField: "",
@@ -184,32 +189,11 @@ export default {
     runQuestion: function () {
       socket.emit("runQuestion", {pollId: this.pollId, questionNumber: this.questionNumber})
     },
-    saveDeck: function () {
-      console.log("du klickade på en knapp med say()")
-      let completeDeck = {"id": this.deckName, "questionArray": this.quizQuestions, "answerArray": this.quizAnswers};
-      //defined on render. Inte bra vet inte varför.
-      console.log(completeDeck);
-      localStorage.setItem(completeDeck.id, JSON.stringify(completeDeck));
-    },
     nameDeck: function (namingTheDeck) {
-      //let id =  '{"id" :' + '"' + namingTheDeck + '" \n  }';
       console.log(namingTheDeck)
       this.deckName = namingTheDeck;
       this.questionObject.id = namingTheDeck;
       this.addingQuestionBool = true;
-      //let deSerializedid = JSON.parse(id);
-      //console.log(deSerializedid);
-      //localStorage.setItem(namingTheDeck, id)
-      //let myObj_deserialized = JSON.parse(localStorage.getItem(namingTheDeck));
-      //localStorage.setItem(namingTheDeck,id);
-      //console.log(myObj_deserialized);
-    },
-    questionsToDeck: function (questionToAdd) {
-      this.quizQuestions.push(questionToAdd);
-      console.log(this.quizQuestions);
-      //console.log(this.quizQuestions);
-      //let myObj_deserialized = JSON.parse(localStorage.getItem(namingTheDeck));
-      //console.log(myObj_deserialized);
     },
     previousCLick: function () {
       if (this.questionIndex > 0) {
@@ -217,21 +201,6 @@ export default {
       }
       this.answerField = this.questionObject.answerArray[this.questionIndex];
       this.questionField = this.questionObject.questionArray[this.questionIndex];
-    },
-    savingCurrentQuestion: function () {
-      let question = this.questionField;
-      let answer = this.answerField;
-      console.log(question);
-      console.log(answer);
-      this.questionObject.questionArray[this.questionIndex] = question;
-      this.questionObject.answerArray[this.questionIndex] = answer;
-      localStorage.setItem(this.questionObject.id, JSON.stringify(this.questionObject));
-    }, //detta fungerar men känns jätteupplagt för bugggar. Vi får hålla koll på detta.
-    addingNewQuestion: function () {
-      this.questionIndex = this.questionObject.questionArray.length;
-      this.questionField = "";
-      this.answerField = "";
-      this.addingQuestionBool = true;
     },
     savingAddedQustion: function () {
       let question = this.questionField;
@@ -279,4 +248,11 @@ export default {
   text-align: center;
   font-family: "Arial Black";
 }
+#questionsCreated{
+  text-align: right;
+  font-size: 18px;
+  margin: 40px;
+}
+
+
 </style>
