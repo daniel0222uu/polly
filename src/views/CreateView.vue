@@ -33,9 +33,10 @@
   <div id="questionsCreated">
     <p> Scroll throught the questions of {{questionObject.id}}</p>
     <p style="font-weight: bold">Question {{questionIndex+1}}</p>
-    <p>{{questionObject.questionArray}}</p>
-    <p style="font-weight: bold">Answer</p>
-    <p>{{questionObject.answerArray}}</p>
+    <p>{{questionObject.questionArray[questionIndex]}}</p>
+    <p style="font-weight: bold">Answer to question</p>
+    <p>{{questionObject.answerArray[questionIndex]}}</p>
+    <p> <button @click="previousCLick" > Previous</button>  <button @click="nextClick"> Next</button>   </p>
   </div>
   <div v-if="!addingQuestionBool">
     <h1>Name your quiz please</h1>
@@ -195,12 +196,18 @@ export default {
       this.questionObject.id = namingTheDeck;
       this.addingQuestionBool = true;
     },
+    nextClick: function(){
+      let initializeQarrayLength = this.questionObject.questionArray.length
+      if (this.questionIndex<initializeQarrayLength-1){
+        this.questionIndex++
+      }
+      console.log(this.questionIndex)
+    },
     previousCLick: function () {
       if (this.questionIndex > 0) {
-        this.questionIndex = this.questionIndex - 1;
+        this.questionIndex--
       }
-      this.answerField = this.questionObject.answerArray[this.questionIndex];
-      this.questionField = this.questionObject.questionArray[this.questionIndex];
+      console.log(this.questionIndex)
     },
     savingAddedQustion: function () {
       let question = this.questionField;
@@ -213,7 +220,6 @@ export default {
       localStorage.setItem(this.questionObject.id, JSON.stringify(this.questionObject));
       this.questionField = "";
       this.answerField = "";
-      this.questionIndex = this.questionIndex + 1;
     }
   }
 }
