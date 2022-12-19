@@ -1,30 +1,46 @@
 <template>
   <BannerComponent />
-  <body id="wholeSite">
+  <body>
   <div id="questionHeader">
-    {{questionObject.id}}
+    <select class="style-select" v-model="selectedDeck" name="drinks" required>
+      <option value="" disabled selected hidden>Välj en frågelek</option>
+      <option v-for="drink in selectorList" v-bind:key="drink">{{ drink }}</option>
+    </select>    <button @click="loadDeck">Load deck</button>
+    <p>
+      {{questionObject.id}}
+    </p>
   </div>
   <BarsComponent v-bind:data="submittedAnswers"/>
   <br>
   <div>
-    <select v-model="selectedDeck" name="drinks" required>
-      <option value="" disabled selected hidden>Choose a drink</option>
-      <option v-for="drink in selectorList" v-bind:key="drink">{{ drink }}</option>
-    </select> {{selectedDeck}}
-    {{selectorList}}
-    <button @click="loadDeck">Load deck</button>
+
+
   </div>
 
-  <div id="questionDiv" @click="questionPress" v-if="answerButtonBool==false">
-    {{questionObject.questionArray[questionPosition]}}
-  </div>
-
-  <div id="answerDiv" @click="answerPress" v-if="answerButtonBool==true">
-    {{questionObject.answerArray[questionPosition]}}
-  </div>
   <div>
-    <button @click="previousCLick" id="previousButton"> Previous </button> {{questionPosition}} <button @click="nextClick" id="nextButton"> Next </button>
+
+    <div class="flippingDivs" id="questionDiv" @click="questionPress" v-if="!answerButtonBool">
+      {{questionObject.questionArray[questionPosition]}}
+    </div>
+
+    <Transition name="fade" v-bind:key="questionPosition">
+
+      <div class="flippingDivs" id="answerDiv" @click="answerPress" v-if="answerButtonBool">
+        {{questionObject.answerArray[questionPosition]}}
+      </div>
+
+    </Transition>
+
   </div>
+
+
+
+  <div>
+    <button @click="previousCLick" class="prevNextButton"> Previous </button> {{questionPosition}} <button @click="nextClick" class="prevNextButton"> Next </button>
+  </div>
+
+
+
   </body>
 </template>
 
@@ -86,6 +102,7 @@ export default {
       if(this.questionPosition > 0){
         this.questionPosition = this.questionPosition - 1;
       }
+      this.answerButtonBool = false;
     },
     nextClick: function(){
       if(this.questionPosition < this.questionObject.questionArray.length - 1){
@@ -94,6 +111,7 @@ export default {
       this.answerButtonBool = false;
     },
     loadDeck: function(){
+      this.questionPosition = 0;
       console.log("du klickade på en knapp med loadDeck()")
       let myObj_deserialized = JSON.parse(localStorage.getItem(this.selectedDeck));
       console.log(myObj_deserialized);
@@ -125,20 +143,54 @@ export default {
 
 
 <style scoped>
-#questionDiv{
-  background-color: aqua;
+
+.fade-enter-from {
+  opacity: 0;
+}
+.fade-enter-to{
+  opacity: 1;
+}
+.fade-enter-active{
+  transition: all 2s ease;
+}
+.fade-leave-from{
+  opacity: 1;
+}
+.fade-leave-to{
+  opacity: 0;
+}
+.fade-leave-active{
+  transition: all 2s ease;
+}
+
+.style-select{
+  height: 40px;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: all 3s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
+
+.flippingDivs{
   font-size: 160px;
   margin-left: 180px;
-  margin-right: 180px
+  margin-right: 180px;
+}
+#questionDiv{
+  background-color: beige;
 }
 #answerDiv{
-  background-color: brown;
-  font-size: 160px;
-  margin-left: 180px;
-  margin-right: 180px
+  background-color: mediumspringgreen;
 }
-#nextButton{
-  margin: 40px;
+.prevNextButton{
+  margin-top: 30px;
+  font-size: 80px;
+  font-margin: 40px;
+  margin-left: 180px;
+  margin-right: 180px;
 }
 #questionHeader{
   text-transform: uppercase;
