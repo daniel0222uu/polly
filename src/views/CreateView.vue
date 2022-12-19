@@ -2,21 +2,30 @@
   <BannerComponent />
   <body>
 
-  <div v-if="!addingQuestionBool">
+  <div id="questionsCreated">
+    <p> Scroll throught the questions of {{questionObject.id}}</p>
+    <p style="font-weight: bold">Question {{questionIndex+1}}</p>
+    <p>{{questionObject.questionArray[questionIndex]}}</p>
+    <p style="font-weight: bold">Answer to question</p>
+    <p>{{questionObject.answerArray[questionIndex]}}</p>
+    <p> <button @click="previousCLick" > Previous</button>  <button @click="nextClick"> Next</button>   </p>
+  </div>
+
+  <div class="nowCreating" v-if="!addingQuestionBool">
 
     <h1>Name your quiz please</h1>
-    <transition name="fade">
-      <div id="deckNamingDiv" v-if="deckNameAlert"  > You must name your deck </div>
-    </transition>
+
     <p><input class="qeustionEditingFields"  id="namingDeckField" type="text" v-model="deckName"></p>
     <p><button @click="nameDeck(deckName)">Name my deck</button></p> {{questionObject.id}}
 
   </div>
 
-  <div id="nowCreating" v-if="addingQuestionBool">
-    <div id="quizName"> Now creating: {{questionObject.id}}
+  <div class="nowCreating" v-if="addingQuestionBool">
 
-    </div>
+
+
+  <h2>Now creating: {{questionObject.id}} </h2>
+
     <h3> Add your questions</h3>
     <input class="qeustionEditingFields" id="questionField" type="text" v-model="questionField">
     <br>
@@ -28,14 +37,7 @@
 
   </div>
 
-  <!--<div id="questionsCreated">
-    <p> Scroll throught the questions of {{questionObject.id}}</p>
-    <p style="font-weight: bold">Question {{questionIndex+1}}</p>
-    <p>{{questionObject.questionArray[questionIndex]}}</p>
-    <p style="font-weight: bold">Answer to question</p>
-    <p>{{questionObject.answerArray[questionIndex]}}</p>
-    <p> <button @click="previousCLick" > Previous</button>  <button @click="nextClick"> Next</button>   </p>
-  </div>-->
+
 
 
   <transition name="fade">
@@ -44,7 +46,9 @@
   <transition name="fade">
     <div id="enterFieldsDiv" v-if="questionFieldAlert"  > You left a field empty </div>
   </transition>
-
+  <transition name="fade">
+    <div id="deckNamingDiv" v-if="deckNameAlert"  > You must name your deck </div>
+  </transition>
 
   </body>
 
@@ -218,18 +222,14 @@ export default {
   margin-left: 300px;
   margin-right: 300px;
 }
-#nowCreating{
-  width: auto;
+.nowCreating{
+  background-color: white;
+  flex: 2;
 }
 #questionsCreated{
-  margin-top: 300px;
-  display: block;
-  text-align: left;
-  padding: 10px;
-  font-size: 18px;
-  position: fixed;
-  float: right;
-  height: 100%;
+  background-color: palegreen;
+  width: 15%;
+  flex: 1 0 10%;
 }
 .fade-enter-from {
   opacity: 0;
