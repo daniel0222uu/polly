@@ -2,14 +2,8 @@
   <BannerComponent />
   <body>
 
-  <div id="questionsCreated">
-    <p> Scroll throught the questions of {{questionObject.id}}</p>
-    <p style="font-weight: bold">Question {{questionIndex+1}}</p>
-    <p>{{questionObject.questionArray[questionIndex]}}</p>
-    <p style="font-weight: bold">Answer to question</p>
-    <p>{{questionObject.answerArray[questionIndex]}}</p>
-    <p> <button @click="previousCLick" > Previous</button>  <button @click="nextClick"> Next</button>   </p>
-  </div>
+
+  <div id="wrapperDiv">
 
   <div class="nowCreating" v-if="!addingQuestionBool">
 
@@ -17,7 +11,9 @@
 
     <p><input class="qeustionEditingFields"  id="namingDeckField" type="text" v-model="deckName"></p>
     <p><button @click="nameDeck(deckName)">Name my deck</button></p> {{questionObject.id}}
-
+    <transition name="fade">
+      <div class="warning" id="deckNamingDiv" v-if="deckNameAlert"  > You must name your deck </div>
+    </transition>
   </div>
 
   <div class="nowCreating" v-if="addingQuestionBool">
@@ -33,22 +29,48 @@
     <input class="qeustionEditingFields"  id="answerField" type="text" v-model="answerField">
 
      <!-- <button @click="previousCLick"> Previous Question</button> -->
-    <button @click="savingAddedQustion">Add this question and answer</button>
+    <p><button @click="savingAddedQustion">Add this question and answer</button> </p>
+
+    <transition name="fade">
+      <div class="warning" id="questionWasAddedDiv" v-if="questionWasAdded"  > The question was added </div>
+    </transition>
+    <transition name="fade">
+      <div class="warning" id="enterFieldsDiv" v-if="questionFieldAlert"  > You left a field empty </div>
+    </transition>
+
+
+
+  </div>
+  <div id="questionsCreated">
+    <p style="font-weight: bold">{{questionObject.questionArray[questionIndex]}}</p>
+    <p>{{questionObject.answerArray[questionIndex]}}</p>
+    <p> <button @click="previousCLick" > Previous</button>  <button @click="nextClick"> Next</button>
+    </p>
+    <p>
+      Added questions
+    </p>
+    <ul>
+      <li v-for="item in questionObject.questionArray" :key="item">{{ item }}</li>
+    </ul>
+  </div>
+
 
   </div>
 
 
 
+    <!--<transition name="fade">
+      <div class="warning" id="questionWasAddedDiv" v-if="questionWasAdded"  > The question was added </div>
+    </transition>
+    <transition name="fade">
+      <div class="warning" id="enterFieldsDiv" v-if="questionFieldAlert"  > You left a field empty </div>
+    </transition>
+    <transition name="fade">
+      <div class="warning" id="deckNamingDiv" v-if="deckNameAlert"  > You must name your deck </div>
+    </transition> -->
 
-  <transition name="fade">
-    <div id="questionWasAddedDiv" v-if="questionWasAdded"  > The question was added </div>
-  </transition>
-  <transition name="fade">
-    <div id="enterFieldsDiv" v-if="questionFieldAlert"  > You left a field empty </div>
-  </transition>
-  <transition name="fade">
-    <div id="deckNamingDiv" v-if="deckNameAlert"  > You must name your deck </div>
-  </transition>
+
+
 
   </body>
 
@@ -201,35 +223,36 @@ export default {
 
 <style scoped>
 
-#questionWasAddedDiv{
+.warning{
   font-size: 40px;
-  background-color: mediumspringgreen;
   margin-top: 20px;
   margin-left: 300px;
   margin-right: 300px;
+}
+
+#questionWasAddedDiv{
+  background-color: mediumspringgreen;
 }
 #enterFieldsDiv{
-  font-size: 40px;
   background-color: red;
-  margin-top: 20px;
-  margin-left: 300px;
-  margin-right: 300px;
 }
 #deckNamingDiv{
-  font-size: 40px;
   background-color: red;
-  margin-top: 20px;
-  margin-left: 300px;
-  margin-right: 300px;
+}
+
+#wrapperDiv{
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  height: 100%;
 }
 .nowCreating{
-  background-color: white;
-  flex: 2;
+  flex: 1;
+  overflow: auto;
 }
 #questionsCreated{
   background-color: palegreen;
-  width: 15%;
-  flex: 1 0 10%;
+  width: 300px;
 }
 .fade-enter-from {
   opacity: 0;
