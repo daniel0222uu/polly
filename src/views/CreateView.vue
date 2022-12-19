@@ -5,6 +5,9 @@
   <div v-if="!addingQuestionBool">
 
     <h1>Name your quiz please</h1>
+    <transition name="fade">
+      <div id="deckNamingDiv" v-if="deckNameAlert"  > You must name your deck </div>
+    </transition>
     <p><input class="qeustionEditingFields"  id="namingDeckField" type="text" v-model="deckName"></p>
     <p><button @click="nameDeck(deckName)">Name my deck</button></p> {{questionObject.id}}
 
@@ -37,6 +40,9 @@
 
   <transition name="fade">
     <div id="questionWasAddedDiv" v-if="questionWasAdded"  > The question was added </div>
+  </transition>
+  <transition name="fade">
+    <div id="enterFieldsDiv" v-if="questionFieldAlert"  > You left a field empty </div>
   </transition>
 
 
@@ -96,6 +102,8 @@ export default {
       selectorList: [],
       addingQuestionBool: false,
       questionWasAdded: false,
+      deckNameAlert: false,
+      questionFieldAlert: false
       //testingObject: JSON.parse(localStorage.getItem("daniel")),
       //completeDeck: {"id":this.deckName, "questionArray": this.quizQuestions, "answerArray":this.quizAnswers}
     }
@@ -127,14 +135,19 @@ export default {
       socket.emit("runQuestion", {pollId: this.pollId, questionNumber: this.questionNumber})
     },
     nameDeck: function (namingTheDeck) {
+      if (namingTheDeck === "") {
+        console.log("Please name your deck");
+        this.deckAlert();
+        return;
+      }
       console.log(namingTheDeck)
       this.deckName = namingTheDeck;
       this.questionObject.id = namingTheDeck;
       this.addingQuestionBool = true;
     },
-    nextClick: function(){
+    nextClick: function () {
       let initializeQarrayLength = this.questionObject.questionArray.length
-      if (this.questionIndex<initializeQarrayLength-1){
+      if (this.questionIndex < initializeQarrayLength - 1) {
         this.questionIndex++
       }
       console.log(this.questionIndex)
@@ -148,6 +161,11 @@ export default {
     savingAddedQustion: function () {
       let question = this.questionField;
       let answer = this.answerField;
+      if (question === "" || answer === "") {
+        console.log("Please fill in both fields")
+        this.fieldAlert()
+        return;
+      }
       console.log(question);
       console.log(answer);
       this.questionObject.questionArray.push(question);
@@ -160,6 +178,18 @@ export default {
       setTimeout(() => {
         this.questionWasAdded = false;
       }, 2000);
+    },
+    deckAlert(){
+      this.deckNameAlert = true;
+      setTimeout(() => {
+        this.deckNameAlert = false;
+      }, 2000);
+    },
+    fieldAlert(){
+      this.questionFieldAlert = true;
+      setTimeout(() => {
+        this.questionFieldAlert = false;
+      }, 2000);
     }
   }
 }
@@ -170,6 +200,20 @@ export default {
 #questionWasAddedDiv{
   font-size: 40px;
   background-color: mediumspringgreen;
+  margin-top: 20px;
+  margin-left: 300px;
+  margin-right: 300px;
+}
+#enterFieldsDiv{
+  font-size: 40px;
+  background-color: red;
+  margin-top: 20px;
+  margin-left: 300px;
+  margin-right: 300px;
+}
+#deckNamingDiv{
+  font-size: 40px;
+  background-color: red;
   margin-top: 20px;
   margin-left: 300px;
   margin-right: 300px;
