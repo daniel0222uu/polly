@@ -10,6 +10,7 @@
     
     <router-link v-on:click="keepLanguage" v-bind:to="'/create/'+lang">{{uiLabels.createPoll}}</router-link>
     <router-link v-on:click="keepLanguage" v-bind:to="'/result/'+lang">{{uiLabels.results}}</router-link>
+    <router-link v-on:click="keepLanguage" v-bind:to="'/GameLobby/'+lang">{{uiLabels.results}}</router-link>
 
     <a href="">Pricing</a>
     <a href="">Game lobby</a>
