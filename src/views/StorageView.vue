@@ -7,8 +7,6 @@ import io from 'socket.io-client';
 const socket = io();
 import Decks from '/assetts/Decks.json'
 import {} from Decks; //Vette fan varfor rad 9 blir gramarkerad...
-
-
 export default {
   name: "StorageView",
   socket.on('NewDeck', function (questionObject) {
@@ -20,5 +18,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>
