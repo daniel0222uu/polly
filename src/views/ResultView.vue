@@ -1,19 +1,24 @@
 <template>
   <BannerComponent />
   <body>
+
+  <div id="wrapperDiv">
+    <div id="horizontalContent">
   <div id="questionHeader">
+
+    {{questionObject.id}}
     <select class="style-select" v-model="selectedDeck" name="drinks" required>
       <option value="" disabled selected hidden>Välj en frågelek</option>
       <option v-for="drink in selectorList" v-bind:key="drink">{{ drink }}</option>
-    </select>    <button @click="loadDeck">Load deck</button>
+    </select>
+
     <p>
-      {{questionObject.id}}
+      <button  @click="loadDeck">Load deck</button>
     </p>
   </div>
   <BarsComponent v-bind:data="submittedAnswers"/>
-  <br>
 
-  <div>
+  <div id="cardsDiv" >
 
     <div class="flippingDivs" id="questionDiv" @click="questionPress" v-if="!answerButtonBool">
       <p :class="resizeText" :style="{'font-size': fontSize + 'px' }" class="flippingDivParagraph" > {{questionObject.questionArray[questionPosition]}} </p>
@@ -32,10 +37,15 @@
 
 
   <div class="buttonDiv">
-    <button @click="previousCLick" class="prevNextButton"> Previous </button> {{questionPosition}} <button @click="nextClick" class="prevNextButton"> Next </button>
+    <button @click="previousCLick" class="prevNextButton"> Previous </button> <button @click="nextClick" class="prevNextButton"> Next </button>
   </div>
+    </div>
 
-
+    <div id="verticalRight">
+      här ska det vara aktiva spelare och möjlighet till att kunna gå med i lobbies. Ska såklart inte va
+      såhär fult grön men aa hoppas man fattar layout
+    </div>
+  </div>
 
   </body>
 </template>
@@ -187,6 +197,22 @@ export default {
   transition: all 2s ease;
 }
 
+#horizontalContent{
+  flex: 1;
+  overflow: auto;
+}
+#verticalRight{
+  background-color: palegreen;
+  width: 33%;
+}
+
+#wrapperDiv{
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
 .style-select{
   height: 40px;
 }
@@ -200,7 +226,6 @@ export default {
 
 .flippingDivs{
   margin-left: 15%;
-  margin-right: 15%;
 }
 .flippingDivParagraph {
 }
@@ -211,22 +236,7 @@ export default {
 #answerDiv{
   background-color: mediumspringgreen;
 }
-.prevNextButton{
-  margin-top: 30px;
-  font-size: 80px;
-  font-margin: 40px;
-  margin-left: 180px;
-  margin-right: 180px;
-}
-#questionHeader{
-  text-transform: uppercase;
-  font-weight: bold;
-  font-size: 30px;
-  padding-top: 100px;
-  margin-left: 180px;
-  margin-right: 180px;
-  text-align: center;
-}
+
 
 header {
   background-color: gray;
@@ -234,10 +244,22 @@ header {
   display: grid;
   grid-template-columns: 2em auto;
 }
-
-.buttonDiv{
-  background-color: white;
+#questionHeader{
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 30px;
+  padding-top: 100px;
+  text-align: center;
+}
+#cardsDiv{
+}
+.prevNextButton{
+  margin-bottom: 30px;
+  font-size: 80px;
+  font-margin: 40px;
+  margin-left: 180px;
 }
 
-
+.buttonDiv{
+}
 </style>
