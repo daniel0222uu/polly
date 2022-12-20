@@ -6,20 +6,26 @@
     <div id="horizontalContent">
   <div id="questionHeader">
 
-    {{questionObject.id}}
-    <select class="style-select" v-model="selectedDeck" name="drinks" required>
-      <option value="" disabled selected hidden>Välj en frågelek</option>
-      <option v-for="drink in selectorList" v-bind:key="drink">{{ drink }}</option>
-    </select>
 
-    <p>
-      <button  @click="loadDeck">Load deck</button>
-    </p>
+    <div id="selectDeck">
+      <p style="font-size: 20px"> Choose a deck </p>
+      <select class="style-select" v-model="selectedDeck" name="drinks" required>
+        <option value="" disabled selected hidden>Välj en frågelek</option>
+        <option v-for="drink in selectorList" v-bind:key="drink">{{ drink }}</option>
+      </select> 
+      <p>
+        <button  @click="loadDeck">Load deck</button>
+      </p>
+    </div>
+
+
   </div>
   <BarsComponent v-bind:data="submittedAnswers"/>
 
   <div id="cardsDiv" >
-
+    <p style="font-size: 40px">
+      {{questionObject.id}}
+    </p>
     <div class="flippingDivs" id="questionDiv" @click="questionPress" v-if="!answerButtonBool">
       <p :class="resizeText" :style="{'font-size': fontSize + 'px' }" class="flippingDivParagraph" > {{questionObject.questionArray[questionPosition]}} </p>
     </div>
@@ -196,7 +202,11 @@ export default {
 .fade-leave-active{
   transition: all 2s ease;
 }
-
+#selectDeck{
+  position: absolute;
+  top: 0;
+  left: 0;
+}
 #horizontalContent{
   flex: 1;
   overflow: auto;
@@ -225,7 +235,8 @@ export default {
 }
 
 .flippingDivs{
-  margin-left: 15%;
+  margin-left: 5%;
+  margin-right: 5%;
 }
 .flippingDivParagraph {
 }
@@ -255,9 +266,8 @@ header {
 }
 .prevNextButton{
   margin-bottom: 30px;
-  font-size: 80px;
+  font-size: 30px;
   font-margin: 40px;
-  margin-left: 180px;
 }
 
 .buttonDiv{
