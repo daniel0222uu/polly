@@ -12,21 +12,17 @@
   </div>
   <BarsComponent v-bind:data="submittedAnswers"/>
   <br>
-  <div>
-
-
-  </div>
 
   <div>
 
     <div class="flippingDivs" id="questionDiv" @click="questionPress" v-if="!answerButtonBool">
-      {{questionObject.questionArray[questionPosition]}}
+      <p :class="resizeText" :style="{'font-size': fontSize + 'px' }" class="flippingDivParagraph" > {{questionObject.questionArray[questionPosition]}} </p>
     </div>
 
     <Transition name="fade" v-bind:key="questionPosition">
 
       <div class="flippingDivs" id="answerDiv" @click="answerPress" v-if="answerButtonBool">
-        {{questionObject.answerArray[questionPosition]}}
+        <p :style="{'font-size': fontSize + 'px'}" class="flippingDivParagraph" > {{questionObject.answerArray[questionPosition]}} </p>
       </div>
 
     </Transition>
@@ -35,7 +31,7 @@
 
 
 
-  <div>
+  <div class="buttonDiv">
     <button @click="previousCLick" class="prevNextButton"> Previous </button> {{questionPosition}} <button @click="nextClick" class="prevNextButton"> Next </button>
   </div>
 
@@ -77,10 +73,36 @@ export default {
         "answerArray": ["Sthlm", "Oslo", "Helsingfors", "CBH"]},
       answerButtonBool: false,
       questionPosition: 0,
-
-
+      fontSize: 80
     }
   },
+  /*computed: {
+    resizeText: {
+      get() {
+        const length = this.questionObject.answerArray[this.questionPosition].length;
+        console.log(length);
+        if (length > 20) {
+          return "smallText";
+        } else if (length > 10) {
+          return "mediumText";
+        } else {
+          return "largeText";
+        }
+      },
+      set(value) {
+        const length = this.questionObject.answerArray[this.questionPosition].length;
+        if (length > 20) {
+          this.fontSize = 20;
+        } else if (length > 10) {
+          this.fontSize = 30;
+        } else {
+          this.fontSize = 40;
+        }
+      },
+    },
+  },
+  watch: {
+  },*/ //försökte lösa justera fonten men gick inte som jag ville
   methods: {
     switchLanguage: function() {
       if (this.lang === "en")
@@ -94,9 +116,11 @@ export default {
     },
     questionPress: function(){
       this.answerButtonBool = true;
+      this.adjustAnswerFontSize();
     },
     answerPress: function(){
       this.answerButtonBool = false;
+      this.fontSize = 80;
     },
     previousCLick: function(){
       if(this.questionPosition > 0){
@@ -109,6 +133,7 @@ export default {
         this.questionPosition = this.questionPosition + 1;
       }
       this.answerButtonBool = false;
+      this.fontSize = 80;
     },
     loadDeck: function(){
       this.questionPosition = 0;
@@ -120,23 +145,22 @@ export default {
       //this.questionField = this.questionObject.questionArray[this.questionIndex];
       this.questionObject = myObj_deserialized;
     },
-  },
-  /*created: function () {
-    this.pollId = this.$route.params.id
-    socket.emit('joinPoll', this.pollId)
-    socket.on("dataUpdate", (update) => {
-      this.submittedAnswers = update.a;
-      this.question = update.q;
-    });
-    socket.on("newQuestion", update => {
-      this.question = update.q;
-      this.data = {};
-    })
-  }*/
-  created: function () {
-    socket.on("init", (labels) => {
-      this.uiLabels = labels
-    })
+    adjustAnswerFontSize: function(){
+      const length = this.questionObject.answerArray[this.questionPosition].length;
+      console.log(length);
+      if (length > 100){
+        this.fontSize = 20;
+      }
+      else if (length > 50){
+        this.fontSize = 35;
+      }
+      else if(length < this.questionObject.questionArray[this.questionPosition].length){
+        return;
+      }
+      else{
+        this.fontSize = 80;
+      }
+    } //logiken fungerar, men känns upplagt för buggar aja.
   },
 }
 </script>
@@ -175,10 +199,12 @@ export default {
 }
 
 .flippingDivs{
-  font-size: 160px;
-  margin-left: 180px;
-  margin-right: 180px;
+  margin-left: 15%;
+  margin-right: 15%;
 }
+.flippingDivParagraph {
+}
+
 #questionDiv{
   background-color: beige;
 }
@@ -208,5 +234,10 @@ header {
   display: grid;
   grid-template-columns: 2em auto;
 }
+
+.buttonDiv{
+  background-color: white;
+}
+
 
 </style>
