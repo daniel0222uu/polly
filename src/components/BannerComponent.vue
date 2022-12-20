@@ -12,6 +12,7 @@
     <router-link v-on:click="keepLanguage" v-bind:to="'/result/'+lang">{{uiLabels.results}}</router-link>
 
     <a href="">Pricing</a>
+    <a href="">Game lobby</a>
     <a href="">About</a>
     <a href="">Settings</a>
     <button v-on:click="switchLanguage">{{uiLabels.changeLanguage}}</button>
