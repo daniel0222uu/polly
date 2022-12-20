@@ -33,14 +33,12 @@
   <!--
   <div>
   <button @click="getDecks">Get Decks</button>
-
     <select v-model="selectedDeck" name="drinks" required>
       <option value="" disabled selected hidden>Choose a drink</option>
       <option v-for="drink in selectorList" v-bind:key="drink">{{ drink }}</option>
     </select> {{selectedDeck}}
     {{selectorList}}
   </div>
-
   <div>
     <header id="questionNumberHeader" v-if="!addingQuestionBool"> QUESTION {{questionIndex+1}} </header>
     <header id="questionNumberHeader" v-if="addingQuestionBool"> QUESTION TO ADD </header>
@@ -51,32 +49,25 @@
     <input class="qeustionEditingFields"  id="answerField" type="text" v-model="answerField">
     {{answerField}}
   </div>
-
   <div>
-
     <button @click="loadDeck">Load deck</button>
-
     <button @click="addingNewQuestion">Add new question</button>
-
     <button @click="savingAddedQustion">Save the added question</button>
   </div>
   <div>
     <button @click="previousCLick" id="previousButton"> Previous </button> {{questionIndex}} <button @click="nextClick" id="nextButton"> Next </button>
-
     <br>
     <br>
     <button @click="savingCurrentQuestion" style="width: 200px; height: 150px">Save button</button>
   </div> -->
-  <BannerComponent>§
-  </BannerComponent>
 
   <div>
-    <EditAndCreateComponent>
-    </EditAndCreateComponent>
+    <EditAndCreateComponent />
+
   </div>
 
--->
- 
+  -->
+
 
 
   </body>
@@ -88,9 +79,8 @@
 import io from 'socket.io-client';
 import Decks from "../assetts/Decks.json";
 import BannerComponent from '@/components/BannerComponent.vue';
-//import EditAndCreateComponent from "@/components/EditAndCreateComponent";
+import EditAndCreateComponent from "@/components/EditAndCreateComponent";
 const socket = io();
-import BannerComponent from '@/components/BannerComponent.vue';
 //const items = {localStorage};
 //console.log(items);
 console.log(Decks);
@@ -99,17 +89,7 @@ console.log(Decks);
 //console.log(testObj);
 //let myObj_deserialized = JSON.parse(localStorage.getItem("theDeckObject"));
 //console.log(myObj_deserialized);
-
 //console.log(JSON.parse(localStorage.getItem("daniel")));
-
-
-
-
-
-
-
-
-
 export default {
   name: 'CreateView',
   data: function () {
@@ -276,11 +256,10 @@ export default {
 #nextButton{
   margin: 40px;
 }
-.qeustionEditingFields{
+.questionEditingFields{
   font-size: 80px;
   text-align: center;
 }
-
 #questionNumberHeader{
   font-size: 80px;
   text-align: center;
