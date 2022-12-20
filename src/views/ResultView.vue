@@ -1,30 +1,42 @@
 <template>
   <BannerComponent />
-  <body id="wholeSite">
+  <body>
   <div id="questionHeader">
-    {{questionObject.id}}
+    <select class="style-select" v-model="selectedDeck" name="drinks" required>
+      <option value="" disabled selected hidden>Välj en frågelek</option>
+      <option v-for="drink in selectorList" v-bind:key="drink">{{ drink }}</option>
+    </select>    <button @click="loadDeck">Load deck</button>
+    <p>
+      {{questionObject.id}}
+    </p>
   </div>
   <BarsComponent v-bind:data="submittedAnswers"/>
   <br>
+
   <div>
-    <select v-model="selectedDeck" name="drinks" required>
-      <option value="" disabled selected hidden>Choose a drink</option>
-      <option v-for="drink in selectorList" v-bind:key="drink">{{ drink }}</option>
-    </select> {{selectedDeck}}
-    {{selectorList}}
-    <button @click="loadDeck">Load deck</button>
+
+    <div class="flippingDivs" id="questionDiv" @click="questionPress" v-if="!answerButtonBool">
+      <p :class="resizeText" :style="{'font-size': fontSize + 'px' }" class="flippingDivParagraph" > {{questionObject.questionArray[questionPosition]}} </p>
+    </div>
+
+    <Transition name="fade" v-bind:key="questionPosition">
+
+      <div class="flippingDivs" id="answerDiv" @click="answerPress" v-if="answerButtonBool">
+        <p :style="{'font-size': fontSize + 'px'}" class="flippingDivParagraph" > {{questionObject.answerArray[questionPosition]}} </p>
+      </div>
+
+    </Transition>
+
   </div>
 
-  <div id="questionDiv" @click="questionPress" v-if="answerButtonBool==false">
-    {{questionObject.questionArray[questionPosition]}}
+
+
+  <div class="buttonDiv">
+    <button @click="previousCLick" class="prevNextButton"> Previous </button> {{questionPosition}} <button @click="nextClick" class="prevNextButton"> Next </button>
   </div>
 
-  <div id="answerDiv" @click="answerPress" v-if="answerButtonBool==true">
-    {{questionObject.answerArray[questionPosition]}}
-  </div>
-  <div>
-    <button @click="previousCLick" id="previousButton"> Previous </button> {{questionPosition}} <button @click="nextClick" id="nextButton"> Next </button>
-  </div>
+
+
   </body>
 </template>
 
@@ -61,10 +73,36 @@ export default {
         "answerArray": ["Sthlm", "Oslo", "Helsingfors", "CBH"]},
       answerButtonBool: false,
       questionPosition: 0,
-
-
+      fontSize: 80
     }
   },
+  /*computed: {
+    resizeText: {
+      get() {
+        const length = this.questionObject.answerArray[this.questionPosition].length;
+        console.log(length);
+        if (length > 20) {
+          return "smallText";
+        } else if (length > 10) {
+          return "mediumText";
+        } else {
+          return "largeText";
+        }
+      },
+      set(value) {
+        const length = this.questionObject.answerArray[this.questionPosition].length;
+        if (length > 20) {
+          this.fontSize = 20;
+        } else if (length > 10) {
+          this.fontSize = 30;
+        } else {
+          this.fontSize = 40;
+        }
+      },
+    },
+  },
+  watch: {
+  },*/ //försökte lösa justera fonten men gick inte som jag ville
   methods: {
     switchLanguage: function() {
       if (this.lang === "en")
@@ -78,22 +116,27 @@ export default {
     },
     questionPress: function(){
       this.answerButtonBool = true;
+      this.adjustAnswerFontSize();
     },
     answerPress: function(){
       this.answerButtonBool = false;
+      this.fontSize = 80;
     },
     previousCLick: function(){
       if(this.questionPosition > 0){
         this.questionPosition = this.questionPosition - 1;
       }
+      this.answerButtonBool = false;
     },
     nextClick: function(){
       if(this.questionPosition < this.questionObject.questionArray.length - 1){
         this.questionPosition = this.questionPosition + 1;
       }
       this.answerButtonBool = false;
+      this.fontSize = 80;
     },
     loadDeck: function(){
+      this.questionPosition = 0;
       console.log("du klickade på en knapp med loadDeck()")
       let myObj_deserialized = JSON.parse(localStorage.getItem(this.selectedDeck));
       console.log(myObj_deserialized);
@@ -102,43 +145,78 @@ export default {
       //this.questionField = this.questionObject.questionArray[this.questionIndex];
       this.questionObject = myObj_deserialized;
     },
-  },
-  /*created: function () {
-    this.pollId = this.$route.params.id
-    socket.emit('joinPoll', this.pollId)
-    socket.on("dataUpdate", (update) => {
-      this.submittedAnswers = update.a;
-      this.question = update.q;
-    });
-    socket.on("newQuestion", update => {
-      this.question = update.q;
-      this.data = {};
-    })
-  }*/
-  created: function () {
-    socket.on("init", (labels) => {
-      this.uiLabels = labels
-    })
+    adjustAnswerFontSize: function(){
+      const length = this.questionObject.answerArray[this.questionPosition].length;
+      console.log(length);
+      if (length > 100){
+        this.fontSize = 20;
+      }
+      else if (length > 50){
+        this.fontSize = 35;
+      }
+      else if(length < this.questionObject.questionArray[this.questionPosition].length){
+        return;
+      }
+      else{
+        this.fontSize = 80;
+      }
+    } //logiken fungerar, men känns upplagt för buggar aja.
   },
 }
 </script>
 
 
 <style scoped>
+
+.fade-enter-from {
+  opacity: 0;
+}
+.fade-enter-to{
+  opacity: 1;
+}
+.fade-enter-active{
+  transition: all 2s ease;
+}
+.fade-leave-from{
+  opacity: 1;
+}
+.fade-leave-to{
+  opacity: 0;
+}
+.fade-leave-active{
+  transition: all 2s ease;
+}
+
+.style-select{
+  height: 40px;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: all 3s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
+
+.flippingDivs{
+  margin-left: 15%;
+  margin-right: 15%;
+}
+.flippingDivParagraph {
+}
+
 #questionDiv{
-  background-color: aqua;
-  font-size: 160px;
-  margin-left: 180px;
-  margin-right: 180px
+  background-color: beige;
 }
 #answerDiv{
-  background-color: brown;
-  font-size: 160px;
-  margin-left: 180px;
-  margin-right: 180px
+  background-color: mediumspringgreen;
 }
-#nextButton{
-  margin: 40px;
+.prevNextButton{
+  margin-top: 30px;
+  font-size: 80px;
+  font-margin: 40px;
+  margin-left: 180px;
+  margin-right: 180px;
 }
 #questionHeader{
   text-transform: uppercase;
@@ -156,47 +234,10 @@ header {
   display: grid;
   grid-template-columns: 2em auto;
 }
-.logo {
-  text-transform: uppercase;
-  letter-spacing: 0.25em;
-  font-size: 2.5rem;
-  color: white;
-  padding-top:0.2em;
-}
-.logo img {
-  height:2.5rem;
-  vertical-align: bottom;
-  margin-right: 0.5rem;
-}
-.hamburger {
-  color:white;
-  width:1em;
-  display: flex;
-  align-items: center;
-  justify-content: left;
-  padding:0.5rem;
-  top:0;
-  left:0;
-  height: 2rem;
-  cursor: pointer;
-  font-size: 1.5rem;
+
+.buttonDiv{
+  background-color: white;
 }
 
-@media screen and (max-width:50em) {
-  .logo {
-    font-size: 5vw;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .hamburger::before {
-    content: "☰";
-  }
-  .close::before {
-    content: "✕";
-  }
-  .hide {
-    left:-12em;
-  }
-}
+
 </style>

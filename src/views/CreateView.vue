@@ -1,72 +1,74 @@
 <template>
   <BannerComponent />
-  <!-- <div>
-     Poll link:
-     <input type="text" v-model="pollId">
-     <button v-on:click="createPoll">
-       Create poll
-     </button>
-     <div>
-       {{uiLabels.question}}:
-       <input type="text" v-model="question">
-       <div>
-         Answers:
-         <input v-for="(_, i) in answers"
-                v-model="answers[i]"
-                v-bind:key="'answer'+i">
-         <button v-on:click="addAnswer">
-           Add answer alternative
-         </button>
-       </div>
-     </div>
-     <button v-on:click="addQuestion">
-       Add question
-     </button>
-     <input type="number" v-model="questionNumber">
-     <button v-on:click="runQuestion">
-       Run question
-     </button>
-     {{data}}
-     <router-link v-bind:to="'/result/'+pollId">Check result</router-link>
-   </div> -->
   <body>
-  <!--
-  <div>
-  <button @click="getDecks">Get Decks</button>
-    <select v-model="selectedDeck" name="drinks" required>
-      <option value="" disabled selected hidden>Choose a drink</option>
-      <option v-for="drink in selectorList" v-bind:key="drink">{{ drink }}</option>
-    </select> {{selectedDeck}}
-    {{selectorList}}
-  </div>
-  <div>
-    <header id="questionNumberHeader" v-if="!addingQuestionBool"> QUESTION {{questionIndex+1}} </header>
-    <header id="questionNumberHeader" v-if="addingQuestionBool"> QUESTION TO ADD </header>
-    <input class="qeustionEditingFields" id="questionField" type="text" v-model="questionField">
-    {{questionField}}
-    <br>
-    <br>
-    <input class="qeustionEditingFields"  id="answerField" type="text" v-model="answerField">
-    {{answerField}}
-  </div>
-  <div>
-    <button @click="loadDeck">Load deck</button>
-    <button @click="addingNewQuestion">Add new question</button>
-    <button @click="savingAddedQustion">Save the added question</button>
-  </div>
-  <div>
-    <button @click="previousCLick" id="previousButton"> Previous </button> {{questionIndex}} <button @click="nextClick" id="nextButton"> Next </button>
-    <br>
-    <br>
-    <button @click="savingCurrentQuestion" style="width: 200px; height: 150px">Save button</button>
-  </div> -->
 
-  <div>
-    <EditAndCreateComponent />
+
+  <div id="wrapperDiv">
+
+    <div class="nowCreating" v-if="!addingQuestionBool">
+
+      <h1>Name your quiz please</h1>
+
+      <p><input class="qeustionEditingFields"  id="namingDeckField" type="text" v-model="deckName"></p>
+      <p><button @click="nameDeck(deckName)">Name my deck</button></p> {{questionObject.id}}
+      <transition name="fade">
+        <div class="warning" id="deckNamingDiv" v-if="deckNameAlert"  > You must name your deck </div>
+      </transition>
+    </div>
+
+    <div class="nowCreating" v-if="addingQuestionBool">
+
+
+
+      <h2>Now creating: {{questionObject.id}} </h2>
+
+      <h3> Add your questions</h3>
+      <input class="qeustionEditingFields" id="questionField" type="text" v-model="questionField">
+      <br>
+      <br>
+      <input class="qeustionEditingFields"  id="answerField" type="text" v-model="answerField">
+
+      <!-- <button @click="previousCLick"> Previous Question</button> -->
+      <p><button @click="savingAddedQustion">Add this question and answer</button> </p>
+
+      <transition name="fade">
+        <div class="warning" id="questionWasAddedDiv" v-if="questionWasAdded"  > The question was added </div>
+      </transition>
+      <transition name="fade">
+        <div class="warning" id="enterFieldsDiv" v-if="questionFieldAlert"  > You left a field empty </div>
+      </transition>
+
+
+
+    </div>
+    <div id="questionsCreated">
+      <p style="font-weight: bold">{{questionObject.questionArray[questionIndex]}}</p>
+      <p>{{questionObject.answerArray[questionIndex]}}</p>
+      <p> <button @click="previousCLick" > Previous</button>  <button @click="nextClick"> Next</button>
+      </p>
+      <p>
+        Added questions
+      </p>
+      <ul>
+        <li v-for="item in questionObject.questionArray" :key="item">{{ item }}</li>
+      </ul>
+    </div>
+
 
   </div>
 
-  -->
+
+
+  <!--<transition name="fade">
+    <div class="warning" id="questionWasAddedDiv" v-if="questionWasAdded"  > The question was added </div>
+  </transition>
+  <transition name="fade">
+    <div class="warning" id="enterFieldsDiv" v-if="questionFieldAlert"  > You left a field empty </div>
+  </transition>
+  <transition name="fade">
+    <div class="warning" id="deckNamingDiv" v-if="deckNameAlert"  > You must name your deck </div>
+  </transition> -->
+
 
 
 
@@ -79,7 +81,7 @@
 import io from 'socket.io-client';
 import Decks from "../assetts/Decks.json";
 import BannerComponent from '@/components/BannerComponent.vue';
-import EditAndCreateComponent from "@/components/EditAndCreateComponent";
+//import EditAndCreateComponent from "@/components/EditAndCreateComponent"; not using it
 const socket = io();
 //const items = {localStorage};
 //console.log(items);
@@ -99,17 +101,14 @@ export default {
       quizName: "",
       lang: "",
       pollId: "",
-      question: "",
-      answers: ["", ""],
       questionIndex: 0,
       data: {},
       uiLabels: {},
       questionObject: {
-        "id": "Sveriges huvudstäder",
-        "questionArray": ["Sverige", "Norge", "Finland", "Danmark"],
-        "answerArray": ["Sthlm", "Oslo", "Helsingfors", "CBH"]
-      }, //Nu gjorde vi om så att objektet inte är i en lista, fungerar
-      //att hämta från singulär objekt.
+        "id": "",
+        "questionArray": [],
+        "answerArray": []
+      },
       answerButtonBool: false,
       questionField: "",
       answerField: "",
@@ -118,13 +117,16 @@ export default {
       quizAnswers: [],
       selectorList: [],
       addingQuestionBool: false,
+      questionWasAdded: false,
+      deckNameAlert: false,
+      questionFieldAlert: false
       //testingObject: JSON.parse(localStorage.getItem("daniel")),
       //completeDeck: {"id":this.deckName, "questionArray": this.quizQuestions, "answerArray":this.quizAnswers}
     }
   },
   components: {
     BannerComponent,
-    EditAndCreateComponent
+    //EditAndCreateComponent Not using it for now
   },
   created: function () {
     this.lang = this.$route.params.lang;
@@ -145,106 +147,118 @@ export default {
     addQuestion: function () {
       socket.emit("addQuestion", {pollId: this.pollId, q: this.question, a: this.answers})
     },
-    addAnswer: function () {
-      this.answers.push("");
-    },
     runQuestion: function () {
       socket.emit("runQuestion", {pollId: this.pollId, questionNumber: this.questionNumber})
     },
-    saveDeck: function () {
-      console.log("du klickade på en knapp med say()")
-      let completeDeck = {"id": this.deckName, "questionArray": this.quizQuestions, "answerArray": this.quizAnswers};
-      //defined on render. Inte bra vet inte varför.
-      console.log(completeDeck);
-      localStorage.setItem(completeDeck.id, JSON.stringify(completeDeck));
-    },
-    getDecks: function () {
-      let listToFill = [];
-      for (var i = 0, len = localStorage.length; i < len; ++i) {
-        listToFill.push(localStorage.key(i));
-      }
-      this.selectorList = listToFill;
-      //this.answerField = this.questionObject.answerArray[this.questionIndex];
-      //this.questionField = this.questionObject.questionArray[this.questionIndex];
-    },
     nameDeck: function (namingTheDeck) {
-      //let id =  '{"id" :' + '"' + namingTheDeck + '" \n  }';
+      if (namingTheDeck === "") {
+        console.log("Please name your deck");
+        this.deckAlert();
+        return;
+      }
       console.log(namingTheDeck)
       this.deckName = namingTheDeck;
-      //let deSerializedid = JSON.parse(id);
-      //console.log(deSerializedid);
-      //localStorage.setItem(namingTheDeck, id)
-      //let myObj_deserialized = JSON.parse(localStorage.getItem(namingTheDeck));
-      //localStorage.setItem(namingTheDeck,id);
-      //console.log(myObj_deserialized);
+      this.questionObject.id = namingTheDeck;
+      this.addingQuestionBool = true;
     },
-    questionsToDeck: function (questionToAdd) {
-      this.quizQuestions.push(questionToAdd);
-      console.log(this.quizQuestions);
-      //console.log(this.quizQuestions);
-      //let myObj_deserialized = JSON.parse(localStorage.getItem(namingTheDeck));
-      //console.log(myObj_deserialized);
-    },
-    answersToDeck: function (answerToAdd) {
-      this.quizAnswers.push(answerToAdd);
-      console.log(this.quizAnswers);
-    },
-    loadDeck: function () {
-      console.log("du klickade på en knapp med loadDeck()")
-      let myObj_deserialized = JSON.parse(localStorage.getItem(this.selectedDeck));
-      console.log(myObj_deserialized);
-      //this.questionObject = myObj_deserialized;
-      //this.answerField = this.questionObject.answerArray[this.questionIndex];
-      //this.questionField = this.questionObject.questionArray[this.questionIndex];
-      this.answerField = myObj_deserialized.answerArray[this.questionIndex];
-      this.questionField = myObj_deserialized.questionArray[this.questionIndex];
-      this.questionObject = myObj_deserialized;
+    nextClick: function () {
+      let initializeQarrayLength = this.questionObject.questionArray.length
+      if (this.questionIndex < initializeQarrayLength - 1) {
+        this.questionIndex++
+      }
+      console.log(this.questionIndex)
     },
     previousCLick: function () {
       if (this.questionIndex > 0) {
-        this.questionIndex = this.questionIndex - 1;
+        this.questionIndex--
       }
-      this.answerField = this.questionObject.answerArray[this.questionIndex];
-      this.questionField = this.questionObject.questionArray[this.questionIndex];
-    },
-    nextClick: function () {
-      if (this.questionIndex < this.questionObject.questionArray.length - 1) {
-        this.questionIndex = this.questionIndex + 1;
-      }
-      this.answerField = this.questionObject.answerArray[this.questionIndex];
-      this.questionField = this.questionObject.questionArray[this.questionIndex];
-    },
-    savingCurrentQuestion: function () {
-      let question = this.questionField;
-      let answer = this.answerField;
-      console.log(question);
-      console.log(answer);
-      this.questionObject.questionArray[this.questionIndex] = question;
-      this.questionObject.answerArray[this.questionIndex] = answer;
-      localStorage.setItem(this.questionObject.id, JSON.stringify(this.questionObject));
-    }, //detta fungerar men känns jätteupplagt för bugggar. Vi får hålla koll på detta.
-    addingNewQuestion: function () {
-      this.questionIndex = this.questionObject.questionArray.length;
-      this.questionField = "";
-      this.answerField = "";
-      this.addingQuestionBool = true;
+      console.log(this.questionIndex)
     },
     savingAddedQustion: function () {
       let question = this.questionField;
       let answer = this.answerField;
+      if (question === "" || answer === "") {
+        console.log("Please fill in both fields")
+        this.fieldAlert()
+        return;
+      }
       console.log(question);
       console.log(answer);
       this.questionObject.questionArray.push(question);
       this.questionObject.answerArray.push(answer);
+      console.log(this.questionObject);
       localStorage.setItem(this.questionObject.id, JSON.stringify(this.questionObject));
-      this.addingQuestionBool = false;
+      this.questionField = "";
+      this.answerField = "";
+      this.questionWasAdded = true;
+      setTimeout(() => {
+        this.questionWasAdded = false;
+      }, 2000);
+    },
+    deckAlert(){
+      this.deckNameAlert = true;
+      setTimeout(() => {
+        this.deckNameAlert = false;
+      }, 2000);
+    },
+    fieldAlert(){
+      this.questionFieldAlert = true;
+      setTimeout(() => {
+        this.questionFieldAlert = false;
+      }, 2000);
     }
   }
 }
 </script>
 
-
 <style scoped>
+.warning{
+  font-size: 40px;
+  margin-top: 20px;
+  margin-left: 300px;
+  margin-right: 300px;
+}
+#questionWasAddedDiv{
+  background-color: mediumspringgreen;
+}
+#enterFieldsDiv{
+  background-color: red;
+}
+#deckNamingDiv{
+  background-color: red;
+}
+#wrapperDiv{
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+}
+.nowCreating{
+  flex: 1;
+  overflow: auto;
+}
+#questionsCreated{
+  background-color: palegreen;
+  width: 300px;
+}
+.fade-enter-from {
+  opacity: 0;
+}
+.fade-enter-to{
+  opacity: 1;
+}
+.fade-enter-active{
+  transition: all 2s ease;
+}
+.fade-leave-from{
+  opacity: 1;
+}
+.fade-leave-to{
+  opacity: 0;
+}
+.fade-leave-active{
+  transition: all 0.5s ease;
+}
 #questionDiv{
   background-color: aqua;
   font-size: 80px;
@@ -256,12 +270,19 @@ export default {
 #nextButton{
   margin: 40px;
 }
-.questionEditingFields{
-  font-size: 80px;
+.qeustionEditingFields{
+  position: relative;
+  font-size: 40px;
+  font-size-adjust:0.5;
   text-align: center;
 }
 #questionNumberHeader{
   font-size: 80px;
+  text-align: center;
+  font-family: "Arial Black";
+}
+#quizName {
+  font-size: 100px;
   text-align: center;
   font-family: "Arial Black";
 }

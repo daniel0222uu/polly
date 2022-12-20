@@ -1,88 +1,122 @@
 <template>
-
+  <BannerComponent /> <!-- http://localhost:8080/#/editing/en  för att komma hit -->
   <body>
-  <div>
-
-    <select v-model="selectedDeck" name="drinks" required>
-      <option value="" disabled selected hidden>Choose a deck</option>
-      <option v-for="drink in selectorList" v-bind:key="drink">{{ drink }}</option>
-    </select> {{selectedDeck}}
-    {{selectorList}}
-  </div>
 
   <div>
-    <header id="questionNumberHeader" v-if="!addingQuestionBool"> {{questionObject.id}} </header>
-    <header id="questionNumberHeader" v-if="addingQuestionBool"> QUESTION TO ADD </header>
-    <input class="qeustionEditingFields" id="questionField" type="text" v-model="questionField">
-    <br>
-    <br>
-    <input class="qeustionEditingFields"  id="answerField" type="text" v-model="answerField">
+    <EditAndCreateComponent
+      />
+
+    Editing is getting edited but not create
   </div>
+ 
 
-  <div>
 
-
-    <button @click="loadDeck">Load deck</button>
-
-    <button @click="addingNewQuestion">Add new question</button>
-
-  </div>
-  <div>
-    <button @click="previousCLick" id="previousButton"> Previous </button> {{questionIndex + 1 }} <button @click="nextClick" id="nextButton"> Next </button>
-
-    <br>
-    <br>
-    <button @click="savingCurrentQuestion" style="width: 200px; height: 150px">Save button</button>
-  </div>
   </body>
+
 </template>
 
+
 <script>
+import io from 'socket.io-client';
+import Decks from "../assetts/Decks.json";
+import BannerComponent from '@/components/BannerComponent.vue';
+import EditAndCreateComponent from "@/components/EditAndCreateComponent";
+const socket = io();
+//const items = {localStorage};
+//console.log(items);
+console.log(Decks);
+//let testObj = JSON.stringify(Decks);
+//localStorage.setItem("theDeckObject", testObj)
+//console.log(testObj);
+//let myObj_deserialized = JSON.parse(localStorage.getItem("theDeckObject"));
+//console.log(myObj_deserialized);
+
+//console.log(JSON.parse(localStorage.getItem("daniel")));
 
 
-let listToFill = [];
-for (var i = 0, len = localStorage.length; i < len; ++i) {
-  listToFill.push(localStorage.key(i));
-}
+
+
+
+
+
 
 
 export default {
-  name: "EditAndCreateComponent",
-
-  data: function (){
-     return {
-       selectedDeck: "",
-       quizName: "",
-       lang: "",
-       pollId: "",
-       question: "",
-       answers: ["", ""],
-       questionIndex: 0,
-       data: {},
-       uiLabels: {},
-       questionObject: {
-         "id": "Sveriges huvudstäder",
-         "questionArray": ["Sverige", "Norge", "Finland", "Danmark"],
-         "answerArray": ["Sthlm", "Oslo", "Helsingfors", "CBH"]
-       }, //Nu gjorde vi om så att objektet inte är i en lista, fungerar
-       //att hämta från singulär objekt.
-       answerButtonBool: false,
-       questionField: "",
-       answerField: "",
-       deckName: "",
-       quizQuestions: [],
-       quizAnswers: [],
-       selectorList: listToFill,
-       addingQuestionBool: false,
-     }
-    },
+  name: 'EditingView',
+  data: function () {
+    return {
+      selectedDeck: "",
+      options: ["Mangoo", "Apple", "Orange", "Melon", "Pineapple", "Lecy", "Blueberry"],
+      quizName: "",
+      lang: "",
+      pollId: "",
+      question: "",
+      answers: ["", ""],
+      questionIndex: 0,
+      data: {},
+      uiLabels: {},
+      questionObject: {
+        "id": "Sveriges huvudstäder",
+        "questionArray": ["Sverige", "Norge", "Finland", "Danmark"],
+        "answerArray": ["Sthlm", "Oslo", "Helsingfors", "CBH"]
+      }, //Nu gjorde vi om så att objektet inte är i en lista, fungerar
+      //att hämta från singulär objekt.
+      answerButtonBool: false,
+      questionField: "",
+      answerField: "",
+      deckName: "",
+      quizQuestions: [],
+      quizAnswers: [],
+      selectorList: [],
+      addingQuestionBool: false,
+      //testingObject: JSON.parse(localStorage.getItem("daniel")),
+      //completeDeck: {"id":this.deckName, "questionArray": this.quizQuestions, "answerArray":this.quizAnswers}
+    }
+  },
+  components: {
+    BannerComponent,
+    EditAndCreateComponent
+  },
+  created: function () {
+    this.lang = this.$route.params.lang;
+    socket.emit("pageLoaded", this.lang);
+    socket.on("init", (labels) => {
+      this.uiLabels = labels
+    })
+    socket.on("dataUpdate", (data) =>
+        this.data = data
+    )
+    socket.on("pollCreated", (data) =>
+        this.data = data)
+  },
   methods: {
+    createPoll: function () {
+      socket.emit("createPoll", {pollId: this.pollId, lang: this.lang})
+    },
+    addQuestion: function () {
+      socket.emit("addQuestion", {pollId: this.pollId, q: this.question, a: this.answers})
+    },
+    addAnswer: function () {
+      this.answers.push("");
+    },
+    runQuestion: function () {
+      socket.emit("runQuestion", {pollId: this.pollId, questionNumber: this.questionNumber})
+    },
     saveDeck: function () {
       console.log("du klickade på en knapp med say()")
       let completeDeck = {"id": this.deckName, "questionArray": this.quizQuestions, "answerArray": this.quizAnswers};
       //defined on render. Inte bra vet inte varför.
       console.log(completeDeck);
       localStorage.setItem(completeDeck.id, JSON.stringify(completeDeck));
+    },
+    getDecks: function () {
+      let listToFill = [];
+      for (var i = 0, len = localStorage.length; i < len; ++i) {
+        listToFill.push(localStorage.key(i));
+      }
+      this.selectorList = listToFill;
+      //this.answerField = this.questionObject.answerArray[this.questionIndex];
+      //this.questionField = this.questionObject.questionArray[this.questionIndex];
     },
     nameDeck: function (namingTheDeck) {
       //let id =  '{"id" :' + '"' + namingTheDeck + '" \n  }';
@@ -123,7 +157,6 @@ export default {
       }
       this.answerField = this.questionObject.answerArray[this.questionIndex];
       this.questionField = this.questionObject.questionArray[this.questionIndex];
-      this.addingQuestionBool = false;
     },
     nextClick: function () {
       if (this.questionIndex < this.questionObject.questionArray.length - 1) {
@@ -158,11 +191,19 @@ export default {
       this.addingQuestionBool = false;
     }
   }
-  }
+}
 </script>
 
 
 <style scoped>
+#questionDiv{
+  background-color: aqua;
+  font-size: 80px;
+}
+#answerDiv{
+  background-color: brown;
+  font-size: 80px;
+}
 #nextButton{
   margin: 40px;
 }

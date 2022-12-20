@@ -1,6 +1,6 @@
 <template>
   <BannerComponent />
-  <h1>Welcome!</h1>
+  <h1>Welcome to Flashcards!</h1>
   <label>
     Write poll id: 
     <input type="text" v-model="id">
@@ -10,8 +10,12 @@
 
 <script>
 import BannerComponent from '@/components/BannerComponent.vue';
+import Decks from "../assetts/Decks.json";
 import io from 'socket.io-client';
+
 const socket = io();
+console.log(Decks);
+
 
 export default {
   name: 'StartView',
@@ -25,11 +29,6 @@ export default {
       lang: "en",
       hideNav: true
     }
-  },
-  created: function () {
-    socket.on("init", (labels) => {
-      this.uiLabels = labels
-    })
   },
   methods: {
     switchLanguage: function() {
@@ -46,12 +45,12 @@ export default {
 }
 </script>
 <style scoped>
-  header {
+  /*header {
     background-color: gray;
     width: 100%;
     display: grid;
     grid-template-columns: 2em auto;
-  }
+  } */
   .logo {
     text-transform: uppercase;
     letter-spacing: 0.25em;
