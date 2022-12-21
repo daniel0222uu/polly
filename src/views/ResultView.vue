@@ -6,10 +6,6 @@
     <div id="horizontalContent">
   <div id="questionHeader">
 
-
-
-
-
     <div id="selectDeck">
       <select class="load-select" v-model="selectedDeck" name="drinks" required @change="loadDeck">
       <option value="" disabled selected hidden>Välj en frågelek</option>
@@ -20,27 +16,13 @@
 
   </div>
   <BarsComponent v-bind:data="submittedAnswers"/>
-
-  <div id="cardsDiv" >
-    <div class="flippingDivs" id="questionDiv" @click="questionPress" v-if="!answerButtonBool">
-      <p :class="resizeText" :style="{'font-size': fontSize + 'px' }" class="flippingDivParagraph" > {{questionObject.questionArray[questionPosition]}} </p>
-    </div>
-
-    <Transition name="fade" v-bind:key="questionPosition">
-
-      <div class="flippingDivs" id="answerDiv" @click="answerPress" v-if="answerButtonBool">
-        <p :style="{'font-size': fontSize + 'px'}" class="flippingDivParagraph" > {{questionObject.answerArray[questionPosition]}} </p>
+      <div>
+        <FlashcardView v-bind:questionProp="myObj_deserialized"></FlashcardView>
       </div>
 
-    </Transition>
-
-  </div>
 
 
 
-  <div class="buttonDiv">
-    <button @click="previousCLick" class="prevNextButton"> Previous </button> <button @click="nextClick" class="prevNextButton"> Next </button>
-  </div>
     </div>
 
     <div id="verticalRight">
@@ -56,6 +38,7 @@
 // @ is an alias to /src
 import BarsComponent from '@/components/BarsComponent.vue';
 import BannerComponent from '@/components/BannerComponent.vue';
+import FlashcardView from "@/views/FlashcardView";
 import io from 'socket.io-client';
 const socket = io();
 
@@ -68,11 +51,13 @@ console.log(listToFill);
 export default {
   name: 'ResultView',
   components: {
+    FlashcardView,
     BannerComponent,
     BarsComponent
   },
   data: function () {
     return {
+      myObj_deserialized: {},
       uiLabels: {},
       lang: "en",
       hideNav: true,
@@ -86,8 +71,11 @@ export default {
         "answerArray": ["Sthlm", "Oslo", "Helsingfors", "CBH"]},
       answerButtonBool: false,
       questionPosition: 0,
-      fontSize: 80
+      fontSize: 80,
     }
+  },
+  created() {
+    this.myObj_deserialized = this.questionObject;
   },
   /*computed: {
     resizeText: {
@@ -127,82 +115,18 @@ export default {
     toggleNav: function () {
       this.hideNav = ! this.hideNav;
     },
-    questionPress: function(){
-      this.answerButtonBool = true;
-      this.adjustAnswerFontSize();
-    },
-    answerPress: function(){
-      if(this.questionPosition < this.questionObject.questionArray.length - 1){
-        this.questionPosition = this.questionPosition + 1;
-      }
-      this.answerButtonBool = false;
-      this.fontSize = 80;
-    },
-    previousCLick: function(){
-      if(this.questionPosition > 0){
-        this.questionPosition = this.questionPosition - 1;
-      }
-      this.answerButtonBool = false;
-    },
-    nextClick: function(){
-      if(this.questionPosition < this.questionObject.questionArray.length - 1){
-        this.questionPosition = this.questionPosition + 1;
-      }
-      this.answerButtonBool = false;
-      this.fontSize = 80;
-    },
     loadDeck: function(){
       this.questionPosition = 0;
-      console.log("du klickade på en knapp med loadDeck()")
-      let myObj_deserialized = JSON.parse(localStorage.getItem(this.selectedDeck));
-      console.log(myObj_deserialized);
-      //this.questionObject = myObj_deserialized;
-      //this.answerField = this.questionObject.answerArray[this.questionIndex];
-      //this.questionField = this.questionObject.questionArray[this.questionIndex];
-      this.questionObject = myObj_deserialized;
+      console.log("du klickade på en knapp med loadDeck()");
+      this.myObj_deserialized = JSON.parse(localStorage.getItem(this.selectedDeck));
+      this.questionObject = this.myObj_deserialized;
     },
-    adjustAnswerFontSize: function(){
-      const length = this.questionObject.answerArray[this.questionPosition].length;
-      console.log(length);
-      if (length > 100){
-        this.fontSize = 20;
-      }
-      else if (length > 50){
-        this.fontSize = 35;
-      }
-      else if(length < this.questionObject.questionArray[this.questionPosition].length){
-        return;
-      }
-      else{
-        this.fontSize = 80;
-      }
-    } //logiken fungerar, men känns upplagt för buggar aja.
   },
 }
 </script>
 
 
 <style scoped>
-
-.fade-enter-from {
-  opacity: 0;
-}
-.fade-enter-to{
-  opacity: 1;
-}
-.fade-enter-active{
-  transition: all 2s ease;
-}
-.fade-leave-from{
-  opacity: 1;
-}
-.fade-leave-to{
-  opacity: 0;
-}
-.fade-leave-active{
-  transition: all 2s ease;
-}
-
 #horizontalContent{
   flex: 1;
   overflow: auto;
@@ -219,30 +143,6 @@ export default {
   flex-direction: row;
 }
 
-.style-select{
-  height: 40px;
-}
-
-.fade-enter-active, .fade-leave-active {
-  transition: all 3s;
-}
-.fade-enter, .fade-leave-to {
-  opacity: 0;
-}
-
-.flippingDivs{
-  margin-left: 5%;
-  margin-right: 5%;
-}
-.flippingDivParagraph {
-}
-
-#questionDiv{
-  background-color: beige;
-}
-#answerDiv{
-  background-color: mediumspringgreen;
-}
 
 
 header {
@@ -257,28 +157,6 @@ header {
   font-size: 30px;
   padding-top: 100px;
   text-align: center;
-}
-#cardsDiv{
-}
-.prevNextButton{
-  font-size: 30px;
-  font-margin: 40px;
-}
-
-.buttonDiv{
-}
-#chooseDeckDiv{
-  font-size: 20px;
-  padding: 20px;
-}
-.load-button {
-  background-color: blue;
-  color: white;
-  font-size: 16px;
-  padding: 8px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
 }
 #selectDeck{
   position: absolute;
