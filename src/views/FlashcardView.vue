@@ -77,14 +77,30 @@ export default {
 </script>
 
 <style scoped>
-
 #questionDiv{
   background-color: beige;
+  box-shadow: -5px 0 5px rgba(0, 0, 0, 0.2);
+}:hover{
+   animation: pulse 1s;
+   transition: .3s;
+ }
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  70% {
+    transform: scale(.9);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 #answerDiv{
   background-color: mediumspringgreen;
+  box-shadow: 5px 0 5px rgba(0, 0, 0, 0.2);
 }
 .flippingDivs{
+  font-family: Roboto;
   margin-left: 5%;
   margin-right: 5%;
 }
@@ -92,18 +108,6 @@ export default {
   font-size: 30px;
   font-margin: 40px;
 }
-
-
-
-
-
-
-
-
-
-
-
-
 .fade-enter-from {
   opacity: 0;
 }
@@ -122,6 +126,4 @@ export default {
 .fade-leave-active{
   transition: all 2s ease;
 }
-
-
 </style>
