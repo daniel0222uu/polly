@@ -7,15 +7,14 @@
   <div id="questionHeader">
 
 
+
+
+
     <div id="selectDeck">
-      <p style="font-size: 20px"> Choose a deck </p>
-      <select class="style-select" v-model="selectedDeck" name="drinks" required>
-        <option value="" disabled selected hidden>Välj en frågelek</option>
-        <option v-for="drink in selectorList" v-bind:key="drink">{{ drink }}</option>
-      </select> 
-      <p>
-        <button  @click="loadDeck">Load deck</button>
-      </p>
+      <select class="load-select" v-model="selectedDeck" name="drinks" required @change="loadDeck">
+      <option value="" disabled selected hidden>Välj en frågelek</option>
+      <option v-for="drink in selectorList" v-bind:key="drink">{{ drink }}</option>
+    </select>
     </div>
 
 
@@ -23,9 +22,6 @@
   <BarsComponent v-bind:data="submittedAnswers"/>
 
   <div id="cardsDiv" >
-    <p style="font-size: 40px">
-      {{questionObject.id}}
-    </p>
     <div class="flippingDivs" id="questionDiv" @click="questionPress" v-if="!answerButtonBool">
       <p :class="resizeText" :style="{'font-size': fontSize + 'px' }" class="flippingDivParagraph" > {{questionObject.questionArray[questionPosition]}} </p>
     </div>
@@ -67,6 +63,7 @@ let listToFill = [];
 for (var i =0, len = localStorage.length; i< len; ++i ) {
   listToFill.push(localStorage.key(i));
 }
+console.log(listToFill);
 
 export default {
   name: 'ResultView',
@@ -79,7 +76,7 @@ export default {
       uiLabels: {},
       lang: "en",
       hideNav: true,
-      selectorList:listToFill,
+      selectorList: listToFill,
       selectedDeck: "",
       question: "",
       submittedAnswers: {
@@ -135,6 +132,9 @@ export default {
       this.adjustAnswerFontSize();
     },
     answerPress: function(){
+      if(this.questionPosition < this.questionObject.questionArray.length - 1){
+        this.questionPosition = this.questionPosition + 1;
+      }
       this.answerButtonBool = false;
       this.fontSize = 80;
     },
@@ -202,11 +202,7 @@ export default {
 .fade-leave-active{
   transition: all 2s ease;
 }
-#selectDeck{
-  position: absolute;
-  top: 0;
-  left: 0;
-}
+
 #horizontalContent{
   flex: 1;
   overflow: auto;
@@ -265,11 +261,37 @@ header {
 #cardsDiv{
 }
 .prevNextButton{
-  margin-bottom: 30px;
   font-size: 30px;
   font-margin: 40px;
 }
 
 .buttonDiv{
+}
+#chooseDeckDiv{
+  font-size: 20px;
+  padding: 20px;
+}
+.load-button {
+  background-color: blue;
+  color: white;
+  font-size: 16px;
+  padding: 8px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+#selectDeck{
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 20px;
+}
+.load-select {
+  background-color: rgba(255, 255, 255, 0.5);
+  font-family: 'Roboto', sans-serif;
+  font-size: 32px;
+  padding: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
 }
 </style>
