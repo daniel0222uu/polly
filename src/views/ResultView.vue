@@ -4,18 +4,13 @@
 
   <div id="wrapperDiv">
     <div id="horizontalContent">
-
   <div id="questionHeader">
 
     <div id="selector">
-   <!--   <select class="load-select" v-model="selectedDeck" name="drinks" required @change="loadDeck">
-      <option value="" disabled selected hidden>Välj en frågelek</option>
-      <option v-for="drink in selectorList" v-bind:key="drink">{{ drink }}</option>
-    </select>-->
-      <label id="choosingParagraph"> Choose a deck! </label>
+
         <select name="drinks" v-model="selectedDeck" required @change="loadDeck">
-          <option value="" disabled selected hidden>Välj en frågelek</option>
-          <option v-for="drink in selectorList" v-bind:key="drink">{{ drink }}</option>
+          <option value="" disabled selected hidden>{{uiLabels.chooseAdeck}}</option>
+          <option v-for="deck in selectorList" v-bind:key="deck">{{ deck }}</option>
         </select>
 
     </div>
@@ -87,45 +82,13 @@ export default {
   },
   created() {
     this.myObj_deserialized = this.questionObject;
+    socket.on("init", (labels) => {
+      this.uiLabels = labels
+      console.log(labels);
+
+    })
   },
-  /*computed: {
-    resizeText: {
-      get() {
-        const length = this.questionObject.answerArray[this.questionPosition].length;
-        console.log(length);
-        if (length > 20) {
-          return "smallText";
-        } else if (length > 10) {
-          return "mediumText";
-        } else {
-          return "largeText";
-        }
-      },
-      set(value) {
-        const length = this.questionObject.answerArray[this.questionPosition].length;
-        if (length > 20) {
-          this.fontSize = 20;
-        } else if (length > 10) {
-          this.fontSize = 30;
-        } else {
-          this.fontSize = 40;
-        }
-      },
-    },
-  },
-  watch: {
-  },*/ //försökte lösa justera fonten men gick inte som jag ville
   methods: {
-    switchLanguage: function() {
-      if (this.lang === "en")
-        this.lang = "sv"
-      else
-        this.lang = "en"
-      socket.emit("switchLanguage", this.lang)
-    },
-    toggleNav: function () {
-      this.hideNav = ! this.hideNav;
-    },
     loadDeck: function(){
       this.questionPosition = 0;
       console.log("du klickade på en knapp med loadDeck()");
@@ -143,13 +106,9 @@ export default {
 * { box-sizing: border-box; }
 
 #choosingParagraph{
+  text-align: center;
+  position: relative;
   font-size: 24px;
-}
-label {
-  margin-top: 1.5em;
-  margin-bottom: .5em;
-  font-weight: bold;
-  font-size: 1.2em;
 }
 
 select {
@@ -176,9 +135,9 @@ select {
   overflow: auto;
 }
 #verticalRight{
-  background-color: palegreen;
   width: 200px;
   max-width: 30%;
+  border: 1px solid black;
 }
 
 #wrapperDiv{
@@ -205,11 +164,11 @@ header {
 }
 #selector{
   font-family: 'Nunito', sans-serif;
-  font-size: 12px;
+  font-size: 16px;
   position: absolute;
   width: 30%;
   top: 0;
   left: 20%;
-  margin: 20px;
+  margin-top: 10px;
 }
 </style>

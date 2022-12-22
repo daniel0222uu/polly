@@ -1,6 +1,7 @@
 <template>
   <div id="cardsDiv" >
-    <div class="flippingDivs" id="questionDiv" @click="questionPress" v-if="!answerButtonBool">
+
+     <div class="flippingDivs" id="questionDiv" @click="questionPress" v-if="!answerButtonBool">
       <p :class="resizeText" :style="{'font-size': fontSize + 'px' }" class="flippingDivParagraph" > {{questionProp.questionArray[questionPosition]}} </p>
     </div>
 
@@ -12,7 +13,7 @@
     </Transition>
 
     <div class="buttonDiv">
-      <button id="previousButton" @click="previousCLick" class="prevNextButton"> Previous </button> <span>   </span>
+      <button id="previousButton" @click="previousCLick" class="prevNextButton"> Previous </button>
       <button id="nextButton" @click="nextClick" class="prevNextButton"> Next </button>
     </div>
 
@@ -30,6 +31,7 @@ export default {
       answerButtonBool: false,
       fontSize: 80,
       questionPosition: 0,
+      uiLabels: {},
     }
   },
   methods: {
@@ -53,22 +55,25 @@ export default {
         this.fontSize = 80;
         return;
       }
-      this.answerButtonBool = false;
-      this.fontSize = 80;
     },
     previousCLick: function(){
       if(this.questionPosition > 0){
         this.questionPosition = this.questionPosition - 1;
       }
+      this.fontSize = 80;
       this.answerButtonBool = false;
     },
     adjustAnswerFontSize: function() {
       const length = this.questionProp.answerArray[this.questionPosition].length;
       console.log(length);
       if (length > 100) {
-        this.fontSize = 20;
+        this.fontSize = 30;
       } else if (length > 50) {
-        this.fontSize = 35;
+        this.fontSize = 40;
+      } else if (length > 20) {
+        this.fontSize = 50;
+      } else if (length > 10) {
+        this.fontSize = 60;
       } else if (length < this.questionProp.questionArray[this.questionPosition].length) {
         return;
       } else {
@@ -81,7 +86,7 @@ export default {
       this.questionPosition = 0;
       this.answerButtonBool = false;
     }
-  },
+  }
 }
 </script>
 
@@ -99,10 +104,16 @@ export default {
 #answerDiv{
   background-color: mediumspringgreen;
   box-shadow: 5px 0 5px rgba(0, 0, 0, 0.2);
-}:hover{
-   animation: pulse 1s;
-   transition: .3s;
- }
+}
+.flippingDivs{
+  font-family: Roboto;
+  margin-left: 5%;
+  margin-right: 5%;
+}
+#answerDiv:hover{
+  animation: pulse 1s;
+  transition: .3s;
+}
 @keyframes pulse {
   0% {
     transform: scale(1);
@@ -114,10 +125,20 @@ export default {
     transform: scale(1);
   }
 }
-.flippingDivs{
-  font-family: Roboto;
-  margin-left: 5%;
-  margin-right: 5%;
+.flippingDivParagraph:hover{
+  animation: pulse 1s;
+  transition: .3s;
+}
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  70% {
+    transform: scale(.9);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 .prevNextButton{
   font-size: 30px;
@@ -142,7 +163,10 @@ export default {
   transition: all 2s ease;
 }
 .buttonDiv{
-
+  display: flex;
+  justify-content: space-between;
+  margin-left: 5%;
+  margin-right: 5%;
 }
 #previousButton {
   border: none;
@@ -155,21 +179,42 @@ export default {
   height: 80px;
   margin-bottom: 5px;
   border-radius: 50px;
-}:hover{
-   opacity: 90%;
- }
+}
 #nextButton {
   border: none;
   padding-top: 10px;
   padding-bottom: 10px;
-  color: black;
   font-weight: 900;
   font-Size: 25px;
   width: 250px;
   height: 80px;
   margin-bottom: 5px;
   border-radius: 50px;
-}:hover{
-   opacity: 90%;
- }
+}
+#previousButton:hover {
+  opacity: 1;
+  -webkit-animation: flash 3s;
+  animation: flash 3s;
+}
+#nextButton:hover {
+  opacity: 1;
+  -webkit-animation: flash 1.5s;
+  animation: flash 1.5s;
+}
+@-webkit-keyframes flash {
+  0% {
+    opacity: .4;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes flash {
+  0% {
+    opacity: .4;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 </style>
