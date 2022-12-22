@@ -9,10 +9,11 @@
       <div class="flippingDivs" id="answerDiv" @click="answerPress" v-if="answerButtonBool">
         <p :style="{'font-size': fontSize + 'px'}" class="flippingDivParagraph" > {{questionProp.answerArray[questionPosition]}} </p>
       </div>
-
     </Transition>
+
     <div class="buttonDiv">
-      <button @click="previousCLick" class="prevNextButton"> Previous </button> <button @click="nextClick" class="prevNextButton"> Next </button>
+      <button id="previousButton" @click="previousCLick" class="prevNextButton"> Previous </button> <span>   </span>
+      <button id="nextButton" @click="nextClick" class="prevNextButton"> Next </button>
     </div>
 
   </div>
@@ -22,6 +23,8 @@
 export default {
   name: "FlashcardView",
   props:['questionProp'],
+  components: {
+  },
   data: function(){
     return{
       answerButtonBool: false,
@@ -37,6 +40,18 @@ export default {
     answerPress: function(){
       if(this.questionPosition < this.questionProp.questionArray.length - 1){
         this.questionPosition = this.questionPosition + 1;
+        this.answerButtonBool = false;
+        this.fontSize = 80;
+        return;
+      }
+      console.log("this should only execute at last");
+    },
+    nextClick: function(){
+      if(this.questionPosition < this.questionProp.questionArray.length - 1){
+        this.questionPosition = this.questionPosition + 1;
+        this.answerButtonBool = false;
+        this.fontSize = 80;
+        return;
       }
       this.answerButtonBool = false;
       this.fontSize = 80;
@@ -46,13 +61,6 @@ export default {
         this.questionPosition = this.questionPosition - 1;
       }
       this.answerButtonBool = false;
-    },
-    nextClick: function(){
-      if(this.questionPosition < this.questionProp.questionArray.length - 1){
-        this.questionPosition = this.questionPosition + 1;
-      }
-      this.answerButtonBool = false;
-      this.fontSize = 80;
     },
     adjustAnswerFontSize: function() {
       const length = this.questionProp.answerArray[this.questionPosition].length;
@@ -77,9 +85,19 @@ export default {
 </script>
 
 <style scoped>
+
+
+#increment-btn {
+  background: #ffb703;
+}
+
 #questionDiv{
   background-color: beige;
   box-shadow: -5px 0 5px rgba(0, 0, 0, 0.2);
+}
+#answerDiv{
+  background-color: mediumspringgreen;
+  box-shadow: 5px 0 5px rgba(0, 0, 0, 0.2);
 }:hover{
    animation: pulse 1s;
    transition: .3s;
@@ -94,10 +112,6 @@ export default {
   100% {
     transform: scale(1);
   }
-}
-#answerDiv{
-  background-color: mediumspringgreen;
-  box-shadow: 5px 0 5px rgba(0, 0, 0, 0.2);
 }
 .flippingDivs{
   font-family: Roboto;
@@ -126,4 +140,35 @@ export default {
 .fade-leave-active{
   transition: all 2s ease;
 }
+.buttonDiv{
+
+}
+#previousButton {
+  border: none;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  color: black;
+  font-weight: 900;
+  font-Size: 25px;
+  width: 250px;
+  height: 80px;
+  margin-bottom: 5px;
+  border-radius: 50px;
+}:hover{
+   opacity: 90%;
+ }
+#nextButton {
+  border: none;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  color: black;
+  font-weight: 900;
+  font-Size: 25px;
+  width: 250px;
+  height: 80px;
+  margin-bottom: 5px;
+  border-radius: 50px;
+}:hover{
+   opacity: 90%;
+ }
 </style>
