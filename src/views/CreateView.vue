@@ -1,6 +1,8 @@
 <template>
   <BannerComponent />
   <body>
+    <WarningMessage v-bind:deck-alert="deckNameAlert"  v-bind:question-field-alert="questionFieldAlert"
+    v-bind:question-was-added="questionWasAdded"/>
 
 
   <div id="wrapperDiv">
@@ -11,9 +13,6 @@
 
       <p><input class="qeustionEditingFields"  id="namingDeckField" type="text" v-model="deckName"></p>
       <p><button @click="nameDeck(deckName)">Name my deck</button></p> {{questionObject.id}}
-      <transition name="fade">
-        <div class="warning" id="deckNamingDiv" v-if="deckNameAlert"  > You must name your deck </div>
-      </transition>
     </div>
 
     <div class="nowCreating" v-if="addingQuestionBool">
@@ -22,24 +21,11 @@
 
       <h2>Now creating: {{questionObject.id}} </h2>
 
-      <h3> Add your questions</h3>
+      <p>Add your questions</p>
       <input class="qeustionEditingFields" id="questionField" type="text" v-model="questionField">
       <br>
-      <br>
       <input class="qeustionEditingFields"  id="answerField" type="text" v-model="answerField">
-
-      <!-- <button @click="previousCLick"> Previous Question</button> -->
       <p><button @click="savingAddedQustion">Add this question and answer</button> </p>
-
-      <transition name="fade">
-        <div class="warning" id="questionWasAddedDiv" v-if="questionWasAdded"  > The question was added </div>
-      </transition>
-      <transition name="fade">
-        <div class="warning" id="enterFieldsDiv" v-if="questionFieldAlert"  > You left a field empty </div>
-      </transition>
-
-
-
     </div>
     <div id="questionsCreated">
       <p style="font-weight: bold">{{questionObject.questionArray[questionIndex]}}</p>
@@ -59,16 +45,6 @@
 
 
 
-  <!--<transition name="fade">
-    <div class="warning" id="questionWasAddedDiv" v-if="questionWasAdded"  > The question was added </div>
-  </transition>
-  <transition name="fade">
-    <div class="warning" id="enterFieldsDiv" v-if="questionFieldAlert"  > You left a field empty </div>
-  </transition>
-  <transition name="fade">
-    <div class="warning" id="deckNamingDiv" v-if="deckNameAlert"  > You must name your deck </div>
-  </transition> -->
-
 
 
 
@@ -81,17 +57,12 @@
 import io from 'socket.io-client';
 import Decks from "../assetts/Decks.json";
 import BannerComponent from '@/components/BannerComponent.vue';
-//import EditAndCreateComponent from "@/components/EditAndCreateComponent"; not using it
+import WarningMessage from "@/views/WarningMessage";
 const socket = io();
-//const items = {localStorage};
-//console.log(items);
 console.log(Decks);
-//let testObj = JSON.stringify(Decks);
-//localStorage.setItem("theDeckObject", testObj)
-//console.log(testObj);
-//let myObj_deserialized = JSON.parse(localStorage.getItem("theDeckObject"));
-//console.log(myObj_deserialized);
-//console.log(JSON.parse(localStorage.getItem("daniel")));
+
+
+
 export default {
   name: 'CreateView',
   data: function () {
@@ -125,6 +96,7 @@ export default {
     }
   },
   components: {
+    WarningMessage,
     BannerComponent,
     //EditAndCreateComponent Not using it for now
   },
@@ -206,8 +178,9 @@ export default {
       setTimeout(() => {
         this.questionFieldAlert = false;
       }, 2000);
-    }
-  }
+    },
+  },
+
 }
 </script>
 
@@ -271,6 +244,7 @@ export default {
   margin: 40px;
 }
 .qeustionEditingFields{
+  margin: 5px;
   position: relative;
   font-size: 40px;
   font-size-adjust:0.5;
