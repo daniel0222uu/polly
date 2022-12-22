@@ -79,6 +79,7 @@ export default {
   watch: {
     questionProp: function() {
       this.questionPosition = 0;
+      this.answerButtonBool = false;
     }
   },
 }

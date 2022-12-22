@@ -26,7 +26,7 @@
   </div>
   <BarsComponent v-bind:data="submittedAnswers"/>
       <div>
-        <FlashcardView v-bind:questionProp="myObj_deserialized"></FlashcardView>
+        <FlashcardView v-bind:questionProp="myObj_deserialized" v-bind:questionIndex="questionPosition"></FlashcardView>
       </div>
 
 
@@ -143,7 +143,7 @@ export default {
 * { box-sizing: border-box; }
 
 #choosingParagraph{
-  font-size: 20px;
+  font-size: 24px;
 }
 label {
   margin-top: 1.5em;
@@ -177,7 +177,8 @@ select {
 }
 #verticalRight{
   background-color: palegreen;
-  width: 33%;
+  width: 200px;
+  max-width: 30%;
 }
 
 #wrapperDiv{
@@ -208,7 +209,7 @@ header {
   position: absolute;
   width: 30%;
   top: 0;
-  left: 15%;
+  left: 20%;
   margin: 20px;
 }
 </style>
