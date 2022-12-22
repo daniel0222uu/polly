@@ -18,14 +18,17 @@
 </template>
 
 <script>
-import io from 'socket.io-client';
 import ResponsiveNav from '@/components/ResponsiveNav.vue';
+import BannerComponent from '@/components/BannerComponent.vue';
+import io from 'socket.io-client';
+
 const socket = io();
 
 export default {
   name: "GameLobby",
   components: {
-    ResponsiveNav
+    ResponsiveNav,
+    BannerComponent,
   }
 
 }
