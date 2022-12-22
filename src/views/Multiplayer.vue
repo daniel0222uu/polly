@@ -26,11 +26,14 @@ export default {
   created() {
     this.socket = io("http://localhost:8080");
   },
+
+
+  /*Kladd infor nasta gng:
   mounted() {
     //this.context = this.$refs.
 
 
-  }
+  }*/
 }
 
 
