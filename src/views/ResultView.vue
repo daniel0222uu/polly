@@ -4,14 +4,23 @@
 
   <div id="wrapperDiv">
     <div id="horizontalContent">
+
   <div id="questionHeader">
 
-    <div id="selectDeck">
-      <select class="load-select" v-model="selectedDeck" name="drinks" required @change="loadDeck">
+    <div id="selector">
+   <!--   <select class="load-select" v-model="selectedDeck" name="drinks" required @change="loadDeck">
       <option value="" disabled selected hidden>Välj en frågelek</option>
       <option v-for="drink in selectorList" v-bind:key="drink">{{ drink }}</option>
-    </select>
+    </select>-->
+      <label id="choosingParagraph"> Choose a deck! </label>
+        <select name="drinks" v-model="selectedDeck" required @change="loadDeck">
+          <option value="" disabled selected hidden>Välj en frågelek</option>
+          <option v-for="drink in selectorList" v-bind:key="drink">{{ drink }}</option>
+        </select>
+
     </div>
+
+
 
 
   </div>
@@ -19,6 +28,8 @@
       <div>
         <FlashcardView v-bind:questionProp="myObj_deserialized"></FlashcardView>
       </div>
+
+
 
 
 
@@ -127,6 +138,39 @@ export default {
 
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;700&display=swap');
+
+* { box-sizing: border-box; }
+
+#choosingParagraph{
+  font-size: 20px;
+}
+label {
+  margin-top: 1.5em;
+  margin-bottom: .5em;
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+select {
+  padding: 1em;
+  width: 130%;
+  border-radius: .2em;
+  border: 1px solid #acacac;
+  color: #181820;
+
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+
+  background: url('https://cdn1.iconfinder.com/data/icons/arrows-vol-1-4/24/dropdown_arrow-512.png');
+  background-repeat: no-repeat;
+  background-size: 15px 15px;
+  background-position: right;
+  background-origin: content-box;
+}
+
 #horizontalContent{
   flex: 1;
   overflow: auto;
@@ -158,18 +202,13 @@ header {
   padding-top: 100px;
   text-align: center;
 }
-#selectDeck{
+#selector{
+  font-family: 'Nunito', sans-serif;
+  font-size: 12px;
   position: absolute;
+  width: 30%;
   top: 0;
-  left: 0;
+  left: 15%;
   margin: 20px;
-}
-.load-select {
-  background-color: rgba(255, 255, 255, 0.5);
-  font-family: 'Roboto', sans-serif;
-  font-size: 32px;
-  padding: 8px;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  border-radius: 4px;
 }
 </style>
