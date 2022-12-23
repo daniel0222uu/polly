@@ -1,6 +1,7 @@
 <template>
   <div id="cardsDiv" >
 
+
      <div class="flippingDivs" id="questionDiv" @click="questionPress" v-if="!answerButtonBool">
       <p :class="resizeText" :style="{'font-size': fontSize + 'px' }" class="flippingDivParagraph" > {{questionProp.questionArray[questionPosition]}} </p>
     </div>
@@ -69,11 +70,11 @@ export default {
       if (length > 100) {
         this.fontSize = 30;
       } else if (length > 50) {
-        this.fontSize = 40;
-      } else if (length > 20) {
         this.fontSize = 50;
-      } else if (length > 10) {
+      } else if (length > 20) {
         this.fontSize = 60;
+      } else if (length > 15) {
+        this.fontSize = 70;
       } else if (length < this.questionProp.questionArray[this.questionPosition].length) {
         return;
       } else {
@@ -109,6 +110,10 @@ export default {
   font-family: Roboto;
   margin-left: 5%;
   margin-right: 5%;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 #answerDiv:hover{
   animation: pulse 1s;
@@ -124,6 +129,11 @@ export default {
   100% {
     transform: scale(1);
   }
+}
+.flippingDivParagraph{
+  margin-left: 3%;
+  margin-right: 3%;
+  overflow: auto;
 }
 .flippingDivParagraph:hover{
   animation: pulse 1s;
@@ -164,7 +174,9 @@ export default {
 }
 .buttonDiv{
   display: flex;
+  justify-content: center;
   justify-content: space-between;
+  margin-top: 5%;
   margin-left: 5%;
   margin-right: 5%;
 }
