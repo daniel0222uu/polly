@@ -4,8 +4,33 @@
 // Create express app
 const express = require("express");
 const app = express();
+const bodyParser = require("body-parser");
 var http = require('http').Server(app);
 var path = require('path');
+const fs = require("fs");
+app.use(bodyParser.json());
+
+
+app.post('/fileTest', (req, res) => { //axios test reveiver
+    const data = req.body;
+    //logs only the data part of the axios post, no headers or other info
+    console.log("realAxios is responding on the server");
+
+    // Do something with the data here, such as saving it to a database
+    const file = fs.readFileSync("/Users/danielceoca/Desktop/projektGränssnitt/polly/src/assetts/Decks.json");
+    let jsonOfTheFile = JSON.parse(file);
+    jsonOfTheFile.push(data.data);
+    console.log(jsonOfTheFile);
+    fs.writeFileSync("/Users/danielceoca/Desktop/projektGränssnitt/polly/src/assetts/Decks.json", JSON.stringify(jsonOfTheFile));
+
+
+
+    //console.log(JSON.parse(file));
+    //console.log(data.data);
+
+
+    res.send({ message: 'Data received' });
+});
 
 // Generate webpack config with CLI service
 if (process.env.NODE_ENV !== 'production') {
