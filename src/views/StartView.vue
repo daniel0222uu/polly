@@ -6,16 +6,39 @@
     <input type="text" v-model="id">
   </label>
   <router-link v-bind:to="'/poll/'+id">{{uiLabels.participatePoll}}</router-link>
-  <div>
-    <upload-component></upload-component>
+  <br><br><br>
+
+  <!-- Här skriver jag leaderboard-->
+  <div style= "display: flex; text-align:left;margin:0 auto;">
+  
+    <!--Det här är första kolumnen-->
+    <div style= "width: 10%">
+    </div>
+  
+     <!--Det här är andra kolumnen-->
+     <div style= "width: 50%;border: 1px solid black; background-color: white; padding: 10px">
+      <p><strong>Leaderboard</strong></p>
+        <ul>
+          <li v-for="Item in ScoreData.sort(function(a,b){return b.points-a.points})" :key="Item.points">{{ Item.name }} {{ Item.points }}</li>
+        </ul>
+    </div>
+
+     <!--Det här är tredje kolumnen-->
+     <div style= "width: 40%">
+    </div>
+  
   </div>
+
+
+
+ 
 </template>
 
 <script>
 import BannerComponent from '@/components/BannerComponent.vue';
 import Decks from "../assetts/Decks.json";
 import io from 'socket.io-client';
-import UploadComponent from "@/components/UploadComponent";
+import Scores from "../assetts/Scores.json";
 
 const socket = io();
 console.log(Decks);
@@ -24,7 +47,6 @@ console.log(Decks);
 export default {
   name: 'StartView',
   components: {
-    UploadComponent,
     BannerComponent
   },
   data: function () {
@@ -32,7 +54,8 @@ export default {
       uiLabels: {},
       id: "",
       lang: "en",
-      hideNav: true
+      hideNav: true,
+      ScoreData: Scores
     }
   },
   methods: {
