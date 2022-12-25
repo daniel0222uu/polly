@@ -6,18 +6,32 @@
     <input type="text" v-model="id">
   </label>
   <router-link v-bind:to="'/poll/'+id">{{uiLabels.participatePoll}}</router-link>
+  <br><br><br>
+
+  <!-- Här skriver jag leaderboard-->
+  <div style= "display: flex; text-align:left;margin:0 auto;">
   
-  <div style="text-align:left;margin:0 auto;">
+    <!--Det här är första kolumnen-->
+    <div style= "width: 10%">
+    </div>
   
-  <P>Hör skriver vi ut ScoreData:</P>
-  {{ ScoreData }}
-  
-  <p><strong>Leaderboard</strong></p>
-  <ul>
-  <li v-for="Item in ScoreData" :key="Item.points">{{ Item.name }} {{ Item.points }}</li>
-  </ul>
+     <!--Det här är andra kolumnen-->
+     <div style= "width: 50%;border: 1px solid black; background-color: white; padding: 10px">
+      <p><strong>Leaderboard</strong></p>
+        <ul>
+          <li v-for="Item in ScoreData.sort(function(a,b){return b.points-a.points})" :key="Item.points">{{ Item.name }} {{ Item.points }}</li>
+        </ul>
+    </div>
+
+     <!--Det här är tredje kolumnen-->
+     <div style= "width: 40%">
+    </div>
   
   </div>
+
+
+
+ 
 </template>
 
 <script>
