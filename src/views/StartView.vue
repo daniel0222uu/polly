@@ -24,7 +24,12 @@
     </div>
 
      <!--Det här är tredje kolumnen-->
-     <div style= "width: 40%">
+     <div style= "width: 40%;padding: 10px;margin: 20px">
+      <p>Add a score</p>
+      Name:<input class="scoreEditingFields" id="scoreNAME" type="text" v-model="scoreNameField">
+      <br>
+      Score:<input class="scoreEditingFields"  id="scorePoint" type="number" v-model="scorePointField">
+      <p><button @click="addToLeaderboard">Add name and score to leaderboard</button> </p>
     </div>
   
   </div>
@@ -46,6 +51,7 @@ console.log(Decks);
 
 export default {
   name: 'StartView',
+
   components: {
     BannerComponent
   },
@@ -55,6 +61,8 @@ export default {
       id: "",
       lang: "en",
       hideNav: true,
+      scoreNameField: "",
+      scorePointField: "",
       ScoreData: Scores
     }
   },
@@ -68,9 +76,26 @@ export default {
     },
     toggleNav: function () {
       this.hideNav = ! this.hideNav;
+    },
+    addToLeaderboard: function () {
+      let name = this.scoreNameField;
+      let points = this.scorePointField;
+      if (name === "" || points === "") {
+        console.log("Please fill in both fields")
+        this.fieldAlert()
+        return;
+      }
+      console.log(name);
+      console.log(points);
+      
+      Scores.push({
+        "name": name,
+        "points": points
+      });
     }
+  },
   }
-}
+
 </script>
 <style scoped>
   /*header {
