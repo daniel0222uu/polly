@@ -1,15 +1,19 @@
+<!-- Kladdkod
+
 <template>
   <body>
   <div>
     <h1>"Multiplayer mode"</h1>
-    <!--See the interface -->
+
     <canvas reference  = "game" width="640" height="480"
             style="border: 2px solid black">
     </canvas>
   </div>
   </body>
-</template>
+</template> -->
 
+
+<!--
 <script>
 //Importing packages:
 import io from 'socket.io-client';
@@ -59,3 +63,5 @@ body{
   alignment: center;
 }
 </style>
+
+-->
