@@ -68,7 +68,7 @@ export default {
       const length = this.questionProp.answerArray[this.questionPosition].length;
       console.log(length);
       if (length > 100) {
-        this.fontSize = 30;
+        this.fontSize = 20;
       } else if (length > 50) {
         this.fontSize = 50;
       } else if (length > 20) {
@@ -133,7 +133,7 @@ export default {
 .flippingDivParagraph{
   margin-left: 3%;
   margin-right: 3%;
-  overflow: auto;
+  overflow-x: auto;
 }
 .flippingDivParagraph:hover{
   animation: pulse 1s;

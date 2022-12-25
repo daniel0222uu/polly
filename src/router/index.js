@@ -13,12 +13,12 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/PollView.vue')
   },
   {
-    path: '/create/:lang',
-    name: 'CreateView',
+    path: '/mydecks/:lang',
+    name: 'MyDecksView',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/CreateView.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/MyDecksView.vue')
   },
   {
     path: '/result/:id',
@@ -35,6 +35,22 @@ const routes = [
       // which is lazy-loaded when the route is visited.
       component: () => import(/* webpackChunkName: "about" */ '../views/EditingView.vue')
     },
+  { path: '/play/:lang',
+    name: 'PlayView',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/PlayView.vue')
+  },
+  { path: '/create/:lang',
+    name: 'CreateView',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/CreateView.vue')
+  },
+
+
 ]
 
 const router = createRouter({

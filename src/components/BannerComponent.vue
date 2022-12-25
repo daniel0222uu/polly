@@ -8,9 +8,8 @@
   <ResponsiveNav v-bind:hideNav="hideNav">
     <a href="">Home/Hem</a>
     
-    <router-link v-on:click="keepLanguage" v-bind:to="'/create/'+lang">{{uiLabels.createPoll}}</router-link>
-    <router-link v-on:click="keepLanguage" v-bind:to="'/result/'+lang">{{uiLabels.results}}</router-link>
-    <router-link v-on:click="keepLanguage" v-bind:to="'/GameLobby/'+lang">{{uiLabels.results}}</router-link>
+    <router-link v-on:click="keepLanguage" v-bind:to="'/mydecks/'+lang">{{uiLabels.myDecks}}</router-link>
+    <router-link v-on:click="keepLanguage" v-bind:to="'/play/'+lang">{{uiLabels.play}}</router-link>
 
     <a href="">Pricing</a>
     <a href="">Game lobby</a>
@@ -56,7 +55,6 @@ export default {
     },
     keepLanguage: function() {
       socket.emit("switchLanguage", this.lang)
-
     },
     toggleNav: function () {
       this.hideNav = ! this.hideNav;
@@ -69,7 +67,7 @@ export default {
 <style scoped>
 
 header {
-    background-color: gray;
+    background-color: grey;
     width: 100%;
     display: grid;
     grid-template-columns: 2em auto;

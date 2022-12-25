@@ -6,12 +6,16 @@
     <input type="text" v-model="id">
   </label>
   <router-link v-bind:to="'/poll/'+id">{{uiLabels.participatePoll}}</router-link>
+  <div>
+    <upload-component></upload-component>
+  </div>
 </template>
 
 <script>
 import BannerComponent from '@/components/BannerComponent.vue';
 import Decks from "../assetts/Decks.json";
 import io from 'socket.io-client';
+import UploadComponent from "@/components/UploadComponent";
 
 const socket = io();
 console.log(Decks);
@@ -20,6 +24,7 @@ console.log(Decks);
 export default {
   name: 'StartView',
   components: {
+    UploadComponent,
     BannerComponent
   },
   data: function () {
