@@ -28,7 +28,19 @@
       </button>
     </router-link>
 
-    <button id="shadow">Upload deck</button>
+    <router-link
+        to="/Upload/en"
+        custom
+        v-slot="{ navigate }"
+    >
+      <button id="shadow"
+              @click="navigate"
+              role="link"
+      >
+        Upload deck
+      </button>
+    </router-link>
+
   </div>
   </body>
 </template>
