@@ -22,7 +22,7 @@
 
 <script>
 import io from 'socket.io-client';
-import Decks from "../assetts/Decks.json";
+import Decks from "../assetts/AllDecks.json";
 import BarsComponent from '@/components/BarsComponent.vue';
 import BannerComponent from '@/components/BannerComponent.vue';
 //import FlashcardView from "@/views/FlashcardView";
@@ -35,7 +35,7 @@ export default {
 //    FlashcardView,
     BannerComponent,
     BarsComponent,
-    Decks,
+    //AllDecks,
   },
 
   // Returns the content as well as info
