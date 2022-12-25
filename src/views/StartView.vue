@@ -6,12 +6,25 @@
     <input type="text" v-model="id">
   </label>
   <router-link v-bind:to="'/poll/'+id">{{uiLabels.participatePoll}}</router-link>
+  
+  <div style="text-align:left;margin:0 auto;">
+  
+  <P>Hör skriver vi ut ScoreData:</P>
+  {{ ScoreData }}
+  
+  <p><strong>Leaderboard</strong></p>
+  <ul>
+  <li v-for="Item in ScoreData" :key="Item.points">{{ Item.name }} {{ Item.points }}</li>
+  </ul>
+  
+  </div>
 </template>
 
 <script>
 import BannerComponent from '@/components/BannerComponent.vue';
 import Decks from "../assetts/Decks.json";
 import io from 'socket.io-client';
+import Scores from "../assetts/Scores.json";
 
 const socket = io();
 console.log(Decks);
@@ -27,7 +40,8 @@ export default {
       uiLabels: {},
       id: "",
       lang: "en",
-      hideNav: true
+      hideNav: true,
+      ScoreData: Scores
     }
   },
   methods: {
