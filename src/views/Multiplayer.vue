@@ -1,51 +1,61 @@
-<!-- Kladdkod
-
 <template>
   <body>
   <div>
-    <h1>"Multiplayer mode"</h1>
-
+    <header>"Multiplayer mode"</header>
+    <!--See the interface
     <canvas reference  = "game" width="640" height="480"
             style="border: 2px solid black">
-    </canvas>
+    </canvas> -->
   </div>
+
+  <div class = "Left player">
+    <h2> Your game:</h2>
+  </div>
+
+  <div class = "right player">
+    <h2>"Opponent's game</h2>
+  </div>
+
   </body>
-</template> -->
+</template>
 
 
-<!--
 <script>
-//Importing packages:
 import io from 'socket.io-client';
 import Decks from "../assetts/Decks.json";
-//const socket = io();
+import BarsComponent from '@/components/BarsComponent.vue';
+import BannerComponent from '@/components/BannerComponent.vue';
+//import FlashcardView from "@/views/FlashcardView";
+const socket = io("http://localhost:8080");
 console.log(Decks);
 
 export default {
-  name: 'Multiplayer',
+  name: "NewMultiplayer",
+  components: {
+//    FlashcardView,
+    BannerComponent,
+    BarsComponent,
+    Decks,
+  },
+
+  // Returns the content as well as info
   data() {
     return {
       socket: {},
-      context: {},
+      context: {}
+    },
 
-      //The coordinates for the deck to be placed at:
-      position : {
-        x: 0,
-        y: 0
-      }
-    }
+    console.log(socket)
+
+    //async mounted() {
+    //  const newgame = await import(Decks);
+    //  this.gameInstance = newgame.launch(this.containerId)
   },
 
-  //Connection to the server:
+
+//Connects to the server on local host
   created() {
     this.socket = io("http://localhost:8080");
-  },
-
-  //  Want to display the decks with their content
-  mounted() {
-    this.context = this.$refs.decks.getContext("2d");
-    this.socket.on("message") //Check the connection.
-    this.context.fill(this.position.x, this.position.y)
   }
 }
 
@@ -57,11 +67,11 @@ body{
   background-color: aqua;
 }
 
-.h1 {
+header {
   font-style: normal;
   font-size: medium;
   alignment: center;
 }
-</style>
 
--->
+
+</style>
