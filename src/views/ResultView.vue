@@ -1,18 +1,14 @@
 <template>
   
   <body>
-
   <div id="wrapperDiv">
     <div id="horizontalContent">
   <div id="questionHeader">
-
     <div id="selector">
-
         <select name="drinks" v-model="selectedDeck" required @change="loadDeck">
           <option value="" disabled selected hidden>{{uiLabels.chooseAdeck}}</option>
           <option v-for="deck in selectorList" v-bind:key="deck">{{ deck }}</option>
         </select>
-
     </div>
 
   </div>
@@ -21,9 +17,20 @@
         <FlashcardView v-bind:questionProp="myObj_deserialized" v-bind:questionIndex="questionPosition"></FlashcardView>
       </div>
 
+      <!-- Give comments and likes to decks -->
+      <div id = "Comments">
+        <button cbutton ="comment()"> Comment </button>
+      </div>
+
+      <div id = "Likes">
+        <button lbutton ="likes()"> Like</button>
+      </div>
+      <!-- -->
+
     </div>
 
     <div id="verticalRight">
+      <h2>Game lobby</h2>
       här ska det vara aktiva spelare och möjlighet till att kunna gå med i lobbies. Ska såklart inte va
       såhär fult grön men aa hoppas man fattar layout
     </div>
@@ -87,6 +94,8 @@ export default {
     },
   },
 }
+
+
 </script>
 
 
@@ -127,12 +136,11 @@ select {
 #verticalRight{
   width: 200px;
   max-width: 30%;
-  border: 1px solid black;
+  border: 1px solid white;
   /*Small editing*/
-  color: white;
+  background-color: white;
   border-radius: 20px;
   padding: 20px;
-
 }
 
 #wrapperDiv{
@@ -141,8 +149,6 @@ select {
   display: flex;
   flex-direction: row;
 }
-
-
 
 header {
   background-color: gray;
@@ -166,4 +172,25 @@ header {
   left: 20%;
   margin-top: 10px;
 }
+
+/*Reaction buttons*/
+button {
+  padding: 10px 40px;
+  cursor: pointer;
+  font-family: 'Kanit', sans-serif;
+  font-size: 20px;
+  opacity: 1;
+  border-radius: 20px;
+  border: white ;
+}
+
+#Likes {
+  padding: 10px 40px;
+}
+
+#Comments{
+  padding: 10px 40px;
+}
+
+
 </style>
