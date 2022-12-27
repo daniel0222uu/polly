@@ -32,7 +32,7 @@
 
 <script>
 export default {
-  name: "FlashcardView",
+  name: 'FlashcardView',
   props:['questionProp'],
   components: {
   },

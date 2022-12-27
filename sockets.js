@@ -54,7 +54,8 @@ function sockets(io, socket, data) {
   socket.on('playRequest', function(d) {
     const requester = d.requester;
     const receiver  = d.receiver;
-    const objectToSend = {requester: requester, receiver: receiver};
+    const lobbyID= d.lobbyID;
+    const objectToSend = {requester: requester, receiver: receiver, lobbyID: lobbyID};
     data.appendInviteList(objectToSend);
     //socket.emit('requestReceive', data.getInviteList());
     io.emit('requestReceive', data.getInviteList());
