@@ -15,19 +15,11 @@
 
     </div>
 
-
-
-
   </div>
   <BarsComponent v-bind:data="submittedAnswers"/>
       <div>
         <FlashcardView v-bind:questionProp="myObj_deserialized" v-bind:questionIndex="questionPosition"></FlashcardView>
       </div>
-
-
-
-
-
 
     </div>
 
