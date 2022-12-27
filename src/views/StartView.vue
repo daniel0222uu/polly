@@ -5,7 +5,7 @@
     Write poll id: 
     <input type="text" v-model="id">
   </label>
-  <router-link v-bind:to="'/poll/'+id">{{uiLabels.participatePoll}}</router-link>
+  
   <br><br><br>
 
   <!-- Här skriver jag leaderboard-->
@@ -42,10 +42,10 @@
 <script>
 import BannerComponent from '@/components/BannerComponent.vue';
 import Decks from "../assetts/Decks.json";
-import io from 'socket.io-client';
+
 import Scores from "../assetts/Scores.json";
 
-const socket = io();
+
 console.log(Decks);
 
 
@@ -57,9 +57,9 @@ export default {
   },
   data: function () {
     return {
-      uiLabels: {},
+     
       id: "",
-      lang: "en",
+      
       hideNav: true,
       scoreNameField: "",
       scorePointField: "",
@@ -67,13 +67,7 @@ export default {
     }
   },
   methods: {
-    switchLanguage: function() {
-      if (this.lang === "en")
-        this.lang = "sv"
-      else
-        this.lang = "en"
-      socket.emit("switchLanguage", this.lang)
-    },
+    
     toggleNav: function () {
       this.hideNav = ! this.hideNav;
     },

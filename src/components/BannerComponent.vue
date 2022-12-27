@@ -8,10 +8,9 @@
   <ResponsiveNav v-bind:hideNav="hideNav">
     <a href="">Home/Hem</a>
     
-    <router-link v-on:click="keepLanguage" v-bind:to="'/mydecks/'+lang">{{uiLabels.myDecks}}</router-link>
-    <router-link v-on:click="keepLanguage" v-bind:to="'/play/'+lang">{{uiLabels.play}}</router-link>
+    <router-link  v-bind:to="'/mydecks/'+lang">{{uiLabels.myDecks}}</router-link>
+    <router-link  v-bind:to="'/play/'+lang">{{uiLabels.play}}</router-link>
 
-    <a href="">Pricing</a>
     <a href="">Game lobby</a>
     <a href="">About</a>
     <a href="">Settings</a>
@@ -25,6 +24,8 @@
 import ResponsiveNav from '@/components/ResponsiveNav.vue';
 import io from 'socket.io-client';
 const socket = io();
+import svenska from '../../data/labels-sv.json';
+import engelska from '../../data/labels-en'
 
 
 export default {
@@ -34,7 +35,7 @@ export default {
     },
     data: function () {
         return {
-            uiLabels: {},
+            uiLabels: engelska, 
             id: "",
             lang: "en",
             hideNav: true
@@ -42,20 +43,25 @@ export default {
     },
     created: function () {
     socket.on("init", (labels) => {
-      this.uiLabels = labels
+      console.log("lang change " + labels)
+      
     })
   },
   methods: {
     switchLanguage: function() {
+      console.log("language switch")
       if (this.lang === "en")
-        this.lang = "sv"
+        this.lang = "sv",
+        this.uiLabels = svenska
+        
       else
-        this.lang = "en"
-      socket.emit("switchLanguage", this.lang)
+        this.lang = "en",
+        this.uiLabels = engelska
+        console.log("langggg")
+        /* socket.emit("switchLanguage", this.lang) */
+        
     },
-    keepLanguage: function() {
-      socket.emit("switchLanguage", this.lang)
-    },
+   
     toggleNav: function () {
       this.hideNav = ! this.hideNav;
     }
