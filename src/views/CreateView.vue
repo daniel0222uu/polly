@@ -8,9 +8,9 @@
 
     <div class="horizontalDiv" v-if="!addingQuestionBool">
 
-      <h1>Name your quiz please</h1>
+      <p id="namingQuiz">Name your quiz please</p>
 
-      <p><input class="qeustionEditingFields"  id="namingDeckField" type="text" v-model="deckName"></p>
+      <div id="namingField" ><input class="qeustionEditingFields"  id="namingDeckField" type="text" v-model="deckName"></div>
       <p><button @click="nameDeck(deckName)">Name my deck</button></p> {{questionObject.id}}
     </div>
 
@@ -197,9 +197,9 @@ export default {
 .horizontalDiv{
 }
 #verticalDiv{
-  background-color: palegreen;
   margin-right: 5%;
   margin-left:  5%;
+  border: 2px solid black;
 }
 .qeustionEditingFields{
   margin: 5px;
@@ -207,5 +207,15 @@ export default {
   font-size: 40px;
   font-size-adjust:0.5;
   text-align: center;
+}
+#namingQuiz{
+  margin: 5px;
+  position: relative;
+  font-size: 40px;
+  font-size-adjust:0.5;
+  text-align: center;
+}
+#namingField{
+  
 }
 </style>

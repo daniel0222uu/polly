@@ -32,6 +32,8 @@ app.post('/fileTest', (req, res) => { //axios test reveiver
     res.send({ message: 'Data received' });
 });
 
+
+
 // Generate webpack config with CLI service
 if (process.env.NODE_ENV !== 'production') {
   const webpackConfig = require("@vue/cli-service/webpack.config.js");

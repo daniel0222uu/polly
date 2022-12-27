@@ -14,7 +14,18 @@
         Single player
       </button>
     </router-link>
-    <button id="shadow">Multiplayer</button>
+    <router-link
+        to="/multiplayer/en"
+        custom
+        v-slot="{ navigate }"
+    >
+      <button id="shadow"
+              @click="navigate"
+              role="link"
+      >
+        Multiplayer
+      </button>
+    </router-link>
 
   </div>
   </body>

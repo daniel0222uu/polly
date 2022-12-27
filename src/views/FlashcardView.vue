@@ -1,7 +1,10 @@
 <template>
   <div id="cardsDiv" >
 
-
+    <!--<div id="count"> <p>
+      Score:
+    </p>  {{points}} out of {{questionProp.questionArray.length}} Points
+    </div> -->
      <div class="flippingDivs" id="questionDiv" @click="questionPress" v-if="!answerButtonBool">
       <p :class="resizeText" :style="{'font-size': fontSize + 'px' }" class="flippingDivParagraph" > {{questionProp.questionArray[questionPosition]}} </p>
     </div>
@@ -14,9 +17,15 @@
     </Transition>
 
     <div class="buttonDiv">
+
       <button id="previousButton" @click="previousCLick" class="prevNextButton"> Previous </button>
+      <!--<input form="text" id="formInput" v-model="answerString">-->
       <button id="nextButton" @click="nextClick" class="prevNextButton"> Next </button>
+      <!--<button id="nextButton" @click="textAnswer" class="prevNextButton"> Answer </button>  testade att skriva
+      funktion som tar in text från input fältet och jämför med svar från arrayen. -->
+      <!--<input type="range" min="10" max="100" v-model="fontSize" class="slider" id="myRange"> -->
     </div>
+
 
   </div>
 </template>
@@ -33,6 +42,8 @@ export default {
       fontSize: 80,
       questionPosition: 0,
       uiLabels: {},
+      answerString: "",
+      points: 0,
     }
   },
   methods: {
@@ -51,15 +62,64 @@ export default {
     },
     nextClick: function(){
       if(this.questionPosition < this.questionProp.questionArray.length - 1){
-        this.questionPosition = this.questionPosition + 1;
+        this.questionPosition++;
         this.answerButtonBool = false;
         this.fontSize = 80;
+        this.$emit('nextClick', this.questionPosition);
+
+        if(this.areStringsSimilar(this.answerString, this.questionProp.answerArray[this.questionPosition-1])){
+          console.log("correct");
+          this.points++;
+        }
+        else{
+          console.log("incorrect");
+        }
         return;
       }
     },
+    textAnswer: function(){
+      let answer = this.answerString;
+      let correctAnswer = this.questionProp.answerArray[this.questionPosition-1];
+      if(this.questionPosition < this.questionProp.questionArray.length){
+        this.answerButtonBool = true;
+        setTimeout(() => {
+          this.answerButtonBool = false;
+          if(this.questionPosition < this.questionProp.questionArray.length-1){
+            this.questionPosition++;
+          }
+        }, 2000);
+        if(this.areStringsSimilar(answer, correctAnswer)){
+          this.points++;
+        }
+        else{
+          console.log("incorrect");
+        }
+      }
+      return;
+    },
+    areStringsSimilar: function(input, correct) {
+      if(input == ""){
+        return false;
+      }
+        input = input.toLowerCase();
+        correct = correct.toLowerCase();
+        console.log(input);
+        console.log(correct);
+        let numDifferences = 0;
+        for (let i = 0; i < input.length; i++) {
+          if (input[i] !== correct[i]) {
+            numDifferences++;
+          }
+          if (numDifferences > 2) {
+            return false;
+          }
+        }
+        return true;
+    },
     previousCLick: function(){
       if(this.questionPosition > 0){
-        this.questionPosition = this.questionPosition - 1;
+        this.questionPosition--;
+        this.$emit('previousClick', this.questionPosition);
       }
       this.fontSize = 80;
       this.answerButtonBool = false;
@@ -83,19 +143,23 @@ export default {
     }
   },
   watch: {
-    questionProp: function() {
+    /*questionProp: function() {
       this.questionPosition = 0;
       this.answerButtonBool = false;
-    }
+    }*/
   }
 }
 </script>
 
 <style scoped>
 
+#count{
+  font-size: 30px;
+}
 
-#increment-btn {
-  background: #ffb703;
+#formInput{
+  width: 300px;
+  font-size: 24px;
 }
 
 #questionDiv{
@@ -179,6 +243,7 @@ export default {
   margin-top: 5%;
   margin-left: 5%;
   margin-right: 5%;
+  margin-bottom: 5%;
 }
 #previousButton {
   border: none;

@@ -52,6 +52,13 @@ export default {
   components: {
     
   },
+  data: function () {
+    return {
+    }
+  },
+  created: function(){
+    console.log("MyDecksView visited");
+  }
 }
 </script>
 

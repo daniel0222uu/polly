@@ -5,6 +5,8 @@ const languages = ["en", "se"];
 // Store data in an object to keep the global namespace clean
 function Data() {
   this.polls = {};
+  this.activePlayerList = [];
+  this.inviteList = [];
 }
 
 /***********************************************
@@ -86,6 +88,29 @@ Data.prototype.getAnswers = function(pollId) {
   }
   return {}
 }
+Data.prototype.activePlayers = function(name,number){
+    this.activePlayerList.push({name:name,score:number});
+    console.log(this.activePlayerList);
+}
+Data.prototype.getActivePlayers = function(){
+    return this.activePlayerList;
+}
+Data.prototype.updateScore = function(name,number){
+   for(let i = 0; i < this.activePlayerList.length; i++){
+        if(this.activePlayerList[i].name == name){
+            this.activePlayerList[i].score = number;
+        }
+    }
+    console.log(this.activePlayerList);
+}
+Data.prototype.appendInviteList = function(inviteObject){
+  this.inviteList.push(inviteObject);
+}
+Data.prototype.getInviteList = function(){
+    return this.inviteList;
+}
+
+
 module.exports = Data;
 
 
