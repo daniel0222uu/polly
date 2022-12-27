@@ -1,7 +1,6 @@
 <template>
-  <BannerComponent />
   <h1>Welcome to Flashcards!</h1>
-  <label>
+  <label> 
     Write poll id: 
     <input type="text" v-model="id">
   </label>
@@ -49,7 +48,6 @@
 </template>
 
 <script>
-import BannerComponent from '@/components/BannerComponent.vue';
 import Decks from "../assetts/Decks.json";
 
 import Scores from "../assetts/Scores.json";
@@ -62,7 +60,7 @@ export default {
   name: 'StartView',
 
   components: {
-    BannerComponent
+    
   },
   data: function () {
     return {

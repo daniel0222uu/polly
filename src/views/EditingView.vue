@@ -1,5 +1,5 @@
 <template>
-  <BannerComponent /> <!-- http://localhost:8080/#/editing/en  för att komma hit -->
+   <!-- http://localhost:8080/#/editing/en  för att komma hit -->
   <body>
 
   <div>
@@ -19,7 +19,7 @@
 <script>
 import io from 'socket.io-client';
 import Decks from "../assetts/Decks.json";
-import BannerComponent from '@/components/BannerComponent.vue';
+
 import EditAndCreateComponent from "@/components/EditAndCreateComponent";
 const socket = io();
 //const items = {localStorage};
@@ -74,7 +74,7 @@ export default {
     }
   },
   components: {
-    BannerComponent,
+   
     EditAndCreateComponent
   },
   created: function () {

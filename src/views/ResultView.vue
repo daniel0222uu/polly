@@ -1,5 +1,5 @@
 <template>
-  <BannerComponent />
+  
   <body>
 
   <div id="wrapperDiv">
@@ -43,7 +43,6 @@
 <script>
 // @ is an alias to /src
 import BarsComponent from '@/components/BarsComponent.vue';
-import BannerComponent from '@/components/BannerComponent.vue';
 import FlashcardView from "@/views/FlashcardView";
 import io from 'socket.io-client';
 const socket = io();
@@ -58,7 +57,6 @@ export default {
   name: 'ResultView',
   components: {
     FlashcardView,
-    BannerComponent,
     BarsComponent
   },
   data: function () {

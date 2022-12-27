@@ -1,5 +1,5 @@
 <template>
-  <banner-component></banner-component>
+ 
   <body>
   <div id="container">
     <router-link
@@ -46,11 +46,11 @@
 </template>
 
 <script>
-import BannerComponent from '@/components/BannerComponent.vue';
+
 export default {
   name: "MyDecksView",
   components: {
-    BannerComponent
+    
   },
 }
 </script>

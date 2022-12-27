@@ -7,8 +7,8 @@
   </header>
   <ResponsiveNav v-bind:hideNav="hideNav">
     <a href="">Home/Hem</a>
-    
-    <router-link  v-bind:to="'/mydecks/'+lang">{{uiLabels.myDecks}}</router-link>
+   
+    <router-link  v-bind:to="'/mydecks/'+ lang">{{uiLabels.myDecks}}</router-link>
     <router-link  v-bind:to="'/play/'+lang">{{uiLabels.play}}</router-link>
 
     <a href="">Game lobby</a>
@@ -54,10 +54,12 @@ export default {
         this.lang = "sv",
         this.uiLabels = svenska
         
+        
       else
         this.lang = "en",
         this.uiLabels = engelska
-        console.log("langggg")
+        console.log("langggg" + this.lang)
+        
         /* socket.emit("switchLanguage", this.lang) */
         
     },

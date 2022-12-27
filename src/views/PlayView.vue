@@ -1,5 +1,5 @@
 <template>
-  <banner-component></banner-component>
+  
   <body>
   <div id="container">
     <router-link
@@ -21,11 +21,11 @@
 </template>
 
 <script>
-import BannerComponent from "@/components/BannerComponent";
+
 export default {
   name: "PlayView",
   components: {
-    BannerComponent
+    
   },
   data: function() {
     return {

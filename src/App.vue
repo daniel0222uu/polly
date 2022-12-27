@@ -1,7 +1,16 @@
 <template>
+  <BannerComponent />
   <router-view/>
 </template>
 
+<script>
+import BannerComponent from '@/components/BannerComponent.vue';
+export default {
+  components: {
+    BannerComponent
+  }
+}
+</script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Island+Moments&family=Kanit:ital,wght@1,300&family=Mukta:wght@200&display=swap');
 :root {
@@ -15,7 +24,6 @@ body {
   margin: 0;
   padding: 0;
   background-image: url("../public/img/backgroundPicture.png");
-  background-opacity: 0.5;
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;

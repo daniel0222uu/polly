@@ -1,5 +1,4 @@
 <template>
-  <banner-component></banner-component>
   <body>
   <div>
     container div
@@ -11,7 +10,7 @@
 </template>
 
 <script>
-import BannerComponent from '@/components/BannerComponent.vue';
+
 import UploadComponent from "@/components/UploadComponent";
 
 
@@ -19,8 +18,7 @@ import UploadComponent from "@/components/UploadComponent";
 export default {
   name: "UploadView",
   components: {
-    UploadComponent,
-    BannerComponent
+    UploadComponent
   },
 }
 </script>

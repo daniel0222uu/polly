@@ -1,5 +1,4 @@
 <template>
-  <BannerComponent />
   <body>
     <WarningMessage v-bind:deck-alert="deckNameAlert"  v-bind:question-field-alert="questionFieldAlert"
     v-bind:question-was-added="questionWasAdded"/>
@@ -61,7 +60,6 @@
 <script>
 import io from 'socket.io-client';
 import Decks from "../assetts/Decks.json";
-import BannerComponent from '@/components/BannerComponent.vue';
 import WarningMessage from "@/views/WarningMessage";
 const socket = io();
 console.log(Decks);
@@ -101,8 +99,8 @@ export default {
     }
   },
   components: {
-    WarningMessage,
-    BannerComponent,
+    WarningMessage
+    
     //EditAndCreateComponent Not using it for now
   },
   created: function () {
