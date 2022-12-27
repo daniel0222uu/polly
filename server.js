@@ -25,10 +25,6 @@ app.post('/fileTest', (req, res) => { //axios test reveiver
 
 
 
-    //console.log(JSON.parse(file));
-    //console.log(data.data);
-
-
     res.send({ message: 'Data received' });
 });
 
