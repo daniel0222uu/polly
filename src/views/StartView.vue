@@ -1,48 +1,80 @@
 <template>
-  <BannerComponent />
   <h1>Welcome to Flashcards!</h1>
-  <label>
+  <label> 
     Write poll id: 
     <input type="text" v-model="id">
   </label>
-  <router-link v-bind:to="'/poll/'+id">{{uiLabels.participatePoll}}</router-link>
+  
+  <br><br><br>
+
+  <div>
+    <H1>Leaderboard</H1><br>
+      <table class="center" style="width:250px; border:1px solid black;font-family: Verdana;background-color: white;padding:10px">
+        <tr>
+          <th style="width: 70%;text-align: left" >Name</th>
+          <th style="width: 30%;text-align: right">Score</th>
+        </tr>
+        <tr v-for="Item in ScoreData.sort(function(a,b){return b.points-a.points})" :key="Item.points">
+          <td style="text-align:left" >{{ Item.name }}</td>
+          <td style="text-align:right">{{ Item.points }}</td>
+        </tr>
+      </table>
+        
+  </div>
+
+
 </template>
 
 <script>
-import BannerComponent from '@/components/BannerComponent.vue';
 import Decks from "../assetts/Decks.json";
-import io from 'socket.io-client';
 
-const socket = io();
+import Scores from "../assetts/Scores.json";
+
+
 console.log(Decks);
 
 
 export default {
   name: 'StartView',
+
   components: {
-    BannerComponent
+    
   },
   data: function () {
     return {
-      uiLabels: {},
+     
       id: "",
-      lang: "en",
-      hideNav: true
+      
+      hideNav: true,
+      scoreNameField: "",
+      scorePointField: "",
+      ScoreData: Scores
     }
   },
   methods: {
-    switchLanguage: function() {
-      if (this.lang === "en")
-        this.lang = "sv"
-      else
-        this.lang = "en"
-      socket.emit("switchLanguage", this.lang)
-    },
+    
     toggleNav: function () {
       this.hideNav = ! this.hideNav;
+    },
+    addToLeaderboard: function () {
+      let name = this.scoreNameField;
+      let points = this.scorePointField;
+      if (name === "" || points === "") {
+        console.log("Please fill in both fields")
+        this.fieldAlert()
+        return;
+      }
+      console.log(name);
+      console.log(points);
+      
+      Scores.push({
+        "name": name,
+        "points": points
+      });
     }
+  },
   }
-}
+
 </script>
 <style scoped>
   /*header {
@@ -75,7 +107,11 @@ export default {
     height: 2rem;
     cursor: pointer;
     font-size: 1.5rem;
-  }
+ }
+  .center {
+  margin-left: auto;
+  margin-right: auto;
+}
 
 @media screen and (max-width:50em) {
   .logo {
@@ -94,4 +130,6 @@ export default {
     left:-12em;
   }
 }
+
+
 </style>

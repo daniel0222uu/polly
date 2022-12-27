@@ -1,5 +1,5 @@
 <template>
-  <BannerComponent />
+  
   <body>
   <div id="GameLobbyPlayers">
 
@@ -19,7 +19,7 @@
 
 <script>
 import ResponsiveNav from '@/components/ResponsiveNav.vue';
-import BannerComponent from '@/components/BannerComponent.vue';
+
 import io from 'socket.io-client';
 
 const socket = io();
@@ -27,8 +27,7 @@ const socket = io();
 export default {
   name: "GameLobby",
   components: {
-    ResponsiveNav,
-    BannerComponent,
+    ResponsiveNav
   }
 
 }

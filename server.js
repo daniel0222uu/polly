@@ -4,8 +4,31 @@
 // Create express app
 const express = require("express");
 const app = express();
+const bodyParser = require("body-parser");
 var http = require('http').Server(app);
 var path = require('path');
+const fs = require("fs");
+app.use(bodyParser.json());
+
+
+app.post('/fileTest', (req, res) => { //axios test reveiver
+    const data = req.body;
+   
+    console.log("realAxios is responding on the server");
+
+     const file = fs.readFileSync("src/assetts/Decks.json");  
+     let jsonOfTheFile = JSON.parse(file);
+      jsonOfTheFile.push(data.data);
+     console.log(jsonOfTheFile);
+     console.log(data.data);
+      fs.writeFileSync("src/assetts/Decks.json", JSON.stringify(jsonOfTheFile));
+
+
+
+    res.send({ message: 'Data received' });
+});
+
+
 
 // Generate webpack config with CLI service
 if (process.env.NODE_ENV !== 'production') {

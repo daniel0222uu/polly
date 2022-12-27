@@ -6,5 +6,7 @@
 	"question": "Question",
 	"changeLanguage": "Byt till svenska",
 	"results": "Results",
-	"chooseAdeck": "Choose a deck"
+	"chooseAdeck": "Choose a deck please",
+	"play": "Play",
+	"myDecks": "My decks"
 }

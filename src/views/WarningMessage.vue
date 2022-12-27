@@ -45,20 +45,24 @@ export default {
   transition: all 0.5s ease;
 }
 .positionWarning{
+  z-index: 9;
   position: fixed;
-  top: 30px;
-  right: 50%;
+  top: 200px;
+  right: 20px;
   background-color: red;
   width: 300px;
   height: 50px;
 }
 .positionConfirmation{
+  display: flex;
+  z-index: 9;
   position: fixed;
-  top: 500px;
-  right: 50%;
+  top: 150px;
+  left: 20px;
   background-color: mediumspringgreen;
   width: 300px;
-  height: 50px;
+  height: 30px;
+  justify-content: center;
 }
 #deckNameWarning{
   text-align: center;

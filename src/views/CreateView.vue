@@ -1,5 +1,4 @@
 <template>
-  <BannerComponent />
   <body>
     <WarningMessage v-bind:deck-alert="deckNameAlert"  v-bind:question-field-alert="questionFieldAlert"
     v-bind:question-was-added="questionWasAdded"/>
@@ -7,15 +6,15 @@
 
   <div id="wrapperDiv">
 
-    <div class="nowCreating" v-if="!addingQuestionBool">
+    <div class="horizontalDiv" v-if="!addingQuestionBool">
 
-      <h1>Name your quiz please</h1>
+      <p id="namingQuiz">Name your quiz please</p>
 
-      <p><input class="qeustionEditingFields"  id="namingDeckField" type="text" v-model="deckName"></p>
+      <div id="namingField" ><input class="qeustionEditingFields"  id="namingDeckField" type="text" v-model="deckName"></div>
       <p><button @click="nameDeck(deckName)">Name my deck</button></p> {{questionObject.id}}
     </div>
 
-    <div class="nowCreating" v-if="addingQuestionBool">
+    <div class="horizontalDiv" v-if="addingQuestionBool">
 
 
 
@@ -27,10 +26,15 @@
       <input class="qeustionEditingFields"  id="answerField" type="text" v-model="answerField">
       <p><button @click="savingAddedQustion">Add this question and answer</button> </p>
     </div>
-    <div id="questionsCreated">
+    <div id="verticalDiv">
       <p style="font-weight: bold">{{questionObject.questionArray[questionIndex]}}</p>
       <p>{{questionObject.answerArray[questionIndex]}}</p>
-      <p> <button @click="previousCLick" > Previous</button>  <button @click="nextClick"> Next</button>
+      <p> <button @click="previousCLick" type="submit" style="margin-right: 70px">
+        <img src="https://cdn-icons-png.flaticon.com/512/7693/7693294.png" style="width: 20px">
+      </button>
+        <button @click="nextClick" >
+          <img src="https://cdn-icons-png.flaticon.com/512/7693/7693290.png" style="width: 20px">
+        </button>
       </p>
       <p>
         Added questions
@@ -56,7 +60,6 @@
 <script>
 import io from 'socket.io-client';
 import Decks from "../assetts/Decks.json";
-import BannerComponent from '@/components/BannerComponent.vue';
 import WarningMessage from "@/views/WarningMessage";
 const socket = io();
 console.log(Decks);
@@ -96,8 +99,8 @@ export default {
     }
   },
   components: {
-    WarningMessage,
-    BannerComponent,
+    WarningMessage
+    
     //EditAndCreateComponent Not using it for now
   },
   created: function () {
@@ -185,63 +188,18 @@ export default {
 </script>
 
 <style scoped>
-.warning{
-  font-size: 40px;
-  margin-top: 20px;
-  margin-left: 300px;
-  margin-right: 300px;
-}
-#questionWasAddedDiv{
-  background-color: mediumspringgreen;
-}
-#enterFieldsDiv{
-  background-color: red;
-}
-#deckNamingDiv{
-  background-color: red;
-}
 #wrapperDiv{
   position: relative;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   height: 100%;
 }
-.nowCreating{
-  flex: 1;
-  overflow: auto;
+.horizontalDiv{
 }
-#questionsCreated{
-  background-color: palegreen;
-  width: 300px;
-}
-.fade-enter-from {
-  opacity: 0;
-}
-.fade-enter-to{
-  opacity: 1;
-}
-.fade-enter-active{
-  transition: all 2s ease;
-}
-.fade-leave-from{
-  opacity: 1;
-}
-.fade-leave-to{
-  opacity: 0;
-}
-.fade-leave-active{
-  transition: all 0.5s ease;
-}
-#questionDiv{
-  background-color: aqua;
-  font-size: 80px;
-}
-#answerDiv{
-  background-color: brown;
-  font-size: 80px;
-}
-#nextButton{
-  margin: 40px;
+#verticalDiv{
+  margin-right: 5%;
+  margin-left:  5%;
+  border: 2px solid black;
 }
 .qeustionEditingFields{
   margin: 5px;
@@ -250,14 +208,14 @@ export default {
   font-size-adjust:0.5;
   text-align: center;
 }
-#questionNumberHeader{
-  font-size: 80px;
+#namingQuiz{
+  margin: 5px;
+  position: relative;
+  font-size: 40px;
+  font-size-adjust:0.5;
   text-align: center;
-  font-family: "Arial Black";
 }
-#quizName {
-  font-size: 100px;
-  text-align: center;
-  font-family: "Arial Black";
+#namingField{
+  
 }
 </style>

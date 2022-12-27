@@ -42,8 +42,23 @@ function sockets(io, socket, data) {
   socket.on('resetAll', () => {
     data = new Data();
     data.initializeData();
-  })
- 
+  });
+  socket.on('startPlaying', function(d) {
+    data.activePlayers(d.name, d.score);
+    io.emit('dataUpdate', data.getActivePlayers());
+  });
+  socket.on('numberProgress', function(d) {
+    data.updateScore(d.name, d.score);
+    io.emit('dataUpdate', data.getActivePlayers());
+  });
+  socket.on('playRequest', function(d) {
+    const requester = d.requester;
+    const receiver  = d.receiver;
+    const objectToSend = {requester: requester, receiver: receiver};
+    data.appendInviteList(objectToSend);
+    //socket.emit('requestReceive', data.getInviteList());
+    io.emit('requestReceive', data.getInviteList());
+  });
 }
 
 module.exports = sockets;
