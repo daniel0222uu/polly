@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import Decks from "/Users/danielceoca/Desktop/projektGränssnitt/polly/src/assetts/Decks.json";
+import Decks from "../assetts/Decks.json";
 import io from "socket.io-client";
 import FlashcardView from "@/views/FlashcardView";
 const socket = io();
