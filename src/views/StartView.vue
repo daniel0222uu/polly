@@ -12,19 +12,30 @@
   <div style= "display: flex; text-align:left;margin:0 auto;">
   
     <!--Det här är första kolumnen-->
-    <div style= "width: 10%">
+    <div style= "width: 30%">
     </div>
   
      <!--Det här är andra kolumnen-->
-     <div style= "width: 50%;border: 1px solid black; background-color: white; padding: 10px">
-      <p><strong>Leaderboard</strong></p>
+     <div style= "width: 40%">
+      <!--<p><strong>Leaderboard</strong></p>
         <ul>
           <li v-for="Item in ScoreData.sort(function(a,b){return b.points-a.points})" :key="Item.points">{{ Item.name }} {{ Item.points }}</li>
-        </ul>
-    </div>
+        </ul>-->
+        <H1>Leaderboard</H1>
+        <table style="width:250px; border:1px solid black;font-family: Verdana;background-color: white;padding:10px">
+          <tr>
+            <th style="width: 70%;text-align: left" >Name</th>
+            <th style="width: 30%;text-align: right">Score</th>
+          </tr>
+          <tr v-for="Item in ScoreData.sort(function(a,b){return b.points-a.points})" :key="Item.points">
+            <td style="text-align:left" >{{ Item.name }}</td>
+            <td style="text-align:right">{{ Item.points }}</td>
+          </tr>
+        </table>
+       </div>
 
      <!--Det här är tredje kolumnen-->
-     <div style= "width: 40%;padding: 10px;margin: 20px">
+     <div style= "width: 30%;padding: 10px;margin: 20px">
       <p>Add a score</p>
       Name:<input class="scoreEditingFields" id="scoreNAME" type="text" v-model="scoreNameField">
       <br>
@@ -33,8 +44,6 @@
     </div>
   
   </div>
-
-
 
  
 </template>
@@ -141,4 +150,6 @@ export default {
     left:-12em;
   }
 }
+
+
 </style>
