@@ -3,7 +3,7 @@
 
   <body>
   <div>
-
+{{inviteInformation}}
   </div>
   <div id="wrapperDiv">
     <div id="horizontalContent">
@@ -15,6 +15,14 @@
       </div>
       <div>
         <FlashcardView v-bind:questionProp="myObj_deserialized" @nextClick="onClickChild" @previousClick="onClickChild" ></FlashcardView>
+      </div>
+
+      <div style="background-color: white">
+        <label>
+          Write poll id:
+          <input type="text" v-model="lobbyId">
+        </label>
+        <router-link v-bind:to="'/poll/'+lobbyId">participate</router-link>
       </div>
 
     </div>
@@ -35,7 +43,7 @@
 <script>
 import Decks from "../assetts/Decks.json";
 import io from "socket.io-client";
-import FlashcardView from "@/views/FlashcardView";
+import FlashcardView from "@/components/FlashcardComponent";
 const socket = io();
 
 
@@ -48,7 +56,7 @@ export default {
   data: function(){
     return {
       lang: "en",
-      pollId: "123",
+      lobbyId: null,
       name: "",
       questionPosition: 0,
       totalQuestionAmount: 5,
@@ -82,11 +90,16 @@ export default {
       socket.emit("numberProgress", {name: this.name, score: this.questionPosition});
     },
     sendRequest: function(playerToRequest){
+      this.createPoll();
       socket.emit('playRequest', {
         requester: this.name,
-        receiver: playerToRequest
+        receiver: playerToRequest,
+        lobbyID: this.lobbyId
       });
-
+    },
+    createPoll: function () { //ett bättre namn hade varit createLobby, men jag är lat
+      this.lobbyId = Math.floor(Math.random()*1000000 + 100000);
+      socket.emit("createPoll", {pollId: this.lobbyId, lang: this.lang })
     }
   },
   watch: {
@@ -94,10 +107,9 @@ export default {
       console.log("inviteInformation is", this.inviteInformation)
       for (var i = 0, l = this.inviteInformation.length; i < l; i++) {
         var inviteInfo = this.inviteInformation[i];
-        console.log(inviteInfo.requester);
-        console.log(inviteInfo.receiver);
         if(inviteInfo.receiver === this.name){
-          console.log("receiver is me and im invited by ", inviteInfo.requester);
+          console.log("receiver is me and im invited by ", inviteInfo.requester,
+          "the lobby created is",inviteInfo.lobbyID);
         }
       }
     }
