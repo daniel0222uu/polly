@@ -105,7 +105,7 @@ export default {
     top:0;
     left:0;
     height: 2rem;
-    cursor: pointer;
+    
     font-size: 1.5rem;
  }
   .center {

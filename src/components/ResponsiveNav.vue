@@ -16,23 +16,42 @@ export default {
 </script>
 <style scoped>
   nav {
-    background-color: lightgray;
+    
     width:100%;
     height: 4em;
     display: grid;
     grid-template-columns: repeat(auto-fit, 10em);
+   
+    
+    justify-content: center;
+    
   }
+  nav :hover{
+    background-color: rgba(32, 178, 171, 0.448);
+  }
+
 
   nav ::v-slotted(a) {
     text-transform: uppercase;
     font-size: 0.8rem;
     letter-spacing: 0.1em;
     text-decoration: none;
-    color: gray;
+    color: black;
     display: grid;
     align-items: center;
     justify-content: center;
-    border-left: 1px solid gray;
+    margin: 3%;
+    
+    
+    background-color: lightseagreen;
+    border-radius: 30px;
+    /*
+    border-left: 10px solid lightblue;
+    border-top: 5px solid lightblue;
+    */
+    
+    
+    
   }
 
 @media screen and (max-width:50em) {
