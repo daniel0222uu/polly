@@ -27,8 +27,18 @@ export default {
     
   }
   nav :hover{
-    background-color: rgba(32, 178, 171, 0.448);
+    
+    background-color: rgb(37, 188, 211);
+    
+   
+     
   }
+  nav :active{
+    
+    transform: translateY(2px);
+    
+  }
+  
 
 
   nav ::v-slotted(a) {
@@ -41,9 +51,13 @@ export default {
     align-items: center;
     justify-content: center;
     margin: 3%;
+    border: 2px solid rgb(3, 81, 77);
+    background-color: rgb(32, 159, 178);
     
     
-    background-color: lightseagreen;
+    
+    
+    
     border-radius: 30px;
     /*
     border-left: 10px solid lightblue;

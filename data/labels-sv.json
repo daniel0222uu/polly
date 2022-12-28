@@ -8,5 +8,10 @@
 	"results": "Resultat",
 	"chooseAdeck": "Välj en kortlek",
 	"play": "Spela",
-	"myDecks": "Mina kortlekar"
+	"myDecks": "Mina kort",
+	"settings":"inställningar",
+	"FAQ":"FAQ",
+	"lobby":"lobby"
+	
+	
 }

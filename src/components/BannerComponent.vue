@@ -3,19 +3,33 @@
     <div v-bind:class="['hamburger', {'close': !hideNav}]"
          v-on:click="toggleNav">
     </div>
-    <div class="logo"> <a href=""><img src="/img/logo2.jfif"></a>Quiz quizzing</div>
+    <div class="logo"> 
+      
+      
+      <router-link class="logo" v-bind:to="'/'" style="text-decoration:none">flashcards</router-link>
+   
+   
+    </div>
+    
+    
+   
+    
   </header>
   <ResponsiveNav v-bind:hideNav="hideNav">
 
-    <router-link  v-bind:to="'/'">Home/Hem</router-link>
+   
     <router-link  v-bind:to="'/mydecks/'+ lang">{{uiLabels.myDecks}}</router-link>
     <router-link  v-bind:to="'/play/'+lang">{{uiLabels.play}}</router-link>
-
-    <a class="navbutton" href="">Game lobby</a>
-    <a href="">About</a>
-    <a href="">Settings</a>
-    <button v-on:click="switchLanguage">{{uiLabels.changeLanguage}}</button>
+    <router-link  v-bind:to="'/'">{{uiLabels.lobby}}</router-link>
+    <router-link  v-bind:to="'/'">{{uiLabels.FAQ}}</router-link>
+    <router-link  v-bind:to="'/'">{{uiLabels.settings}}</router-link>
+    
+    
+    <button  v-on:click="switchLanguage">{{uiLabels.changeLanguage}}</button>
+    
+    
   </ResponsiveNav>
+  
 
 </template>
 
@@ -43,7 +57,7 @@ export default {
     },
     created: function () {
     socket.on("init", (labels) => {
-      this.uiLabels = labels
+      /*this.uiLabels = labels */
       console.log("lang change " + labels)
       
     })
@@ -74,29 +88,44 @@ export default {
 
 
 <style scoped>
-button:hover {
-  cursor: pointer;
-}
+
 
 
 header {
    
-    width: 100%;
-    display: grid;
-    grid-template-columns: 2em auto;
+    width:auto;
+    display: flex;
+    
+    justify-content: center;
+    align-items: center;
+  
+   
+    margin-bottom: 10px;
+    margin-top: 10px;
+    
+   
   }
+
   
    .logo {
+    width:100%;
     text-transform: uppercase;
-    letter-spacing: 0.25em;
+    letter-spacing: 0.5em;
     font-size: 2.5rem;
-    color: white;
-    padding-top:0.2em;
+    color:rgb(3, 30, 81);
+    
+    
+    padding:5px;
+    margin:5px;
+   
+  
+    
+
   }
   
   .logo img {
     height:5rem;
-    vertical-align: bottom;  
+    vertical-align: center;  
     margin-right: 0.5rem; 
   }
   

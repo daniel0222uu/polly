@@ -8,5 +8,8 @@
 	"results": "Results",
 	"chooseAdeck": "Choose a deck please",
 	"play": "Play",
-	"myDecks": "My decks"
+	"myDecks": "My decks",
+	"settings":"settings",
+	"FAQ":"FAQ",
+	"lobby":"lobby"
 }
