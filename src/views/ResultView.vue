@@ -17,7 +17,7 @@
         <FlashcardView v-bind:questionProp="myObj_deserialized" v-bind:questionIndex="questionPosition"></FlashcardView>
       </div>
 
-      <!-- Give comments and likes to decks -->
+      <!-- Give comments and likes to decks. Popups will also appear -->
       <div id = "Comments">
         <button cbutton ="comment()"> Comment </button>
       </div>
@@ -25,6 +25,12 @@
       <div id = "Likes">
         <button lbutton ="likes()"> Like</button>
       </div>
+
+    <div class = "popup" id = "popup">
+      <h2>Tack!</h2>
+      <p>Tack for din like!</p>
+      <button type="button">OK</button>
+    </div>
       <!-- -->
 
     </div>
@@ -44,6 +50,7 @@
 import BarsComponent from '@/components/BarsComponent.vue';
 import FlashcardView from "@/components/FlashcardComponent";
 import io from 'socket.io-client';
+
 const socket = io();
 
 let listToFill = [];
@@ -190,6 +197,35 @@ button {
 
 #Comments{
   padding: 10px 40px;
+}
+
+/*Popup button*/
+.popup{
+  width: 400px;
+  background-color: black;
+  position: absolute;
+  top:50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  text-align: center;
+  padding: 0 30px 30px;
+}
+
+.popup h2 {
+  font-size: 38px;
+  font-weight: 500;
+  margin: 30px 0 10px;
+}
+
+.popup button{
+  width: 100%;
+  margin-top: 50px;
+  padding: 10px 0;
+  border: 0;
+  outline: none;
+  font-size: 20px;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 
