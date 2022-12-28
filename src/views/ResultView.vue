@@ -42,7 +42,7 @@
 <script>
 // @ is an alias to /src
 import BarsComponent from '@/components/BarsComponent.vue';
-import FlashcardView from "@/views/FlashcardView";
+import FlashcardView from "@/components/FlashcardComponent";
 import io from 'socket.io-client';
 const socket = io();
 
