@@ -93,6 +93,14 @@ export default {
       this.questionObject = this.myObj_deserialized;
     },
   },
+
+  lbutton() {
+    console.log("Thank you for liking!")
+  },
+
+  cbutton(){
+
+  }
 }
 
 
