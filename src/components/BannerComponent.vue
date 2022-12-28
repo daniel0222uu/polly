@@ -6,8 +6,8 @@
     <div class="logo"> <a href=""><img src="/img/logo2.jfif"></a>Quiz quizzing</div>
   </header>
   <ResponsiveNav v-bind:hideNav="hideNav">
-    <a href="">Home/Hem</a>
    
+    <router-link  v-bind:to="'/'">Home/Hem</router-link>
     <router-link  v-bind:to="'/mydecks/'+ lang">{{uiLabels.myDecks}}</router-link>
     <router-link  v-bind:to="'/play/'+lang">{{uiLabels.play}}</router-link>
 
@@ -43,6 +43,7 @@ export default {
     },
     created: function () {
     socket.on("init", (labels) => {
+      this.uiLabels = labels
       console.log("lang change " + labels)
       
     })
