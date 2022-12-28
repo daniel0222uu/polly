@@ -6,12 +6,12 @@
     <div class="logo"> <a href=""><img src="/img/logo2.jfif"></a>Quiz quizzing</div>
   </header>
   <ResponsiveNav v-bind:hideNav="hideNav">
-   
+
     <router-link  v-bind:to="'/'">Home/Hem</router-link>
     <router-link  v-bind:to="'/mydecks/'+ lang">{{uiLabels.myDecks}}</router-link>
     <router-link  v-bind:to="'/play/'+lang">{{uiLabels.play}}</router-link>
 
-    <a href="">Game lobby</a>
+    <a class="navbutton" href="">Game lobby</a>
     <a href="">About</a>
     <a href="">Settings</a>
     <button v-on:click="switchLanguage">{{uiLabels.changeLanguage}}</button>
@@ -74,9 +74,13 @@ export default {
 
 
 <style scoped>
+button:hover {
+  cursor: pointer;
+}
+
 
 header {
-    background-color: grey;
+   
     width: 100%;
     display: grid;
     grid-template-columns: 2em auto;
@@ -106,8 +110,8 @@ header {
     top:0;
     left:0;
     height: 2rem;
-    cursor: pointer;
     font-size: 1.5rem;
+    
   }
 
 @media screen and (max-width:50em) {
