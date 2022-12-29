@@ -29,14 +29,13 @@ export default {
   nav :hover{
     
     background-color: rgb(37, 188, 211);
+    transform: translateY(1px);
     
    
      
   }
   nav :active{
-    
-    transform: translateY(2px);
-    
+    transform: translateY(-1px);
   }
   
 
@@ -58,7 +57,7 @@ export default {
     
     
     
-    border-radius: 30px;
+    border-radius: 10px;
     /*
     border-left: 10px solid lightblue;
     border-top: 5px solid lightblue;

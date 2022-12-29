@@ -1,24 +1,36 @@
 <template>
-  <div id="cardsDiv" >
+
+  <div class="card" v-on:click="flip" >
+    <div class="card-inner" :class="{flipped: flipped}">
+      <div class="card-front">
+        <div >{{questionProp.questionArray[questionPosition]}}</div>
+        
+    </div>
+    <div class="card-back">
+      {{questionProp.answerArray[questionPosition]}}
+    </div>
+
+    </div>
+    
+
+  </div>
+
+
+  <div>
 
     <!--<div id="count"> <p>
       Score:
     </p>  {{points}} out of {{questionProp.questionArray.length}} Points
     </div> -->
-     <div class="flippingDivs" id="questionDiv" @click="questionPress" v-if="!answerButtonBool">
-      <p :class="resizeText" :style="{'font-size': fontSize + 'px' }" class="flippingDivParagraph" > {{questionProp.questionArray[questionPosition]}} </p>
-    </div>
+     
 
-    <Transition name="fade" v-bind:key="questionPosition">
-
-      <div class="flippingDivs" id="answerDiv" @click="answerPress" v-if="answerButtonBool">
-        <p :style="{'font-size': fontSize + 'px'}" class="flippingDivParagraph" > {{questionProp.answerArray[questionPosition]}} </p>
-      </div>
-    </Transition>
+    
 
     <div class="buttonDiv">
 
       <button id="previousButton" @click="previousCLick" class="prevNextButton"> Previous </button>
+
+      <a style="color:white">{{ questionPosition +1}}/{{questionProp.questionArray.length}}</a>
       <!--<input form="text" id="formInput" v-model="answerString">-->
       <button id="nextButton" @click="nextClick" class="prevNextButton"> Next </button>
       <!--<button id="nextButton" @click="textAnswer" class="prevNextButton"> Answer </button>  testade att skriva
@@ -38,6 +50,7 @@ export default {
   },
   data: function(){
     return{
+      flipped: false,
       answerButtonBool: false,
       fontSize: 80,
       questionPosition: 0,
@@ -47,6 +60,9 @@ export default {
     }
   },
   methods: {
+    flip(){
+      this.flipped = !this.flipped;
+    },
     questionPress: function() {
       this.answerButtonBool = true;
       this.adjustAnswerFontSize();
@@ -153,6 +169,75 @@ export default {
 
 <style scoped>
 
+.card {
+  margin-left: 35%;
+  margin-right: 35%;
+  
+  height:400px; 
+  display: flex;
+  justify-content: center;
+  cursor:pointer;
+  align-items: center;
+
+  
+ 
+  
+  perspective: 1000px; /* Remove this if you don't want the 3D effect */
+
+}
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 1.2s;
+  transform-style: preserve-3d;
+  
+  
+
+}
+.card-inner.flipped{
+  transform: rotateY(180deg);
+}
+
+.card-front, .card-back {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 4px;
+  backface-visibility: hidden;
+  border: 2px solid black;
+  background-color: rgb(74, 91, 205);
+ 
+ 
+  
+ 
+  
+}
+
+.card-front {
+  color: black;
+  font-size: 18px;
+  background-color: rgb(32, 159, 178);
+  
+}
+
+.card-back {
+  font-size: 14px;
+  color: white;
+  transform: rotateY(180deg);
+  background-color: rgb(74, 91, 205);
+}
+
+
+
+
+
+
+
+
 #count{
   font-size: 30px;
 }
@@ -215,8 +300,8 @@ export default {
   }
 }
 .prevNextButton{
-  font-size: 30px;
-  font-margin: 40px;
+  font-size: 10px;
+ 
 }
 .fade-enter-from {
   opacity: 0;
@@ -238,45 +323,33 @@ export default {
 }
 .buttonDiv{
   display: flex;
+
   justify-content: center;
-  justify-content: space-between;
   margin-top: 5%;
   margin-left: 5%;
   margin-right: 5%;
   margin-bottom: 5%;
 }
-#previousButton {
+
+#nextButton, #previousButton {
   border: none;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  color: black;
-  font-weight: 900;
-  font-Size: 25px;
-  width: 250px;
-  height: 80px;
-  margin-bottom: 5px;
-  border-radius: 50px;
+  
+  cursor:pointer;
+ 
+  font-Size: 2vmax;
+  width: 12vmax;
+  height: 4vmax;
+  
+  border-radius: 5px;
 }
-#nextButton {
-  border: none;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  font-weight: 900;
-  font-Size: 25px;
-  width: 250px;
-  height: 80px;
-  margin-bottom: 5px;
-  border-radius: 50px;
+#previousButton:active {
+transform: translateX(-2px);
 }
-#previousButton:hover {
-  opacity: 1;
-  -webkit-animation: flash 3s;
-  animation: flash 3s;
+#nextButton:active {
+  transform: translateX(2px);
 }
-#nextButton:hover {
-  opacity: 1;
-  -webkit-animation: flash 1.5s;
-  animation: flash 1.5s;
+#nextButton:hover, #previousButton:hover{
+  background-color: lightgray;
 }
 @-webkit-keyframes flash {
   0% {

@@ -1,6 +1,8 @@
   <template>
   <div>
-    {{pollId}}
+   <!--
+    
+   --> {{pollId}}
   </div>
     <div>
       <FlashcardComponent v-bind:questionProp="myObj_deserialized" @nextClick="onClickChild" @previousClick="onClickChild" ></FlashcardComponent>

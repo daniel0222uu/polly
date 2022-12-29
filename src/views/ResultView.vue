@@ -1,24 +1,32 @@
 <template>
   
   <body>
+   
+       
+      
   <div id="wrapperDiv">
+    
     <div id="horizontalContent">
-  <div id="questionHeader">
-    <div id="selector">
-        <select name="drinks" v-model="selectedDeck" required @change="loadDeck">
-          <option value="" disabled selected hidden>{{uiLabels.chooseAdeck}}</option>
-          <option v-for="deck in selectorList" v-bind:key="deck">{{ deck }}</option>
-        </select>
-    </div>
-
-  </div>
-  <BarsComponent v-bind:data="submittedAnswers"/>
-      <div>
-        <FlashcardView v-bind:questionProp="myObj_deserialized" v-bind:questionIndex="questionPosition"></FlashcardView>
+      
+      <div id="questionHeader">
+        <div id="selector">
+          <select name="decks" v-model="selectedDeck" required @change="loadDeck">
+            <option value="" disabled selected hidden>{{uiLabels.chooseAdeck}}</option>
+            <option v-for="deck in selectorList" v-bind:key="deck">{{ deck }}</option>
+          </select>
+        </div>
+        <FlashcardView v-bind:questionProp="myObj_deserialized" v-bind:questionIndex="questionPosition"> </FlashcardView>
       </div>
+            <!--
+          <BarsComponent v-bind:data="submittedAnswers"/>
+            -->
+    
 
-      <!-- Give comments and likes to decks. Popups will also appear -->
-      <div id = "Comments">
+  
+      
+<!--
+    Give comments and likes to decks. Popups will also appear 
+   <div id = "Comments">
         <button cbutton ="comment()"> Comment </button>
       </div>
 
@@ -31,15 +39,12 @@
       <p>Tack for din like!</p>
       <button type="button">OK</button>
     </div>
-      <!-- -->
+       -->
 
+     
     </div>
 
-    <div id="verticalRight">
-      <h2>Game lobby</h2>
-      här ska det vara aktiva spelare och möjlighet till att kunna gå med i lobbies. Ska såklart inte va
-      såhär fult grön men aa hoppas man fattar layout
-    </div>
+   
   </div>
 
   </body>
@@ -47,7 +52,7 @@
 
 <script>
 // @ is an alias to /src
-import BarsComponent from '@/components/BarsComponent.vue';
+// import BarsComponent from '@/components/BarsComponent.vue';
 import FlashcardView from "@/components/FlashcardComponent";
 import io from 'socket.io-client';
 
@@ -63,7 +68,7 @@ export default {
   name: 'ResultView',
   components: {
     FlashcardView,
-    BarsComponent
+    // BarsComponent
   },
   data: function () {
     return {
@@ -109,7 +114,7 @@ export default {
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;700&display=swap');
 
-* { box-sizing: border-box; }
+
 
 #choosingParagraph{
   text-align: center;
@@ -164,9 +169,7 @@ header {
   grid-template-columns: 2em auto;
 }
 #questionHeader{
-  text-transform: uppercase;
-  font-weight: bold;
-  font-size: 30px;
+  font-size:30px;
   padding-top: 100px;
   text-align: center;
 }
