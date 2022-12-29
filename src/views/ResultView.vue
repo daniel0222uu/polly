@@ -13,13 +13,19 @@
       
       <div id="questionHeader">
         <div id="selector">
-          <select name="decks" v-model="selectedDeck" required @change="loadDeck">
-            <option value="" disabled selected hidden>{{uiLabels.chooseAdeck}}</option>
-            <option v-for="deck in selectorList" v-bind:key="deck">{{ deck }}</option>
+          <select  name="decks" v-model="selectedDeck" required @change="loadDeck(this.selectedDeck)">
+            <option value="" disabled selected hidden>{{selectorList[0]}}</option>
+            <option id="deckSelector" v-for="deck in selectorList" v-bind:key="deck">{{ deck }}</option>
           </select>
         </div>
+       <!--
+    ----if no deck exists, the card should show: "go to my decks and create a deck to play".----- (for single player only)
+
+
+       --> 
         <FlashcardView v-bind:questionProp="myObj_deserialized" v-bind:questionIndex="questionPosition"> </FlashcardView>
       </div>
+      {{ selectedDeck }}
             <!--
           <BarsComponent v-bind:data="submittedAnswers"/>
             -->
@@ -57,12 +63,6 @@ import io from 'socket.io-client';
 
 const socket = io();
 
-let listToFill = [];
-for (var i =0, len = localStorage.length; i< len; ++i ) {
-  listToFill.push(localStorage.key(i));
-}
-console.log(listToFill);
-
 export default {
   name: 'ResultView',
   components: {
@@ -75,7 +75,7 @@ export default {
       uiLabels: {},
       lang: "en",
       hideNav: true,
-      selectorList: listToFill,
+      selectorList: [],
       selectedDeck: "",
       question: "",
       submittedAnswers: {
@@ -89,18 +89,24 @@ export default {
     }
   },
   created() {
+    for (var i =0, len = localStorage.length; i< len; ++i ) 
+    {
+       this.selectorList.push(localStorage.key(i));
+    }
     this.myObj_deserialized = this.questionObject;
+
     socket.on("init", (labels) => {
       this.uiLabels = labels
       console.log(labels);
+       this.loadDeck(this.selectorList[0])
 
     })
   },
   methods: {
-    loadDeck: function(){
+    loadDeck: function(deck){
       this.questionPosition = 0;
       console.log("du klickade på en knapp med loadDeck()");
-      this.myObj_deserialized = JSON.parse(localStorage.getItem(this.selectedDeck));
+      this.myObj_deserialized = JSON.parse(localStorage.getItem(deck));
       this.questionObject = this.myObj_deserialized;
     },
   },
@@ -200,6 +206,7 @@ button {
 #Comments{
   padding: 10px 40px;
 }
+
 
 /*Popup button
 .popup{
