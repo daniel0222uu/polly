@@ -22,7 +22,15 @@
           Write poll id:
           <input type="text" v-model="lobbyId">
         </label>
-        <router-link v-bind:to="'/poll/'+lobbyId">participate</router-link>
+        <router-link
+            v-bind:to="'/poll/'+lobbyId"
+        >
+          <button id="shadow"
+                  @click="joinLobby"
+          >
+            Participate
+          </button>
+        </router-link>
       </div>
 
     </div>
@@ -56,7 +64,7 @@ export default {
   data: function(){
     return {
       lang: "en",
-      lobbyId: null,
+      lobbyId: 1000000,
       name: "",
       questionPosition: 0,
       totalQuestionAmount: 5,
@@ -96,10 +104,18 @@ export default {
         receiver: playerToRequest,
         lobbyID: this.lobbyId
       });
+      socket.emit('lobbyObject', {
+        lobbyID: this.lobbyId,
+        playersInLobby: []
+      });
     },
     createPoll: function () { //ett bättre namn hade varit createLobby, men jag är lat
       this.lobbyId = Math.floor(Math.random()*1000000 + 100000);
-      socket.emit("createPoll", {pollId: this.lobbyId, lang: this.lang })
+      socket.emit("createPoll", {pollId: this.lobbyId, lang: this.lang });
+    },
+    joinLobby: function(){
+      socket.emit("joinLobby", {lobbyID: this.lobbyId, name: this.name});
+      this.navigate();
     }
   },
   watch: {

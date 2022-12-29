@@ -7,6 +7,7 @@ function Data() {
   this.polls = {};
   this.activePlayerList = [];
   this.inviteList = [];
+  this.activeLobbies = [];
 }
 
 /***********************************************
@@ -50,7 +51,7 @@ Data.prototype.editQuestion = function(pollId, index, newQuestion) {
 
 Data.prototype.getQuestion = function(pollId, qId=null) {
   const poll = this.polls[pollId];
-  console.log("question requested for ", pollId, qId);
+ // console.log("question requested for ", pollId, qId);
   if (typeof poll !== 'undefined') {
     if (qId !== null) {
       poll.currentQuestion = qId;
@@ -90,7 +91,6 @@ Data.prototype.getAnswers = function(pollId) {
 }
 Data.prototype.activePlayers = function(name,number){
     this.activePlayerList.push({name:name,score:number});
-    console.log(this.activePlayerList);
 }
 Data.prototype.getActivePlayers = function(){
     return this.activePlayerList;
@@ -101,13 +101,35 @@ Data.prototype.updateScore = function(name,number){
             this.activePlayerList[i].score = number;
         }
     }
-    console.log(this.activePlayerList);
 }
 Data.prototype.appendInviteList = function(inviteObject){
   this.inviteList.push(inviteObject);
 }
 Data.prototype.getInviteList = function(){
     return this.inviteList;
+}
+Data.prototype.appendLobbies = function(lobbyObject){
+    this.activeLobbies.push(lobbyObject);
+}
+Data.prototype.updateLobbies = function(name, pollId){
+  const playerToAdd = name;
+  const lobbyToJoin = pollId;
+  for (let lobby of this.activeLobbies){
+    if (lobby.lobbyID == lobbyToJoin){
+      lobby.playersInLobby.push(playerToAdd);
+    }
+  }
+}
+Data.prototype.getAllLobbies = function(){
+    return this.activeLobbies;
+}
+Data.prototype.getLobbyParticipants = function(searchLobbyID){
+  for (let lobby of this.activeLobbies){
+    if (lobby.lobbyID == searchLobbyID){
+     // console.log("found lobby", lobby);
+      return lobby.playersInLobby;
+    }
+  }
 }
 
 

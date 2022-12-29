@@ -10,7 +10,12 @@ function sockets(io, socket, data) {
   });
 
   socket.on('createPoll', function(d) {
-    socket.emit('pollCreated', data.createPoll(d.pollId, d.lang));
+   // console.log(d.pollId, "was sent to the socket.js in createPoll");
+    socket.emit('pollCreated', d.pollId);
+
+  });
+  socket.on("updatePollView", function(d) {
+    //console.log("update pollview received:", d.name);
   });
 
   socket.on('addQuestion', function(d) {
@@ -34,10 +39,7 @@ function sockets(io, socket, data) {
     io.to(d.pollId).emit('dataUpdate', data.getAnswers(d.pollId));
   });
 
-  socket.on('submitAnswer', function(d) {
-    data.submitAnswer(d.pollId, d.answer);
-    io.to(d.pollId).emit('dataUpdate', data.getAnswers(d.pollId));
-  });
+
 
   socket.on('resetAll', () => {
     data = new Data();
@@ -60,6 +62,36 @@ function sockets(io, socket, data) {
     //socket.emit('requestReceive', data.getInviteList());
     io.emit('requestReceive', data.getInviteList());
   });
+  socket.on('lobbyObject', function(d) {
+    const lobbyID = d.lobbyID;
+    const playersInLobby = d.playersInLobby;
+    const objectToSend = {lobbyID: lobbyID, playersInLobby: playersInLobby};
+    data.appendLobbies(objectToSend);
+  });
+  socket.on('joinLobby', function(d) {
+    const name = d.name;
+    const lobbyID = d.lobbyID;
+    data.updateLobbies(name, lobbyID);
+    //console.log(data.getLobbyParticipants(lobbyID));
+    //io.to(d.pollId).emit('dataUpdate', data.getLobbyParticipants(d.pollId)); denna rad fungerar inte
+  });
+  socket.on('getPlayers', function(d) {
+    console.log("getPLayers respondend in sockets.jS");
+  });
+  /*socket.on('submitAnswer', function(d) {
+    console.log("answer submitted for ", d.pollId);
+    console.log(data.getLobbyParticipants(d.pollId));
+    //console.log("if this is correct, it should be seen in console from submit answer", d.questionObject, d.pollId);
+    io.to(d.pollId).emit('dataUpdate', d.questionObject);
+  }); detta är submitanswer innan, försöker
+  visa lobby players från den istället*/
+  socket.on('submitAnswer', function(d) {
+    console.log(data.getLobbyParticipants(d.pollId));
+    //console.log("if this is correct, it should be seen in console from submit answer", d.questionObject, d.pollId);
+    io.to(d.pollId).emit('dataUpdate', data.getLobbyParticipants(
+        d.pollId));
+  });
 }
+
 
 module.exports = sockets;
