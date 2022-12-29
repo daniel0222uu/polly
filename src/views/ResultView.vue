@@ -1,6 +1,12 @@
 <template>
   
   <body>
+
+  <!-- Popups -->
+  <WarningMessage v-bind:deck-alert="deckNameAlert"  v-bind:question-field-alert="DeckWasLiked"
+                  v-bind:question-was-added="questionWasAdded"/>
+
+
   <div id="wrapperDiv">
     <div id="horizontalContent">
   <div id="questionHeader">
