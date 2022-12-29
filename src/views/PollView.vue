@@ -1,12 +1,11 @@
   <template>
   <div>
-   <!--
-    
-   --> {{pollId}}
+    {{pollId}} {{players}} <button @click="submitAnswer"> Press this button to get the players connected to the lobby</button>
   </div>
     <div>
       <FlashcardComponent v-bind:questionProp="myObj_deserialized" @nextClick="onClickChild" @previousClick="onClickChild" ></FlashcardComponent>
     </div>
+
 </template>
 
 <script>
@@ -26,7 +25,8 @@ export default {
       questionObject: {"id": "Sveriges huvudstäder",
         "questionArray": ["Sverige", "Norge", "Finland", "Danmark"],
         "answerArray": ["Sthlm", "Oslo", "Helsingfors", "CBH"]},
-      myObj_deserialized: {}
+      myObj_deserialized: {},
+      players: [],
     }
   },
   created: function () {
@@ -37,12 +37,12 @@ export default {
       this.question = q
     )
     socket.on("dataUpdate", answers =>
-      this.submittedAnswers = answers
+      this.players = answers
     )
   },
   methods: {
-    submitAnswer: function (answer) {
-      socket.emit("submitAnswer", {pollId: this.pollId, answer: answer})
+    submitAnswer: function () {
+      socket.emit("submitAnswer", {pollId: this.pollId})
     },
     onClickChild: function(value){
       this.questionPosition = value;
