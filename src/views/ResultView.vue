@@ -23,12 +23,8 @@
             <!--
           <BarsComponent v-bind:data="submittedAnswers"/>
             -->
-    
 
-  
-      
-<!--
-    Give comments and likes to decks. Popups will also appear 
+      <!--
    <div id = "Comments">
         <button cbutton ="comment()"> Comment </button>
       </div>
@@ -37,12 +33,13 @@
         <button lbutton ="likes()"> Like</button>
       </div>
 
-      <!--<div class = "popup" id = "popup">
+
+      <div class = "popup" id = "popup">
         <h2>Tack!</h2>
         <p>Tack for din like!</p>
         <button type="button">OK</button>
-      </div>
-         -->
+      </div>-->
+
 
     </div>
 
