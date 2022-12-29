@@ -26,12 +26,12 @@
         <button lbutton ="likes()"> Like</button>
       </div>
 
-    <div class = "popup" id = "popup">
-      <h2>Tack!</h2>
-      <p>Tack for din like!</p>
-      <button type="button">OK</button>
-    </div>
-      <!-- -->
+      <!--<div class = "popup" id = "popup">
+        <h2>Tack!</h2>
+        <p>Tack for din like!</p>
+        <button type="button">OK</button>
+      </div>
+         -->
 
     </div>
 
@@ -199,7 +199,7 @@ button {
   padding: 10px 40px;
 }
 
-/*Popup button*/
+/*Popup button
 .popup{
   width: 400px;
   background-color: black;
@@ -226,7 +226,7 @@ button {
   font-size: 20px;
   border-radius: 4px;
   cursor: pointer;
-}
+}*/
 
 
 </style>
