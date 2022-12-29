@@ -8,8 +8,12 @@
   <br><br><br>
 
   <div>
-    <H1>Leaderboard</H1><br>
-      <table class="center" style="width:250px; border:1px solid black;font-family: Verdana;background-color: white;padding:10px">
+    <table class="center" style="width:250px; font-family:Kanit;font-size:26px;padding:10px">
+      <tr><img src="http://localhost:8080/img/score-icon-21.jpeg" width="100" height="100"></tr>
+      <tr> <marquee direction="right" behavior="scroll">L E A D E R B O A R D</marquee></tr>
+    </table>
+   
+      <table class="center" style="width:250px; border: 5px solid black;border-radius: 10px;font-family: Kanit;font-size:20px;background-color: white;padding:10px">
         <tr>
           <th style="width: 70%;text-align: left" >Name</th>
           <th style="width: 30%;text-align: right">Score</th>
@@ -77,6 +81,7 @@ export default {
 
 </script>
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Island+Moments&family=Kanit:ital,wght@1,300&family=Mukta:wght@200&display=swap');
   /*header {
     background-color: gray;
     width: 100%;
