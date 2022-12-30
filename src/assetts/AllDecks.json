@@ -1,14 +1,14 @@
+[
 {"id": "Sveriges huvudstäder",
   "questionArray": ["Sverige", "Norge", "Finland", "Danmark"],
-  "answerArray": ["Sthlm", "Oslo", "Helsingfors", "CBH"],
+  "answerArray": ["Sthlm", "Oslo", "Helsingfors", "CBH"]},
 
-  "id2": "Engelska ord",
-  "questionArray1": ["Hej","Hejdå","Tack", "Ja", "Nej"],
-  "AnswerArray1": ["Hello","Bye","Thank you","Yes","No"],
+  {"id": "Engelska ord",
+  "questionArray": ["Hej","Hejdå","Tack", "Ja", "Nej"],
+  "answerArray": ["Hello","Bye","Thank you","Yes","No"]},
 
-  "id3": "Färger och symboler",
-  "questionArray1": ["Gul","Blå","Grön", "Svart", "orange"],
-  "AnswerArray1": ["Sol","Vatten","Gräs","Katt","Apelsin"]
-}
-
+  {"id": "Färger och symboler",
+  "questionArray": ["Gul","Blå","Grön", "Svart", "orange"],
+  "answerArray": ["Sol","Vatten","Gräs","Katt","Apelsin"]}
+]
 
