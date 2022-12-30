@@ -53,6 +53,19 @@
           Points {{player.score}} out of {{totalQuestionAmount}} <button @click="sendRequest(player.name)" > Send request</button> </li>
       </ul>
     </div>
+
+    <!-- Kommentar och likes
+
+    <div id = "Comments">
+      <button cbutton ="comment()"> Comment </button>
+    </div>
+
+    <div id = "Likes">
+      <button lbutton ="likes()"> Like</button>
+    </div> -->
+
+
+
   </div>
 
   </body>
@@ -198,4 +211,15 @@ export default {
   max-width: 30%;
   border: 1px solid black;
 }
+
+/* CSS för knapparna likes och comments:
+#Likes {
+  padding: 10px 40px;
+}
+
+#Comments{
+  padding: 10px 40px;
+}
+ */
+
 </style>
