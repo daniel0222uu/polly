@@ -2,9 +2,9 @@
   
   <body>
 
-  <!-- Popups -->
+  <!-- Popups
   <WarningMessage v-bind:deck-alert="deckNameAlert"  v-bind:question-field-alert="DeckWasLiked"
-                  v-bind:question-was-added="questionWasAdded"/>
+                  v-bind:question-was-added="questionWasAdded"/> -->
 
 
   <div id="wrapperDiv">
@@ -150,15 +150,6 @@ select {
   flex: 1;
   overflow: auto;
 }
-#verticalRight{
-  width: 200px;
-  max-width: 30%;
-  border: 1px solid white;
-  /*Small editing*/
-  background-color: white;
-  border-radius: 20px;
-  padding: 20px;
-}
 
 #wrapperDiv{
   position: relative;
@@ -199,6 +190,7 @@ button {
   border: white ;
 }
 
+/*
 #Likes {
   padding: 10px 40px;
 }
@@ -208,7 +200,7 @@ button {
 }
 
 
-/*Popup button
+Popup button
 .popup{
   width: 400px;
   background-color: black;
