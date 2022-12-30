@@ -84,6 +84,18 @@ function sockets(io, socket, data) {
     io.to(d.pollId).emit('dataUpdate', data.getLobbyParticipants(
         d.pollId));
   });
+
+  socket.on("startGame", function(d) {
+    console.log("start game received, for the lobbyID: ", d.pollId, d.players);
+    console.log("now just running startGame data function", data.startGame(d.players)); //denna returnera
+    //inget för startgame har ingen return :D
+    io.to(d.pollId).emit('totalTrueValues', data.startGame(d.players));
+  });
+
+  socket.on('seeQuestion', function(d) {
+    console.log("see question received,: ", d.pollId);
+    io.to(d.pollId).emit('updateTrueCount');
+  });
 }
 
 

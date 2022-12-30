@@ -1,7 +1,10 @@
   <template>
   <div>
-    {{pollId}} {{players}} <button @click="submitAnswer"> Press this button to get the players connected to the lobby</button>
+    {{pollId}} {{players}} {{trueCount}} out of {{trueValuesNeeded}}<button @click="startGame"> Press this button to retrieve the game object</button>
   </div>
+    <diV>
+      <button @click="seeQuestion">Press here to update the </button>
+    </diV>
     <div>
       <FlashcardComponent v-bind:questionProp="myObj_deserialized" @nextClick="onClickChild" @previousClick="onClickChild" ></FlashcardComponent>
     </div>
@@ -27,6 +30,9 @@ export default {
         "answerArray": ["Sthlm", "Oslo", "Helsingfors", "CBH"]},
       myObj_deserialized: {},
       players: [],
+      trueValuesNeeded: 0,
+      trueCount: 0,
+      swapSides: false
     }
   },
   created: function () {
@@ -40,16 +46,38 @@ export default {
     socket.on("dataUpdate", answers =>
       this.players = answers
     )
+    socket.on('totalTrueValues', totalTrueValues => {
+      this.trueValuesNeeded = totalTrueValues;
+    })
+    socket.on('updateTrueCount', () => {
+      this.trueCount++;
+    })
   },
   methods: {
-    submitAnswer: function () {
-      console.log("submitAnswer was pressed in PollView" );
+    startGame: function () {
+      socket.emit("startGame", {pollId: this.pollId, players: this.players});
+    },
+    seeQuestion: function () {
+      socket.emit("seeQuestion", {pollId: this.pollId});
     },
     onClickChild: function(value){
       this.questionPosition = value;
       console.log("parent has", this.questionPosition);
       socket.emit("numberProgress", {name: this.name, score: this.questionPosition});
     },
+  },
+  watch: {
+    trueCount: function () {
+      console.log("trueCount has changed");
+      console.log("this is the trueCount:",this.trueCount);
+      if(this.trueCount === this.trueValuesNeeded){
+        console.log("trueCount is equal to trueValuesNeeded");
+        this.swapSides = true;
+        console.log("now swapsides should be:", this.swapSides);
+        //det som egentligen ska ske här är att man ska emitta next card då alla svarat och att man ska resetta
+        //counten för alla i rummet.
+      }
+    }
   }
 }
 </script>
