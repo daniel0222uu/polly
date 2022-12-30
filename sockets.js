@@ -46,12 +46,12 @@ function sockets(io, socket, data) {
 
   socket.on('startPlaying', function(d) {
     data.activePlayers(d.name, d.score);
-    io.emit('dataUpdate', data.getActivePlayers());
+    io.emit('multiplayerViewUpdate', data.getActivePlayers());
   });
 
   socket.on('numberProgress', function(d) {
     data.updateScore(d.name, d.score);
-    io.emit('dataUpdate', data.getActivePlayers());
+    io.emit('multiplayerViewUpdate', data.getActivePlayers());
   });
 
   socket.on('playRequest', function(d) {
@@ -83,6 +83,18 @@ function sockets(io, socket, data) {
     //console.log("if this is correct, it should be seen in console from submit answer", d.questionObject, d.pollId);
     io.to(d.pollId).emit('dataUpdate', data.getLobbyParticipants(
         d.pollId));
+  });
+
+  socket.on("startGame", function(d) {
+    console.log("start game received, for the lobbyID: ", d.pollId, d.players);
+    console.log("now just running startGame data function", data.startGame(d.players)); //denna returnera
+    //inget för startgame har ingen return :D
+    io.to(d.pollId).emit('totalTrueValues', data.startGame(d.players));
+  });
+
+  socket.on('seeQuestion', function(d) {
+    console.log("see question received,: ", d.pollId);
+    io.to(d.pollId).emit('updateTrueCount');
   });
 }
 

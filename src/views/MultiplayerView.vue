@@ -112,7 +112,7 @@ export default {
   },
   created: function() {
     this.myObj_deserialized = this.questionObject;
-    socket.on("dataUpdate", playersActive => {
+    socket.on("multiplayerViewUpdate", playersActive => {
       this.players = playersActive;
     });
     /*socket.on("requestReceive", inviteInformation => {

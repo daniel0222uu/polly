@@ -131,6 +131,15 @@ Data.prototype.getLobbyParticipants = function(searchLobbyID){
     }
   }
 }
+Data.prototype.startGame = function(players) {
+  let totalTrueValuesNeeded = players.length;
+ /* for (let player of players) {
+    console.log("player getting looped :", player);
+  }  tanke om att  skapa objekt för varje spelar namn då
+  gamet startar men denna ide kanske inte behövs*/
+  return totalTrueValuesNeeded;
+}
+
 
 
 module.exports = Data;
