@@ -6,6 +6,12 @@
       <button @click="seeQuestion">Press here to update the </button>
     </diV>
     <div>
+      <div id="selector"> {{selectorList}}
+        <select  name="decks" required v-model="selectedDeck" @change="loadDeck(this.selectedDeck)" >
+          <option value="" disabled selected hidden></option>
+          <option id="deckSelector" v-for="deck in selectorList" v-bind:key="deck">{{deck}}</option>
+        </select>
+      </div>
       <FlashcardComponent v-bind:questionProp="myObj_deserialized" @nextClick="onClickChild" @previousClick="onClickChild" ></FlashcardComponent>
     </div>
 
@@ -15,7 +21,11 @@
 // @ is an alias to /src
 import io from 'socket.io-client';
 import FlashcardComponent from "@/components/FlashcardComponent";
+import AllDecks from "/Users/danielceoca/Desktop/projektGränssnitt/polly/src/assetts/AllDecks.json";
 const socket = io();
+
+let selectList = AllDecks;
+const idListFromAllDecks = selectList.map(element => element.id);
 
 export default {
   name: 'PollView',
@@ -32,7 +42,9 @@ export default {
       players: [],
       trueValuesNeeded: 0,
       trueCount: 0,
-      swapSides: false
+      swapSides: false,
+      selectedDeck: "",
+      selectorList: idListFromAllDecks,
     }
   },
   created: function () {
@@ -64,6 +76,14 @@ export default {
       this.questionPosition = value;
       console.log("parent has", this.questionPosition);
       socket.emit("numberProgress", {name: this.name, score: this.questionPosition});
+    },
+    loadDeck: function(deckIdToLoad){
+      this.questionPosition = 0;
+      const target = AllDecks.find(deck => deck.id === deckIdToLoad);
+      console.log("target, should be",target);
+      console.log("du klickade på en knapp med loadDeck()");
+      this.myObj_deserialized = target;
+      this.questionObject = this.myObj_deserialized;
     },
   },
   watch: {
