@@ -39,20 +39,21 @@ function sockets(io, socket, data) {
     io.to(d.pollId).emit('dataUpdate', data.getAnswers(d.pollId));
   });
 
-
-
   socket.on('resetAll', () => {
     data = new Data();
     data.initializeData();
   });
+
   socket.on('startPlaying', function(d) {
     data.activePlayers(d.name, d.score);
     io.emit('dataUpdate', data.getActivePlayers());
   });
+
   socket.on('numberProgress', function(d) {
     data.updateScore(d.name, d.score);
     io.emit('dataUpdate', data.getActivePlayers());
   });
+
   socket.on('playRequest', function(d) {
     const requester = d.requester;
     const receiver  = d.receiver;
@@ -62,30 +63,22 @@ function sockets(io, socket, data) {
     //socket.emit('requestReceive', data.getInviteList());
     io.emit('requestReceive', data.getInviteList());
   });
+
   socket.on('lobbyObject', function(d) {
     const lobbyID = d.lobbyID;
     const playersInLobby = d.playersInLobby;
     const objectToSend = {lobbyID: lobbyID, playersInLobby: playersInLobby};
     data.appendLobbies(objectToSend);
   });
+
   socket.on('joinLobby', function(d) {
     const name = d.name;
     const lobbyID = d.lobbyID;
     data.updateLobbies(name, lobbyID);
-    //console.log(data.getLobbyParticipants(lobbyID));
-    //io.to(d.pollId).emit('dataUpdate', data.getLobbyParticipants(d.pollId)); denna rad fungerar inte
+    console.log(data.getLobbyParticipants(lobbyID));
   });
+
   socket.on('getPlayers', function(d) {
-    console.log("getPLayers respondend in sockets.jS");
-  });
-  /*socket.on('submitAnswer', function(d) {
-    console.log("answer submitted for ", d.pollId);
-    console.log(data.getLobbyParticipants(d.pollId));
-    //console.log("if this is correct, it should be seen in console from submit answer", d.questionObject, d.pollId);
-    io.to(d.pollId).emit('dataUpdate', d.questionObject);
-  }); detta är submitanswer innan, försöker
-  visa lobby players från den istället*/
-  socket.on('submitAnswer', function(d) {
     console.log(data.getLobbyParticipants(d.pollId));
     //console.log("if this is correct, it should be seen in console from submit answer", d.questionObject, d.pollId);
     io.to(d.pollId).emit('dataUpdate', data.getLobbyParticipants(

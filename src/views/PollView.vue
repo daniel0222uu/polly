@@ -36,13 +36,14 @@ export default {
     socket.on("newQuestion", q =>
       this.question = q
     )
+    socket.emit("getPlayers", {pollId: this.pollId})
     socket.on("dataUpdate", answers =>
       this.players = answers
     )
   },
   methods: {
     submitAnswer: function () {
-      socket.emit("submitAnswer", {pollId: this.pollId})
+      console.log("submitAnswer was pressed in PollView" );
     },
     onClickChild: function(value){
       this.questionPosition = value;
