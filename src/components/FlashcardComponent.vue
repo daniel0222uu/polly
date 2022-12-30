@@ -43,13 +43,16 @@
 </template>
 
 <script>
+
+import io from 'socket.io-client';
+const socket = io();
+
 export default {
   name: 'FlashcardView',
-  props:['questionProp'],
-  components: {
-  },
-  data: function(){
-    return{
+  props: ['questionProp', 'showAnswer', 'pollId'],
+  components: {},
+  data: function () {
+    return {
       flipped: false,
       answerButtonBool: false,
       fontSize: 80,
@@ -60,15 +63,15 @@ export default {
     }
   },
   methods: {
-    flip(){
+    flip() {
       this.flipped = !this.flipped;
     },
-    questionPress: function() {
+    questionPress: function () {
       this.answerButtonBool = true;
       this.adjustAnswerFontSize();
     },
-    answerPress: function(){
-      if(this.questionPosition < this.questionProp.questionArray.length - 1){
+    answerPress: function () {
+      if (this.questionPosition < this.questionProp.questionArray.length - 1) {
         this.questionPosition = this.questionPosition + 1;
         this.answerButtonBool = false;
         this.fontSize = 80;
@@ -76,71 +79,69 @@ export default {
       }
       console.log("this should only execute at last");
     },
-    nextClick: function(){
-      if(this.questionPosition < this.questionProp.questionArray.length - 1){
+    nextClick: function () {
+      if (this.questionPosition < this.questionProp.questionArray.length - 1) {
         this.questionPosition++;
         this.answerButtonBool = false;
         this.fontSize = 80;
         this.$emit('nextClick', this.questionPosition);
 
-        if(this.areStringsSimilar(this.answerString, this.questionProp.answerArray[this.questionPosition-1])){
+        if (this.areStringsSimilar(this.answerString, this.questionProp.answerArray[this.questionPosition - 1])) {
           console.log("correct");
           this.points++;
-        }
-        else{
+        } else {
           console.log("incorrect");
         }
         return;
       }
     },
-    textAnswer: function(){
+    textAnswer: function () {
       let answer = this.answerString;
-      let correctAnswer = this.questionProp.answerArray[this.questionPosition-1];
-      if(this.questionPosition < this.questionProp.questionArray.length){
+      let correctAnswer = this.questionProp.answerArray[this.questionPosition - 1];
+      if (this.questionPosition < this.questionProp.questionArray.length) {
         this.answerButtonBool = true;
         setTimeout(() => {
           this.answerButtonBool = false;
-          if(this.questionPosition < this.questionProp.questionArray.length-1){
+          if (this.questionPosition < this.questionProp.questionArray.length - 1) {
             this.questionPosition++;
           }
         }, 2000);
-        if(this.areStringsSimilar(answer, correctAnswer)){
+        if (this.areStringsSimilar(answer, correctAnswer)) {
           this.points++;
-        }
-        else{
+        } else {
           console.log("incorrect");
         }
       }
       return;
     },
-    areStringsSimilar: function(input, correct) {
-      if(input == ""){
+    areStringsSimilar: function (input, correct) {
+      if (input == "") {
         return false;
       }
-        input = input.toLowerCase();
-        correct = correct.toLowerCase();
-        console.log(input);
-        console.log(correct);
-        let numDifferences = 0;
-        for (let i = 0; i < input.length; i++) {
-          if (input[i] !== correct[i]) {
-            numDifferences++;
-          }
-          if (numDifferences > 2) {
-            return false;
-          }
+      input = input.toLowerCase();
+      correct = correct.toLowerCase();
+      console.log(input);
+      console.log(correct);
+      let numDifferences = 0;
+      for (let i = 0; i < input.length; i++) {
+        if (input[i] !== correct[i]) {
+          numDifferences++;
         }
-        return true;
+        if (numDifferences > 2) {
+          return false;
+        }
+      }
+      return true;
     },
-    previousCLick: function(){
-      if(this.questionPosition > 0){
+    previousCLick: function () {
+      if (this.questionPosition > 0) {
         this.questionPosition--;
         this.$emit('previousClick', this.questionPosition);
       }
       this.fontSize = 80;
       this.answerButtonBool = false;
     },
-    adjustAnswerFontSize: function() {
+    adjustAnswerFontSize: function () {
       const length = this.questionProp.answerArray[this.questionPosition].length;
       console.log(length);
       if (length > 100) {
@@ -156,13 +157,20 @@ export default {
       } else {
         this.fontSize = 80;
       }
-    }
+    },
   },
   watch: {
-    /*questionProp: function() {
-      this.questionPosition = 0;
-      this.answerButtonBool = false;
-    }*/
+    showAnswer: function () {
+
+      if (this.showAnswer) {
+
+        console.log("showAnswer changed because flipped is:", this.flipped);
+        this.flipped = true;
+        setTimeout(() => this.flipped = false, 2000);
+        setTimeout(() => this.nextClick(), 3000);
+        setTimeout(() => socket.emit('questionSeen', {pollId: this.pollId}), 3500);
+      }
+    }
   }
 }
 </script>
