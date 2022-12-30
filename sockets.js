@@ -96,6 +96,11 @@ function sockets(io, socket, data) {
     console.log("see question received,: ", d.pollId);
     io.to(d.pollId).emit('updateTrueCount');
   });
+
+  socket.on('questionSeen', function(d) {
+  console.log("question seen received,: ", d.pollId);
+  io.to(d.pollId).emit('resetTrueCount');
+  });
 }
 
 

@@ -12,7 +12,9 @@
           <option id="deckSelector" v-for="deck in selectorList" v-bind:key="deck">{{deck}}</option>
         </select>
       </div>
-      <FlashcardComponent v-bind:questionProp="myObj_deserialized" @nextClick="onClickChild" @previousClick="onClickChild" ></FlashcardComponent>
+      <FlashcardComponent v-bind:questionProp="myObj_deserialized" v-bind:show-answer="swapSides"
+                          v-bind:poll-id="pollId"
+                          @nextClick="onClickChild" @previousClick="onClickChild" ></FlashcardComponent>
     </div>
 
 </template>
@@ -64,6 +66,9 @@ export default {
     socket.on('updateTrueCount', () => {
       this.trueCount++;
     })
+    socket.on('resetTrueCount', () => {
+      this.trueCount=0;
+    })
   },
   methods: {
     startGame: function () {
@@ -95,6 +100,9 @@ export default {
         console.log("now swapsides should be:", this.swapSides);
         //det som egentligen ska ske här är att man ska emitta next card då alla svarat och att man ska resetta
         //counten för alla i rummet.
+      }
+      if(this.trueCount === 0){
+        this.swapSides = false;
       }
     }
   }
