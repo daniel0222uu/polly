@@ -75,7 +75,6 @@ export default {
     onClickChild: function(value){
       this.questionPosition = value;
       console.log("parent has", this.questionPosition);
-      socket.emit("numberProgress", {name: this.name, score: this.questionPosition});
     },
     loadDeck: function(deckIdToLoad){
       this.questionPosition = 0;
