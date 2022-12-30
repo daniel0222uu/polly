@@ -46,12 +46,12 @@ function sockets(io, socket, data) {
 
   socket.on('startPlaying', function(d) {
     data.activePlayers(d.name, d.score);
-    io.emit('dataUpdate', data.getActivePlayers());
+    io.emit('multiplayerViewUpdate', data.getActivePlayers());
   });
 
   socket.on('numberProgress', function(d) {
     data.updateScore(d.name, d.score);
-    io.emit('dataUpdate', data.getActivePlayers());
+    io.emit('multiplayerViewUpdate', data.getActivePlayers());
   });
 
   socket.on('playRequest', function(d) {
