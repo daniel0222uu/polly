@@ -23,7 +23,8 @@
 // @ is an alias to /src
 import io from 'socket.io-client';
 import FlashcardComponent from "@/components/FlashcardComponent";
-import AllDecks from "/Users/danielceoca/Desktop/projektGränssnitt/polly/src/assetts/AllDecks.json";
+//import AllDecks from "/Users/danielceoca/Desktop/projektGränssnitt/polly/src/assetts/AllDecks.json";
+import AllDecks from "@/assetts/AllDecks.json";
 const socket = io();
 
 let selectList = AllDecks;
