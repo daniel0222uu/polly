@@ -3,30 +3,25 @@
   <div>
     {{inviteInformation}}
   </div>
-  <div id="wrapperDiv">
-    <div id="horizontalContent">
+  <div v-if="!joinedBoolean">
+    <p  style="font-size: 30px; font-weight: bolder"> CHOOSE YOUR NAME</p>
+    <input v-model="name" type="text" />
+    <button @click="startPlaying" > Start playing! </button>
+  </div>
+  <div id="wrapperDiv" v-if="joinedBoolean">
+    <div id="horizontalContent">{{name}}
 
-      <p  style="font-size: 30px; font-weight: bolder"> CHOOSE YOUR NAME</p>
-      <div v-if="!joinedBoolean">
-        <input v-model="name" type="text" />
-        <button @click="startPlaying" > Start playing! </button>
+      <div id="selector">
+        <select  name="decks" required v-model="selectedDeck" @change="loadDeck(this.selectedDeck)" >
+          <option value="" disabled selected hidden></option>
+          <option id="deckSelector" v-for="deck in selectorList" v-bind:key="deck">{{deck}}</option>
+        </select>
       </div>
+
+
       <div>
         <FlashcardView v-bind:questionProp="myObj_deserialized" @nextClick="onClickChild" @previousClick="onClickChild" ></FlashcardView>
       </div>
-
-      <!-- Kommentarer start -->
-
-      <div id = "app">
-        <input type="text" v-model="todoName" @keyup.enter="addTodo">
-        <ul>
-          <li v-for="todo of todos" :key="todo.id">
-            {{todo.name}}
-          </li>
-        </ul>
-      </div>
-
-      <!-- kommentarer end -->
 
       <div style="background-color: white">
         <label>
@@ -54,18 +49,6 @@
       </ul>
     </div>
 
-    <!-- Kommentar och likes
-
-    <div id = "Comments">
-      <button cbutton ="comment()"> Comment </button>
-    </div>
-
-    <div id = "Likes">
-      <button lbutton ="likes()"> Like</button>
-    </div> -->
-
-
-
   </div>
 
   </body>
@@ -74,14 +57,12 @@
 
 <script>
 import Decks from "../assetts/Decks.json";
-
-// Importerar axios!
-import axios from "axios";
-const baseURL = "http://localhost:8080"
-// Comments end
+let selectList = AllDecks;
+const idListFromAllDecks = selectList.map(element => element.id);
 
 import io from "socket.io-client";
 import FlashcardView from "@/components/FlashcardComponent";
+import AllDecks from "@/assetts/AllDecks.json";
 const socket = io();
 console.log(Decks);
 export default {
@@ -103,12 +84,9 @@ export default {
       questionObject:   {"id": "Sveriges huvudstäder",
         "questionArray": ["Sverige", "Norge", "Finland", "Danmark"],
         "answerArray": ["Sthlm", "Oslo", "Helsingfors", "CBH"]},
-
-      // Comments start:
-      todos: [],
-      todoName: ''
-      // Comments end
-    };
+      selectedDeck: "",
+      selectorList: idListFromAllDecks
+    }
   },
   created: function() {
     this.myObj_deserialized = this.questionObject;
@@ -118,21 +96,7 @@ export default {
     /*socket.on("requestReceive", inviteInformation => {
       this.inviteInformation = inviteInformation;
     });*/
-
-
-    /*Kommentarer ang jsonfil*/
-    try{
-      //const res = await axios.get("http://localhost:8080");
-      const res = axios.get("");
-      this.todos = res.data();
-    }
-    catch (e) {
-      console.error(e);
-    }
-    //End comment
-
   },
-
   methods:
       {
         startPlaying: function(){
@@ -164,15 +128,14 @@ export default {
           socket.emit("joinLobby", {lobbyID: this.lobbyId, name: this.name});
           this.navigate();
         },
-
-        // Created a method to store the API
-        async addTodo(){
-          const res = await axios.post(baseURL, {name:this.todoName});
-          this.todos = [...this.todos, res.data];
-          this.todoName = '';
-        },
-        // End comment
-
+        loadDeck: function(deckIdToLoad){
+          this.questionPosition = 0;
+          const target = AllDecks.find(deck => deck.id === deckIdToLoad);
+          console.log("target, should be",target);
+          console.log("du klickade på en knapp med loadDeck()");
+          this.myObj_deserialized = target;
+          this.questionObject = this.myObj_deserialized;
+          }
       },
   watch: {
     inviteInformation: function(){

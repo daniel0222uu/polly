@@ -6,7 +6,7 @@
       <button @click="seeQuestion">Press here to update the </button>
     </diV>
     <div>
-      <div id="selector"> {{selectorList}}
+      <div id="selector">
         <select  name="decks" required v-model="selectedDeck" @change="loadDeck(this.selectedDeck)" >
           <option value="" disabled selected hidden></option>
           <option id="deckSelector" v-for="deck in selectorList" v-bind:key="deck">{{deck}}</option>
@@ -108,3 +108,7 @@ export default {
   }
 }
 </script>
+
+
+  <style scoped>
+  </style>
