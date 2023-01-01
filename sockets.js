@@ -101,6 +101,11 @@ function sockets(io, socket, data) {
   console.log("question seen received,: ", d.pollId);
   io.to(d.pollId).emit('resetTrueCount');
   });
+
+  socket.on('loadDeck', function(d) {
+    console.log("load deck received,: ", d.pollId);
+    io.to(d.pollId).emit('instantiateDeck', d.deck);
+  });
 }
 
 

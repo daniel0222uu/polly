@@ -23,7 +23,6 @@
 // @ is an alias to /src
 import io from 'socket.io-client';
 import FlashcardComponent from "@/components/FlashcardComponent";
-//import AllDecks from "/Users/danielceoca/Desktop/projektGränssnitt/polly/src/assetts/AllDecks.json";
 import AllDecks from "@/assetts/AllDecks.json";
 const socket = io();
 
@@ -70,6 +69,9 @@ export default {
     socket.on('resetTrueCount', () => {
       this.trueCount=0;
     })
+    socket.on('instantiateDeck', deck => {
+      this.myObj_deserialized = deck;
+    })
   },
   methods: {
     startGame: function () {
@@ -89,6 +91,7 @@ export default {
       console.log("du klickade på en knapp med loadDeck()");
       this.myObj_deserialized = target;
       this.questionObject = this.myObj_deserialized;
+      socket.emit("loadDeck", {pollId: this.pollId, deck: this.myObj_deserialized});
     },
   },
   watch: {
