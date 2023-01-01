@@ -81,14 +81,15 @@
 
 <script>
 
+
+// TA INTE BORT DENNA KOMMENTERADE DEL!
 // Sparar antal ggr som likes knappen har används
-let nroflikes = 0; // We want to know how many likes a deck has.
-let like = document.getElementById("like");
-like.onclick = function() {
-  nroflikes = nroflikes + 1;
-  console.log("Antalet personer som gillar kortleken:" + nroflikes)
-}
-/////////////
+//let nroflikes = 0; // We want to know how many likes a deck has.
+//let like = document.getElementById("like");
+//like.onclick = function() {
+//  nroflikes = nroflikes + 1;
+//  console.log("Antalet personer som gillar kortleken:" + nroflikes)
+//}
 
 
 import Decks from "../assetts/Decks.json";
@@ -135,8 +136,6 @@ export default {
 
 ///////////////////////// KAN TAS BORT!
 
-
-
       // Number of clicks a button has:
 //      var lbutton = document.getElementById("lbutton");
 //      lbutton.onclick = likes()
@@ -148,7 +147,6 @@ export default {
 //////////////////////////
 
     },
-
   methods:
       {
         startPlaying: function(){
