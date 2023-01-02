@@ -2,10 +2,6 @@
   
   <body>
 
-  <!-- Popups
-  <WarningMessage v-bind:deck-alert="deckNameAlert"  v-bind:question-field-alert="DeckWasLiked"
-                  v-bind:question-was-added="questionWasAdded"/> -->
-
 
   <div id="wrapperDiv">
     
@@ -18,34 +14,9 @@
             <option id="deckSelector" v-for="deck in selectorList" v-bind:key="deck">{{ deck }}</option>
           </select>
         </div>
-       <!--
-    ----if no deck exists, the card should show: "go to my decks and create a deck to play".----- (for single player only)
-
-
-       --> 
         <FlashcardView v-bind:questionProp="myObj_deserialized" v-bind:questionIndex="questionPosition"> </FlashcardView>
       </div>
       {{ selectedDeck }}
-            <!--
-          <BarsComponent v-bind:data="submittedAnswers"/>
-            -->
-
-      <!--
-   <div id = "Comments">
-        <button cbutton ="comment()"> Comment </button>
-      </div>
-
-      <div id = "Likes">
-        <button lbutton ="likes()"> Like</button>
-      </div>
-
-
-      <div class = "popup" id = "popup">
-        <h2>Tack!</h2>
-        <p>Tack for din like!</p>
-        <button type="button">OK</button>
-      </div>-->
-
 
     </div>
 

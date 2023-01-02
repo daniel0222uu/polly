@@ -2,11 +2,11 @@
 
   <div class="card" v-on:click="flip" >
     <div class="card-inner" :class="{flipped: flipped}">
-      <div class="card-front">
+      <div :style="{'font-size': fontSize + 'px' }" class="card-front">
         <div >{{questionProp.questionArray[questionPosition]}}</div>
         
     </div>
-    <div class="card-back">
+    <div :style="{'font-size': fontSize + 'px' }" class="card-back">
       {{questionProp.answerArray[questionPosition]}}
     </div>
 
@@ -17,11 +17,6 @@
 
 
   <div>
-
-    <!--<div id="count"> <p>
-      Score:
-    </p>  {{points}} out of {{questionProp.questionArray.length}} Points
-    </div> -->
      
 
     
@@ -65,19 +60,7 @@ export default {
   methods: {
     flip() {
       this.flipped = !this.flipped;
-    },
-    questionPress: function () {
-      this.answerButtonBool = true;
       this.adjustAnswerFontSize();
-    },
-    answerPress: function () {
-      if (this.questionPosition < this.questionProp.questionArray.length - 1) {
-        this.questionPosition = this.questionPosition + 1;
-        this.answerButtonBool = false;
-        this.fontSize = 80;
-        return;
-      }
-      console.log("this should only execute at last");
     },
     nextClick: function () {
       if (this.questionPosition < this.questionProp.questionArray.length - 1) {
@@ -142,28 +125,31 @@ export default {
       this.answerButtonBool = false;
     },
     adjustAnswerFontSize: function () {
-      const length = this.questionProp.answerArray[this.questionPosition].length;
-      console.log(length);
-      if (length > 100) {
-        this.fontSize = 20;
-      } else if (length > 50) {
-        this.fontSize = 50;
-      } else if (length > 20) {
-        this.fontSize = 60;
-      } else if (length > 15) {
-        this.fontSize = 70;
-      } else if (length < this.questionProp.questionArray[this.questionPosition].length) {
-        return;
-      } else {
-        this.fontSize = 80;
+      if(this.flipped){
+        console.log("now we should only show the answer")
+        const length = this.questionProp.answerArray[this.questionPosition].length;
+        if (length > 100) {
+          this.fontSize = 20;
+        } else if (length > 50) {
+          this.fontSize = 50;
+        } else if (length > 20) {
+          this.fontSize = 60;
+        } else if (length > 15) {
+          this.fontSize = 70;
+        } else if (length < this.questionProp.questionArray[this.questionPosition].length) {
+          return;
+        } else {
+          this.fontSize = 80;
+        }
+      }
+      if(!this.flipped){
+        setTimeout(() => this.fontSize = 80, 500);
       }
     },
   },
   watch: {
     showAnswer: function () {
-
       if (this.showAnswer) {
-
         console.log("showAnswer changed because flipped is:", this.flipped);
         this.flipped = true;
         setTimeout(() => this.flipped = false, 2000);
@@ -218,11 +204,6 @@ export default {
   backface-visibility: hidden;
   border: 2px solid black;
   background-color: rgb(74, 91, 205);
- 
- 
-  
- 
-  
 }
 
 .card-front {
