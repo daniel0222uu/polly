@@ -22,6 +22,15 @@
         <FlashcardView v-bind:questionProp="myObj_deserialized" @nextClick="onClickChild" @previousClick="onClickChild" ></FlashcardView>
       </div>
 
+      <!-- Buttons for liking and commenting: -->
+      <div class="buttons">
+        <!--<button id = "likeButton" v-on:click="like()">-->
+        <button id = "likeButton" v-on:click="likes(1)">
+          <img src="https://freesvg.org/img/Thumbs-Up-Silhouette.png"
+               style="width: 30px; height: 30px;"
+          />
+        </button>
+      </div>
 
       <div style="background-color: white">
         <label>
@@ -37,9 +46,7 @@
             Participate
           </button>
         </router-link>
-
       </div>
-
     </div>
 
     <div id="verticalRight">
@@ -49,7 +56,6 @@
           Points {{player.score}} out of {{totalQuestionAmount}} <button @click="sendRequest(player.name)" > Send request</button> </li>
       </ul>
     </div>
-
   </div>
 
   </body>
@@ -88,6 +94,9 @@ export default {
         "questionArray": ["Sverige", "Norge", "Finland", "Danmark"],
         "answerArray": ["Sthlm", "Oslo", "Helsingfors", "CBH"]},
       selectedDeck: "",
+
+      //buttons: 0,
+
       selectorList: idListFromAllDecks
     }
   },
@@ -99,16 +108,16 @@ export default {
     },
   methods:
       {
-        startPlaying: function(){
+        startPlaying: function () {
           this.joinedBoolean = true;
           socket.emit("startPlaying", {name: this.name, score: this.questionIndex});
         },
-        onClickChild: function(value){
+        onClickChild: function (value) {
           this.questionPosition = value;
           console.log("parent has", this.questionPosition);
           socket.emit("numberProgress", {name: this.name, score: this.questionPosition});
         },
-        sendRequest: function(playerToRequest){
+        sendRequest: function (playerToRequest) {
           this.createPoll();
           socket.emit('playRequest', {
             requester: this.name,
@@ -121,22 +130,30 @@ export default {
           });
         },
         createPoll: function () { //ett bättre namn hade varit createLobby, men jag är lat
-          this.lobbyId = Math.floor(Math.random()*1000000 + 100000);
-          socket.emit("createPoll", {pollId: this.lobbyId, lang: this.lang });
+          this.lobbyId = Math.floor(Math.random() * 1000000 + 100000);
+          socket.emit("createPoll", {pollId: this.lobbyId, lang: this.lang});
         },
-        joinLobby: function(){
+        joinLobby: function () {
           socket.emit("joinLobby", {lobbyID: this.lobbyId, name: this.name});
           this.navigate();
         },
-        loadDeck: function(deckIdToLoad){
+        loadDeck: function (deckIdToLoad) {
           this.questionPosition = 0;
           const target = AllDecks.find(deck => deck.id === deckIdToLoad);
-          console.log("target, should be",target);
+          console.log("target, should be", target);
           console.log("du klickade på en knapp med loadDeck()");
           this.myObj_deserialized = target;
           this.questionObject = this.myObj_deserialized;
-          }
+        },
+
+        // Function for the like button
+        likes: function (e) {
+          let ButtonVal = +(e.target.dataset.clickcount);
+          e.target.dataset.clickcount = ButtonVal++;
+          console.log("Number of likes:" + ButtonVal)
+        },
       },
+
   watch: {
     inviteInformation: function(){
       console.log("inviteInformation is", this.inviteInformation)
@@ -160,6 +177,7 @@ export default {
 </script>
 
 <style scoped>
+
 #wrapperDiv{
   position: relative;
   height: 100%;
@@ -174,6 +192,17 @@ export default {
   width: 200px;
   max-width: 30%;
   border: 1px solid black;
+}
+
+#likeButton {
+  height: 40px;
+  width: 50px;
+  margin-bottom: 20px;
+}
+
+@media screen {
+
+
 }
 
 
