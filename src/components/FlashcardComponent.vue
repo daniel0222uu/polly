@@ -166,18 +166,12 @@ export default {
 .card {
   margin-left: 35%;
   margin-right: 35%;
-  
   height:400px; 
   display: flex;
   justify-content: center;
   cursor:pointer;
   align-items: center;
-
-  
- 
-  
-  perspective: 1000px; /* Remove this if you don't want the 3D effect */
-
+  perspective: 1000px;
 }
 .card-inner {
   position: relative;
@@ -186,18 +180,17 @@ export default {
   text-align: center;
   transition: transform 1.2s;
   transform-style: preserve-3d;
-  
-  
-
 }
 .card-inner.flipped{
   transform: rotateY(180deg);
 }
-
 .card-front, .card-back {
   position: absolute;
   display: flex;
   justify-content: center;
+  align-items: center;
+  overflow: auto;
+  padding: 10px;
   width: 100%;
   height: 100%;
   border-radius: 4px;
@@ -205,57 +198,24 @@ export default {
   border: 2px solid black;
   background-color: rgb(74, 91, 205);
 }
-
 .card-front {
   color: black;
   font-size: 18px;
   background-color: rgb(32, 159, 178);
   
 }
-
 .card-back {
   font-size: 14px;
   color: white;
   transform: rotateY(180deg);
   background-color: rgb(74, 91, 205);
 }
-
-
-
-
-
-
-
-
 #count{
   font-size: 30px;
 }
-
 #formInput{
   width: 300px;
   font-size: 24px;
-}
-
-#questionDiv{
-  background-color: beige;
-  box-shadow: -5px 0 5px rgba(0, 0, 0, 0.2);
-}
-#answerDiv{
-  background-color: mediumspringgreen;
-  box-shadow: 5px 0 5px rgba(0, 0, 0, 0.2);
-}
-.flippingDivs{
-  font-family: Roboto;
-  margin-left: 5%;
-  margin-right: 5%;
-  height: 200px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-#answerDiv:hover{
-  animation: pulse 1s;
-  transition: .3s;
 }
 @keyframes pulse {
   0% {
@@ -267,15 +227,6 @@ export default {
   100% {
     transform: scale(1);
   }
-}
-.flippingDivParagraph{
-  margin-left: 3%;
-  margin-right: 3%;
-  overflow-x: auto;
-}
-.flippingDivParagraph:hover{
-  animation: pulse 1s;
-  transition: .3s;
 }
 @keyframes pulse {
   0% {
@@ -291,24 +242,6 @@ export default {
 .prevNextButton{
   font-size: 10px;
  
-}
-.fade-enter-from {
-  opacity: 0;
-}
-.fade-enter-to{
-  opacity: 1;
-}
-.fade-enter-active{
-  transition: all 2s ease;
-}
-.fade-leave-from{
-  opacity: 1;
-}
-.fade-leave-to{
-  opacity: 0;
-}
-.fade-leave-active{
-  transition: all 2s ease;
 }
 .buttonDiv{
   display: flex;
