@@ -8,6 +8,7 @@
     <input v-model="name" type="text" />
     <button @click="startPlaying" > Start playing! </button>
   </div>
+
   <div id="wrapperDiv" v-if="joinedBoolean">
     <div id="horizontalContent">{{name}}
 
@@ -49,6 +50,7 @@
       </div>
     </div>
 
+     <!-- Detta är original layouten 
     <div id="verticalRight">
       <p style="justify-content: center; font-size: 30px; font-weight:bold"> Players</p>
       <ul style="list-style: none">
@@ -57,7 +59,23 @@
       </ul>
     </div>
   </div>
-
+ -->
+ 
+  <div id="verticalRight">
+      <p style="justify-content: left; font-size: 24px; font-weight:bold">Active players</p>
+      <ul style="list-style: none">
+        <li><b>{{name}}</b><br>
+        <button @click="sendRequest(player.name)">Exit game</button><br>
+        <p>--------------</p></li>
+        <li v-for="player in players" v-bind:key="player"> <b>{{player.name}}</b><br>
+        {{player.score}} points out of {{totalQuestionAmount}}<br>
+        <button @click="sendRequest(player.name)">Invite to game</button>
+        <p>--------------</p>
+        </li>
+      </ul>
+    </div>
+  </div>
+ 
   </body>
 
 </template>
@@ -189,9 +207,11 @@ export default {
   overflow: auto;
 }
 #verticalRight{
-  width: 200px;
+  width: 250px;
   max-width: 30%;
-  border: 1px solid black;
+  border: 5px solid black;
+  border-radius: 10px;
+  background-color: lightgrey;
 }
 
 #likeButton {
