@@ -20,12 +20,10 @@
   <!--Popup för likes och användarkommentarer på decks-->
 
   <transition name="fade">
-    <div class="positionConfirmation" id="addedConfirmation" v-if="DeckWasLiked">
+    <div class="positionConfirmation" id="DeckLiked" v-if="DeckWasLiked">
       <p class="text"> Thank you for liking this deck!</p>
     </div>
   </transition>
-
-  <!-- -->
 
 </template>
 
