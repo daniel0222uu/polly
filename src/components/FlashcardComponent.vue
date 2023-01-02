@@ -17,9 +17,9 @@
 
 
   <div>
-     
 
-    
+
+
 
     <div class="buttonDiv">
 
@@ -32,6 +32,8 @@
       funktion som tar in text från input fältet och jämför med svar från arrayen. -->
       <!--<input type="range" min="10" max="100" v-model="fontSize" class="slider" id="myRange"> -->
     </div>
+
+    <div></div>
 
 
   </div>
@@ -64,8 +66,8 @@ export default {
     },
     nextClick: function () {
       if (this.questionPosition < this.questionProp.questionArray.length - 1) {
-        this.questionPosition++;
-        this.answerButtonBool = false;
+        this.flipped = false;
+        setTimeout(() => this.questionPosition++, 500);
         this.fontSize = 80;
         this.$emit('nextClick', this.questionPosition);
 
