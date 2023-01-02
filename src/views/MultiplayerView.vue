@@ -220,9 +220,23 @@ export default {
   margin-bottom: 20px;
 }
 
-@media screen {
+/*Adjusted for an Iphone 12 Pro screen*/
+@media only screen and (max-width: 390px) {
+  #wrapperDiv {
+    visibility: visible;
+  }
 
+  #horizontalContent {
+    visibility: visible;
+  }
 
+  #verticalRight {
+    visibility: visible;
+  }
+
+  #likeButton {
+    visibility: visible;
+  }
 }
 
 
