@@ -161,6 +161,49 @@ button {
   border: white ;
 }
 
+/*Adjusted for an Iphone 12 Pro screen*/
+@media only screen and (max-width: 390px) {
+  #wrapperDiv {
+    visibility: visible;
+  }
+
+  #choosingParagraph{
+    visibility: visible;
+  }
+
+  select {
+    visibility: visible;
+  }
+
+  #horizontalContent{
+    visibility: visible;
+  }
+
+  #wrapperDiv{
+    visibility: visible;
+  }
+
+  header {
+    visibility: visible;
+  }
+  #questionHeader{
+    visibility: visible;
+  }
+  #selector{
+    visibility: visible;
+  }
+
+  /*Reaction buttons*/
+  button {
+    visibility: visible;
+  }
+}
+
+
+
+
+
+
 /*
 #Likes {
   padding: 10px 40px;
