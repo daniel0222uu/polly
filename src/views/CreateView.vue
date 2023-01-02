@@ -26,22 +26,47 @@
       <input class="qeustionEditingFields"  id="answerField" type="text" v-model="answerField">
       <p><button @click="savingAddedQustion">Add this question and answer</button> </p>
     </div>
-    <div id="verticalDiv">
-      <p style="font-weight: bold">{{questionObject.questionArray[questionIndex]}}</p>
-      <p>{{questionObject.answerArray[questionIndex]}}</p>
-      <p> <button @click="previousCLick" type="submit" style="margin-right: 70px">
-        <img src="https://cdn-icons-png.flaticon.com/512/7693/7693294.png" style="width: 20px">
-      </button>
-        <button @click="nextClick" >
-          <img src="https://cdn-icons-png.flaticon.com/512/7693/7693290.png" style="width: 20px">
+
+
+    <div v-if="addingQuestionBool" id="verticalDiv">
+
+
+      <div id="questionShowing">
+
+        <p style="font-weight: bold">{{questionObject.questionArray[questionIndex]}}</p>
+        <p>{{questionObject.answerArray[questionIndex]}}</p>
+        <p> <button @click="previousCLick" type="submit" style="margin-right: 70px">
+          <img src="https://cdn-icons-png.flaticon.com/512/7693/7693294.png" style="width: 20px">
         </button>
-      </p>
+          <button @click="nextClick" >
+            <img src="https://cdn-icons-png.flaticon.com/512/7693/7693290.png" style="width: 20px">
+          </button>
+        </p>
+
+      </div>
+
+      <div id="constantTextLeft">
+        <p>
+          QUESTION
+        </p>
+        <p>
+          ANSWER
+        </p>
+        <p>Q. number {{questionIndex}}</p>
+      </div>
+
+
+
+      <div id="questionList">
+
       <p>
         Added questions
       </p>
       <ul>
         <li v-for="item in questionObject.questionArray" :key="item">{{ item }}</li>
       </ul>
+    </div>
+
     </div>
 
 
@@ -200,6 +225,21 @@ export default {
   margin-right: 5%;
   margin-left:  5%;
   border: 2px solid black;
+  display: flex;
+  flex-direction: row-reverse;
+  background-blend-mode: overlay;
+  overflow: auto;
+}
+#questionShowing{
+  margin-right: 100px;
+  margin-left: 200px;
+}
+#constantTextLeft{
+  margin-left: 100px;
+
+}
+#questionList{
+  margin-right: 400px;
 }
 .qeustionEditingFields{
   margin: 5px;
