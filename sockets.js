@@ -49,6 +49,13 @@ function sockets(io, socket, data) {
     io.emit('multiplayerViewUpdate', data.getActivePlayers());
   });
 
+  // Testar att skapa en funktion för ta bort spelare i ActivePlayers
+  socket.on('exitPlaying', function(d) {
+    data.removePlayer(d);
+    io.emit('multiplayerViewUpdate', data.getActivePlayers());
+  });
+
+
   socket.on('numberProgress', function(d) {
     data.updateScore(d.name, d.score);
     io.emit('multiplayerViewUpdate', data.getActivePlayers());

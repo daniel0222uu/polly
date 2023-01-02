@@ -65,11 +65,11 @@
       <p style="justify-content: left; font-size: 24px; font-weight:bold">Active players</p>
       <ul style="list-style: none">
         <li><b>{{name}}</b><br>
-        <button @click="sendRequest(player.name)">Exit game</button><br>
+        <button @click="exitPlaying(player.name)">Exit game</button><br>
         <p>--------------</p></li>
         <li v-for="player in players" v-bind:key="player"> <b>{{player.name}}</b><br>
         {{player.score}} points out of {{totalQuestionAmount}}<br>
-        <button @click="sendRequest(player.name)">Invite to game</button>
+        <button @click="sendRequest(player.name)">Ask to join</button>
         <p>--------------</p>
         </li>
       </ul>
@@ -129,6 +129,11 @@ export default {
         startPlaying: function () {
           this.joinedBoolean = true;
           socket.emit("startPlaying", {name: this.name, score: this.questionIndex});
+        },
+        // Testar att lägga till funktion för att ta bort spelare
+        exitPlaying: function () {
+          this.joinedBoolean = false;
+          socket.emit("exitPlaying", {name: this.name});
         },
         onClickChild: function (value) {
           this.questionPosition = value;

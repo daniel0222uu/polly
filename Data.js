@@ -92,6 +92,12 @@ Data.prototype.getAnswers = function(pollId) {
 Data.prototype.activePlayers = function(name,number){
     this.activePlayerList.push({name:name,score:number});
 }
+
+// Testar funktion för att ta bort player från activePlayerList
+Data.prototype.removePlayer = function(name){
+  this.activePlayerList = this.activePlayerList.filter(player => player.name !== name);
+}
+
 Data.prototype.getActivePlayers = function(){
     return this.activePlayerList;
 }
