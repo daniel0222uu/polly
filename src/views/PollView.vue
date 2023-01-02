@@ -1,6 +1,8 @@
   <template>
   <div>
     {{pollId}} {{players}} {{trueCount}} out of {{trueValuesNeeded}}<button @click="startGame"> Press this button to retrieve the game object</button>
+
+    <p>{{name}}</p>
   </div>
     <diV>
       <button @click="seeQuestion">Press here to update the </button>
@@ -36,6 +38,8 @@ export default {
   },
   data: function () {
     return {
+      name: "",
+      haveReceivedName: false,
       pollId: "inactive poll",
       questionObject: {"id": "Sveriges huvudstäder",
         "questionArray": ["Sverige", "Norge", "Finland", "Danmark"],
@@ -107,6 +111,14 @@ export default {
       }
       if(this.trueCount === 0){
         this.swapSides = false;
+      }
+    },
+    players: function(){
+      if(!this.haveReceivedName){
+        let initializePlayers = this.players;
+        let lastElement = initializePlayers.slice(-1);
+        this.name = lastElement[0];
+        this.haveReceivedName = true;
       }
     }
   }
