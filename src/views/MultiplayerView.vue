@@ -22,29 +22,6 @@
         <FlashcardView v-bind:questionProp="myObj_deserialized" @nextClick="onClickChild" @previousClick="onClickChild" ></FlashcardView>
       </div>
 
-      <!-- Create a like and comment button -->
-        <div id = "buttons">
-
-          <button id = "like">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Thumbs_up_font_awesome.svg/768px-
-            Thumbs_up_font_awesome.svg.png?20200502113252" style="width: 30px; height: 30px"/>
-          </button>
-
-<!--
-          <button id = "comment">
-            <img src="http://www.clipartbest.com/cliparts/dcr/aGK/dcraGK4oi.svg" style="width: 30px; height: 30px"/>
-          </button>
-          -->
-
-          <!--<button lbutton ="likes()">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Thumbs_up_font_awesome.svg/768px-
-            Thumbs_up_font_awesome.svg.png?20200502113252" style="width: 30px; height: 30px"/>
-          </button>
-
-          <button cbutton ="comment()">
-            <img src="http://www.clipartbest.com/cliparts/dcr/aGK/dcraGK4oi.svg" style="width: 30px; height: 30px"/>
-          </button>-->
-        </div>
 
       <div style="background-color: white">
         <label>
@@ -80,16 +57,6 @@
 </template>
 
 <script>
-
-
-// TA INTE BORT DENNA KOMMENTERADE DEL!
-// Sparar antal ggr som likes knappen har används
-//let nroflikes = 0; // We want to know how many likes a deck has.
-//let like = document.getElementById("like");
-//like.onclick = function() {
-//  nroflikes = nroflikes + 1;
-//  console.log("Antalet personer som gillar kortleken:" + nroflikes)
-//}
 
 
 import Decks from "../assetts/Decks.json";
@@ -129,23 +96,6 @@ export default {
     socket.on("multiplayerViewUpdate", playersActive => {
       this.players = playersActive;
     });
-    /*socket.on("requestReceive", inviteInformation => {
-      this.inviteInformation = inviteInformation;
-    });*/
-
-
-///////////////////////// KAN TAS BORT!
-
-      // Number of clicks a button has:
-//      var lbutton = document.getElementById("lbutton");
-//      lbutton.onclick = likes()
-//    {
-//        nroflikes = nroflikes + 1;
-//        console.log(nroflikes)
-
-//      }
-//////////////////////////
-
     },
   methods:
       {
@@ -225,25 +175,6 @@ export default {
   max-width: 30%;
   border: 1px solid black;
 }
-
-/*
-
-#cbutton {
-  margin-left: 10px;
-  margin-right: 40px;
-  margin-bottom: 60px;
-  opacity: 1;
-  border-radius: 100%;
-}
-
-.comment {
-  margin-left: 10px;
-  margin-right: 40px;
-  margin-bottom: 60px;
-  opacity: 1;
-  border-radius: 100%;
-}
-*/
 
 
 
