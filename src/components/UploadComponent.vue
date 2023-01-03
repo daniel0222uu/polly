@@ -1,6 +1,7 @@
 <template>
   <div>
-    <button @click="testAxiosPost">Test axios POST</button>
+    <button @click="testAxiosPost(uploadingObject)">Test axios POST</button>
+
   </div>
 </template>
 
@@ -12,6 +13,7 @@ import axios from 'axios';
 
 export default {
   name: "UploadComponent",
+  props: ['uploadingObject'],
   data: function(){
     return {
       testing: {"id": "Sveriges huvudstäder",
@@ -20,10 +22,10 @@ export default {
     }
   },
   methods: {
-    async testAxiosPost() {
+    async testAxiosPost(sendDeckToServer) {
       try {
         const response = await axios.post('http://localhost:8080/fileTest ', {
-          data: this.testing,
+          data: sendDeckToServer,
           headers:{
             'Content-Type': 'application/json'
           },
