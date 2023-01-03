@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button @click="testAxiosPost(uploadingObject)">Test axios POST</button>
+  <button @click="testAxiosPost(uploadingObject)">Test axios POST</button>
 
   </div>
 </template>
@@ -16,9 +16,7 @@ export default {
   props: ['uploadingObject'],
   data: function(){
     return {
-      testing: {"id": "Sveriges huvudstäder",
-        "questionArray": ["Sverige", "Norge", "Finland", "Danmark"],
-        "answerArray": ["Sthlm", "Oslo", "Helsingfors", "CBH"]},
+      testing: {}
     }
   },
   methods: {

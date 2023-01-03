@@ -10,7 +10,7 @@
     container div
   </div>
   <div>
-    <upload-component v-bind:uploading-object="deckToUpload" ></upload-component>
+    <upload-component v-bind:uploading-object="deckToAxios" ></upload-component>
   </div>
   </body>
 </template>
@@ -31,6 +31,11 @@ export default {
       selectedDeck: "",
       selectorList: [],
       deckToUpload: {},
+      deckToAxios: {
+        id:"",
+        questionArray:[],
+        answerArray:[],
+        likes: 0}
     }
   },
   created(){
@@ -44,6 +49,9 @@ export default {
       this.questionPosition = 0;
       console.log("du klickade på en knapp med loadDeck()", deck);
       this.deckToUpload = JSON.parse(localStorage.getItem(deck));
+      this.deckToAxios.id = this.deckToUpload.id;
+      this.deckToAxios.questionArray = this.deckToUpload.questionArray;
+      this.deckToAxios.answerArray = this.deckToUpload.answerArray;
     },
   }
 
