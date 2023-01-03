@@ -30,28 +30,13 @@
       <!-- Buttons for liking and commenting: -->
       <div class="buttons">
         <!--<button id = "likeButton" v-on:click="like()">-->
-        <button id = "likeButton" v-on:click="likes(1)">
+        <button id = "likeButton" v-on:click="likeDeck(questionObject.id)">
           <img src="https://freesvg.org/img/Thumbs-Up-Silhouette.png"
                style="width: 30px; height: 30px;"
           />
         </button>
       </div>
 
-      <div style="background-color: white">
-        <label>
-          Write poll id:
-          <input type="text" v-model="lobbyId">
-        </label>
-        <router-link
-            v-bind:to="'/poll/'+lobbyId"
-        >
-          <button id="shadow"
-                  @click="joinLobby"
-          >
-            Participate
-          </button>
-        </router-link>
-      </div>
     </div>
 
      <!-- Detta är original layouten 
@@ -69,7 +54,7 @@
       <p style="justify-content: left; font-size: 24px; font-weight:bold">Active players</p>
       <ul style="list-style: none">
         <li><b>{{name}}</b><br>
-        <button @click="exitPlaying(player.name)">Exit game</button><br>
+        <button @click="exitPlaying(name)">Exit game</button><br>
         <p>--------------</p></li>
         <li v-for="player in players" v-bind:key="player"> <b>{{player.name}}</b><br>
         {{player.score}} points out of {{totalQuestionAmount}}<br>
@@ -95,6 +80,7 @@ import io from "socket.io-client";
 import FlashcardView from "@/components/FlashcardComponent";
 import AllDecks from "@/assetts/AllDecks.json";
 import joinLobbyComponent from "@/components/JoinLobbyComponent";
+import axios from "axios";
 const socket = io();
 console.log(Decks);
 export default {
@@ -138,9 +124,10 @@ export default {
           socket.emit("startPlaying", {name: this.name, score: this.questionIndex});
         },
         // Testar att lägga till funktion för att ta bort spelare
-        exitPlaying: function () {
+        exitPlaying: function (playerName) {
           this.joinedBoolean = false;
-          socket.emit("exitPlaying", {name: this.name});
+          socket.emit("exitPlaying", {name: playerName});
+          console.log("exitPLaying should've ran");
         },
         onClickChild: function (value) {
           this.questionPosition = value;
@@ -173,10 +160,19 @@ export default {
         },
 
         // Function for the like button
-        likes: function (e) {
-          let ButtonVal = +(e.target.dataset.clickcount);
-          e.target.dataset.clickcount = ButtonVal++;
-          console.log("Number of likes:" + ButtonVal)
+        async likeDeck (deckToLike) {
+          console.log("Number of likes:");
+          try {
+            const response = await axios.post('http://localhost:8080/likeDeck ', {
+              data: deckToLike,
+              headers:{
+                'Content-Type': 'application/json'
+              },
+            });
+            console.log(response.data);
+          } catch (error) {
+            console.error(error);
+          }
         },
       },
 

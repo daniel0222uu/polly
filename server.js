@@ -13,8 +13,6 @@ app.use(bodyParser.json());
 
 app.post('/fileTest', (req, res) => { //axios test reveiver
     const data = req.body;
-   
-    console.log("realAxios is responding on the server");
 
      const file = fs.readFileSync("src/assetts/Decks.json");  
      let jsonOfTheFile = JSON.parse(file);
@@ -22,6 +20,18 @@ app.post('/fileTest', (req, res) => { //axios test reveiver
      console.log(jsonOfTheFile);
      console.log(data.data);
       fs.writeFileSync("src/assetts/Decks.json", JSON.stringify(jsonOfTheFile));
+
+
+
+    res.send({ message: 'Data received' });
+});
+
+app.post('/likeDeck', (req, res) => { //axios test reveiver
+    const data = req.body;
+
+    const file = fs.readFileSync("src/assetts/Decks.json");
+    console.log("the deck i want to like is",data.data);   
+    let jsonOfTheFile = JSON.parse(file);
 
 
 
