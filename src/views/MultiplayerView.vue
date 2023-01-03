@@ -1,7 +1,11 @@
 <template>
   <body>
   <div>
-    {{inviteInformation}}
+    <ul style="list-style: none">
+      <li v-for="invite in invitationList" v-bind:key="invite"> {{invite.requester}} Invites you to play {{invite.lobbyID}}
+        <join-lobby-component v-bind:lobby-id="invite.lobbyID" v-bind:name="name" ></join-lobby-component>
+      </li>
+    </ul>
   </div>
   <div v-if="!joinedBoolean">
     <p  style="font-size: 30px; font-weight: bolder"> CHOOSE YOUR NAME</p>
@@ -90,12 +94,14 @@ const idListFromAllDecks = selectList.map(element => element.id);
 import io from "socket.io-client";
 import FlashcardView from "@/components/FlashcardComponent";
 import AllDecks from "@/assetts/AllDecks.json";
+import joinLobbyComponent from "@/components/JoinLobbyComponent";
 const socket = io();
 console.log(Decks);
 export default {
   name: "MultiplayerView",
   components: {
-    FlashcardView
+    FlashcardView,
+    joinLobbyComponent
   },
   data: function(){
     return {
@@ -112,6 +118,7 @@ export default {
         "questionArray": ["Sverige", "Norge", "Finland", "Danmark"],
         "answerArray": ["Sthlm", "Oslo", "Helsingfors", "CBH"]},
       selectedDeck: "",
+      invitationList: [],
 
       //buttons: 0,
 
@@ -156,10 +163,6 @@ export default {
           this.lobbyId = Math.floor(Math.random() * 1000000 + 100000);
           socket.emit("createPoll", {pollId: this.lobbyId, lang: this.lang});
         },
-        joinLobby: function () {
-          socket.emit("joinLobby", {lobbyID: this.lobbyId, name: this.name});
-          this.navigate();
-        },
         loadDeck: function (deckIdToLoad) {
           this.questionPosition = 0;
           const target = AllDecks.find(deck => deck.id === deckIdToLoad);
@@ -180,16 +183,18 @@ export default {
   watch: {
     inviteInformation: function(){
       console.log("inviteInformation is", this.inviteInformation)
-      for (var i = 0, l = this.inviteInformation.length; i < l; i++) {
-        var inviteInfo = this.inviteInformation[i];
+      let listToFill = [];
+      for (let i = 0, l = this.inviteInformation.length; i < l; i++) {
+        let inviteInfo = this.inviteInformation[i];
         if(inviteInfo.receiver === this.name){
           console.log("receiver is me and im invited by ", inviteInfo.requester,
               "the lobby created is",inviteInfo.lobbyID);
+          listToFill.push(inviteInfo);
+          this.invitationList = listToFill;
         }
       }
     }
   },
-
   mounted() {
     this.socket = io();
     this.socket.on('requestReceive',inviteInformation => {
@@ -223,25 +228,6 @@ export default {
   height: 40px;
   width: 50px;
   margin-bottom: 20px;
-}
-
-/*Adjusted for an Iphone 12 Pro screen*/
-@media only screen and (max-width: 390px) {
-  #wrapperDiv {
-    visibility: visible;
-  }
-
-  #horizontalContent {
-    visibility: visible;
-  }
-
-  #verticalRight {
-    visibility: visible;
-  }
-
-  #likeButton {
-    visibility: visible;
-  }
 }
 
 
