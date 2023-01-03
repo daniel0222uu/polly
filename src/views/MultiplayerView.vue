@@ -1,6 +1,9 @@
 <template>
   <body>
-  <div>
+  <!-- Här visas text om autoLogout-->
+    <div v-if="logoutMessage"></div>
+  
+    <div>
     <ul style="list-style: none">
       <li v-for="invite in invitationList" v-bind:key="invite"> {{invite.requester}} Invites you to play {{invite.lobbyID}}
         <join-lobby-component v-bind:lobby-id="invite.lobbyID" v-bind:name="name" ></join-lobby-component>
@@ -80,6 +83,10 @@ import io from "socket.io-client";
 import FlashcardView from "@/components/FlashcardComponent";
 import AllDecks from "@/assetts/AllDecks.json";
 import joinLobbyComponent from "@/components/JoinLobbyComponent";
+
+// Här importeras componentern AutoLogout
+// import autoLogout from "@/components/AutoLogout";
+
 import axios from "axios";
 const socket = io();
 console.log(Decks);
@@ -105,6 +112,7 @@ export default {
         "answerArray": ["Sthlm", "Oslo", "Helsingfors", "CBH"]},
       selectedDeck: "",
       invitationList: [],
+      logoutMessage: false,
 
       //buttons: 0,
 
@@ -123,6 +131,10 @@ export default {
           this.joinedBoolean = true;
           socket.emit("startPlaying", {name: this.name, score: this.questionIndex});
         },
+        // Testar att använda funktionen AutoLogout
+        // autoLogut: function () {
+        //  logoutMessage = true;
+        //},
         // Testar att lägga till funktion för att ta bort spelare
         exitPlaying: function (playerName) {
           this.joinedBoolean = false;
