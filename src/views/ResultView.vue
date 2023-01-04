@@ -10,7 +10,7 @@
       <div id="questionHeader">
         <div id="selector">
           <select  name="decks" v-model="selectedDeck" required @change="loadDeck(this.selectedDeck)">
-            <option value="" disabled selected hidden>{{selectorList[0]}}</option>
+            <option value="" disabled selected hidden>Choose your deck cp tobbe!</option>
             <option id="deckSelector" v-for="deck in selectorList" v-bind:key="deck">{{ deck }}</option>
           </select>
         </div>

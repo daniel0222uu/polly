@@ -6,8 +6,7 @@
     <select v-model="selectedDeck" name="drinks" required>
       <option value="" disabled selected hidden>Choose a deck</option>
       <option v-for="drink in selectorList" v-bind:key="drink">{{ drink }}</option>
-    </select> {{selectedDeck}}
-    {{selectorList}}
+    </select>
   </div>
 
   <div>
@@ -174,6 +173,5 @@ export default {
 #questionNumberHeader{
   font-size: 80px;
   text-align: center;
-  font-family: "Arial Black";
 }
 </style>

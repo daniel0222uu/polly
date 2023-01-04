@@ -2,16 +2,24 @@
   <body>
     <WarningMessage v-bind:deck-alert="deckNameAlert"  v-bind:question-field-alert="questionFieldAlert"
     v-bind:question-was-added="questionWasAdded"/>
-
-
-  <div id="wrapperDiv">
-
     <div class="horizontalDiv" v-if="!addingQuestionBool">
 
       <p id="namingQuiz">Name your quiz please</p>
 
       <div id="namingField" ><input class="qeustionEditingFields"  id="namingDeckField" type="text" v-model="deckName"></div>
       <p><button @click="nameDeck(deckName)">Name my deck</button></p> {{questionObject.id}}
+    </div>
+
+  <div id="wrapperDiv">
+
+    <div id="questionList">
+
+      <p>
+        Added questions
+      </p>
+      <ul>
+        <li v-for="item in questionObject.questionArray" :key="item">{{ item }}</li>
+      </ul>
     </div>
 
     <div class="horizontalDiv" v-if="addingQuestionBool">
@@ -45,27 +53,7 @@
 
       </div>
 
-      <div id="constantTextLeft">
-        <p>
-          QUESTION
-        </p>
-        <p>
-          ANSWER
-        </p>
-        <p>Q. number {{questionIndex}}</p>
-      </div>
 
-
-
-      <div id="questionList">
-
-      <p>
-        Added questions
-      </p>
-      <ul>
-        <li v-for="item in questionObject.questionArray" :key="item">{{ item }}</li>
-      </ul>
-    </div>
 
     </div>
 
@@ -85,7 +73,7 @@
 <script>
 import io from 'socket.io-client';
 import Decks from "../assetts/Decks.json";
-import WarningMessage from "@/views/WarningMessage";
+import WarningMessage from "@/components/WarningMessage";
 const socket = io();
 console.log(Decks);
 
@@ -216,36 +204,31 @@ export default {
 #wrapperDiv{
   position: relative;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   height: 100%;
+  justify-content: space-between;
+  overflow: auto;
 }
 .horizontalDiv{
 }
 #verticalDiv{
-  margin-right: 5%;
-  margin-left:  5%;
   border: 2px solid black;
-  display: flex;
-  flex-direction: row-reverse;
-  background-blend-mode: overlay;
-  overflow: auto;
+  margin-right: 3%;
 }
 #questionShowing{
-  margin-right: 100px;
-  margin-left: 200px;
-}
-#constantTextLeft{
-  margin-left: 100px;
-
 }
 #questionList{
-  margin-right: 400px;
+  margin-left: 3%;
+  max-width: 100px;
+  overflow: auto;
+  position: relative;
 }
 .qeustionEditingFields{
   margin: 5px;
-  position: relative;
-  font-size: 40px;
+  font-size: 20px;
   font-size-adjust:0.5;
+  margin-left: 5%;
+  position: relative;
   text-align: center;
 }
 #namingQuiz{
