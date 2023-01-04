@@ -12,7 +12,7 @@
 
   <div id="wrapperDiv">
 
-    <div id="questionList">
+    <div id="questionList" v-if="addingQuestionBool">
 
       <p>
         Added questions
@@ -29,34 +29,38 @@
       <h2>Now creating: {{questionObject.id}} </h2>
 
       <p>Add your questions</p>
-      <input class="qeustionEditingFields" id="questionField" type="text" v-model="questionField">
+      <input class="qeustionEditingFields" type="text" placeholder="Question goes here"  v-model="questionField">
       <br>
-      <input class="qeustionEditingFields"  id="answerField" type="text" v-model="answerField">
-      <p><button @click="savingAddedQustion">Add this question and answer</button> </p>
+      <input class="qeustionEditingFields" type="text" placeholder="Answer goes here" v-model="answerField">
+
     </div>
 
+    <div id="submitQuestionDiv">
+      <button id="buttonPosition" @click="savingAddedQustion">Add this question and answer</button>
+    </div>
 
     <div v-if="addingQuestionBool" id="verticalDiv">
 
 
-      <div id="questionShowing">
 
-        <p style="font-weight: bold">{{questionObject.questionArray[questionIndex]}}</p>
-        <p>{{questionObject.answerArray[questionIndex]}}</p>
-        <p> <button @click="previousCLick" type="submit" style="margin-right: 70px">
-          <img src="https://cdn-icons-png.flaticon.com/512/7693/7693294.png" style="width: 20px">
-        </button>
-          <button @click="nextClick" >
-            <img src="https://cdn-icons-png.flaticon.com/512/7693/7693290.png" style="width: 20px">
-          </button>
-        </p>
+
 
       </div>
 
 
 
     </div>
+    <div id="questionShowing">
 
+      <p style="font-weight: bold">{{questionObject.questionArray[questionIndex]}}</p>
+      <p>{{questionObject.answerArray[questionIndex]}}</p>
+      <p> <button @click="previousCLick" type="submit" style="margin-right: 70px">
+        <img src="https://cdn-icons-png.flaticon.com/512/7693/7693294.png" style="width: 20px">
+      </button>
+        <button @click="nextClick" >
+          <img src="https://cdn-icons-png.flaticon.com/512/7693/7693290.png" style="width: 20px">
+        </button>
+      </p>
 
   </div>
 
@@ -212,24 +216,25 @@ export default {
 .horizontalDiv{
 }
 #verticalDiv{
-  border: 2px solid black;
-  margin-right: 3%;
 }
 #questionShowing{
 }
 #questionList{
-  margin-left: 3%;
+  margin-left: 5%;
   max-width: 100px;
   overflow: auto;
   position: relative;
 }
 .qeustionEditingFields{
-  margin: 5px;
+  width: 700px;
+  height: 80px;
   font-size: 20px;
-  font-size-adjust:0.5;
+  margin-bottom: 10px;
   margin-left: 5%;
-  position: relative;
+  margin-right: 5%;
   text-align: center;
+  justify-content: center;
+  word-break: break-all;
 }
 #namingQuiz{
   margin: 5px;
@@ -239,6 +244,15 @@ export default {
   text-align: center;
 }
 #namingField{
-  
+}
+#submitQuestionDiv{
+  width: 20px;
+  justify-content: left;
+  margin-right: 100px;
+}
+#buttonPosition{
+  margin-top: 150px;
+  width: 180px;
+  height: 100px;
 }
 </style>
