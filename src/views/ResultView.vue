@@ -1,7 +1,8 @@
 <template>
   
   <body>
-
+    
+    
 
   <div id="wrapperDiv">
     
@@ -9,14 +10,25 @@
       
       <div id="questionHeader">
         <div id="selector">
-          <select  name="decks" v-model="selectedDeck" required @change="loadDeck(this.selectedDeck)">
+          <select  name="decks" v-model="selectedDeck" required @change="loadDeck(this.selectedDeck); $refs.myChild.resetQuestionPosition()">
             <option value="" disabled selected hidden>Choose your deck cp tobbe!</option>
             <option id="deckSelector" v-for="deck in selectorList" v-bind:key="deck">{{ deck }}</option>
           </select>
         </div>
-        <FlashcardView v-bind:questionProp="myObj_deserialized" v-bind:questionIndex="questionPosition"> </FlashcardView>
+
+        <div class="notActive" :class="{active:isActive}">
+         
+          {{ selectedDeck }}
+        <br>
+        <FlashcardView v-bind:questionProp="myObj_deserialized" ref="myChild"> </FlashcardView>
+
+        
+        
+
+        </div>
+        
       </div>
-      {{ selectedDeck }}
+      
 
     </div>
 
@@ -32,6 +44,7 @@
 import FlashcardView from "@/components/FlashcardComponent";
 import io from 'socket.io-client';
 
+
 const socket = io();
 
 export default {
@@ -42,6 +55,8 @@ export default {
   },
   data: function () {
     return {
+      numberToSend:0,
+      isActive:false,
       myObj_deserialized: {},
       uiLabels: {},
       lang: "en",
@@ -55,7 +70,6 @@ export default {
         "questionArray": ["Sverige", "Norge", "Finland", "Danmark"],
         "answerArray": ["Sthlm", "Oslo", "Helsingfors", "CBH"]},
       answerButtonBool: false,
-      questionPosition: 0,
       fontSize: 80,
     }
   },
@@ -69,16 +83,19 @@ export default {
     socket.on("init", (labels) => {
       this.uiLabels = labels
       console.log(labels);
-       this.loadDeck(this.selectorList[0])
+       
 
     })
   },
   methods: {
+    
     loadDeck: function(deck){
-      this.questionPosition = 0;
+      
       console.log("du klickade på en knapp med loadDeck()");
       this.myObj_deserialized = JSON.parse(localStorage.getItem(deck));
       this.questionObject = this.myObj_deserialized;
+      
+      this.isActive = true;
     },
   },
 }
@@ -90,8 +107,12 @@ export default {
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;700&display=swap');
 
-
-
+.notActive {
+display: none;
+}
+.active {
+  display: block;
+}
 #choosingParagraph{
   text-align: center;
   position: relative;
@@ -148,6 +169,8 @@ header {
   top: 0;
   left: 20%;
   margin-top: 10px;
+ 
+  
 }
 
 /*Reaction buttons*/
