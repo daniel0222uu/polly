@@ -62,6 +62,7 @@
           <input type="radio" name="player" v-model="selectedPlayer">  {{player.name}}</div>
           <button type="submit">Challange now!</button>
       </form>
+      <P><button @click="exitPlaying(name)">I want to exit the game</button></P>
     </div>
     
     
