@@ -1,73 +1,67 @@
 <template>
   <body>
   <!-- Här visas text om autoLogout-->
-    <div v-if="logoutMessage"></div>
+  <!--<div><autoLogout></autoLogout></div>-->
   
+  <!-- Här visas meddelande om att det finns en invite -->
     <div>
     <ul style="list-style: none">
       <li v-for="invite in invitationList" v-bind:key="invite"> {{invite.requester}} Invites you to play {{invite.lobbyID}}
         <join-lobby-component v-bind:lobby-id="invite.lobbyID" v-bind:name="name" ></join-lobby-component>
       </li>
     </ul>
-  </div>
-  <div v-if="!joinedBoolean">
-    <p  style="font-size: 30px; font-weight: bolder"> CHOOSE YOUR NAME</p>
-    <input v-model="name" type="text" />
-    <button @click="startPlaying" > Start playing! </button>
-  </div>
+    </div>
 
-  <div id="wrapperDiv" v-if="joinedBoolean">
-    <div id="horizontalContent">{{name}}
+  <!-- Här fyller användaren i namn och väljer att starta spelet -->
+    <div v-if="!joinedBoolean">
+      <p style="font-size: 30px; font-weight: bolder">Choose your name:</p>
+      <input v-model="name" type="text" />
+      <button @click="startPlaying">Start playing!</button>
+    </div>
 
-      <div id="selector">
-        <select  name="decks" required v-model="selectedDeck" @change="loadDeck(this.selectedDeck)" >
-          <option value="" disabled selected hidden></option>
-          <option id="deckSelector" v-for="deck in selectorList" v-bind:key="deck">{{deck}}</option>
-        </select>
-      </div>
+  <!-- Här startar div som visas när joinedBoolean=True -->
+    <div id="wrapperDiv" v-if="joinedBoolean">
 
+    <!-- Här visas namn och användaren kan välja decka att spela-->
+      <div id="horizontalContent">{{name}}
+        <div id="selector">
+          <select name="decks" required v-model="selectedDeck" @change="loadDeck(this.selectedDeck)">
+            <option value="" disabled selected hidden></option>
+            <option id="deckSelector" v-for="deck in selectorList" v-bind:key="deck">{{deck}}</option>
+          </select>
+        </div>
+      <!--</div>-->
+
+    <!-- Här visas komponenten FlashcardView -->
       <div>
         <FlashcardView v-bind:questionProp="myObj_deserialized" @nextClick="onClickChild" @previousClick="onClickChild" ></FlashcardView>
       </div>
 
-      <!-- Buttons for liking and commenting: -->
+    <!-- Buttons for liking and commenting: -->
       <div class="buttons">
         <!--<button id = "likeButton" v-on:click="like()">-->
         <button id = "likeButton" v-on:click="likeDeck(questionObject.id)">
-          <img src="https://freesvg.org/img/Thumbs-Up-Silhouette.png"
-               style="width: 30px; height: 30px;"
-          />
+        <img src="https://freesvg.org/img/Thumbs-Up-Silhouette.png" style="width: 30px; height: 30px;"/>
         </button>
       </div>
+    </div>
+     <!-- Här avslutas allt som visas när joinBolean=True -->
 
+    <!-- Här visas Active Player listan -->    
+      <div id="verticalRight">
+        <p style="justify-content: left; font-size: 24px; font-weight:bold">Active players</p>
+        <ul style="list-style: none">
+          <li><b>{{name}}</b><br>
+            <button @click="exitPlaying(name)">Exit game</button><br>
+            <p>--------------</p></li>
+          <li v-for="player in players" v-bind:key="player"> <b>{{player.name}}</b><br>
+            {{player.score}} points out of {{totalQuestionAmount}}<br>
+            <button @click="sendRequest(player.name)">Ask to join</button>
+          <p>--------------</p></li>
+        </ul>
+      </div>
     </div>
 
-     <!-- Detta är original layouten 
-    <div id="verticalRight">
-      <p style="justify-content: center; font-size: 30px; font-weight:bold"> Players</p>
-      <ul style="list-style: none">
-        <li v-for="player in players" v-bind:key="player"> {{player.name}} ,
-          Points {{player.score}} out of {{totalQuestionAmount}} <button @click="sendRequest(player.name)" > Send request</button> </li>
-      </ul>
-    </div>
-  </div>
- -->
- 
-  <div id="verticalRight">
-      <p style="justify-content: left; font-size: 24px; font-weight:bold">Active players</p>
-      <ul style="list-style: none">
-        <li><b>{{name}}</b><br>
-        <button @click="exitPlaying(name)">Exit game</button><br>
-        <p>--------------</p></li>
-        <li v-for="player in players" v-bind:key="player"> <b>{{player.name}}</b><br>
-        {{player.score}} points out of {{totalQuestionAmount}}<br>
-        <button @click="sendRequest(player.name)">Ask to join</button>
-        <p>--------------</p>
-        </li>
-      </ul>
-    </div>
-  </div>
- 
   </body>
 
 </template>
@@ -90,12 +84,15 @@ import joinLobbyComponent from "@/components/JoinLobbyComponent";
 import axios from "axios";
 const socket = io();
 console.log(Decks);
+
 export default {
   name: "MultiplayerView",
   components: {
     FlashcardView,
-    joinLobbyComponent
+    joinLobbyComponent,
+    // autoLogout
   },
+  
   data: function(){
     return {
       lang: "en",
@@ -112,7 +109,6 @@ export default {
         "answerArray": ["Sthlm", "Oslo", "Helsingfors", "CBH"]},
       selectedDeck: "",
       invitationList: [],
-      logoutMessage: false,
 
       //buttons: 0,
 
@@ -131,10 +127,7 @@ export default {
           this.joinedBoolean = true;
           socket.emit("startPlaying", {name: this.name, score: this.questionIndex});
         },
-        // Testar att använda funktionen AutoLogout
-        // autoLogut: function () {
-        //  logoutMessage = true;
-        //},
+        
         // Testar att lägga till funktion för att ta bort spelare
         exitPlaying: function (playerName) {
           this.joinedBoolean = false;
