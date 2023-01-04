@@ -95,6 +95,7 @@ Data.prototype.activePlayers = function(name,number){
 
 // Testar funktion för att ta bort player från activePlayerList
 Data.prototype.removePlayer = function(name){
+  console.log("player to remove", name);
   this.activePlayerList = this.activePlayerList.filter(player => player.name !== name);
 }
 
