@@ -3,10 +3,9 @@
   <body>
 
   <div>
-    <EditAndCreateComponent
-      />
+    <!----><EditAndCreateComponent/>
 
-    Editing is getting edited but not create
+  
   </div>
  
 

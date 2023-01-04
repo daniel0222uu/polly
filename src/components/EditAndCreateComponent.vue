@@ -3,13 +3,14 @@
   <body>
   <div>
 
-    <select v-model="selectedDeck" name="drinks" required>
-      <option value="" disabled selected hidden>Choose a deck</option>
+    <select v-model="selectedDeck" name="drinks" required @change="loadDeck">
+      <option value="" disabled selected hidden>Pick a deck to edit</option>
       <option v-for="drink in selectorList" v-bind:key="drink">{{ drink }}</option>
     </select>
   </div>
 
-  <div>
+  <div class="editView" :class="{active: isActive}">
+    <div>
     <header id="questionNumberHeader" v-if="!addingQuestionBool"> {{questionObject.id}} </header>
     <header id="questionNumberHeader" v-if="addingQuestionBool"> QUESTION TO ADD </header>
     <input class="qeustionEditingFields" id="questionField" type="text" v-model="questionField">
@@ -21,18 +22,25 @@
   <div>
 
 
-    <button @click="loadDeck">Load deck</button>
+    
 
     <button @click="addingNewQuestion">Add new question</button>
 
   </div>
   <div>
-    <button @click="previousCLick" id="previousButton"> Previous </button> {{questionIndex + 1 }} <button @click="nextClick" id="nextButton"> Next </button>
+    <button @click="previousCLick" id="previousButton"> Previous </button>
+
+     {{questionIndex + 1 }}
+     
+     <button @click="nextClick" id="nextButton"> Next </button>
 
     <br>
     <br>
     <button @click="savingCurrentQuestion" style="width: 200px; height: 150px">Save button</button>
   </div>
+
+  </div>
+  
   </body>
 </template>
 
@@ -50,6 +58,7 @@ export default {
 
   data: function (){
      return {
+      isActive:false,
        selectedDeck: "",
        quizName: "",
        lang: "",
@@ -109,16 +118,17 @@ export default {
       console.log("du klickade på en knapp med loadDeck()")
       let myObj_deserialized = JSON.parse(localStorage.getItem(this.selectedDeck));
       console.log(myObj_deserialized);
-      //this.questionObject = myObj_deserialized;
-      //this.answerField = this.questionObject.answerArray[this.questionIndex];
-      //this.questionField = this.questionObject.questionArray[this.questionIndex];
+      this.questionObject = myObj_deserialized;
+      this.answerField = this.questionObject.answerArray[this.questionIndex];
+      this.questionField = this.questionObject.questionArray[this.questionIndex];
       this.answerField = myObj_deserialized.answerArray[this.questionIndex];
       this.questionField = myObj_deserialized.questionArray[this.questionIndex];
       this.questionObject = myObj_deserialized;
+      this.isActive = true;
     },
     previousCLick: function () {
       if (this.questionIndex > 0) {
-        this.questionIndex = this.questionIndex - 1;
+        this.questionIndex -- ;
       }
       this.answerField = this.questionObject.answerArray[this.questionIndex];
       this.questionField = this.questionObject.questionArray[this.questionIndex];
@@ -126,7 +136,7 @@ export default {
     },
     nextClick: function () {
       if (this.questionIndex < this.questionObject.questionArray.length - 1) {
-        this.questionIndex = this.questionIndex + 1;
+        this.questionIndex ++ ;
       }
       this.answerField = this.questionObject.answerArray[this.questionIndex];
       this.questionField = this.questionObject.questionArray[this.questionIndex];
@@ -162,6 +172,15 @@ export default {
 
 
 <style scoped>
+.editView{
+  display: none;
+
+}
+.active {
+  display: block;
+}
+
+
 #nextButton{
   margin: 40px;
 }

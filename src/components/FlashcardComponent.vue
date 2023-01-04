@@ -16,7 +16,7 @@
   </div>
 
 
-  <div>
+ 
 
 
 
@@ -25,7 +25,7 @@
 
       <button id="previousButton" @click="previousCLick" class="prevNextButton"> Previous </button>
 
-      <a style="color:white">{{ questionPosition +1}}/{{questionProp.questionArray.length}}</a>
+      <a style="color:white">{{ questionPosition+1}}/{{questionProp.questionArray.length}}</a>
       <!--<input form="text" id="formInput" v-model="answerString">-->
       <button id="nextButton" @click="nextClick" class="prevNextButton"> Next </button>
       <!--<button id="nextButton" @click="textAnswer" class="prevNextButton"> Answer </button>  testade att skriva
@@ -33,33 +33,37 @@
       <!--<input type="range" min="10" max="100" v-model="fontSize" class="slider" id="myRange"> -->
     </div>
 
-    <div></div>
 
-
-  </div>
 </template>
 
 <script>
 
+
 import io from 'socket.io-client';
-const socket = io();
+const socket = io();  
 
 export default {
   name: 'FlashcardView',
-  props: ['questionProp', 'showAnswer', 'pollId'],
+  props: ['questionProp', ],
   components: {},
   data: function () {
     return {
+      hej:0,
       flipped: false,
       answerButtonBool: false,
       fontSize: 80,
-      questionPosition: 0,
+      questionPosition :0,
       uiLabels: {},
       answerString: "",
       points: 0,
     }
   },
+  
   methods: {
+
+   resetQuestionPosition() {
+      this.questionPosition = 0;
+    },
     flip() {
       this.flipped = !this.flipped;
       this.adjustAnswerFontSize();
@@ -67,9 +71,12 @@ export default {
     nextClick: function () {
       if (this.questionPosition < this.questionProp.questionArray.length - 1) {
         this.flipped = false;
-        setTimeout(() => this.questionPosition++, 500);
+        this.questionPosition++;
         this.fontSize = 80;
         this.$emit('nextClick', this.questionPosition);
+      
+        
+        
 
         if (this.areStringsSimilar(this.answerString, this.questionProp.answerArray[this.questionPosition - 1])) {
           console.log("correct");
