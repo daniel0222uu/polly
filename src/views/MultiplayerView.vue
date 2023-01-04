@@ -14,7 +14,7 @@
 
   <!-- Här fyller användaren i namn och väljer att starta spelet -->
     <div v-if="!joinedBoolean">
-      <p style="font-size: 30px; font-weight: bolder">Choose your name:</p>
+      <p style="font-size: 30px; font-weight: bolder">Enter your name:</p>
       <input v-model="name" type="text" />
       <button @click="startPlaying">Start playing!</button>
     </div>
@@ -23,8 +23,8 @@
     <div id="wrapperDiv" v-if="joinedBoolean">
 
     <!-- Här visas namn och användaren kan välja decka att spela-->
-      <div id="horizontalContent">{{name}}
-        <div id="selector">
+      <div id="horizontalContent"><p style="font-size:24px;font-weight:bold">{{name}}</p>
+        <div id="selector">Choose deck to play:
           <select name="decks" required v-model="selectedDeck" @change="loadDeck(this.selectedDeck)">
             <option value="" disabled selected hidden></option>
             <option id="deckSelector" v-for="deck in selectorList" v-bind:key="deck">{{deck}}</option>
@@ -33,21 +33,41 @@
       <!--</div>-->
 
     <!-- Här visas komponenten FlashcardView -->
-      <div>
-        <FlashcardView v-bind:questionProp="myObj_deserialized" @nextClick="onClickChild" @previousClick="onClickChild" ></FlashcardView>
+      <div v-if="joinedBoolean">
+        <p><FlashcardView v-bind:questionProp="myObj_deserialized" @nextClick="onClickChild" @previousClick="onClickChild" ></FlashcardView></p>
+        <button id="FinishGame" @click="finishGame()">Done!</button>
       </div>
 
-    <!-- Buttons for liking and commenting: -->
-      <div class="buttons">
-        <!--<button id = "likeButton" v-on:click="like()">-->
+    <!-- Buttons for liking and commenting -->
+    <!-- div class="buttons">
+        <<button id = "likeButton" v-on:click="like()">
         <button id = "likeButton" v-on:click="likeDeck(questionObject.id)">
         <img src="https://freesvg.org/img/Thumbs-Up-Silhouette.png" style="width: 30px; height: 30px;"/>
         </button>
-      </div>
-    </div>
+      </div>-->
+
+    </div> 
+
      <!-- Här avslutas allt som visas när joinBolean=True -->
 
-    <!-- Här visas Active Player listan -->    
+     <!-- Här visas info när användaren spelat klart och klickat Done -->
+ 
+    <div id="viewAfterGame" v-if="gameFinishedBoolean">
+      <img src="http://localhost:8080/img/score-icon-21.jpeg" width="100" height="100">
+      <P>Congratulation, {{name}}! Well done!</P>
+      <P>Your score is: {{score}} points out of {{totalQuestionAmount}}</P>
+      <p>Do you want to challange another player? Select one player from the list below and then click "Challange"!</p>
+      <form @submit="sendRequest(selectedPlayer)">
+        <div v-for="player in players" v-bind:key="player">
+          <input type="radio" name="player" v-model="selectedPlayer">  {{player.name}}</div>
+          <button type="submit">Challange now!</button>
+      </form>
+    </div>
+    
+    
+    </div>
+
+    <!-- Här visas Active Player listan
       <div id="verticalRight">
         <p style="justify-content: left; font-size: 24px; font-weight:bold">Active players</p>
         <ul style="list-style: none">
@@ -60,8 +80,8 @@
           <p>--------------</p></li>
         </ul>
       </div>
-    </div>
-
+    </div>-->    
+  
   </body>
 
 </template>
@@ -109,6 +129,7 @@ export default {
         "answerArray": ["Sthlm", "Oslo", "Helsingfors", "CBH"]},
       selectedDeck: "",
       invitationList: [],
+      gameFinishedBoolean: false,
 
       //buttons: 0,
 
@@ -163,6 +184,9 @@ export default {
           this.myObj_deserialized = target;
           this.questionObject = this.myObj_deserialized;
         },
+        finishGame: function () {
+          this.gameFinishedBoolean = true;
+        },
 
         // Function for the like button
         async likeDeck (deckToLike) {
@@ -211,7 +235,7 @@ export default {
   position: relative;
   height: 100%;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 }
 #horizontalContent{
   flex: 1;
@@ -223,6 +247,16 @@ export default {
   border: 5px solid black;
   border-radius: 10px;
   background-color: lightgrey;
+}
+
+#viewAfterGame {
+  font-size: 24px;
+  text-align: left;
+	background-color: white;
+	margin-left: 300px;
+	width: 600px;
+  border-radius: 10px;
+  padding: 10px;
 }
 
 #likeButton {
