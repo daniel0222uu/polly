@@ -1,1 +1,32 @@
-[{"id":"Sveriges huvudstäder","questionArray":["Sverige","Norge","Finland","Danmark"],"answerArray":["Sthlm","Oslo","Helsingfors","CBH"]},{"id":"Sveriges huvudstäder","questionArray":["Sverige","Norge","Finland","Danmark"],"answerArray":["Sthlm","Oslo","Helsingfors","CBH"]},{"id":"Sveriges huvudstäder","questionArray":["Sverige","Norge","Finland","Danmark"],"answerArray":["Sthlm","Oslo","Helsingfors","CBH"]},{"id":"Sveriges huvudstäder","questionArray":["Sverige","Norge","Finland","Danmark"],"answerArray":["Sthlm","Oslo","Helsingfors","CBH"]},{"id":"Sveriges huvudstäder","questionArray":["Sverige","Norge","Finland","Danmark"],"answerArray":["Sthlm","Oslo","Helsingfors","CBH"]},{"id":"Sveriges huvudstäder","questionArray":["Sverige","Norge","Finland","Danmark"],"answerArray":["Sthlm","Oslo","Helsingfors","CBH"]},{"id":"Sveriges huvudstäder","questionArray":["Sverige","Norge","Finland","Danmark"],"answerArray":["Sthlm","Oslo","Helsingfors","CBH"]},{"id":"Sveriges huvudstäder","questionArray":["Sverige","Norge","Finland","Danmark"],"answerArray":["Sthlm","Oslo","Helsingfors","CBH"]},{"id":"Sveriges huvudstäder","questionArray":["Sverige","Norge","Finland","Danmark"],"answerArray":["Sthlm","Oslo","Helsingfors","CBH"]},{"id":"Sveriges huvudstäder","questionArray":["Sverige","Norge","Finland","Danmark"],"answerArray":["Sthlm","Oslo","Helsingfors","CBH"]},{"id":"Sveriges huvudstäder","questionArray":["Sverige","Norge","Finland","Danmark"],"answerArray":["Sthlm","Oslo","Helsingfors","CBH"]},{"id":"Sveriges huvudstäder","questionArray":["Sverige","Norge","Finland","Danmark"],"answerArray":["Sthlm","Oslo","Helsingfors","CBH"]},{"id":"Sveriges huvudstäder","questionArray":["Sverige","Norge","Finland","Danmark"],"answerArray":["Sthlm","Oslo","Helsingfors","CBH"]},{"id":"Sveriges huvudstäder","questionArray":["Sverige","Norge","Finland","Danmark"],"answerArray":["Sthlm","Oslo","Helsingfors","CBH"]},{"id":"Sveriges huvudstäder","questionArray":["Sverige","Norge","Finland","Danmark"],"answerArray":["Sthlm","Oslo","Helsingfors","CBH"]},{"id":"Sveriges huvudstäder","questionArray":["Sverige","Norge","Finland","Danmark"],"answerArray":["Sthlm","Oslo","Helsingfors","CBH"]},{"id":"Sveriges huvudstäder","questionArray":["Sverige","Norge","Finland","Danmark"],"answerArray":["Sthlm","Oslo","Helsingfors","CBH"]},{"id":"Sveriges huvudstäder","questionArray":["Sverige","Norge","Finland","Danmark"],"answerArray":["Sthlm","Oslo","Helsingfors","CBH"]},{"id":"Sveriges huvudstäder","questionArray":["Sverige","Norge","Finland","Danmark"],"answerArray":["Sthlm","Oslo","Helsingfors","CBH"]},{"id":"Sveriges huvudstäder","questionArray":["Sverige","Norge","Finland","Danmark"],"answerArray":["Sthlm","Oslo","Helsingfors","CBH"]},{"id":"Sveriges huvudstäder","questionArray":["Sverige","Norge","Finland","Danmark"],"answerArray":["Sthlm","Oslo","Helsingfors","CBH"]},{"id":"Sveriges huvudstäder","questionArray":["Sverige","Norge","Finland","Danmark"],"answerArray":["Sthlm","Oslo","Helsingfors","CBH"]},{"id":"","questionArray":[],"answerArray":[],"likes":0},{"id":"Blåbär","questionArray":["Vad är blått?","Vem är Rut?"],"answerArray":["Bären","Rutger"],"likes":0},{"id":"Blåbär","questionArray":["Vad är blått?","Vem är Rut?"],"answerArray":["Bären","Rutger"],"likes":0},{"id":"Blåbär","questionArray":["Vad är blått?","Vem är Rut?"],"answerArray":["Bären","Rutger"],"likes":0},{"id":"Blåbär","questionArray":["Vad är blått?","Vem är Rut?"],"answerArray":["Bären","Rutger"],"likes":0},{"id":"MathQuiz","questionArray":["4+3?","3*5?","6-3?","22+3?","4*8?"],"answerArray":["7","15","3","25","32"],"likes":0},{"id":"MathQuiz","questionArray":["4+3?","3*5?","6-3?","22+3?","4*8?"],"answerArray":["7","15","3","25","32"],"likes":0},{"id":"MathQuiz","questionArray":["4+3?","3*5?","6-3?","22+3?","4*8?"],"answerArray":["7","15","3","25","32"],"likes":0},{"id":"MathQuiz","questionArray":["4+3?","3*5?","6-3?","22+3?","4*8?"],"answerArray":["7","15","3","25","32"],"likes":0},{"id":"MathQuiz","questionArray":["4+3?","3*5?","6-3?","22+3?","4*8?"],"answerArray":["7","15","3","25","32"],"likes":0},{"id":"MathQuiz","questionArray":["4+3?","3*5?","6-3?","22+3?","4*8?"],"answerArray":["7","15","3","25","32"],"likes":0},{"id":"MathQuiz","questionArray":["4+3?","3*5?","6-3?","22+3?","4*8?"],"answerArray":["7","15","3","25","32"],"likes":0},{"id":"MathQuiz","questionArray":["4+3?","3*5?","6-3?","22+3?","4*8?"],"answerArray":["7","15","3","25","32"],"likes":0},{"id":"Pontus i skogen","questionArray":["Svart och vit","Julträd"],"answerArray":["björk","Gran"],"likes":0}]
+[
+  {
+    "id": "Bilmärkets ikon",
+    "questionArray": [
+      "BMW",
+      "Alfa Romeo",
+      "Audi ",
+      "Mercedes"
+    ],
+    "answerArray": [
+      "E30",
+      "Giulia",
+      "S2",
+      "W214"
+    ],
+    "likes": 1
+  },
+  {
+    "id": "Långa svar",
+    "questionArray": [
+      "Symptom på covid 19? ",
+      "Ovaccinerad? ",
+      "Vaccinationsbevis?"
+    ],
+    "answerArray": [
+      "Stanna hemma från arbetet, skolan, förskolan och andra aktiviteter om du känner dig sjuk och har symtom som kan vara tecken på covid-19. Det gäller även om du testat negativt med ett antigentest i form av ett självtest.  Så skyddar du dig själv och andra mot att smittas av covid-19 Stanna hemma om du är sjuk med symtom på covid-19 Testning för covid-19 Ring telefonnummer 1177 om du behöver hjälp att bedöma symtom eller få hjälp med var du kan söka vård. Du kan också besöka webbplatsen 1177.se.",
+      "Information till de som är ovaccinerade.  Särskilda rekommendationer för att skydda dig som är ovaccinerad Frågor och svar om vaccination mot covid-19",
+      "Svaret på denna fråga ligger under våra vanliga frågor och svar om vaccination mot covid-19, läs mer om bland annat covidbevis under frågan Jag är vaccinerad och ska resa utomlands – vad gäller?"
+    ],
+    "likes": 2
+  }
+]

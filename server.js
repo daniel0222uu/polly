@@ -32,6 +32,15 @@ app.post('/likeDeck', (req, res) => { //axios test reveiver
     const file = fs.readFileSync("src/assetts/Decks.json");
     console.log("the deck i want to like is",data.data);   
     let jsonOfTheFile = JSON.parse(file);
+    for(let deck of jsonOfTheFile){
+        if(deck.id == data.data){
+            console.log("found the deck,",deck);
+            deck.likes++;
+        }
+    }
+    fs.writeFileSync("src/assetts/Decks.json", JSON.stringify(jsonOfTheFile)); //problem att servern laddar om man
+    //kör detta, men så ska det inte ens vara egentligen. Filen ändras och sparas i NODE.js så
+    // det är därför den blir som den blir
 
 
 

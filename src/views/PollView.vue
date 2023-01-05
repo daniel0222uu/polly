@@ -25,10 +25,10 @@
 // @ is an alias to /src
 import io from 'socket.io-client';
 import FlashcardComponent from "@/components/FlashcardComponent";
-import AllDecks from "@/assetts/AllDecks.json";
+import Decks from "@/assetts/Decks.json.json";
 const socket = io();
 
-let selectList = AllDecks;
+let selectList = Decks;
 const idListFromAllDecks = selectList.map(element => element.id);
 
 export default {
@@ -90,7 +90,7 @@ export default {
     },
     loadDeck: function(deckIdToLoad){
       this.questionPosition = 0;
-      const target = AllDecks.find(deck => deck.id === deckIdToLoad);
+      const target = Decks.find(deck => deck.id === deckIdToLoad);
       console.log("target, should be",target);
       console.log("du klickade på en knapp med loadDeck()");
       this.myObj_deserialized = target;
