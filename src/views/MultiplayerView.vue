@@ -65,7 +65,7 @@
 
      <!-- Här visas info när användaren spelat klart och klickat Done -->
 
-
+      <!-- Här visas Active Player listan-->
       <div id="verticalRight">
         <p style="justify-content: left; font-size: 24px; font-weight:bold">Active players</p>
         <ul style="list-style: none">
@@ -81,7 +81,7 @@
     
     </div>
 
-    <!-- Här visas Active Player listan-->
+
 
    <!-- </div>-->
   
