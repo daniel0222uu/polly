@@ -11,7 +11,7 @@
       <div id="questionHeader">
         <div id="selector">
           <select  name="decks" v-model="selectedDeck" required @change="loadDeck(this.selectedDeck); $refs.myChild.resetQuestionPosition()">
-            <option value="" disabled selected hidden>Choose your deck cp tobbe!</option>
+            <option value="" disabled selected hidden>Choose your deck!</option>
             <option id="deckSelector" v-for="deck in selectorList" v-bind:key="deck">{{ deck }}</option>
           </select>
         </div>
