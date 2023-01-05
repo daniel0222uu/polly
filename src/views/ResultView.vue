@@ -90,12 +90,17 @@ export default {
   methods: {
     
     loadDeck: function(deck){
-      
+      this.isActive = false;
       console.log("du klickade på en knapp med loadDeck()");
-      this.myObj_deserialized = JSON.parse(localStorage.getItem(deck));
-      this.questionObject = this.myObj_deserialized;
       
-      this.isActive = true;
+      setTimeout (() => {
+        this.questionObject = this.myObj_deserialized;
+        this.myObj_deserialized = JSON.parse(localStorage.getItem(deck));
+        this.isActive = true;
+      },1);
+      
+      
+      
     },
   },
 }
@@ -118,27 +123,33 @@ display: none;
   position: relative;
   font-size: 24px;
 }
+option {
+
+}
 
 select {
   padding: 1em;
-  width: 130%;
+  width: 100%;
   border-radius: .2em;
   border: 1px solid #acacac;
-  color: #181820;
-
+  color: black;
+  
+  
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
   -ms-appearance: none;
 
-  background: url('https://cdn1.iconfinder.com/data/icons/arrows-vol-1-4/24/dropdown_arrow-512.png');
-  background-repeat: no-repeat;
-  background-size: 15px 15px;
+  background: url('https://cdn1.iconfinder.com/data/icons/arrows-vol-1-4/24/dropdown_arrow-512.png'); 
+  background-color: transparent;
+  background-repeat: no-repeat; 
+  background-size: 15px 15px; 
   background-position: right;
   background-origin: content-box;
 }
 
 #horizontalContent{
+  
   flex: 1;
   overflow: auto;
 }
@@ -148,10 +159,12 @@ select {
   height: 100%;
   display: flex;
   flex-direction: row;
+  
+  
 }
 
 header {
-  background-color: gray;
+  
   width: 100%;
   display: grid;
   grid-template-columns: 2em auto;
@@ -160,6 +173,7 @@ header {
   font-size:30px;
   padding-top: 100px;
   text-align: center;
+  
 }
 #selector{
   font-family: 'Nunito', sans-serif;
@@ -169,6 +183,7 @@ header {
   top: 0;
   left: 20%;
   margin-top: 10px;
+  
  
   
 }

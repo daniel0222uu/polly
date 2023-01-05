@@ -63,6 +63,7 @@ export default {
 
    resetQuestionPosition() {
       this.questionPosition = 0;
+      this.flipped = false;
     },
     flip() {
       this.flipped = !this.flipped;
