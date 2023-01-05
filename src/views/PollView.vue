@@ -103,9 +103,7 @@ export default {
       console.log("trueCount has changed");
       console.log("this is the trueCount:",this.trueCount);
       if(this.trueCount === this.trueValuesNeeded){
-        console.log("trueCount is equal to trueValuesNeeded");
         this.swapSides = true;
-        console.log("now swapsides should be:", this.swapSides);
         //det som egentligen ska ske här är att man ska emitta next card då alla svarat och att man ska resetta
         //counten för alla i rummet.
       }
