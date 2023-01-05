@@ -44,7 +44,7 @@ const socket = io();
 
 export default {
   name: 'FlashcardView',
-  props: ['questionProp', ],
+  props: ['questionProp','showAnswer' ],
   components: {},
   data: function () {
     return {

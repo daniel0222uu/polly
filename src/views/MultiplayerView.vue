@@ -238,7 +238,7 @@ export default {
   position: relative;
   height: 100%;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
 }
 #horizontalContent{
   flex: 1;
