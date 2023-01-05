@@ -1,5 +1,6 @@
 <template>
-    <div v-if="warningZone">Are you still with us?</div>
+  <p style="margin-left: 50px"> you are still with us!</p>
+    <p v-if="warningZone"> Are you still with us</p>
 </template>
 
 
@@ -19,7 +20,7 @@ export default {
 
     mounted() {
         this.events.forEach(function(event) {
-            window.addEventListners(event, this.resetTimer);
+            window.addEventListener(event, this.resetTimer);
         }, this);
 
         this.setTimers();
