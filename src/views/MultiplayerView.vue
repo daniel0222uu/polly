@@ -46,29 +46,26 @@
         </button>
       </div>-->
 
+        <div id="viewAfterGame" v-if="gameFinishedBoolean">
+          <img src="http://localhost:8080/img/score-icon-21.jpeg" width="100" height="100">
+          <P>Congratulation, {{name}}! Well done!</P>
+          <P>Your score is: {{score}} points out of {{totalQuestionAmount}}</P>
+          <p>Do you want to challange another player? Select one player from the list below and then click "Challange"!</p>
+          <form @submit="sendRequest(selectedPlayer)">
+            <div v-for="player in players" v-bind:key="player">
+              <input type="radio" name="player" v-model="selectedPlayer">  {{player.name}}</div>
+            <button type="submit">Challange now!</button>
+          </form>
+          <P><button @click="exitPlaying(name)">I want to exit the game</button></P>
+        </div>
+
     </div> 
 
      <!-- Här avslutas allt som visas när joinBolean=True -->
 
      <!-- Här visas info när användaren spelat klart och klickat Done -->
- 
-    <div id="viewAfterGame" v-if="gameFinishedBoolean">
-      <img src="http://localhost:8080/img/score-icon-21.jpeg" width="100" height="100">
-      <P>Congratulation, {{name}}! Well done!</P>
-      <P>Your score is: {{score}} points out of {{totalQuestionAmount}}</P>
-      <p>Do you want to challange another player? Select one player from the list below and then click "Challange"!</p>
-      <form @submit="sendRequest(selectedPlayer)">
-        <div v-for="player in players" v-bind:key="player">
-          <input type="radio" name="player" v-model="selectedPlayer">  {{player.name}}</div>
-          <button type="submit">Challange now!</button>
-      </form>
-      <P><button @click="exitPlaying(name)">I want to exit the game</button></P>
-    </div>
-    
-    
-    </div>
 
-    <!-- Här visas Active Player listan
+
       <div id="verticalRight">
         <p style="justify-content: left; font-size: 24px; font-weight:bold">Active players</p>
         <ul style="list-style: none">
@@ -78,10 +75,15 @@
           <li v-for="player in players" v-bind:key="player"> <b>{{player.name}}</b><br>
             {{player.score}} points out of {{totalQuestionAmount}}<br>
             <button @click="sendRequest(player.name)">Ask to join</button>
-          <p>--------------</p></li>
+            <p>--------------</p></li>
         </ul>
       </div>
-    </div>-->    
+    
+    </div>
+
+    <!-- Här visas Active Player listan-->
+
+   <!-- </div>-->
   
   </body>
 
