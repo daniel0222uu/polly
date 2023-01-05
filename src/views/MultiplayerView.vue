@@ -1,7 +1,7 @@
 <template>
   <body>
   <!-- Här visas text om autoLogout-->
-  <!--<div><autoLogout></autoLogout></div>-->
+
   
   <!-- Här visas meddelande om att det finns en invite -->
     <div>
@@ -21,7 +21,7 @@
 
   <!-- Här startar div som visas när joinedBoolean=True -->
     <div id="wrapperDiv" v-if="joinedBoolean">
-
+      <div><autoLogout></autoLogout> </div>
     <!-- Här visas namn och användaren kan välja decka att spela-->
       <div id="horizontalContent"><p style="font-size:24px;font-weight:bold">{{name}}</p>
         <div id="selector">Choose deck to play:
@@ -46,7 +46,10 @@
         </button>
       </div>-->
 
-    </div> 
+
+
+
+    </div>
 
      <!-- Här avslutas allt som visas när joinBolean=True -->
 
@@ -64,11 +67,7 @@
       </form>
       <P><button @click="exitPlaying(name)">I want to exit the game</button></P>
     </div>
-    
-    
-    </div>
 
-    <!-- Här visas Active Player listan
       <div id="verticalRight">
         <p style="justify-content: left; font-size: 24px; font-weight:bold">Active players</p>
         <ul style="list-style: none">
@@ -78,10 +77,14 @@
           <li v-for="player in players" v-bind:key="player"> <b>{{player.name}}</b><br>
             {{player.score}} points out of {{totalQuestionAmount}}<br>
             <button @click="sendRequest(player.name)">Ask to join</button>
-          <p>--------------</p></li>
+            <p>--------------</p></li>
         </ul>
       </div>
-    </div>-->    
+    
+    </div>
+
+    <!-- Här visas Active Player listan -->
+
   
   </body>
 
@@ -100,7 +103,7 @@ import AllDecks from "@/assetts/AllDecks.json";
 import joinLobbyComponent from "@/components/JoinLobbyComponent";
 
 // Här importeras componentern AutoLogout
-// import autoLogout from "@/components/AutoLogout";
+import autoLogout from "@/components/AutoLogout";
 
 import axios from "axios";
 const socket = io();
@@ -111,7 +114,7 @@ export default {
   components: {
     FlashcardView,
     joinLobbyComponent,
-    // autoLogout
+    autoLogout
   },
   
   data: function(){
@@ -236,7 +239,7 @@ export default {
   position: relative;
   height: 100%;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
 }
 #horizontalContent{
   flex: 1;
