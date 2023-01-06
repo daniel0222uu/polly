@@ -5,6 +5,7 @@
   
   <!-- Här visas meddelande om att det finns en invite -->
     <div>
+      {{inviteInformation}}
     <ul style="list-style: none">
       <li v-for="invite in invitationList" v-bind:key="invite"> {{invite.requester}} Invites you to play {{invite.lobbyID}}
         <join-lobby-component v-bind:lobby-id="invite.lobbyID" v-bind:name="name" ></join-lobby-component>
@@ -31,20 +32,19 @@
           </select>
         </div>
       <!--</div>-->
-
+        <!-- Buttons for liking and commenting -->
+        <div class="buttons">
+          <button id = "likeButton" v-on:click="likeDeck(questionObject.id)">
+            <img src="https://freesvg.org/img/Thumbs-Up-Silhouette.png" style="width: 30px; height: 30px;"/>
+          </button>
+        </div>
     <!-- Här visas komponenten FlashcardView -->
       <div v-if="joinedBoolean">
         <p><FlashcardView v-bind:questionProp="myObj_deserialized" @nextClick="onClickChild" @previousClick="onClickChild" ></FlashcardView></p>
         <button id="FinishGame" @click="finishGame()">Done!</button>
       </div>
 
-    <!-- Buttons for liking and commenting -->
-    <!-- div class="buttons">
-        <<button id = "likeButton" v-on:click="like()">
-        <button id = "likeButton" v-on:click="likeDeck(questionObject.id)">
-        <img src="https://freesvg.org/img/Thumbs-Up-Silhouette.png" style="width: 30px; height: 30px;"/>
-        </button>
-      </div>-->
+
 
         <div id="viewAfterGame" v-if="gameFinishedBoolean">
           <img src="http://localhost:8080/img/score-icon-21.jpeg" width="100" height="100">
@@ -93,12 +93,11 @@
 
 
 import Decks from "../assetts/Decks.json";
-let selectList = AllDecks;
+let selectList = Decks;
 const idListFromAllDecks = selectList.map(element => element.id);
 
 import io from "socket.io-client";
 import FlashcardView from "@/components/FlashcardComponent";
-import AllDecks from "@/assetts/AllDecks.json";
 import joinLobbyComponent from "@/components/JoinLobbyComponent";
 
 // Här importeras componentern AutoLogout
@@ -140,6 +139,7 @@ export default {
     }
   },
   created: function() {
+    this.lobbyId = Math.floor(Math.random() * 1000000 + 100000);
     this.myObj_deserialized = this.questionObject;
     socket.on("multiplayerViewUpdate", playersActive => {
       this.players = playersActive;
@@ -176,12 +176,12 @@ export default {
           });
         },
         createPoll: function () { //ett bättre namn hade varit createLobby, men jag är lat
-          this.lobbyId = Math.floor(Math.random() * 1000000 + 100000);
+         // this.lobbyId = Math.floor(Math.random() * 1000000 + 100000);
           socket.emit("createPoll", {pollId: this.lobbyId, lang: this.lang});
         },
         loadDeck: function (deckIdToLoad) {
           this.questionPosition = 0;
-          const target = AllDecks.find(deck => deck.id === deckIdToLoad);
+          const target = Decks.find(deck => deck.id === deckIdToLoad);
           console.log("target, should be", target);
           console.log("du klickade på en knapp med loadDeck()");
           this.myObj_deserialized = target;
@@ -194,6 +194,7 @@ export default {
         // Function for the like button
         async likeDeck (deckToLike) {
           console.log("Number of likes:");
+          console.log(deckToLike);
           try {
             const response = await axios.post('http://localhost:8080/likeDeck ', {
               data: deckToLike,
