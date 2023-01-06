@@ -21,7 +21,7 @@
 
 
 
-    <div class="buttonDiv">
+    <div class="buttonDiv" v-if="!coopMultiplayer">
 
       <button id="previousButton" @click="previousCLick" class="prevNextButton"> Previous </button>
 
@@ -44,7 +44,7 @@ const socket = io();
 
 export default {
   name: 'FlashcardView',
-  props: ['questionProp','showAnswer','pollId' ],
+  props: ['questionProp','showAnswer','pollId','coopMultiplayer','deckLoaded'],
   components: {},
   data: function () {
     return {
@@ -166,6 +166,10 @@ export default {
         setTimeout(() => this.nextClick(), 3000);
         setTimeout(() => socket.emit('questionSeen', {pollId: this.pollId}), 3500);
       }
+    },
+    deckLoaded: function () {
+      this.resetQuestionPosition();
+      console.log("deckLoaded changed, questionPosition is now:", this.questionPosition);
     }
   }
 }

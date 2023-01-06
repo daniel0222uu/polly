@@ -93,6 +93,15 @@ function sockets(io, socket, data) {
         d.pollId));
   });
 
+  socket.on('suggestGame', function(d) {
+    io.to(d.pollId).emit('gameSuggested', d.deckName);
+  });
+
+  socket.on('acceptGame', function(d) {
+    console.log("acceptGame received:", d.deckName);
+    io.to(d.pollId).emit('gameAccepted', d.deckName);
+  });
+
   socket.on("startGame", function(d) {
     console.log("start game received, for the lobbyID: ", d.pollId, d.players);
     console.log("now just running startGame data function", data.startGame(d.players)); //denna returnera
@@ -101,7 +110,6 @@ function sockets(io, socket, data) {
   });
 
   socket.on('seeQuestion', function(d) {
-    console.log("see question received,: ", d.pollId);
     io.to(d.pollId).emit('updateTrueCount');
   });
 

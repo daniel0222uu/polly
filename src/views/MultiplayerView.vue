@@ -5,6 +5,7 @@
   
   <!-- Här visas meddelande om att det finns en invite -->
     <div>
+      {{inviteInformation}}
     <ul style="list-style: none">
       <li v-for="invite in invitationList" v-bind:key="invite"> {{invite.requester}} Invites you to play {{invite.lobbyID}}
         <join-lobby-component v-bind:lobby-id="invite.lobbyID" v-bind:name="name" ></join-lobby-component>
@@ -138,6 +139,7 @@ export default {
     }
   },
   created: function() {
+    this.lobbyId = Math.floor(Math.random() * 1000000 + 100000);
     this.myObj_deserialized = this.questionObject;
     socket.on("multiplayerViewUpdate", playersActive => {
       this.players = playersActive;
@@ -174,7 +176,7 @@ export default {
           });
         },
         createPoll: function () { //ett bättre namn hade varit createLobby, men jag är lat
-          this.lobbyId = Math.floor(Math.random() * 1000000 + 100000);
+         // this.lobbyId = Math.floor(Math.random() * 1000000 + 100000);
           socket.emit("createPoll", {pollId: this.lobbyId, lang: this.lang});
         },
         loadDeck: function (deckIdToLoad) {
