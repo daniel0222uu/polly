@@ -6,8 +6,7 @@
 
   <div id="wrapperDiv">
     
-    <div id="horizontalContent">
-      
+
       <div id="questionHeader">
         <div id="selector">
           <select  name="decks" v-model="selectedDeck" required @change="loadDeck(this.selectedDeck); $refs.myChild.resetQuestionPosition()">
@@ -15,25 +14,21 @@
             <option id="deckSelector" v-for="deck in selectorList" v-bind:key="deck">{{ deck }}</option>
           </select>
         </div>
-
-        <div class="notActive" :class="{active:isActive}">
-         
-          {{ selectedDeck }}
-        <br>
-        <FlashcardView v-bind:questionProp="myObj_deserialized" ref="myChild"> </FlashcardView>
-
-        
-        
-
-        </div>
-        
-      </div>
-      
-
+      </div>  
     </div>
 
-   
-  </div>
+    <div class="notActive" :class="{active:isActive}">
+         
+         {{ selectedDeck }}
+       <br>
+     
+       </div>
+    <div >
+      <FlashcardView v-bind:questionProp="myObj_deserialized" ref="myChild"> </FlashcardView>
+
+    </div>
+    
+
 
   </body>
 </template>
@@ -128,6 +123,7 @@ option {
 }
 
 select {
+  
   padding: 1em;
   width: 100%;
   border-radius: .2em;
@@ -148,17 +144,12 @@ select {
   background-origin: content-box;
 }
 
-#horizontalContent{
-  
-  flex: 1;
-  overflow: auto;
-}
-
 #wrapperDiv{
   position: relative;
   height: 100%;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+
   
   
 }
@@ -170,19 +161,24 @@ header {
   grid-template-columns: 2em auto;
 }
 #questionHeader{
+  display: flex;
+  justify-content: center;
   font-size:30px;
-  padding-top: 100px;
+  padding-top: 40px;
+  padding-bottom: 40px;
   text-align: center;
+  
+  
   
 }
 #selector{
   font-family: 'Nunito', sans-serif;
   font-size: 16px;
-  position: absolute;
-  width: 30%;
+  
+  width: 200px;
   top: 0;
-  left: 20%;
-  margin-top: 10px;
+  
+  
   
  
   
@@ -213,9 +209,7 @@ button {
     visibility: visible;
   }
 
-  #horizontalContent{
-    visibility: visible;
-  }
+
 
   #wrapperDiv{
     visibility: visible;

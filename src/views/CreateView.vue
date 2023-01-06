@@ -1,73 +1,78 @@
 <template>
   <body>
+    <!--
+      Saker att fixa: 
+
+      Namnen måste vara unika, det får alltså inte finnas två deck med identiska namn.
+
+
+    -->
     <WarningMessage v-bind:deck-alert="deckNameAlert"  v-bind:question-field-alert="questionFieldAlert"
     v-bind:question-was-added="questionWasAdded"/>
-    <div class="horizontalDiv" v-if="!addingQuestionBool">
+    <div class="firstView" :class="{notActive: deckIsNamed}">
 
-      <p id="namingQuiz">Name your quiz please</p>
 
-      <div id="namingField" ><input class="qeustionEditingFields"  id="namingDeckField" type="text" v-model="deckName"></div>
-      <p><button @click="nameDeck(deckName)">Name my deck</button></p> {{questionObject.id}}
+        
+        <input style="padding:5px; margin:5px;" placeholder="Name your deck here" id="namingDeckField" type="text" v-model="deckName">
+      
+      <button style="padding:5px; margin:5px;" @click="nameDeck(deckName)">Create new deck</button> {{questionObject.id}}
     </div>
 
-  <div id="wrapperDiv">
-
-    <div id="questionList" v-if="addingQuestionBool">
-
-      <p>
-        Added questions
-      </p>
-      <ul>
-        <li v-for="item in questionObject.questionArray" :key="item">{{ item }}</li>
-      </ul>
-    </div>
-
-    <div class="horizontalDiv" v-if="addingQuestionBool">
 
 
+    
+    <div :class="{notActive: !deckIsNamed}">
 
-      <h2>Now creating: {{questionObject.id}} </h2>
+      <div id="wrapperDiv">
 
-      <p>Add your questions</p>
-      <input class="qeustionEditingFields" type="text" placeholder="Question goes here"  v-model="questionField">
-      <br>
-      <input class="qeustionEditingFields" type="text" placeholder="Answer goes here" v-model="answerField">
+        
+        <h2>{{questionObject.id}} </h2>
+        <div class="horizontalDiv">
 
-    </div>
+          <div id="questionList" >
 
-    <div id="submitQuestionDiv">
-      <button id="buttonPosition" @click="savingAddedQustion">Add this question and answer</button>
-    </div>
+                 <ol>
+                   <li  v-for="item in questionObject.questionArray" :key="item">{{ item }}</li>
+                 </ol>
+             </div>
 
-    <div v-if="addingQuestionBool" id="verticalDiv">
+          <div id="inputFields">
+             
 
+            
+          <input class="questionEditingFields" type="text" placeholder="Question"  v-model="questionField">
+           <br>
+           <textarea class="questionEditingFields"  placeholder="Answer" v-model="answerField"></textarea>
 
+           <button id="buttonPosition" @click="savingAddedQustion">Add card</button>
 
+          </div>
 
+        
+
+        </div>
+
+      </div>
+<!--
+
+<div id="questionShowing">
+        <p >{{questionObject.questionArray[questionIndex]}}</p>
+        <p>{{questionObject.answerArray[questionIndex]}}</p>
+        <p>
+           <button @click="previousCLick" type="submit" style="margin-right: 70px">
+           <img src="https://cdn-icons-png.flaticon.com/512/7693/7693294.png" style="width: 20px">
+            </button>
+           <button @click="nextClick" >
+            <img src="https://cdn-icons-png.flaticon.com/512/7693/7693290.png" style="width: 20px">
+           </button>
+         </p>
 
       </div>
 
-
-
+-->
+      
     </div>
-    <div id="questionShowing">
-
-      <p style="font-weight: bold">{{questionObject.questionArray[questionIndex]}}</p>
-      <p>{{questionObject.answerArray[questionIndex]}}</p>
-      <p> <button @click="previousCLick" type="submit" style="margin-right: 70px">
-        <img src="https://cdn-icons-png.flaticon.com/512/7693/7693294.png" style="width: 20px">
-      </button>
-        <button @click="nextClick" >
-          <img src="https://cdn-icons-png.flaticon.com/512/7693/7693290.png" style="width: 20px">
-        </button>
-      </p>
-
-  </div>
-
-
-
-
-
+  
 
   </body>
 
@@ -107,7 +112,7 @@ export default {
       quizQuestions: [],
       quizAnswers: [],
       selectorList: [],
-      addingQuestionBool: false,
+      deckIsNamed: false,
       questionWasAdded: false,
       deckNameAlert: false,
       questionFieldAlert: false
@@ -151,7 +156,7 @@ export default {
       console.log(namingTheDeck)
       this.deckName = namingTheDeck;
       this.questionObject.id = namingTheDeck;
-      this.addingQuestionBool = true;
+      this.deckIsNamed = true;
     },
     nextClick: function () {
       let initializeQarrayLength = this.questionObject.questionArray.length
@@ -205,36 +210,81 @@ export default {
 </script>
 
 <style scoped>
-#wrapperDiv{
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  height: 100%;
-  justify-content: space-between;
-  overflow: auto;
+
+ol {
+  list-style-type: upper-roman;
+  border-left: 2px dotted black;
+  font-size: 20px;
+  
+  
+  overflow: hidden;
+ 
+  
+}
+
+.questionEditingFields:focus::placeholder {
+  color: transparent;
+}
+#createButton {
+ text-decoration: none;
+ color: black;
+ cursor:default;
+ 
+}
+#saveButtonDiv{
+  
+  
+  
+  
+}
+
+#inputFields {
+grid-column: 3;
+
+width: 300px;
+
+
+ 
+}
+
+
+.firstView {
+  margin-top:5%;
 }
 .horizontalDiv{
+  display: grid;
+  grid-template-columns: repeat(5, 20%);
+  
+ 
 }
-#verticalDiv{
+
+.notActive {
+  display:none;
+
 }
-#questionShowing{
+#buttonPosition {
+  width: 90%;
+  height: 30%;
 }
 #questionList{
-  margin-left: 5%;
-  max-width: 100px;
-  overflow: auto;
-  position: relative;
+  
+ grid-column: 2;
+ 
+ 
+  
 }
-.qeustionEditingFields{
-  width: 700px;
-  height: 80px;
-  font-size: 20px;
+.questionEditingFields{
+  width: 90%;
+  height: 40px;
+  font-size: 14px;
   margin-bottom: 10px;
-  margin-left: 5%;
-  margin-right: 5%;
   text-align: center;
-  justify-content: center;
-  word-break: break-all;
+  
+  
+}
+#namingField {
+ 
+ 
 }
 #namingQuiz{
   margin: 5px;
@@ -243,16 +293,30 @@ export default {
   font-size-adjust:0.5;
   text-align: center;
 }
-#namingField{
+@media screen and (max-width:40em) {
+  .horizontalDiv {
+display:flex;
+align-items: center;
+flex-direction: column-reverse;
+
+
+  }
+  #questionList {
+    margin-top:100px;
+    
+  color:white;
+    max-width: 300px;
+  }
+  .firstView {
+  margin-top:none;
 }
-#submitQuestionDiv{
-  width: 20px;
-  justify-content: left;
-  margin-right: 100px;
+#buttonPosition {
+  width: 90%;
+  height: 50px;
 }
-#buttonPosition{
-  margin-top: 150px;
-  width: 180px;
-  height: 100px;
+
 }
+
+
+
 </style>

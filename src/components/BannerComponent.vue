@@ -147,9 +147,9 @@ header {
   .logo {
     font-size: 5vw;
     display: flex;
-    /*
+    
     align-items: center;
-    justify-content: center; */
+    justify-content: center; 
   }
   .hamburger::before {
     content: "☰";
