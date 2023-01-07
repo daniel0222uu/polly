@@ -21,6 +21,17 @@
           <ul>
             <li v-for="player in players" v-bind:key="player"> {{player}} </li>
           </ul>
+        <div>
+
+
+          <p> Chat</p>
+          <textarea readonly  v-model="messages">
+        </textarea>
+          <p>
+            <input v-model="newMessage"/>
+            <button @click="sendMessage(newMessage)">Send</button></p>
+        </div>
+
       </div>
 
       <div id="middleContent">
@@ -30,6 +41,7 @@
         </div>
         <FlashcardComponent v-bind:questionProp="myObj_deserialized" v-bind:show-answer="swapSides"
                             v-bind:poll-id="pollId" v-bind:coop-multiplayer="hideNextButtons" v-bind:deck-loaded="resetQuestionPosition"
+                            v-bind:disable-click="nonClickableFlashcardBool"
                             @nextClick="onClickChild" @previousClick="onClickChild" ></FlashcardComponent>
 
       </div>
@@ -42,9 +54,7 @@
         </ul>
         <br>
 
-        <textarea styl>
-          Chatbox
-        </textarea>
+
         <ActivePlayersComponent v-bind:player-nick-name="name" v-bind:uniqueLobbyID="pollId"
         ></ActivePlayersComponent>
 
@@ -56,7 +66,11 @@
 
     <div id="belowGame">
 
-      <button style="width: 100px; height: 60px;" @click="seeQuestion">Press here to update the </button>
+
+      <div>
+        <button v-if="showPressToSeeQuestion" style="width: 100px; height: 70px;" @click="seeQuestion">Press here when you want to see the question </button>
+      </div>
+
     </div>
 
 
@@ -88,10 +102,9 @@ export default {
       pollId: "inactive poll",
       questionObject: {
         "id": "Sveriges huvudstäder",
-        "questionArray": ["Sverige", "Norge", "Finland", "Danmark"],
-        "answerArray": ["Sthlm", "Oslo", "Helsingfors", "CBH"]
+        "questionArray": ["Choose a deck!","Can't find one? Create your own!"],
+        "answerArray": ["Or not?","Or yes?"]
       },
-      myObj_deserialized: {},
       players: [],
       trueValuesNeeded: 0,
       trueCount: 0,
@@ -102,6 +115,11 @@ export default {
       resetQuestionPosition: false,
       suggestedDecks: [],
       suggestedDecksChanged: 0,
+      newMessage: "",
+      messages: '',
+      showPressToSeeQuestion: false,
+      seeFlashcardBool: false,
+      nonClickableFlashcardBool: false,
     }
   },
   created: function () {
@@ -123,6 +141,7 @@ export default {
     })
     socket.on('resetTrueCount', () => {
       this.trueCount = 0;
+      this.seeFlashcardBool = false;
     })
     socket.on('instantiateDeck', deck => {
       this.myObj_deserialized = deck;
@@ -143,6 +162,11 @@ export default {
       }
       this.suggestedDecksChanged++;
     })
+    socket.on('appendChatMessage', message => {
+      console.log("appendChatMessage received on the client side");
+      let messageToAppend = message.player + ": " + message.message;
+      this.messages += messageToAppend + '\n'
+    })
   },
   methods: {
     suggestGame: function () {
@@ -156,7 +180,10 @@ export default {
       socket.emit("startGame", {pollId: this.pollId, players: this.players});
     },
     seeQuestion: function () {
-      socket.emit("seeQuestion", {pollId: this.pollId});
+      if(!this.seeFlashcardBool){
+        socket.emit("seeQuestion", {pollId: this.pollId});
+        this.seeFlashcardBool = true;
+      }
     },
     onClickChild: function (value) {
       this.questionPosition = value;
@@ -170,6 +197,10 @@ export default {
       this.questionObject = this.myObj_deserialized;
       socket.emit("loadDeck", {pollId: this.pollId, deck: this.myObj_deserialized});
     },
+    sendMessage: function (messageToSend) {
+      socket.emit("sendMessage", {pollId: this.pollId, message: messageToSend, player: this.name});
+      this.newMessage = "";
+    }
   },
   watch: {
     trueCount: function () {
@@ -188,6 +219,7 @@ export default {
           this.loadDeck(deck.id);
           this.suggestedDecks = [];
           this.startGame();
+          this.showPressToSeeQuestion = true;
           return;
         }
       }
@@ -207,7 +239,7 @@ export default {
 
   <style scoped>
   #leftVertical{
-    width: 100px;
+    width: 200px;
     height: 100%;
   }
   #playersActive{
@@ -220,6 +252,9 @@ export default {
     flex-direction: column;
   }
   #belowGame{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
     margin-top: 40px;
     height: 200px;
     width: 100%;

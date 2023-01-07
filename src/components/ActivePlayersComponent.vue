@@ -72,9 +72,10 @@ export default {
           socket.emit("numberProgress", {name: this.name, score: this.questionPosition});
         },
         sendRequest: function (playerToRequest) {
+          this.$emit('lobbyCreated', true);
           this.createPoll();
           socket.emit('playRequest', {
-            requester: this.playerNickName,
+            requester: this.playerNickName ,
             receiver: playerToRequest,
             lobbyID: this.uniqueLobbyID
           });

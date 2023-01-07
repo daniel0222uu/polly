@@ -3,7 +3,7 @@
       v-bind:to="'/lobby/'+lobbyId"
   >
     <button
-            @click="joinLobby()"
+            @click="joinLobby"
     > Join lobby
     </button>
   </router-link>
@@ -14,12 +14,18 @@ import io from "socket.io-client";
 const socket = io();
 export default {
   name: "JoinLobbyComponent",
-  props: ["lobbyId", "name"],
+  props: ["lobbyId", "name",'lobbyCreated'],
   methods: {
     joinLobby: function () {
       socket.emit("joinLobby", {lobbyID: this.lobbyId, name: this.name});
       this.navigate();
     },
+  },
+  watch: {
+    lobbyCreated: function () {
+      console.log("lobbyCreated changed and i should've navigated");
+      //this.joinLobby();
+    }
   }
 }
 </script>

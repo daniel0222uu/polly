@@ -7,7 +7,7 @@
     <div>
     <ul style="list-style: none">
       <li v-for="invite in invitationList" v-bind:key="invite"> {{invite.requester}} Invites you to play {{invite.lobbyID}}
-        <join-lobby-component v-bind:lobby-id="invite.lobbyID" v-bind:name="name" ></join-lobby-component>
+        <join-lobby-component v-bind:lobby-id="invite.lobbyID" v-bind:name="name" v-bind:lobby-created="lobbyCreated" ></join-lobby-component>
       </li>
     </ul>
     </div>
@@ -23,7 +23,12 @@
     <div id="wrapperDiv" v-if="joinedBoolean">
 
     <!-- Här visas namn och användaren kan välja decka att spela-->
-      <div id="horizontalContent"><p style="font-size:24px;font-weight:bold">{{name}}</p>
+      <div id="horizontalContent">
+
+        <p style="font-size:24px;font-weight:bold">
+            {{name}}
+        </p>
+        <span v-if="lobbyCreatedBool"> join the lobby you created: <join-lobby-component v-bind:lobby-id="lobbyId" v-bind:name="name"></join-lobby-component>   </span>
         <div id="selector">Choose deck to play:
           <select name="decks" required v-model="selectedDeck" @change="loadDeck(this.selectedDeck)">
             <option value="" disabled selected hidden></option>
@@ -66,7 +71,7 @@
 
       <!-- Här visas Active Player listan-->
       <div id="verticalRight">
-        <ActivePlayersComponent v-bind:player-nick-name="name" v-bind:uniqueLobbyID="lobbyId"
+        <ActivePlayersComponent @lobbyCreated="setLobbyCreatedBool" v-bind:player-nick-name="name" v-bind:uniqueLobbyID="lobbyId"
         ></ActivePlayersComponent>
       </div>
 
@@ -124,6 +129,7 @@ export default {
       selectedDeck: "",
       invitationList: [],
       gameFinishedBoolean: false,
+      lobbyCreatedBool: false,
 
       //buttons: 0,
 
@@ -143,6 +149,9 @@ export default {
           this.joinedBoolean = true;
           socket.emit("startPlaying", {name: this.name, score: this.questionIndex});
         },
+        setLobbyCreatedBool: function (lobbyCreated) {
+          this.lobbyCreatedBool = lobbyCreated;
+        },
         // Testar att lägga till funktion för att ta bort spelare
         exitPlaying: function (playerName) {
           this.joinedBoolean = false;
@@ -155,7 +164,6 @@ export default {
           socket.emit("numberProgress", {name: this.name, score: this.questionPosition});
         },
         sendRequest: function (playerToRequest) {
-          this.createPoll();
           socket.emit('playRequest', {
             requester: this.name,
             receiver: playerToRequest,

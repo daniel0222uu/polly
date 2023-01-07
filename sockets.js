@@ -123,6 +123,11 @@ function sockets(io, socket, data) {
     console.log("load deck received,: ", d.pollId);
     io.to(d.pollId).emit('instantiateDeck', d.deck);
   });
+
+  socket.on('sendMessage', function(d) {
+    console.log("send message received,: ", d);
+    io.to(d.pollId).emit('appendChatMessage',d);
+  });
 }
 
 
