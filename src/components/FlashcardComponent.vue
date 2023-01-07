@@ -78,17 +78,9 @@ export default {
         this.questionPosition++;
         this.fontSize = 80;
         this.$emit('nextClick', this.questionPosition);
-      
-        
-        
-
-        if (this.areStringsSimilar(this.answerString, this.questionProp.answerArray[this.questionPosition - 1])) {
-          console.log("correct");
-          this.points++;
-        } else {
-          console.log("incorrect");
-        }
         return;
+      } else if (this.questionPosition == this.questionProp.questionArray.length - 1) {
+        this.$emit('gameFinished');
       }
     },
     textAnswer: function () {
@@ -174,7 +166,7 @@ export default {
       this.resetQuestionPosition();
       console.log("deckLoaded changed, questionPosition is now:", this.questionPosition);
     }
-  }
+  },
 }
 </script>
 

@@ -1,8 +1,7 @@
 <template>
   <body>
-  im playing as {{playerNickName}}
+  Playing as {{playerNickName}}
   <br>
-  showing in the player list
   <div>
     <ul style="list-style: none">
       <li v-for="invite in invitationList" v-bind:key="invite"> {{invite.requester}} Invites you to play {{invite.lobbyID}}
@@ -11,7 +10,8 @@
     </ul>
   </div>
     <!-- Här visas Active Player listan-->
-    <div id="verticalRight">
+  <button @click="seeFriendList">Toggle friendlist</button>
+    <div id="verticalRight" v-if="expandPlayerList">
       <p style="justify-content: left; font-size: 24px; font-weight:bold">Active players</p>
       <ul style="list-style: none">
         <li><b>{{playerNickName}}</b><br>
@@ -51,6 +51,7 @@ export default {
       players: [],
       inviteInformation: [],
       invitationList: [],
+      expandPlayerList: true,
     }
   },
   created: function() {
@@ -65,6 +66,9 @@ export default {
           this.joinedBoolean = false;
           socket.emit("exitPlaying", {name: playerName});
           console.log("exitPLaying should've ran");
+        },
+        seeFriendList: function () {
+          this.expandPlayerList = !this.expandPlayerList;
         },
         onClickChild: function (value) {
           this.questionPosition = value;
@@ -122,5 +126,7 @@ export default {
 #verticalRight{
   width: 250px;
   background: beige;
+  height: 600px;
+  overflow: auto;
 }
 </style>

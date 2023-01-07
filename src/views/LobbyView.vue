@@ -2,8 +2,13 @@
 
 
     <div id="wholeScreen">
-
+      <progress-bar-component v-bind:progress="trueCountProgress"></progress-bar-component>
+      {{trueCount}} out of {{trueValuesNeeded}} wants to see the question
       <div id="playersActive">
+      </div>
+    <div id="wrapperDiv">
+
+      <div id="leftVertical">
         <div>
           <br>
           <button style="" @click="suggestGame"> Suggest to play this deck</button>
@@ -11,12 +16,7 @@
             <option value="" disabled selected hidden></option>
             <option id="deckSelector" v-for="deck in selectorList" v-bind:key="deck">{{deck}}</option>
           </select>
-          <p>{{trueCount}} out of {{trueValuesNeeded}} wants to see the question</p>
         </div>
-      </div>
-    <div id="wrapperDiv">
-
-      <div id="leftVertical">
         Players
           <ul>
             <li v-for="player in players" v-bind:key="player"> {{player}} </li>
@@ -41,8 +41,9 @@
         </div>
         <FlashcardComponent v-bind:questionProp="myObj_deserialized" v-bind:show-answer="swapSides"
                             v-bind:poll-id="pollId" v-bind:coop-multiplayer="hideNextButtons" v-bind:deck-loaded="resetQuestionPosition"
-                            v-bind:disable-click="nonClickableFlashcardBool"
-                            @nextClick="onClickChild" @previousClick="onClickChild" ></FlashcardComponent>
+                            v-bind:disable-click="clickableFlashcardBool"
+                            @nextClick="onClickChild" @previousClick="onClickChild" @gameFinished="gameWasFinished"
+        ></FlashcardComponent>
 
       </div>
 
@@ -84,6 +85,7 @@ import io from 'socket.io-client';
 import FlashcardComponent from "@/components/FlashcardComponent";
 import ActivePlayersComponent from "@/components/ActivePlayersComponent";
 import Decks from "@/assetts/Decks.json";
+import ProgressBarComponent from "@/components/ProgressBarComponent";
 const socket = io();
 
 let selectList = Decks;
@@ -93,7 +95,8 @@ export default {
   name: 'LobbyView',
   components: {
     FlashcardComponent,
-    ActivePlayersComponent
+    ActivePlayersComponent,
+    ProgressBarComponent
   },
   data: function () {
     return {
@@ -110,6 +113,7 @@ export default {
       trueCount: 0,
       swapSides: false,
       selectedDeck: "",
+      myObj_deserialized: {},
       selectorList: idListFromAllDecks,
       hideNextButtons: true,
       resetQuestionPosition: false,
@@ -119,7 +123,7 @@ export default {
       messages: '',
       showPressToSeeQuestion: false,
       seeFlashcardBool: false,
-      nonClickableFlashcardBool: false,
+      clickableFlashcardBool: false,
     }
   },
   created: function () {
@@ -189,6 +193,10 @@ export default {
       this.questionPosition = value;
       console.log("parent has", this.questionPosition);
     },
+    gameWasFinished: function () {
+      this.hideNextButtons = false;
+      this.clickableFlashcardBool = true;
+    },
     loadDeck: function (deckIdToLoad) {
       this.resetQuestionPosition = !this.resetQuestionPosition;
       console.log("loadDeck", this.resetQuestionPosition);
@@ -198,6 +206,9 @@ export default {
       socket.emit("loadDeck", {pollId: this.pollId, deck: this.myObj_deserialized});
     },
     sendMessage: function (messageToSend) {
+      if(messageToSend !== ""){
+        return;
+      }
       socket.emit("sendMessage", {pollId: this.pollId, message: messageToSend, player: this.name});
       this.newMessage = "";
     }
@@ -220,6 +231,8 @@ export default {
           this.suggestedDecks = [];
           this.startGame();
           this.showPressToSeeQuestion = true;
+          this.hideNextButtons = true;
+          this.clickableFlashcardBool = false;
           return;
         }
       }
@@ -231,6 +244,11 @@ export default {
         this.name = lastElement[0];
         this.haveReceivedName = true;
       }
+    }
+  },
+  computed: {
+    trueCountProgress: function () {
+      return this.trueCount / this.trueValuesNeeded * 100;
     }
   }
 }
