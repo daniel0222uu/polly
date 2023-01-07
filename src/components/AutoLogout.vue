@@ -28,7 +28,7 @@ export default {
 
     unmounted() {
         this.events.forEach(function(event) {
-            window.removeEventListners(event, this.resetTimer);
+            window.removeEventListner(event, this.resetTimer);
         }, this);
         
         this.resetTimer();
