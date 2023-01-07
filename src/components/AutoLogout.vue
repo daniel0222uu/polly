@@ -1,6 +1,7 @@
 <template>
-  <p style="margin-left: 50px"> you are still with us!</p>
-    <p v-if="warningZone"> Are you still with us</p>
+  <!--<p style="margin-left: 50px"> you are still with us!</p>-->
+  <p v-if="warningZone"> Hello, are you still with us?</p>
+  <p v-if="logoutZone"> You are logout due to inactivity</p>
 </template>
 
 
@@ -15,6 +16,7 @@ export default {
             warningTimer: null,
             logoutTimer: null,
             warningZone: false,
+            logoutZone: false,
         }
     },
 
@@ -37,7 +39,8 @@ export default {
     methods: {
         setTimers: function() {
             this.warningTimer = setTimeout(this.warningMessage, 5*1000);
-            this.logoutTimer = setTimeout(this.exitGame, 7*1000); // Här ska vi lägga till action för att lämna spelet
+            this.logoutTimer = setTimeout(this.exitGame, 10*1000); // Här ska vi lägga till action för att lämna spelet
+          
         },
 
         warningMessage: function() {
@@ -45,10 +48,15 @@ export default {
         },
         
         exitGame: function() {
+            this.warningZone = false;
+            this.logoutZone = true;
+
             // Här skriver vi action för att spelaren ska lämna spelet
         },
 
         resetTimer: function() {
+            this.warningZone = false;
+
             clearTimeout(this.warningTimer);
             clearTimeout(this.logoutTimer);
 

@@ -1,7 +1,7 @@
 <template>
   <body>
   <!-- Här visas text om autoLogout-->
-  <!--<div><autoLogout></autoLogout></div>-->
+  <div><autoLogout></autoLogout></div>
   
   <!-- Här visas meddelande om att det finns en invite -->
     <div>
@@ -101,7 +101,7 @@ import FlashcardView from "@/components/FlashcardComponent";
 import joinLobbyComponent from "@/components/JoinLobbyComponent";
 
 // Här importeras componentern AutoLogout
-// import autoLogout from "@/components/AutoLogout";
+import autoLogout from "@/components/AutoLogout";
 
 import axios from "axios";
 const socket = io();
@@ -112,7 +112,7 @@ export default {
   components: {
     FlashcardView,
     joinLobbyComponent,
-    // autoLogout
+    autoLogout
   },
   
   data: function(){
