@@ -42,9 +42,7 @@
         </ul>
         <br>
 
-        <textarea styl>
-          Chatbox
-        </textarea>
+
         <ActivePlayersComponent v-bind:player-nick-name="name" v-bind:uniqueLobbyID="pollId"
         ></ActivePlayersComponent>
 
@@ -55,8 +53,21 @@
     </div>
 
     <div id="belowGame">
+      <div>
 
-      <button style="width: 100px; height: 60px;" @click="seeQuestion">Press here to update the </button>
+
+        <p> Chat</p>
+        <textarea v-model="messages">
+        </textarea>
+        <p>
+        <input v-model="newMessage"/>
+        <button @click="sendMessage(newMessage)">Send</button></p>
+      </div>
+
+      <div>
+        <button style="width: 100px; height: 70px;" @click="seeQuestion">Press here when you want to see the question </button>
+      </div>
+
     </div>
 
 
@@ -91,7 +102,6 @@ export default {
         "questionArray": ["Sverige", "Norge", "Finland", "Danmark"],
         "answerArray": ["Sthlm", "Oslo", "Helsingfors", "CBH"]
       },
-      myObj_deserialized: {},
       players: [],
       trueValuesNeeded: 0,
       trueCount: 0,
@@ -102,6 +112,8 @@ export default {
       resetQuestionPosition: false,
       suggestedDecks: [],
       suggestedDecksChanged: 0,
+      newMessage: "",
+      messages: '',
     }
   },
   created: function () {
@@ -143,6 +155,11 @@ export default {
       }
       this.suggestedDecksChanged++;
     })
+    socket.on('appendChatMessage', message => {
+      console.log("appendChatMessage received on the client side");
+      let messageToAppend = message.player + ": " + message.message;
+      this.messages += messageToAppend + '\n'
+    })
   },
   methods: {
     suggestGame: function () {
@@ -170,6 +187,9 @@ export default {
       this.questionObject = this.myObj_deserialized;
       socket.emit("loadDeck", {pollId: this.pollId, deck: this.myObj_deserialized});
     },
+    sendMessage: function (messageToSend) {
+      socket.emit("sendMessage", {pollId: this.pollId, message: messageToSend, player: this.name});
+    }
   },
   watch: {
     trueCount: function () {
@@ -220,6 +240,9 @@ export default {
     flex-direction: column;
   }
   #belowGame{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
     margin-top: 40px;
     height: 200px;
     width: 100%;
