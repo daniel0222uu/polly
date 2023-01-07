@@ -5,7 +5,6 @@
 
       <div id="playersActive">
         <div>
-          Your own player name should display here: {{name}}
           <br>
           <button style="" @click="suggestGame"> Suggest to play this deck</button>
           <select  name="decks" required v-model="selectedDeck" >
@@ -46,8 +45,8 @@
         <textarea styl>
           Chatbox
         </textarea>
-
-
+        <ActivePlayersComponent v-bind:player-nick-name="name" v-bind:uniqueLobbyID="pollId"
+        ></ActivePlayersComponent>
 
       </div>
 
@@ -69,6 +68,7 @@
 // @ is an alias to /src
 import io from 'socket.io-client';
 import FlashcardComponent from "@/components/FlashcardComponent";
+import ActivePlayersComponent from "@/components/ActivePlayersComponent";
 import Decks from "@/assetts/Decks.json";
 const socket = io();
 
@@ -79,6 +79,7 @@ export default {
   name: 'LobbyView',
   components: {
     FlashcardComponent,
+    ActivePlayersComponent
   },
   data: function () {
     return {

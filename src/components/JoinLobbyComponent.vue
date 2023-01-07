@@ -3,7 +3,7 @@
       v-bind:to="'/lobby/'+lobbyId"
   >
     <button
-            @click="joinLobby(lobbyId)"
+            @click="joinLobby()"
     > Join lobby
     </button>
   </router-link>
@@ -16,8 +16,7 @@ export default {
   name: "JoinLobbyComponent",
   props: ["lobbyId", "name"],
   methods: {
-    joinLobby: function (lobbyToJoin) {
-      console.log("I should've joined", lobbyToJoin);
+    joinLobby: function () {
       socket.emit("joinLobby", {lobbyID: this.lobbyId, name: this.name});
       this.navigate();
     },

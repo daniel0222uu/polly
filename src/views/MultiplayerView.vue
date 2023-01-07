@@ -5,7 +5,6 @@
   
   <!-- Här visas meddelande om att det finns en invite -->
     <div>
-      {{inviteInformation}}
     <ul style="list-style: none">
       <li v-for="invite in invitationList" v-bind:key="invite"> {{invite.requester}} Invites you to play {{invite.lobbyID}}
         <join-lobby-component v-bind:lobby-id="invite.lobbyID" v-bind:name="name" ></join-lobby-component>
@@ -67,18 +66,10 @@
 
       <!-- Här visas Active Player listan-->
       <div id="verticalRight">
-        <p style="justify-content: left; font-size: 24px; font-weight:bold">Active players</p>
-        <ul style="list-style: none">
-          <li><b>{{name}}</b><br>
-            <button @click="exitPlaying(name)">Exit game</button><br>
-            <p>--------------</p></li>
-          <li v-for="player in players" v-bind:key="player"> <b>{{player.name}}</b><br>
-            {{player.score}} points out of {{totalQuestionAmount}}<br>
-            <button @click="sendRequest(player.name)">Ask to join</button>
-            <p>--------------</p></li>
-        </ul>
+        <ActivePlayersComponent v-bind:player-nick-name="name" v-bind:uniqueLobbyID="lobbyId"
+        ></ActivePlayersComponent>
       </div>
-    
+
     </div>
 
 
@@ -99,26 +90,27 @@ const idListFromAllDecks = selectList.map(element => element.id);
 import io from "socket.io-client";
 import FlashcardView from "@/components/FlashcardComponent";
 import joinLobbyComponent from "@/components/JoinLobbyComponent";
+import ActivePlayersComponent from "@/components/ActivePlayersComponent";
 
 // Här importeras componentern AutoLogout
 //import autoLogout from "@/components/AutoLogout";
 
 import axios from "axios";
 const socket = io();
-console.log(Decks);
 
 export default {
   name: "MultiplayerView",
   components: {
     FlashcardView,
     joinLobbyComponent,
+    ActivePlayersComponent,
     //autoLogout
   },
   
   data: function(){
     return {
       lang: "en",
-      lobbyId: 1000000,
+      lobbyId: 1337,
       name: "",
       questionPosition: 0,
       totalQuestionAmount: 5,
@@ -151,7 +143,6 @@ export default {
           this.joinedBoolean = true;
           socket.emit("startPlaying", {name: this.name, score: this.questionIndex});
         },
-        
         // Testar att lägga till funktion för att ta bort spelare
         exitPlaying: function (playerName) {
           this.joinedBoolean = false;
@@ -175,10 +166,6 @@ export default {
             playersInLobby: []
           });
         },
-        createPoll: function () { //ett bättre namn hade varit createLobby, men jag är lat
-         // this.lobbyId = Math.floor(Math.random() * 1000000 + 100000);
-          socket.emit("createPoll", {pollId: this.lobbyId, lang: this.lang});
-        },
         loadDeck: function (deckIdToLoad) {
           this.questionPosition = 0;
           const target = Decks.find(deck => deck.id === deckIdToLoad);
@@ -190,7 +177,6 @@ export default {
         finishGame: function () {
           this.gameFinishedBoolean = true;
         },
-
         // Function for the like button
         async likeDeck (deckToLike) {
           console.log("Number of likes:");
@@ -246,11 +232,6 @@ export default {
   overflow: auto;
 }
 #verticalRight{
-  width: 250px;
-  max-width: 30%;
-  border: 5px solid black;
-  border-radius: 10px;
-  background-color: lightgrey;
 }
 
 #viewAfterGame {
