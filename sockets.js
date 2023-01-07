@@ -67,6 +67,7 @@ function sockets(io, socket, data) {
     const receiver  = d.receiver;
     const lobbyID= d.lobbyID;
     const objectToSend = {requester: requester, receiver: receiver, lobbyID: lobbyID};
+    console.log("playRequest received:", objectToSend);
     data.appendInviteList(objectToSend);
     //socket.emit('requestReceive', data.getInviteList());
     io.emit('requestReceive', data.getInviteList());

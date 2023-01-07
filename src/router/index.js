@@ -8,9 +8,9 @@ const routes = [
     component: StartView
   },
     {
-    path: '/poll/:id',
-    name: 'PollView',
-    component: () => import(/* webpackChunkName: "about" */ '../views/PollView.vue')
+    path: '/lobby/:id',
+    name: 'LobbyView',
+    component: () => import(/* webpackChunkName: "about" */ '../views/LobbyView.vue')
   },
   {
     path: '/mydecks/:lang',
