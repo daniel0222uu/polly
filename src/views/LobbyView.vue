@@ -41,6 +41,7 @@
         </div>
         <FlashcardComponent v-bind:questionProp="myObj_deserialized" v-bind:show-answer="swapSides"
                             v-bind:poll-id="pollId" v-bind:coop-multiplayer="hideNextButtons" v-bind:deck-loaded="resetQuestionPosition"
+                            v-bind:disable-click="nonClickableFlashcardBool"
                             @nextClick="onClickChild" @previousClick="onClickChild" ></FlashcardComponent>
 
       </div>
@@ -64,6 +65,7 @@
     </div>
 
     <div id="belowGame">
+
 
       <div>
         <button v-if="showPressToSeeQuestion" style="width: 100px; height: 70px;" @click="seeQuestion">Press here when you want to see the question </button>
@@ -115,7 +117,9 @@ export default {
       suggestedDecksChanged: 0,
       newMessage: "",
       messages: '',
-      showPressToSeeQuestion: false
+      showPressToSeeQuestion: false,
+      seeFlashcardBool: false,
+      nonClickableFlashcardBool: false,
     }
   },
   created: function () {
@@ -137,6 +141,7 @@ export default {
     })
     socket.on('resetTrueCount', () => {
       this.trueCount = 0;
+      this.seeFlashcardBool = false;
     })
     socket.on('instantiateDeck', deck => {
       this.myObj_deserialized = deck;
@@ -175,7 +180,10 @@ export default {
       socket.emit("startGame", {pollId: this.pollId, players: this.players});
     },
     seeQuestion: function () {
-      socket.emit("seeQuestion", {pollId: this.pollId});
+      if(!this.seeFlashcardBool){
+        socket.emit("seeQuestion", {pollId: this.pollId});
+        this.seeFlashcardBool = true;
+      }
     },
     onClickChild: function (value) {
       this.questionPosition = value;

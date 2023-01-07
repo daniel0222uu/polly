@@ -1,6 +1,6 @@
 <template>
 
-  <div class="card" v-on:click="flip" >
+  <div class="card"  v-on:click="flip">
     <div class="card-inner" :class="{flipped: flipped}">
       <div :style="{'font-size': fontSize + 'px' }" class="card-front">
         <div >{{questionProp.questionArray[questionPosition]}}</div>
@@ -44,7 +44,7 @@ const socket = io();
 
 export default {
   name: 'FlashcardView',
-  props: ['questionProp','showAnswer','pollId','coopMultiplayer','deckLoaded'],
+  props: ['questionProp','showAnswer','pollId','coopMultiplayer','deckLoaded','disableClick'],
   components: {},
   data: function () {
     return {
@@ -66,6 +66,9 @@ export default {
       this.flipped = false;
     },
     flip() {
+     if(!this.disableClick){
+       return;
+     }
       this.flipped = !this.flipped;
       this.adjustAnswerFontSize();
     },
