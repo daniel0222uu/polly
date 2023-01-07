@@ -1,6 +1,5 @@
 <template>
   <body>
-  Playing as {{playerNickName}}
   <br>
   <div>
     <ul style="list-style: none">

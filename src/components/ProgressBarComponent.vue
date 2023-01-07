@@ -15,7 +15,7 @@ export default {
 .progress-bar {
   margin-left: 30%;
   margin-right: 30%;
-  height: 20px;
+  height: 8px  ;
   background-color: #ddd;
   border-radius: 10px;
   overflow: hidden;
@@ -26,4 +26,5 @@ export default {
   background-color: #4caf50;
   border-radius: 10px;
 }
+
 </style>

@@ -24,7 +24,9 @@
      
        </div>
     <div >
-      <FlashcardView v-bind:questionProp="myObj_deserialized" ref="myChild"> </FlashcardView>
+      <FlashcardView  v-bind:questionProp="myObj_deserialized"
+                      v-bind:disable-click="clickableFlashcardBool"
+                     ref="myChild"> </FlashcardView>
 
     </div>
     
@@ -66,6 +68,7 @@ export default {
         "answerArray": ["Sthlm", "Oslo", "Helsingfors", "CBH"]},
       answerButtonBool: false,
       fontSize: 80,
+      clickableFlashcardBool: true,
     }
   },
   created() {

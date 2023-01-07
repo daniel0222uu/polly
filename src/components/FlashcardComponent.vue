@@ -66,7 +66,7 @@ export default {
       this.flipped = false;
     },
     flip() {
-     if(!this.disableClick){
+    if(!this.disableClick){
        return;
      }
       this.flipped = !this.flipped;
@@ -173,9 +173,8 @@ export default {
 <style scoped>
 
 .card {
-  margin-left: 35%;
-  margin-right: 35%;
-  height:400px; 
+  height:400px;
+  width: 400px;
   display: flex;
   justify-content: center;
   cursor:pointer;

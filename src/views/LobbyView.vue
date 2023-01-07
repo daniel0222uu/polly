@@ -9,18 +9,7 @@
     <div id="wrapperDiv">
 
       <div id="leftVertical">
-        <div>
-          <br>
-          <button style="" @click="suggestGame"> Suggest to play this deck</button>
-          <select  name="decks" required v-model="selectedDeck" >
-            <option value="" disabled selected hidden></option>
-            <option id="deckSelector" v-for="deck in selectorList" v-bind:key="deck">{{deck}}</option>
-          </select>
-        </div>
-        Players
-          <ul>
-            <li v-for="player in players" v-bind:key="player"> {{player}} </li>
-          </ul>
+        Players in lobby: <span v-for="player in players" v-bind:key="player" > {{player}} ,  </span>
         <div>
 
 
@@ -36,9 +25,6 @@
 
       <div id="middleContent">
 
-        <div id="selector">
-
-        </div>
         <FlashcardComponent v-bind:questionProp="myObj_deserialized" v-bind:show-answer="swapSides"
                             v-bind:poll-id="pollId" v-bind:coop-multiplayer="hideNextButtons" v-bind:deck-loaded="resetQuestionPosition"
                             v-bind:disable-click="clickableFlashcardBool"
@@ -49,6 +35,14 @@
 
       <div id="rightVertical">
 
+        <div>
+          <br>
+          <button style="" @click="suggestGame"> Suggest to play this deck</button>
+          <select  name="decks" required v-model="selectedDeck" >
+            <option value="" disabled selected hidden></option>
+            <option id="deckSelector" v-for="deck in selectorList" v-bind:key="deck">{{deck}}</option>
+          </select>
+        </div>
         <ul>
           <li v-for="deck in suggestedDecks" v-bind:key="deck"> <b>{{deck.id}}</b>  was suggested for co-op, votes {{deck.votes}} / {{players.length}}
             <button @click="acceptGame(deck.id)">Accept</button> </li>
@@ -105,7 +99,7 @@ export default {
       pollId: "inactive poll",
       questionObject: {
         "id": "Sveriges huvudstäder",
-        "questionArray": ["Choose a deck!","Can't find one? Create your own!"],
+        "questionArray": ["Vote for  a deck to play!","Can't find one? Create your own!"],
         "answerArray": ["Or not?","Or yes?"]
       },
       players: [],
@@ -206,11 +200,9 @@ export default {
       socket.emit("loadDeck", {pollId: this.pollId, deck: this.myObj_deserialized});
     },
     sendMessage: function (messageToSend) {
-      if(messageToSend !== ""){
-        return;
-      }
-      socket.emit("sendMessage", {pollId: this.pollId, message: messageToSend, player: this.name});
-      this.newMessage = "";
+        socket.emit("sendMessage", {pollId: this.pollId, message: messageToSend, player: this.name});
+        this.newMessage = "";
+        console.log("sendMessage ran");
     }
   },
   watch: {
@@ -256,10 +248,7 @@ export default {
 
 
   <style scoped>
-  #leftVertical{
-    width: 200px;
-    height: 100%;
-  }
+
   #playersActive{
     display: flex;
     flex-direction: row;
@@ -282,15 +271,14 @@ export default {
     flex-direction: row;
     justify-content: space-evenly;
   }
+  #leftVertical{
+  }
   #middleContent{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
   }
   #rightVertical{
-    width: 200px;
-    height: 100%;
+    height: 400px;
+    overflow: auto;
+    width: 300px;
   }
 
   </style>
