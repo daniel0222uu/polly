@@ -3,9 +3,9 @@
   <body>
   <div>
 
-    <select v-model="selectedDeck" name="drinks" required @change="loadDeck">
+    <select v-model="selectedDeck" name="decks" required @change="loadDeck">
       <option value="" disabled selected hidden>Pick a deck to edit</option>
-      <option v-for="drink in selectorList" v-bind:key="drink">{{ drink }}</option>
+      <option v-for="deck in selectorList" v-bind:key="deck">{{ deck }}</option>
     </select>
   </div>
 
@@ -16,7 +16,7 @@
     <input class="qeustionEditingFields" id="questionField" type="text" v-model="questionField">
     <br>
     <br>
-    <input class="qeustionEditingFields"  id="answerField" type="text" v-model="answerField">
+    <textarea class="qeustionEditingFields"  id="answerField" type="text" v-model="answerField"></textarea>
   </div>
 
   <div>
@@ -36,7 +36,7 @@
 
     <br>
     <br>
-    <button @click="savingCurrentQuestion" style="width: 200px; height: 150px">Save button</button>
+    <button @click="savingCurrentQuestion" style="width: 100px; height: 50px">Save button</button>
   </div>
 
   </div>
@@ -115,6 +115,7 @@ export default {
       console.log(this.quizAnswers);
     },
     loadDeck: function () {
+      // if isActive is true and changes has been made, pop up= do you want to save changes before leaving? yes no
       console.log("du klickade på en knapp med loadDeck()")
       let myObj_deserialized = JSON.parse(localStorage.getItem(this.selectedDeck));
       console.log(myObj_deserialized);
@@ -185,12 +186,12 @@ export default {
   margin: 40px;
 }
 .qeustionEditingFields{
-  font-size: 80px;
-  text-align: center;
+  font-size: 14px;
+  
 }
 
 #questionNumberHeader{
-  font-size: 80px;
+  font-size: 24px;
   text-align: center;
 }
 </style>

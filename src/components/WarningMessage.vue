@@ -1,11 +1,36 @@
-<template>
-  <transition name="fade">
-  <div class="positionWarning" id="deckNameWarning" v-if="deckAlert">
-    <p class="text">YOU HAVE TO NAME YOUR DECK</p>
-  </div>
-  </transition>
 
-  <transition name="fade">
+
+
+
+
+
+<!--
+
+  Denna commponent används inte längre i createView. Behövs den fortfarande?
+
+
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+<template>
+  
+  <div class="positionWarning" id="deckNameWarning" v-if="deckAlert">
+    <p class="text">Please enter a name to continue</p>
+  </div>
+  
+<!--
+
+<transition name="fade">
   <div class="positionWarning" id="deckNameWarning" v-if="questionFieldAlert">
     <p class="text">NO EMPTY FIELDS</p>
   </div>
@@ -17,7 +42,7 @@
     </div>
   </transition>
 
-  <!--Popup för likes och användarkommentarer på decks-->
+ Popup för likes och användarkommentarer på decks
 
   <transition name="fade">
     <div class="positionConfirmation" id="DeckLiked" v-if="DeckWasLiked">
@@ -25,6 +50,8 @@
     </div>
   </transition>
 
+-->
+  
 </template>
 
 <script>
@@ -35,6 +62,39 @@ export default {
 </script>
 
 <style scoped>
+
+.positionWarning{
+  
+ 
+  z-index: 9;
+  position: fixed;
+
+  right: 20px;
+  background-color: red;
+  width: 300px;
+  height: 150px;
+}
+.positionConfirmation{
+  display: flex;
+  z-index: 9;
+  position: fixed;
+  top: 150px;
+  left: 20px;
+  background-color: mediumspringgreen;
+  width: 300px;
+  height: 30px;
+  justify-content: center;
+}
+#deckNameWarning{
+  
+  border: 1px solid;
+  
+}
+.text{
+  text-align: center;
+}
+
+/*
 .fade-enter-from {
   opacity: 0;
 }
@@ -53,33 +113,6 @@ export default {
 .fade-leave-active{
   transition: all 0.5s ease;
 }
-.positionWarning{
-  z-index: 9;
-  position: fixed;
-  top: 200px;
-  right: 20px;
-  background-color: red;
-  width: 300px;
-  height: 50px;
-}
-.positionConfirmation{
-  display: flex;
-  z-index: 9;
-  position: fixed;
-  top: 150px;
-  left: 20px;
-  background-color: mediumspringgreen;
-  width: 300px;
-  height: 30px;
-  justify-content: center;
-}
-#deckNameWarning{
-  text-align: center;
-  border: 1px solid;
-  opaqueness: 0.8;
-}
-.text{
-  text-align: center;
-}
+*/
 
 </style>

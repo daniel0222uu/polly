@@ -118,9 +118,6 @@ display: none;
   position: relative;
   font-size: 24px;
 }
-option {
-
-}
 
 select {
   

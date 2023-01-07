@@ -195,25 +195,5 @@ export default {
 
 
 <style scoped>
-#questionDiv{
-  background-color: aqua;
-  font-size: 80px;
-}
-#answerDiv{
-  background-color: brown;
-  font-size: 80px;
-}
-#nextButton{
-  margin: 40px;
-}
-.qeustionEditingFields{
-  font-size: 80px;
-  text-align: center;
-}
 
-#questionNumberHeader{
-  font-size: 80px;
-  text-align: center;
-  font-family: "Arial Black";
-}
 </style>
