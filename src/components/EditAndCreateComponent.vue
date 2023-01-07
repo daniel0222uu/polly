@@ -1,50 +1,77 @@
 <template>
 
   <body>
-  <div>
+    <div class="editPage">
+      <div>
+      <div>
 
-    <select v-model="selectedDeck" name="decks" required @change="loadDeck">
-      <option value="" disabled selected hidden>Pick a deck to edit</option>
-      <option v-for="deck in selectorList" v-bind:key="deck">{{ deck }}</option>
-    </select>
-  </div>
+<select v-model="selectedDeck" name="decks" required @change="loadDeck">
+  <option value="" disabled selected hidden>Pick a deck to edit</option>
+  <option v-for="deck in selectorList" v-bind:key="deck">{{ deck }}</option>
+</select>
 
-  <div class="editView" :class="{active: isActive}">
-    <div>
-    <header id="questionNumberHeader" v-if="!addingQuestionBool"> {{questionObject.id}} </header>
-    <header id="questionNumberHeader" v-if="addingQuestionBool"> QUESTION TO ADD </header>
-    <input class="qeustionEditingFields" id="questionField" type="text" v-model="questionField">
-    <br>
-    <br>
-    <textarea class="qeustionEditingFields"  id="answerField" type="text" v-model="answerField"></textarea>
-  </div>
+</div>
 
-  <div>
+<div class="editView" :class="{active: isActive}">
+<div>
+<header id="questionNumberHeader" v-if="!addingQuestionBool"> {{questionObject.id}} </header>
+<header id="questionNumberHeader" v-if="addingQuestionBool"> QUESTION TO ADD </header>
+<input class="questionEditingFields" id="questionField" type="text" v-model="questionField">
+<br>
+<br>
+<textarea class="questionEditingFields"  id="answerField" type="text" v-model="answerField"></textarea>
+</div>
 
+<div>
+
+
+
+
+<button @click="addingNewQuestion">Add new question</button>
+
+</div>
+<div>
+<button @click="previousCLick" id="previousButton"> Previous </button>
+
+ {{questionIndex + 1 }}
+ 
+ <button @click="nextClick" id="nextButton"> Next </button>
+
+<br>
+
+
+<button @click="deleteDeckMessage" style="height:50px;">Delete deck</button>
+
+
+
+<br>
+<br>
+<button @click="savingCurrentQuestion" style=" height: 50px">Save changes</button>
+</div>
+
+</div>
+</div>
+
+<div class="deleteMessage" :class="{activeMessage:showDeleteMessage}">
+      <span style="font-size:20px">Are you sure you want to delete: <h5>{{ this.selectedDeck }}</h5> ?</span>
+       <div class="yesAndNoDiv">
+        <button class="bigButton" @click="deleteDeck">Yes</button>
+        <button class="bigButton" @click="deleteDeckMessage">No</button>
+
+       </div>
+     
+    </div>
+
+    </div>
 
     
-
-    <button @click="addingNewQuestion">Add new question</button>
-
-  </div>
-  <div>
-    <button @click="previousCLick" id="previousButton"> Previous </button>
-
-     {{questionIndex + 1 }}
-     
-     <button @click="nextClick" id="nextButton"> Next </button>
-
-    <br>
-    <br>
-    <button @click="savingCurrentQuestion" style="width: 100px; height: 50px">Save button</button>
-  </div>
-
-  </div>
   
   </body>
 </template>
 
 <script>
+
+
 
 
 let listToFill = [];
@@ -82,6 +109,7 @@ export default {
        quizAnswers: [],
        selectorList: listToFill,
        addingQuestionBool: false,
+       showDeleteMessage:false,
      }
     },
   methods: {
@@ -116,6 +144,7 @@ export default {
     },
     loadDeck: function () {
       // if isActive is true and changes has been made, pop up= do you want to save changes before leaving? yes no
+
       console.log("du klickade på en knapp med loadDeck()")
       let myObj_deserialized = JSON.parse(localStorage.getItem(this.selectedDeck));
       console.log(myObj_deserialized);
@@ -166,6 +195,27 @@ export default {
       this.questionObject.answerArray.push(answer);
       localStorage.setItem(this.questionObject.id, JSON.stringify(this.questionObject));
       this.addingQuestionBool = false;
+    },
+
+    deleteDeckMessage: function() {
+      this.showDeleteMessage= !this.showDeleteMessage;
+
+    },
+
+    deleteDeck: function() {
+      console.log("you have deleted: " + this.selectedDeck);
+      localStorage.removeItem(this.selectedDeck);
+
+      /*
+      for (var i = 0, len = localStorage.length; i < len; ++i) {
+        this.selectorList.push(localStorage.key(i));
+      }
+
+     */
+
+      this.isActive = false;
+      this.showDeleteMessage= !this.showDeleteMessage;
+
     }
   }
   }
@@ -173,9 +223,42 @@ export default {
 
 
 <style scoped>
+.yesAndNoDiv {
+  display: flex;
+  justify-content: space-around;
+  
+
+
+}
+.bigButton {
+  width: 150px;
+  height: 70px;
+
+}
+.editPage {
+  display: flex;
+  justify-content: center;
+}
+.deleteMessage {
+  display:none;
+  flex-direction: column;
+  justify-content: space-around;
+  position: absolute;
+  width: 400px;
+  height: 410px;
+  z-index:1;
+  background-color: white;
+  user-select: none;
+  border:1px solid black;
+  
+}
+
 .editView{
   display: none;
 
+}
+.activeMessage {
+  display:flex
 }
 .active {
   display: block;
@@ -185,7 +268,7 @@ export default {
 #nextButton{
   margin: 40px;
 }
-.qeustionEditingFields{
+.questionEditingFields{
   font-size: 14px;
   
 }
@@ -193,5 +276,16 @@ export default {
 #questionNumberHeader{
   font-size: 24px;
   text-align: center;
+}
+
+@media screen and (max-width:40em) {
+
+
+.deleteMessage {
+  width: 75%;
+}
+
+
+
 }
 </style>
