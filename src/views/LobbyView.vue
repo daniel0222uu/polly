@@ -21,6 +21,17 @@
           <ul>
             <li v-for="player in players" v-bind:key="player"> {{player}} </li>
           </ul>
+        <div>
+
+
+          <p> Chat</p>
+          <textarea readonly  v-model="messages">
+        </textarea>
+          <p>
+            <input v-model="newMessage"/>
+            <button @click="sendMessage(newMessage)">Send</button></p>
+        </div>
+
       </div>
 
       <div id="middleContent">
@@ -53,19 +64,9 @@
     </div>
 
     <div id="belowGame">
-      <div>
-
-
-        <p> Chat</p>
-        <textarea v-model="messages">
-        </textarea>
-        <p>
-        <input v-model="newMessage"/>
-        <button @click="sendMessage(newMessage)">Send</button></p>
-      </div>
 
       <div>
-        <button style="width: 100px; height: 70px;" @click="seeQuestion">Press here when you want to see the question </button>
+        <button v-if="showPressToSeeQuestion" style="width: 100px; height: 70px;" @click="seeQuestion">Press here when you want to see the question </button>
       </div>
 
     </div>
@@ -99,8 +100,8 @@ export default {
       pollId: "inactive poll",
       questionObject: {
         "id": "Sveriges huvudstäder",
-        "questionArray": ["Sverige", "Norge", "Finland", "Danmark"],
-        "answerArray": ["Sthlm", "Oslo", "Helsingfors", "CBH"]
+        "questionArray": ["Choose a deck!","Can't find one? Create your own!"],
+        "answerArray": ["Or not?","Or yes?"]
       },
       players: [],
       trueValuesNeeded: 0,
@@ -114,6 +115,7 @@ export default {
       suggestedDecksChanged: 0,
       newMessage: "",
       messages: '',
+      showPressToSeeQuestion: false
     }
   },
   created: function () {
@@ -189,6 +191,7 @@ export default {
     },
     sendMessage: function (messageToSend) {
       socket.emit("sendMessage", {pollId: this.pollId, message: messageToSend, player: this.name});
+      this.newMessage = "";
     }
   },
   watch: {
@@ -208,6 +211,7 @@ export default {
           this.loadDeck(deck.id);
           this.suggestedDecks = [];
           this.startGame();
+          this.showPressToSeeQuestion = true;
           return;
         }
       }
@@ -227,7 +231,7 @@ export default {
 
   <style scoped>
   #leftVertical{
-    width: 100px;
+    width: 200px;
     height: 100%;
   }
   #playersActive{
