@@ -1,76 +1,85 @@
 <template>
   <body>
-    <!--
-      Saker att fixa: 
 
-      Namnen måste vara unika, det får alltså inte finnas två deck med identiska namn.
+  <!-- Här är första sidan-->
 
-
-    -->
-    <WarningMessage v-bind:deck-alert="deckNameAlert"  v-bind:question-field-alert="questionFieldAlert"
-    v-bind:question-was-added="questionWasAdded"/>
     <div class="firstView" :class="{notActive: deckIsNamed}">
 
+      <!-- Två varningsmeddelande som visas bara om villkoren är mötta -->
 
-        
-        <input style="padding:5px; margin:5px;" placeholder="Name your deck here" id="namingDeckField" type="text" v-model="deckName">
+      <div class = deckNameWarning :class="{showText:showText}">
+        Give your deck a name to continue!
+      </div>
       
-      <button style="padding:5px; margin:5px;" @click="nameDeck(deckName)">Create new deck</button> {{questionObject.id}}
+      <div style="margin-bottom:10px" class = deckNameWarning :class="{showText:duplicateName}">
+        Your already have a deck with this name!
+      </div>
+      
+       <!-- Här ger man namn och skapar deck-->
+
+      <div>
+        <input class="questionEditingFields" :class="{fieldEmpty:showText ,fieldDuplicate:duplicateName}"  autocomplete="off" placeholder="Name your deck here" id="namingDeckField" type="text" v-model="deckName">
+      
+        <button style="padding:5px; margin:5px;" @click="createDeck(deckName)">Create new deck</button> {{questionObject.id}}
+
+      </div>
+      
+       
     </div>
 
 
 
-    
+    <!-- Här är andra sidan -->
+
     <div :class="{notActive: !deckIsNamed}">
 
       <div id="wrapperDiv">
 
+        <!-- Här visas titeln-->
+
+        <h3>{{questionObject.id}} </h3>
+
         
-        <h2>{{questionObject.id}} </h2>
         <div class="horizontalDiv">
 
-          <div id="questionList" >
+
+
+          <!-- Här visas alla frågor som har skapats -->
+
+          <div class="questionList" >
 
                  <ol>
                    <li  v-for="item in questionObject.questionArray" :key="item">{{ item }}</li>
                  </ol>
              </div>
 
-          <div id="inputFields">
+          <div class="inputFields">
+
+            <!--Varningsmeddelande-->
+
+            <div style="margin-bottom:5px" class="deckNameWarning" :class="{showText:questionAlert , showText:answerAlert}">
+              No empty fields!
+            </div>
              
 
-            
-          <input class="questionEditingFields" type="text" placeholder="Question"  v-model="questionField">
-           <br>
-           <textarea class="questionEditingFields"  placeholder="Answer" v-model="answerField"></textarea>
 
-           <button id="buttonPosition" @click="savingAddedQustion">Add card</button>
+                  <!-- Här lägger man till kort (frågor och svar)-->
+           
+          <input class="questionEditingFields" :class="{fieldEmpty:questionAlert}" type="text" placeholder="Question"  v-model="questionField">
+           <br>
+           
+          
+           <textarea class="questionEditingFields"  :class="{fieldEmpty:answerAlert}" placeholder="Answer" v-model="answerField"></textarea>
+            
+           <button class="buttonPosition" @click="savingAddedQustion">Add card</button>
+          
 
           </div>
-
-        
 
         </div>
 
       </div>
-<!--
 
-<div id="questionShowing">
-        <p >{{questionObject.questionArray[questionIndex]}}</p>
-        <p>{{questionObject.answerArray[questionIndex]}}</p>
-        <p>
-           <button @click="previousCLick" type="submit" style="margin-right: 70px">
-           <img src="https://cdn-icons-png.flaticon.com/512/7693/7693294.png" style="width: 20px">
-            </button>
-           <button @click="nextClick" >
-            <img src="https://cdn-icons-png.flaticon.com/512/7693/7693290.png" style="width: 20px">
-           </button>
-         </p>
-
-      </div>
-
--->
-      
     </div>
   
 
@@ -81,23 +90,21 @@
 
 <script>
 import io from 'socket.io-client';
-import Decks from "../assetts/Decks.json";
-import WarningMessage from "@/components/WarningMessage";
+
 const socket = io();
-console.log(Decks);
 
-
+let listToFill = [];
+for (var i = 0, len = localStorage.length; i < len; ++i) {
+  listToFill.push(localStorage.key(i));
+}
 
 export default {
   name: 'CreateView',
   data: function () {
     return {
-      selectedDeck: "",
-      options: ["Mangoo", "Apple", "Orange", "Melon", "Pineapple", "Lecy", "Blueberry"],
-      quizName: "",
-      lang: "",
-      pollId: "",
-      questionIndex: 0,
+      lang: "", 
+      pollId: "", //behövs?
+      questionIndex: 0, //behövs?
       data: {},
       uiLabels: {},
       questionObject: {
@@ -105,28 +112,26 @@ export default {
         "questionArray": [],
         "answerArray": []
       },
-      answerButtonBool: false,
       questionField: "",
       answerField: "",
       deckName: "",
-      quizQuestions: [],
-      quizAnswers: [],
-      selectorList: [],
+      selectorList: listToFill,
       deckIsNamed: false,
-      questionWasAdded: false,
-      deckNameAlert: false,
-      questionFieldAlert: false
-      //testingObject: JSON.parse(localStorage.getItem("daniel")),
-      //completeDeck: {"id":this.deckName, "questionArray": this.quizQuestions, "answerArray":this.quizAnswers}
+      showText: false,
+      duplicateName: false,
+      questionAlert: false,
+      answerAlert: false
+      
     }
   },
   components: {
-    WarningMessage
+    
     
     //EditAndCreateComponent Not using it for now
   },
   created: function () {
     this.lang = this.$route.params.lang;
+    console.log(this.lang)
     socket.emit("pageLoaded", this.lang);
     socket.on("init", (labels) => {
       this.uiLabels = labels
@@ -138,26 +143,42 @@ export default {
         this.data = data)
   },
   methods: {
-    createPoll: function () {
-      socket.emit("createPoll", {pollId: this.pollId, lang: this.lang})
-    },
+   /*       Vad gör dom här?
     addQuestion: function () {
       socket.emit("addQuestion", {pollId: this.pollId, q: this.question, a: this.answers})
     },
     runQuestion: function () {
       socket.emit("runQuestion", {pollId: this.pollId, questionNumber: this.questionNumber})
-    },
-    nameDeck: function (namingTheDeck) {
-      if (namingTheDeck === "") {
-        console.log("Please name your deck");
-        this.deckAlert();
+    }, 
+
+            Vad gör dom här?
+    */
+    createDeck: function (deckName) {
+     
+      for (let i=0, len= this.selectorList.length; i<len; i++)  {
+      if (deckName === this.selectorList[i]) {
+        console.log("duplicate name!!!")
+        this.duplicateNameAlert();
         return;
       }
-      console.log(namingTheDeck)
-      this.deckName = namingTheDeck;
-      this.questionObject.id = namingTheDeck;
+      }
+     
+      if (deckName === "") {
+        console.log("Please name your deck");
+        this.noNameAlert();
+        return;
+      }
+     
+      
+      
+      console.log(deckName)
+      this.deckName = deckName;
+      this.questionObject.id = deckName;
       this.deckIsNamed = true;
     },
+
+    /*
+    Kan vi ta bort detta? 
     nextClick: function () {
       let initializeQarrayLength = this.questionObject.questionArray.length
       if (this.questionIndex < initializeQarrayLength - 1) {
@@ -171,37 +192,64 @@ export default {
       }
       console.log(this.questionIndex)
     },
+    Kan vi ta bort detta? 
+    */
     savingAddedQustion: function () {
       let question = this.questionField;
       let answer = this.answerField;
       if (question === "" || answer === "") {
-        console.log("Please fill in both fields")
+        if (question === "") {
+          this.questionFieldAlert()
+
+        }
+        if (answer === "") {
+          this.answerFieldAlert()
+
+        }
+       return;
+      }
+      if (question === "" || answer === "" ) {
+        
         this.fieldAlert()
         return;
+        
       }
-      console.log(question);
-      console.log(answer);
+      
       this.questionObject.questionArray.push(question);
       this.questionObject.answerArray.push(answer);
-      console.log(this.questionObject);
+
       localStorage.setItem(this.questionObject.id, JSON.stringify(this.questionObject));
+
       this.questionField = "";
       this.answerField = "";
-      this.questionWasAdded = true;
+      
+    },
+
+    noNameAlert(){
+      this.showText = true;
       setTimeout(() => {
-        this.questionWasAdded = false;
+        this.showText = false;
       }, 2000);
     },
-    deckAlert(){
-      this.deckNameAlert = true;
+
+    duplicateNameAlert(){
+      this.duplicateName = true;
       setTimeout(() => {
-        this.deckNameAlert = false;
+        this.duplicateName = false;
       }, 2000);
     },
-    fieldAlert(){
-      this.questionFieldAlert = true;
+
+    questionFieldAlert(){
+      this.questionAlert = true;
       setTimeout(() => {
-        this.questionFieldAlert = false;
+        this.questionAlert = false;
+      }, 2000);
+    },
+
+    answerFieldAlert(){
+      this.answerAlert = true;
+      setTimeout(() => {
+        this.answerAlert = false;
       }, 2000);
     },
   },
@@ -212,8 +260,10 @@ export default {
 <style scoped>
 
 ol {
+  margin-right:20px;
   list-style-type: upper-roman;
-  border-left: 2px dotted black;
+  
+  border: 5px ridge lightseagreen;
   font-size: 20px;
   
   
@@ -222,23 +272,34 @@ ol {
   
 }
 
+.deckNameWarning {
+  color: transparent;
+  user-select: none;
+  font-family: Helvetica;
+  font-size: 16px;
+  
+
+}
+.showText {
+color:black;
+}
+.fieldEmpty {
+  border:1px solid red;
+}
+.fieldDuplicate {
+  border:1px solid blue;
+
+}
+
+
 .questionEditingFields:focus::placeholder {
   color: transparent;
 }
-#createButton {
- text-decoration: none;
- color: black;
- cursor:default;
- 
-}
-#saveButtonDiv{
-  
-  
-  
-  
-}
 
-#inputFields {
+
+
+
+.inputFields {
 grid-column: 3;
 
 width: 300px;
@@ -250,6 +311,11 @@ width: 300px;
 
 .firstView {
   margin-top:5%;
+  display: flex;
+  
+  align-items: center;
+  flex-direction: column;
+ 
 }
 .horizontalDiv{
   display: grid;
@@ -262,11 +328,13 @@ width: 300px;
   display:none;
 
 }
-#buttonPosition {
+
+.buttonPosition {
   width: 90%;
   height: 30%;
 }
-#questionList{
+
+.questionList{
   
  grid-column: 2;
  
@@ -282,17 +350,8 @@ width: 300px;
   
   
 }
-#namingField {
- 
- 
-}
-#namingQuiz{
-  margin: 5px;
-  position: relative;
-  font-size: 40px;
-  font-size-adjust:0.5;
-  text-align: center;
-}
+
+
 @media screen and (max-width:40em) {
   .horizontalDiv {
 display:flex;
@@ -301,16 +360,16 @@ flex-direction: column-reverse;
 
 
   }
-  #questionList {
-    margin-top:100px;
+  .questionList {
+    margin-top:10px;
     
-  color:white;
+    color:white;
     max-width: 300px;
   }
   .firstView {
   margin-top:none;
 }
-#buttonPosition {
+.buttonPosition {
   width: 90%;
   height: 50px;
 }
