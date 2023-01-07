@@ -76,7 +76,7 @@ let selectList = Decks;
 const idListFromAllDecks = selectList.map(element => element.id);
 
 export default {
-  name: 'PollView',
+  name: 'LobbyView',
   components: {
     FlashcardComponent,
   },

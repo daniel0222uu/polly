@@ -1,6 +1,6 @@
 <template>
   <router-link
-      v-bind:to="'/poll/'+lobbyId"
+      v-bind:to="'/lobby/'+lobbyId"
   >
     <button
             @click="joinLobby(lobbyId)"
