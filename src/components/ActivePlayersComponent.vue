@@ -16,7 +16,7 @@
       <p style="font-size: 16px; font-weight: bold"> Active players</p>
       <ul style="list-style: none">
         <li v-for="player in filteredPlayers" v-bind:key="player">   <b>{{player.name}}</b>
-          <button @click="sendRequest(player.name)">Invite</button>
+          <button v-if="lobbyCreatedBool" @click="sendRequest(player.name)">Invite</button>
         </li>
       </ul>
     </div>
@@ -39,7 +39,7 @@ export default {
     joinLobbyComponent,
     //autoLogout
   },
-  props: ["playerNickName",'uniqueLobbyID'],
+  props: ["playerNickName",'uniqueLobbyID','lobbyCreatedBool'],
   data: function(){
     return {
       lang: "en",
@@ -73,7 +73,6 @@ export default {
           socket.emit("numberProgress", {name: this.name, score: this.questionPosition});
         },
         sendRequest: function (playerToRequest) {
-          this.$emit('lobbyCreated', true);
           this.createPoll();
           socket.emit('playRequest', {
             requester: this.playerNickName ,

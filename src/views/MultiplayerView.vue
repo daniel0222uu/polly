@@ -29,6 +29,7 @@
             {{name}}
           <button @click="exitPlaying">Quit</button>
         </p>
+        <span v-if="!lobbyCreatedBool"> <button @click="lobbyCreatedBool=true"> create lobby</button></span>
         <span v-if="lobbyCreatedBool"> join the lobby you created: <join-lobby-component v-bind:lobby-id="lobbyId" v-bind:name="name"></join-lobby-component>   </span>
         <div id="selector">Choose deck to play:
           <select name="decks" required v-model="selectedDeck" @change="loadDeck(this.selectedDeck)">
@@ -73,7 +74,9 @@
 
       <!-- Här visas Active Player listan-->
       <div id="verticalRight" >
-        <ActivePlayersComponent v-if="expandPlayerList" @lobbyCreated="setLobbyCreatedBool" v-bind:player-nick-name="name" v-bind:uniqueLobbyID="lobbyId"
+        <ActivePlayersComponent v-if="expandPlayerList" @lobbyCreated="setLobbyCreatedBool"
+                                v-bind:player-nick-name="name" v-bind:uniqueLobbyID="lobbyId"
+                                v-bind:lobby-created-bool="lobbyCreatedBool"
         ></ActivePlayersComponent>
       </div>
 
@@ -154,9 +157,6 @@ export default {
         startPlaying: function () {
           this.joinedBoolean = true;
           socket.emit("startPlaying", {name: this.name, activityStamp: Date.now()});
-        },
-        setLobbyCreatedBool: function (lobbyCreated) {
-          this.lobbyCreatedBool = lobbyCreated;
         },
         exitPlaying: function () {
           this.joinedBoolean = false;

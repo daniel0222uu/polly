@@ -51,6 +51,7 @@
 
 
         <ActivePlayersComponent v-bind:player-nick-name="name" v-bind:uniqueLobbyID="pollId"
+                                v-bind:lobby-created-bool="lobbyCreatedBool"
         ></ActivePlayersComponent>
 
       </div>
@@ -94,6 +95,7 @@ export default {
   },
   data: function () {
     return {
+      lobbyCreatedBool: true,
       name: "",
       haveReceivedName: false,
       pollId: "inactive poll",
