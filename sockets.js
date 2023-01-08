@@ -1,5 +1,7 @@
 function sockets(io, socket, data) {
   socket.emit('init', data.getUILabels());
+
+
   
   socket.on('pageLoaded', function (lang) {
     socket.emit('init', data.getUILabels(lang));
@@ -45,7 +47,7 @@ function sockets(io, socket, data) {
   });
 
   socket.on('startPlaying', function(d) {
-    data.activePlayers(d.name, d.score);
+    data.activePlayers(d.name, d.activityStamp);
     io.emit('multiplayerViewUpdate', data.getActivePlayers());
   });
 
@@ -105,8 +107,7 @@ function sockets(io, socket, data) {
 
   socket.on("startGame", function(d) {
     console.log("start game received, for the lobbyID: ", d.pollId, d.players);
-    console.log("now just running startGame data function", data.startGame(d.players)); //denna returnera
-    //inget för startgame har ingen return :D
+    console.log("now just running startGame data function", data.startGame(d.players));
     io.to(d.pollId).emit('totalTrueValues', data.startGame(d.players));
   });
 
@@ -127,6 +128,12 @@ function sockets(io, socket, data) {
   socket.on('sendMessage', function(d) {
     console.log("send message received,: ", d);
     io.to(d.pollId).emit('appendChatMessage',d);
+  });
+
+  socket.on('playerActive', function(d) {
+    // console.log("playerActive received,: ", d);
+   // console.log('the active players are logged in sockets: ', data.getActivePlayers());
+    io.emit('multiplayerViewUpdate', data.updateActivity(d.name, d.activityStamp));
   });
 }
 

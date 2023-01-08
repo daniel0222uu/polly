@@ -27,6 +27,7 @@
 
         <p style="font-size:24px;font-weight:bold">
             {{name}}
+          <button @click="exitPlaying">Quit</button>
         </p>
         <span v-if="lobbyCreatedBool"> join the lobby you created: <join-lobby-component v-bind:lobby-id="lobbyId" v-bind:name="name"></join-lobby-component>   </span>
         <div id="selector">Choose deck to play:
@@ -144,20 +145,22 @@ export default {
     socket.on("multiplayerViewUpdate", playersActive => {
       this.players = playersActive;
     });
+    setInterval( () => {
+      socket.emit("playerActive", {name: this.name, activityStamp: Date.now()});
+    }, 3000);
     },
   methods:
       {
         startPlaying: function () {
           this.joinedBoolean = true;
-          socket.emit("startPlaying", {name: this.name, score: this.questionIndex});
+          socket.emit("startPlaying", {name: this.name, activityStamp: Date.now()});
         },
         setLobbyCreatedBool: function (lobbyCreated) {
           this.lobbyCreatedBool = lobbyCreated;
         },
-        // Testar att lägga till funktion för att ta bort spelare
-        exitPlaying: function (playerName) {
+        exitPlaying: function () {
           this.joinedBoolean = false;
-          socket.emit("exitPlaying", {name: playerName});
+          socket.emit("exitPlaying", {name: this.name});
           console.log("exitPLaying should've ran");
         },
         onClickChild: function (value) {

@@ -9,8 +9,11 @@
     </ul>
   </div>
     <!-- Här visas Active Player listan-->
-  <button @click="seeFriendList">Toggle friendlist</button>
+  <p>
+    <span> Players online</span> <button id="toggleActivePlayer" @click="seeFriendList"> Toggle</button>
+  </p>
     <div id="verticalRight" v-if="expandPlayerList">
+      <p style="font-size: 16px; font-weight: bold"> Active players</p>
       <ul style="list-style: none">
         <li v-for="player in filteredPlayers" v-bind:key="player">   <b>{{player.name}}</b>
           <button @click="sendRequest(player.name)">Invite</button>
@@ -126,5 +129,7 @@ export default {
   height: 600px;
   overflow: auto;
   font-size: 12px;
+}
+#toggleActivePlayer{
 }
 </style>

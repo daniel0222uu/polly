@@ -8,6 +8,9 @@ function Data() {
   this.activePlayerList = [];
   this.inviteList = [];
   this.activeLobbies = [];
+  setInterval( () => {
+    this.currentCheck = Date.now();
+  }, 5000);
 }
 
 /***********************************************
@@ -51,7 +54,6 @@ Data.prototype.editQuestion = function(pollId, index, newQuestion) {
 
 Data.prototype.getQuestion = function(pollId, qId=null) {
   const poll = this.polls[pollId];
- // console.log("question requested for ", pollId, qId);
   if (typeof poll !== 'undefined') {
     if (qId !== null) {
       poll.currentQuestion = qId;
@@ -61,23 +63,6 @@ Data.prototype.getQuestion = function(pollId, qId=null) {
   return []
 }
 
-Data.prototype.submitAnswer = function(pollId, answer) {
-  const poll = this.polls[pollId];
-  console.log("answer submitted for ", pollId, answer);
-  if (typeof poll !== 'undefined') {
-    let answers = poll.answers[poll.currentQuestion];
-    if (typeof answers !== 'object') {
-      answers = {};
-      answers[answer] = 1;
-      poll.answers.push(answers);
-    }
-    else if (typeof answers[answer] === 'undefined')
-      answers[answer] = 1;
-    else
-      answers[answer] += 1
-    console.log("answers looks like ", answers, typeof answers);
-  }
-}
 
 Data.prototype.getAnswers = function(pollId) {
   const poll = this.polls[pollId];
@@ -89,19 +74,37 @@ Data.prototype.getAnswers = function(pollId) {
   }
   return {}
 }
-Data.prototype.activePlayers = function(name,number){
-    this.activePlayerList.push({name:name,score:number});
+Data.prototype.activePlayers = function(name,statusOfActivity){
+    this.activePlayerList.push({name:name,activityStamp:statusOfActivity});
 }
 
-// Testar funktion för att ta bort player från activePlayerList
 Data.prototype.removePlayer = function(name){
-  console.log("player to remove", name);
   this.activePlayerList = this.activePlayerList.filter(player => player.name !== name);
 }
 
 Data.prototype.getActivePlayers = function(){
+  for(let player of this.activePlayerList){
+    console.log(player.activityStamp - this.currentCheck);
+    if( Math.abs(player.activityStamp - this.currentCheck) > 10000){
+      console.log("player is inactive", player.name);
+        this.removePlayer(player.name);
+    }
+  }
     return this.activePlayerList;
 }
+
+Data.prototype.updateActivity = function(playerName, activityStamp){
+  for (let player of this.activePlayerList){
+    if (player.name === playerName){
+      player.activityStamp = activityStamp;
+    }
+  }
+  return this.activePlayerList;
+}
+
+
+
+
 Data.prototype.updateScore = function(name,number){
    for(let i = 0; i < this.activePlayerList.length; i++){
         if(this.activePlayerList[i].name == name){
@@ -133,21 +136,14 @@ Data.prototype.getAllLobbies = function(){
 Data.prototype.getLobbyParticipants = function(searchLobbyID){
   for (let lobby of this.activeLobbies){
     if (lobby.lobbyID == searchLobbyID){
-     // console.log("found lobby", lobby);
       return lobby.playersInLobby;
     }
   }
 }
 Data.prototype.startGame = function(players) {
   let totalTrueValuesNeeded = players.length;
- /* for (let player of players) {
-    console.log("player getting looped :", player);
-  }  tanke om att  skapa objekt för varje spelar namn då
-  gamet startar men denna ide kanske inte behövs*/
   return totalTrueValuesNeeded;
 }
-
-
 
 module.exports = Data;
 

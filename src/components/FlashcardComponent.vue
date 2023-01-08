@@ -139,7 +139,7 @@ export default {
 <style scoped>
 .card {
   height:400px;
-  width: 400px;
+  width: 300px;
   cursor:pointer;
   perspective: 1000px;
 }

@@ -14,7 +14,7 @@
 
 
           <p> Chat</p>
-          <textarea readonly  v-model="messages">
+          <textarea id="chatWindow" readonly  v-model="messages">
         </textarea>
           <p>
             <input v-model="newMessage"/>
@@ -277,8 +277,14 @@ export default {
   }
   #rightVertical{
     height: 400px;
-    overflow: auto;
     width: 300px;
+  }
+  #chatWindow{
+    height: 300px;
+    width: 150px;
+    border: 1px solid black;
+    overflow: scroll;
+    white-space: pre-wrap;
   }
 
   </style>
