@@ -1,6 +1,6 @@
 <template>
   <body>
-
+    
   <!-- Här är första sidan-->
 
     <div class="firstView" :class="{notActive: deckIsNamed}">
@@ -57,21 +57,24 @@
 
             <!--Varningsmeddelande-->
 
-            <div style="margin-bottom:5px" class="deckNameWarning" :class="{showText:questionAlert , showText:answerAlert}">
+            <div style="margin-bottom:5px" class="deckNameWarning" :class="{showText:questionAlert || answerAlert}">
+             
               No empty fields!
             </div>
+           
+            
              
 
 
                   <!-- Här lägger man till kort (frågor och svar)-->
            
-          <input class="questionEditingFields" :class="{fieldEmpty:questionAlert}" type="text" placeholder="Question"  v-model="questionField">
+          <textarea style="height:50px;" class="questionEditingFields" :class="{fieldEmpty:questionAlert}"  placeholder="Question"  v-model="questionField"></textarea>
            <br>
            
           
-           <textarea class="questionEditingFields"  :class="{fieldEmpty:answerAlert}" placeholder="Answer" v-model="answerField"></textarea>
+           <textarea style="height:100px;" class="questionEditingFields"  :class="{fieldEmpty:answerAlert}" placeholder="Answer" v-model="answerField"></textarea>
             
-           <button class="buttonPosition" @click="savingAddedQustion">Add card</button>
+           <button class="buttonPosition" @click="saveCard">Add card</button>
           
 
           </div>
@@ -175,6 +178,7 @@ export default {
       this.deckName = deckName;
       this.questionObject.id = deckName;
       this.deckIsNamed = true;
+      
     },
 
     /*
@@ -194,23 +198,25 @@ export default {
     },
     Kan vi ta bort detta? 
     */
-    savingAddedQustion: function () {
+    saveCard: function () {
       let question = this.questionField;
       let answer = this.answerField;
       if (question === "" || answer === "") {
         if (question === "") {
           this.questionFieldAlert()
+          
 
         }
         if (answer === "") {
           this.answerFieldAlert()
+          
 
         }
        return;
       }
       if (question === "" || answer === "" ) {
         
-        this.fieldAlert()
+        
         return;
         
       }
@@ -222,6 +228,9 @@ export default {
 
       this.questionField = "";
       this.answerField = "";
+      for (var i = 0, len = localStorage.length; i < len; ++i) {
+        this.selectorList.push(localStorage.key(i));
+      }
       
     },
 

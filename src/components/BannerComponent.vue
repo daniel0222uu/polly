@@ -18,11 +18,12 @@
   <ResponsiveNav v-bind:hideNav="hideNav">
 
    
-    <router-link  v-bind:to="'/mydecks/'+ lang">{{uiLabels.myDecks}}</router-link>
+    <router-link class="hej" v-bind:to="'/mydecks/'+ lang">{{uiLabels.myDecks}}</router-link>
     <router-link  v-bind:to="'/play/'+lang">{{uiLabels.play}}</router-link>
     <router-link  v-bind:to="'/'">{{uiLabels.lobby}}</router-link>
     <router-link  v-bind:to="'/'">{{uiLabels.FAQ}}</router-link>
     <router-link  v-bind:to="'/'">{{uiLabels.settings}}</router-link>
+    
     
     
     <button  v-on:click="switchLanguage">{{uiLabels.changeLanguage}}</button>
@@ -89,6 +90,21 @@ export default {
 
 <style scoped>
 
+button {
+  text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    color: black;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    margin: 3%;
+    border: 2px solid rgb(3, 81, 77);
+    background-color: rgb(32, 159, 178);
+
+    border-radius: 10px;
+}
 
 
 header {

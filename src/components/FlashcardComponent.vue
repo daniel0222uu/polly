@@ -173,6 +173,7 @@ export default {
   perspective: 1000px;
 }
 .card-inner {
+  user-select: none;
   position: relative;
   width: 100%;
   height: 100%;

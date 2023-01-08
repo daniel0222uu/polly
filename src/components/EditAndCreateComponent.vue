@@ -23,10 +23,10 @@
 <br>
 
 
-<input class="questionEditingFields" id="questionField" type="text" v-model="questionField">
+<textarea class="questionEditingFields" id="questionField" placeholder="Question" v-model="questionField"></textarea>
 <br>
 <br>
-<textarea class="questionEditingFields"  id="answerField" type="text" v-model="answerField"></textarea>
+<textarea style="height:50px" class="questionEditingFields"  id="answerField" placeholder="Answer" v-model="answerField"></textarea>
 </div>
 
 
@@ -41,27 +41,28 @@
 
   </div>
 
+<ResposiveNav v-bind:hideNav="hideNav">
+  
+  <button class="buttonNav" @click="addCard">Add new card</button>
+  <button class="buttonNav" @click="deleteCard">Delete card</button>
+  <button class="buttonNav" @click="saveCard" >Save changes</button>
+  <button class="buttonNav" @click="deleteDeckMessage" >Delete deck</button>
+  
+  
+  
 
+</ResposiveNav>
  <div>
 
 
 
 
-  <button @click="addCard">Add new card</button>
-  <button @click="deleteCard">Delete card</button>
+
 
 </div>
 
-<br>
 
 
-<button @click="deleteDeckMessage" style="height:50px;">Delete deck</button>
-
-
-
-<br>
-<br>
-<button @click="saveCard" style=" height: 50px">Save changes</button>
 </div>
 
 </div>
@@ -88,7 +89,7 @@ Problem med att hämta namn som har två mellanslag i sig eller mellanslag innan
 
 <script>
 
-
+import ResposiveNav from "./ResponsiveNav";
 
 
 
@@ -104,6 +105,7 @@ export default {
 
   data: function (){
      return {
+      hideNav: true,
       isActive:false,
        selectedDeck: "",
        quizName: "",
@@ -130,6 +132,11 @@ export default {
        addingQuestionBool: false,
        showDeleteMessage:false,
      }
+     
+    },
+    components: {
+      ResposiveNav
+
     },
   methods: {
     saveDeck: function () {
@@ -237,7 +244,7 @@ export default {
 
     },
     deleteCard: function() {
-      if (this.questionIndex == 0) {
+      if (this.deckObject.answerArray.length == 1) {
         this.deleteDeckMessage();
         return;
       }
@@ -281,17 +288,70 @@ export default {
 
 
 <style scoped>
-.prevButton, .nextButton{
+
+
+nav {
+   
+    width:100%;
+    height: 160px;
+    display: grid;
+    grid-template-rows: repeat(auto-fit, 10em);
+   
+    
+   
+    
+    justify-content: center;
+    
+  }
+.buttonNav {
+    user-select: none;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    color: black;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    margin: 3%;
+    border: 2px solid black;
+    background-color: rgb(32, 90, 178);
+    cursor: pointer;
+    border-radius: 10px;
+  border: 2px solid #000;
   
+  background-color: #fec89a;
+  transition: box-shadow 300ms ease, transform 500ms ease;
+    
+    
+
+    border-radius: 10px;
+}
+
+.buttonNav:hover{
+color: white;
+border: 2px solid white;  
+background-color: rgb(32, 90, 178);
+
+transform: translateY(-10px);
+
+}
+.buttonNav:active{
+  transform: translateY(10px);
+}
+.prevButton, .nextButton{
+  user-select: none;
+  cursor: pointer;
   border-radius: 5px;
-  cursor:pointer;
+  border: 1px solid gray;
   font-Size: 16px;
   width:100px;
   margin:30px;
   height: 40px;
- 
+}
+.prevButton:hover, .nextButton:hover{
   
-  
+background-color: lightgray;
 }
 .prevButton:active {
 transform: translateX(-2px);
@@ -334,8 +394,8 @@ transform: translateX(-2px);
   flex-direction: column;
   justify-content: space-around;
   position: absolute;
-  width: 400px;
-  height: 410px;
+  width: 650px;
+  height: 430px;
   z-index:1;
   background-color: white;
   user-select: none;
@@ -369,14 +429,44 @@ transform: translateX(-2px);
   text-align: center;
 }
 
-@media screen and (max-width:40em) {
+@media screen and (max-width:50em) {
+  button {
+    height: 40px;
+   
+    
+  }
+ 
+  nav {
+    margin:10px;
+    position: relative;
+    height:100vh;
+    top: 3em;
+    left: 0;
+    width:95%;
+    display: grid;
+    grid-template-rows: repeat(auto-fit, 3em);
+    transition: 1.5s;
+  }
+  nav ::v-slotted(a) {
+    justify-content: left;
+    padding-left: none;
+    
+    
+    
+  }
+ 
+  .deleteMessage {
+  width: 100%;
+  height: 80%;
+  
+}
 
-
-.deleteMessage {
-  width: 75%;
+  .hide {
+    left: 0;
+  }
 }
 
 
 
-}
+
 </style>
