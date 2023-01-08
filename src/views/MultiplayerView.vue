@@ -43,10 +43,10 @@
           </button>
         </div>
     <!-- Här visas komponenten FlashcardView -->
-      <div v-if="joinedBoolean">
-        <p><FlashcardView v-bind:questionProp="myObj_deserialized" @nextClick="onClickChild" @previousClick="onClickChild" v-bind:coop-multiplayer="false"
-        v-bind:disable-click="true"></FlashcardView></p>
-        <button id="FinishGame" @click="finishGame()">Done!</button>
+      <div id="flashcardWrapperDiv" v-if="joinedBoolean">
+        <FlashcardView v-bind:questionProp="myObj_deserialized" @nextClick="onClickChild" @previousClick="onClickChild" v-bind:coop-multiplayer="false"
+        v-bind:disable-click="true"></FlashcardView>
+        <!-- <button id="FinishGame" @click="finishGame()">Done!</button> -->
       </div>
 
 
@@ -242,6 +242,11 @@ export default {
   overflow: auto;
 }
 #verticalRight{
+}
+#flashcardWrapperDiv{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #viewAfterGame {
