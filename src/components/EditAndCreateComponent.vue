@@ -2,6 +2,9 @@
 
   <body>
     <div class="editPage">
+    
+
+      
       <div>
       <div>
 
@@ -10,32 +13,44 @@
   <option v-for="deck in selectorList" v-bind:key="deck">{{ deck }}</option>
 </select>
 
+
 </div>
 
 <div class="editView" :class="{active: isActive}">
 <div>
-<header id="questionNumberHeader" v-if="!addingQuestionBool"> {{questionObject.id}} </header>
-<header id="questionNumberHeader" v-if="addingQuestionBool"> QUESTION TO ADD </header>
+<header id="questionNumberHeader" > {{deckObject.id}} </header>
+
+<br>
+
+
 <input class="questionEditingFields" id="questionField" type="text" v-model="questionField">
 <br>
 <br>
 <textarea class="questionEditingFields"  id="answerField" type="text" v-model="answerField"></textarea>
 </div>
 
+
+
 <div>
+  <div class="prevAndNextDiv">
+    <button @click="previousCLick" class="prevButton"> Previous </button>
+
+ <span style="font-size:larger; position: absolute;">{{questionIndex + 1 }} / {{this.deckObject.questionArray.length }}</span>
+ 
+ <button @click="nextClick" class="nextButton"> Next </button>
+
+  </div>
+
+
+ <div>
 
 
 
 
-<button @click="addingNewQuestion">Add new question</button>
+  <button @click="addCard">Add new card</button>
+  <button @click="deleteCard">Delete card</button>
 
 </div>
-<div>
-<button @click="previousCLick" id="previousButton"> Previous </button>
-
- {{questionIndex + 1 }}
- 
- <button @click="nextClick" id="nextButton"> Next </button>
 
 <br>
 
@@ -46,14 +61,16 @@
 
 <br>
 <br>
-<button @click="savingCurrentQuestion" style=" height: 50px">Save changes</button>
+<button @click="saveCard" style=" height: 50px">Save changes</button>
 </div>
 
 </div>
+Problem med att hämta namn som har två mellanslag i sig eller mellanslag innan/efter namnet. Vet inte hur man löser.
 </div>
+
 
 <div class="deleteMessage" :class="{activeMessage:showDeleteMessage}">
-      <span style="font-size:20px">Are you sure you want to delete: <h5>{{ this.selectedDeck }}</h5> ?</span>
+      <span style="font-size:20px; font-family: Arial, Helvetica;">Are you sure you want to delete: <h5 style="font-style:italic">{{ this.selectedDeck }}</h5> <h2>?</h2><br>Nothing will be saved.</span>
        <div class="yesAndNoDiv">
         <button class="bigButton" @click="deleteDeck">Yes</button>
         <button class="bigButton" @click="deleteDeckMessage">No</button>
@@ -70,6 +87,8 @@
 </template>
 
 <script>
+
+
 
 
 
@@ -95,7 +114,7 @@ export default {
        questionIndex: 0,
        data: {},
        uiLabels: {},
-       questionObject: {
+       deckObject: {
          "id": "Sveriges huvudstäder",
          "questionArray": ["Sverige", "Norge", "Finland", "Danmark"],
          "answerArray": ["Sthlm", "Oslo", "Helsingfors", "CBH"]
@@ -142,69 +161,108 @@ export default {
       this.quizAnswers.push(answerToAdd);
       console.log(this.quizAnswers);
     },
-    loadDeck: function () {
-      // if isActive is true and changes has been made, pop up= do you want to save changes before leaving? yes no
 
-      console.log("du klickade på en knapp med loadDeck()")
+    loadDeck: function () {
+      this.questionIndex = 0;
+      // if isActive is true and changes has been made, pop up= do you want to save changes before leaving? yes no
+      console.log(this.selectedDeck)
+
       let myObj_deserialized = JSON.parse(localStorage.getItem(this.selectedDeck));
-      console.log(myObj_deserialized);
-      this.questionObject = myObj_deserialized;
-      this.answerField = this.questionObject.answerArray[this.questionIndex];
-      this.questionField = this.questionObject.questionArray[this.questionIndex];
+      
+      this.deckObject = myObj_deserialized;
+      
+      this.answerField = this.deckObject.answerArray[this.questionIndex];
+      this.questionField = this.deckObject.questionArray[this.questionIndex];
       this.answerField = myObj_deserialized.answerArray[this.questionIndex];
       this.questionField = myObj_deserialized.questionArray[this.questionIndex];
-      this.questionObject = myObj_deserialized;
+      this.deckObject = myObj_deserialized;
       this.isActive = true;
+      
     },
     previousCLick: function () {
-      if (this.questionIndex > 0) {
+      this.saveCard();
+      if (this.questionIndex != 0) {
         this.questionIndex -- ;
       }
-      this.answerField = this.questionObject.answerArray[this.questionIndex];
-      this.questionField = this.questionObject.questionArray[this.questionIndex];
+      else if (this.questionIndex == 0) {
+        
+        this.questionIndex = this.deckObject.questionArray.length -1;
+
+      }
+      this.answerField = this.deckObject.answerArray[this.questionIndex];
+      this.questionField = this.deckObject.questionArray[this.questionIndex];
       this.addingQuestionBool = false;
     },
     nextClick: function () {
-      if (this.questionIndex < this.questionObject.questionArray.length - 1) {
+      this.saveCard();
+      if (this.questionIndex < this.deckObject.questionArray.length - 1) {
         this.questionIndex ++ ;
       }
-      this.answerField = this.questionObject.answerArray[this.questionIndex];
-      this.questionField = this.questionObject.questionArray[this.questionIndex];
+      else if (this.questionIndex == this.deckObject.questionArray.length - 1) {
+        this.questionIndex = 0;
+      }
+      this.answerField = this.deckObject.answerArray[this.questionIndex];
+      this.questionField = this.deckObject.questionArray[this.questionIndex];
+
     },
-    savingCurrentQuestion: function () {
-      let question = this.questionField;
-      let answer = this.answerField;
-      console.log(question);
-      console.log(answer);
-      this.questionObject.questionArray[this.questionIndex] = question;
-      this.questionObject.answerArray[this.questionIndex] = answer;
-      localStorage.setItem(this.questionObject.id, JSON.stringify(this.questionObject));
-    }, //detta fungerar men känns jätteupplagt för bugggar. Vi får hålla koll på detta.
-    addingNewQuestion: function () {
-      this.questionIndex = this.questionObject.questionArray.length;
+    saveCard: function () {
+
+      this.deckObject.questionArray[this.questionIndex] = this.questionField;
+      this.deckObject.answerArray[this.questionIndex] = this.answerField;
+      localStorage.setItem(this.deckObject.id, JSON.stringify(this.deckObject));
+
+    }, 
+    addCard: function () {
+      this.saveCard();
+      this.questionIndex = this.deckObject.questionArray.length;
       this.questionField = "";
       this.answerField = "";
       this.addingQuestionBool = true;
+      this.saveCard();
     },
+    /*
     savingAddedQustion: function () {
       let question = this.questionField;
       let answer = this.answerField;
-      console.log(question);
-      console.log(answer);
-      this.questionObject.questionArray.push(question);
-      this.questionObject.answerArray.push(answer);
-      localStorage.setItem(this.questionObject.id, JSON.stringify(this.questionObject));
+      
+      this.deckObject.questionArray.push(question);
+      this.deckObject.answerArray.push(answer);
+      localStorage.setItem(this.deckObject.id, JSON.stringify(this.deckObject));
       this.addingQuestionBool = false;
     },
+    */
 
     deleteDeckMessage: function() {
       this.showDeleteMessage= !this.showDeleteMessage;
+
+    },
+    deleteCard: function() {
+      if (this.questionIndex == 0) {
+        this.deleteDeckMessage();
+        return;
+      }
+      this.deckObject.questionArray.splice(this.questionIndex , 1);
+      this.deckObject.answerArray.splice(this.questionIndex , 1);
+      localStorage.setItem(this.deckObject.id, JSON.stringify(this.deckObject));
+
+      if (this.questionIndex == this.deckObject.answerArray.length) {
+        this.questionIndex--;
+
+      }
+      this.questionField = this.deckObject.questionArray[this.questionIndex];
+      this.answerField = this.deckObject.answerArray[this.questionIndex];
+      
+
 
     },
 
     deleteDeck: function() {
       console.log("you have deleted: " + this.selectedDeck);
       localStorage.removeItem(this.selectedDeck);
+      this.selectorList = [];
+      for (var i = 0, len = localStorage.length; i < len; ++i) {
+        this.selectorList.push(localStorage.key(i));
+      }   
 
       /*
       for (var i = 0, len = localStorage.length; i < len; ++i) {
@@ -223,6 +281,38 @@ export default {
 
 
 <style scoped>
+.prevButton, .nextButton{
+  
+  border-radius: 5px;
+  cursor:pointer;
+  font-Size: 16px;
+  width:100px;
+  margin:30px;
+  height: 40px;
+ 
+  
+  
+}
+.prevButton:active {
+transform: translateX(-2px);
+}
+.nextButton:active {
+  transform: translateX(2px);
+}
+
+.prevAndNextDiv {
+  
+  display:flex;
+  justify-content: center;
+  height: 100px;
+ 
+  
+ 
+ 
+
+}
+
+
 .yesAndNoDiv {
   display: flex;
   justify-content: space-around;
@@ -264,13 +354,14 @@ export default {
   display: block;
 }
 
-
-#nextButton{
-  margin: 40px;
-}
 .questionEditingFields{
   font-size: 14px;
-  
+  text-align: center;
+  width:300px;
+  /*
+  background: transparent;
+  border: none;
+  */  
 }
 
 #questionNumberHeader{
