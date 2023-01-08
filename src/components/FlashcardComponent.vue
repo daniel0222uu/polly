@@ -1,12 +1,12 @@
 <template>
 
-  <div class="card"  v-on:click="flip">
-    <div class="card-inner" :class="{flipped: flipped}">
-      <div :style="{'font-size': fontSize + 'px' }" class="card-front">
+  <div class="card"  >
+    <div class="card-inner" v-on:click="flip" :class="{flipped: flipped}">
+      <div :style="{'font-size': adjustingFontSizeQuestion + 'px' }" class="card-front">
         <div >{{questionProp.questionArray[questionPosition]}}</div>
 
     </div>
-    <div :style="{'font-size': fontSize + 'px' }" class="card-back">
+    <div :style="{'font-size': adjustingFontSizeAnswer + 'px' }" class="card-back">
       {{questionProp.answerArray[questionPosition]}}
     </div>
 
@@ -65,87 +65,24 @@ export default {
        return;
      }
       this.flipped = !this.flipped;
-      this.adjustAnswerFontSize();
+    console.log("flip() ran");
     },
     nextClick: function () {
       if (this.questionPosition < this.questionProp.questionArray.length - 1) {
-        this.flipped = false;
-        this.questionPosition++;
-        this.fontSize = 80;
+        setTimeout(() => this.questionPosition++, 500);
+        this.flip();
         this.$emit('nextClick', this.questionPosition);
-        return;
       } else if (this.questionPosition == this.questionProp.questionArray.length - 1) {
         this.$emit('gameFinished');
       }
-    },
-    textAnswer: function () {
-      let answer = this.answerString;
-      let correctAnswer = this.questionProp.answerArray[this.questionPosition - 1];
-      if (this.questionPosition < this.questionProp.questionArray.length) {
-        this.answerButtonBool = true;
-        setTimeout(() => {
-          this.answerButtonBool = false;
-          if (this.questionPosition < this.questionProp.questionArray.length - 1) {
-            this.questionPosition++;
-          }
-        }, 2000);
-        if (this.areStringsSimilar(answer, correctAnswer)) {
-          this.points++;
-        } else {
-          console.log("incorrect");
-        }
-      }
-      return;
-    },
-    areStringsSimilar: function (input, correct) {
-      if (input == "") {
-        return false;
-      }
-      input = input.toLowerCase();
-      correct = correct.toLowerCase();
-      console.log(input);
-      console.log(correct);
-      let numDifferences = 0;
-      for (let i = 0; i < input.length; i++) {
-        if (input[i] !== correct[i]) {
-          numDifferences++;
-        }
-        if (numDifferences > 2) {
-          return false;
-        }
-      }
-      return true;
     },
     previousCLick: function () {
       if (this.questionPosition > 0) {
         this.questionPosition--;
         this.$emit('previousClick', this.questionPosition);
       }
-      this.fontSize = 80;
       this.answerButtonBool = false;
-    },
-    adjustAnswerFontSize: function () {
-      if(this.flipped){
-        console.log("now we should only show the answer")
-        const length = this.questionProp.answerArray[this.questionPosition].length;
-        if (length > 100) {
-          this.fontSize = 20;
-        } else if (length > 50) {
-          this.fontSize = 50;
-        } else if (length > 20) {
-          this.fontSize = 60;
-        } else if (length > 15) {
-          this.fontSize = 70;
-        } else if (length < this.questionProp.questionArray[this.questionPosition].length) {
-          return;
-        } else {
-          this.fontSize = 80;
-        }
-      }
-      if(!this.flipped){
-        setTimeout(() => this.fontSize = 80, 500);
-      }
-    },
+    }
   },
   watch: {
     showAnswer: function () {
@@ -162,6 +99,40 @@ export default {
       console.log("deckLoaded changed, questionPosition is now:", this.questionPosition);
     }
   },
+  computed: {
+    adjustingFontSizeAnswer: function() {
+      const length = this.questionProp.answerArray[this.questionPosition].length;
+      if (length > 100) {
+        return 20;
+      } else if (length > 50) {
+        return 30;
+      } else if (length > 20) {
+        return 40;
+      } else if (length > 15) {
+        return 50;
+      } else if (length < this.questionProp.questionArray[this.questionPosition].length) {
+        return 60;
+      } else {
+        return 70;
+      }
+    },
+    adjustingFontSizeQuestion: function() {
+      const length = this.questionProp.questionArray[this.questionPosition].length;
+      if (length > 100) {
+        return 20;
+      } else if (length > 50) {
+        return 30;
+      } else if (length > 20) {
+        return 40;
+      } else if (length > 15) {
+        return 50;
+      } else if (length < this.questionProp.questionArray[this.questionPosition].length) {
+        return 60;
+      } else {
+        return 70;
+      }
+    }
+  }
 }
 </script>
 
