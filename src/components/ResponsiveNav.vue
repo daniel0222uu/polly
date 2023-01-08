@@ -15,6 +15,7 @@ export default {
 }
 </script>
 <style scoped>
+
   nav {
     
     width:100%;
@@ -28,7 +29,7 @@ export default {
   }
   nav :hover{
     
-    background-color: rgb(37, 188, 211);
+    background-color: rgb(40, 211, 238);
     transform: translateY(1px);
     
    
@@ -46,24 +47,14 @@ export default {
     letter-spacing: 0.1em;
     text-decoration: none;
     color: black;
-    display: grid;
+    display:flex;
     align-items: center;
     justify-content: center;
     margin: 3%;
     border: 2px solid rgb(3, 81, 77);
     background-color: rgb(32, 159, 178);
-    
-    
-    
-    
-    
+
     border-radius: 10px;
-    /*
-    border-left: 10px solid lightblue;
-    border-top: 5px solid lightblue;
-    */
-    
-    
     
   }
 

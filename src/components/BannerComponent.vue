@@ -18,11 +18,12 @@
   <ResponsiveNav v-bind:hideNav="hideNav">
 
    
-    <router-link  v-bind:to="'/mydecks/'+ lang">{{uiLabels.myDecks}}</router-link>
+    <router-link class="hej" v-bind:to="'/mydecks/'+ lang">{{uiLabels.myDecks}}</router-link>
     <router-link  v-bind:to="'/play/'+lang">{{uiLabels.play}}</router-link>
     <router-link  v-bind:to="'/'">{{uiLabels.lobby}}</router-link>
     <router-link  v-bind:to="'/'">{{uiLabels.FAQ}}</router-link>
     <router-link  v-bind:to="'/'">{{uiLabels.settings}}</router-link>
+    
     
     
     <button  v-on:click="switchLanguage">{{uiLabels.changeLanguage}}</button>
@@ -88,6 +89,7 @@ export default {
 
 
 <style scoped>
+
 
 
 
