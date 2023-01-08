@@ -43,10 +43,10 @@
           </button>
         </div>
     <!-- Här visas komponenten FlashcardView -->
-      <div v-if="joinedBoolean">
-        <p><FlashcardView v-bind:questionProp="myObj_deserialized" @nextClick="onClickChild" @previousClick="onClickChild" v-bind:coop-multiplayer="false"
-        v-bind:disable-click="true"></FlashcardView></p>
-        <button id="FinishGame" @click="finishGame()">Done!</button>
+      <div id="flashcardWrapperDiv" v-if="joinedBoolean">
+        <FlashcardView v-bind:questionProp="myObj_deserialized" @nextClick="onClickChild" @previousClick="onClickChild" v-bind:coop-multiplayer="false"
+        v-bind:disable-click="true"></FlashcardView>
+        <!-- <button id="FinishGame" @click="finishGame()">Done!</button> -->
       </div>
 
 
@@ -71,8 +71,8 @@
      <!-- Här visas info när användaren spelat klart och klickat Done -->
 
       <!-- Här visas Active Player listan-->
-      <div id="verticalRight" v-if="expandPlayerList">
-        <ActivePlayersComponent @lobbyCreated="setLobbyCreatedBool" v-bind:player-nick-name="name" v-bind:uniqueLobbyID="lobbyId"
+      <div id="verticalRight" >
+        <ActivePlayersComponent v-if="expandPlayerList" @lobbyCreated="setLobbyCreatedBool" v-bind:player-nick-name="name" v-bind:uniqueLobbyID="lobbyId"
         ></ActivePlayersComponent>
       </div>
 
@@ -239,9 +239,16 @@ export default {
 }
 #horizontalContent{
   flex: 1;
-  overflow: auto;
 }
 #verticalRight{
+  height: 400px;
+  overflow: auto;
+  width: 250px;
+}
+#flashcardWrapperDiv{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #viewAfterGame {

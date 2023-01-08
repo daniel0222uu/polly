@@ -4,14 +4,19 @@
     <div class="card-inner" :class="{flipped: flipped}">
       <div :style="{'font-size': fontSize + 'px' }" class="card-front">
         <div >{{questionProp.questionArray[questionPosition]}}</div>
-        
+
     </div>
     <div :style="{'font-size': fontSize + 'px' }" class="card-back">
       {{questionProp.answerArray[questionPosition]}}
     </div>
 
     </div>
-    
+
+    <div class="buttonDiv" v-if="!coopMultiplayer">
+      <button id="previousButton" @click="previousCLick" class="prevNextButton"> Previous </button>
+      <a style="color:white">{{ questionPosition+1}}/{{questionProp.questionArray.length}}</a>
+      <button id="nextButton" @click="nextClick" class="prevNextButton"> Next </button>
+    </div>
 
   </div>
 
@@ -21,17 +26,7 @@
 
 
 
-    <div class="buttonDiv" v-if="!coopMultiplayer">
 
-      <button id="previousButton" @click="previousCLick" class="prevNextButton"> Previous </button>
-
-      <a style="color:white">{{ questionPosition+1}}/{{questionProp.questionArray.length}}</a>
-      <!--<input form="text" id="formInput" v-model="answerString">-->
-      <button id="nextButton" @click="nextClick" class="prevNextButton"> Next </button>
-      <!--<button id="nextButton" @click="textAnswer" class="prevNextButton"> Answer </button>  testade att skriva
-      funktion som tar in text från input fältet och jämför med svar från arrayen. -->
-      <!--<input type="range" min="10" max="100" v-model="fontSize" class="slider" id="myRange"> -->
-    </div>
 
 
 </template>
@@ -171,14 +166,10 @@ export default {
 </script>
 
 <style scoped>
-
 .card {
   height:400px;
   width: 400px;
-  display: flex;
-  justify-content: center;
   cursor:pointer;
-  align-items: center;
   perspective: 1000px;
 }
 .card-inner {
@@ -218,13 +209,6 @@ export default {
   transform: rotateY(180deg);
   background-color: rgb(74, 91, 205);
 }
-#count{
-  font-size: 30px;
-}
-#formInput{
-  width: 300px;
-  font-size: 24px;
-}
 @keyframes pulse {
   0% {
     transform: scale(1);
@@ -249,13 +233,11 @@ export default {
 }
 .prevNextButton{
   font-size: 10px;
- 
 }
 .buttonDiv{
   display: flex;
-
   justify-content: center;
-  margin-top: 5%;
+  margin-top: 15%;
   margin-left: 5%;
   margin-right: 5%;
   margin-bottom: 5%;

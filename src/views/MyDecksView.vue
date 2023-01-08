@@ -1,6 +1,7 @@
 <template>
  
   <body>
+
   <div id="container">
     <router-link
         to="/create/en"
@@ -42,6 +43,7 @@
     </router-link>
 
   </div>
+
   </body>
 </template>
 
@@ -97,5 +99,9 @@ button {
 
 #shadow:active {
   transform: scale(0.9);
+}
+
+#viewDeckList {
+  border: solid black;
 }
 </style>

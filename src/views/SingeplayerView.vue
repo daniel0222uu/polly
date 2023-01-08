@@ -23,7 +23,7 @@
        <br>
      
        </div>
-    <div >
+    <div  id="centerDiv">
       <FlashcardView  v-bind:questionProp="myObj_deserialized"
                       v-bind:disable-click="clickableFlashcardBool"
                      ref="myChild"> </FlashcardView>
@@ -230,50 +230,10 @@ button {
     visibility: visible;
   }
 }
-
-
-
-
-
-
-/*
-#Likes {
-  padding: 10px 40px;
+#centerDiv{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-
-#Comments{
-  padding: 10px 40px;
-}
-
-
-Popup button
-.popup{
-  width: 400px;
-  background-color: black;
-  position: absolute;
-  top:50%;
-  left: 50%;
-  transform: translate(-50%,-50%);
-  text-align: center;
-  padding: 0 30px 30px;
-}
-
-.popup h2 {
-  font-size: 38px;
-  font-weight: 500;
-  margin: 30px 0 10px;
-}
-
-.popup button{
-  width: 100%;
-  margin-top: 50px;
-  padding: 10px 0;
-  border: 0;
-  outline: none;
-  font-size: 20px;
-  border-radius: 4px;
-  cursor: pointer;
-}*/
-
 
 </style>
