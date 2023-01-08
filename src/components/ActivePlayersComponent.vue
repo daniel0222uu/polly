@@ -11,15 +11,10 @@
     <!-- Här visas Active Player listan-->
   <button @click="seeFriendList">Toggle friendlist</button>
     <div id="verticalRight" v-if="expandPlayerList">
-      <p style="justify-content: left; font-size: 24px; font-weight:bold">Active players</p>
       <ul style="list-style: none">
-        <li><b>{{playerNickName}}</b><br>
-          <button @click="exitPlaying(playerNickName)">Exit game</button><br>
-          <p>--------------</p></li>
-        <li v-for="player in filteredPlayers" v-bind:key="player"> <b>{{player.name}}</b><br>
-          {{player.score}} points out of {{totalQuestionAmount}}<br>
+        <li v-for="player in filteredPlayers" v-bind:key="player">   <b>{{player.name}}</b>
           <button @click="sendRequest(player.name)">Invite</button>
-          <p>--------------</p></li>
+        </li>
       </ul>
     </div>
 
@@ -128,8 +123,8 @@ export default {
 <style scoped>
 #verticalRight{
   width: 250px;
-  background: beige;
   height: 600px;
   overflow: auto;
+  font-size: 12px;
 }
 </style>

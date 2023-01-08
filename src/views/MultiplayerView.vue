@@ -71,8 +71,8 @@
      <!-- Här visas info när användaren spelat klart och klickat Done -->
 
       <!-- Här visas Active Player listan-->
-      <div id="verticalRight" v-if="expandPlayerList">
-        <ActivePlayersComponent @lobbyCreated="setLobbyCreatedBool" v-bind:player-nick-name="name" v-bind:uniqueLobbyID="lobbyId"
+      <div id="verticalRight" >
+        <ActivePlayersComponent v-if="expandPlayerList" @lobbyCreated="setLobbyCreatedBool" v-bind:player-nick-name="name" v-bind:uniqueLobbyID="lobbyId"
         ></ActivePlayersComponent>
       </div>
 
@@ -239,9 +239,11 @@ export default {
 }
 #horizontalContent{
   flex: 1;
-  overflow: auto;
 }
 #verticalRight{
+  height: 400px;
+  overflow: auto;
+  width: 250px;
 }
 #flashcardWrapperDiv{
   display: flex;
