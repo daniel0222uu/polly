@@ -29,7 +29,7 @@ export default {
   }
   nav :hover{
     
-    background-color: rgb(37, 188, 211);
+    background-color: rgb(40, 211, 238);
     transform: translateY(1px);
     
    

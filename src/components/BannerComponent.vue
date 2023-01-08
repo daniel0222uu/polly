@@ -90,21 +90,7 @@ export default {
 
 <style scoped>
 
-button {
-  text-transform: uppercase;
-    font-size: 0.8rem;
-    letter-spacing: 0.1em;
-    text-decoration: none;
-    color: black;
-    display:flex;
-    align-items: center;
-    justify-content: center;
-    margin: 3%;
-    border: 2px solid rgb(3, 81, 77);
-    background-color: rgb(32, 159, 178);
 
-    border-radius: 10px;
-}
 
 
 header {

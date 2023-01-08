@@ -3,6 +3,7 @@
   <body>
 
   <div id="container">
+
     <router-link
         to="/create/en"
         custom
@@ -48,6 +49,7 @@
 </template>
 
 <script>
+
 
 export default {
   name: "MyDecksView",

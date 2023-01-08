@@ -18,15 +18,16 @@
 
 <div class="editView" :class="{active: isActive}">
 <div>
-<header id="questionNumberHeader" > {{deckObject.id}} </header>
+<header id="questionNumberHeader" > <input class=" titleChangeField"   autocomplete="off" id="namingDeckField" type="text" v-model="this.deckObject.id" ></header>
 
 <br>
 
 
 <textarea class="questionEditingFields" id="questionField" placeholder="Question" v-model="questionField"></textarea>
+
 <br>
 <br>
-<textarea style="height:50px" class="questionEditingFields"  id="answerField" placeholder="Answer" v-model="answerField"></textarea>
+<textarea style="height:50px;" class="questionEditingFields"  id="answerField" placeholder="Answer" v-model="answerField"></textarea>
 </div>
 
 
@@ -35,7 +36,7 @@
   <div class="prevAndNextDiv">
     <button @click="previousCLick" class="prevButton"> Previous </button>
 
- <span style="font-size:larger; position: absolute;">{{questionIndex + 1 }} / {{this.deckObject.questionArray.length }}</span>
+ <span style="font-size:x-large; position: absolute;">{{deckIndex + 1 }} / {{this.deckObject.questionArray.length }}</span>
  
  <button @click="nextClick" class="nextButton"> Next </button>
 
@@ -113,7 +114,7 @@ export default {
        pollId: "",
        question: "",
        answers: ["", ""],
-       questionIndex: 0,
+       deckIndex: 0,
        data: {},
        uiLabels: {},
        deckObject: {
@@ -170,7 +171,7 @@ export default {
     },
 
     loadDeck: function () {
-      this.questionIndex = 0;
+      this.deckIndex = 0;
       // if isActive is true and changes has been made, pop up= do you want to save changes before leaving? yes no
       console.log(this.selectedDeck)
 
@@ -178,50 +179,50 @@ export default {
       
       this.deckObject = myObj_deserialized;
       
-      this.answerField = this.deckObject.answerArray[this.questionIndex];
-      this.questionField = this.deckObject.questionArray[this.questionIndex];
-      this.answerField = myObj_deserialized.answerArray[this.questionIndex];
-      this.questionField = myObj_deserialized.questionArray[this.questionIndex];
+      this.answerField = this.deckObject.answerArray[this.deckIndex];
+      this.questionField = this.deckObject.questionArray[this.deckIndex];
+      this.answerField = myObj_deserialized.answerArray[this.deckIndex];
+      this.questionField = myObj_deserialized.questionArray[this.deckIndex];
       this.deckObject = myObj_deserialized;
       this.isActive = true;
       
     },
     previousCLick: function () {
       this.saveCard();
-      if (this.questionIndex != 0) {
-        this.questionIndex -- ;
+      if (this.deckIndex != 0) {
+        this.deckIndex -- ;
       }
-      else if (this.questionIndex == 0) {
+      else if (this.deckIndex == 0) {
         
-        this.questionIndex = this.deckObject.questionArray.length -1;
+        this.deckIndex = this.deckObject.questionArray.length -1;
 
       }
-      this.answerField = this.deckObject.answerArray[this.questionIndex];
-      this.questionField = this.deckObject.questionArray[this.questionIndex];
+      this.answerField = this.deckObject.answerArray[this.deckIndex];
+      this.questionField = this.deckObject.questionArray[this.deckIndex];
       this.addingQuestionBool = false;
     },
     nextClick: function () {
       this.saveCard();
-      if (this.questionIndex < this.deckObject.questionArray.length - 1) {
-        this.questionIndex ++ ;
+      if (this.deckIndex < this.deckObject.questionArray.length - 1) {
+        this.deckIndex ++ ;
       }
-      else if (this.questionIndex == this.deckObject.questionArray.length - 1) {
-        this.questionIndex = 0;
+      else if (this.deckIndex == this.deckObject.questionArray.length - 1) {
+        this.deckIndex = 0;
       }
-      this.answerField = this.deckObject.answerArray[this.questionIndex];
-      this.questionField = this.deckObject.questionArray[this.questionIndex];
+      this.answerField = this.deckObject.answerArray[this.deckIndex];
+      this.questionField = this.deckObject.questionArray[this.deckIndex];
 
     },
     saveCard: function () {
 
-      this.deckObject.questionArray[this.questionIndex] = this.questionField;
-      this.deckObject.answerArray[this.questionIndex] = this.answerField;
+      this.deckObject.questionArray[this.deckIndex] = this.questionField;
+      this.deckObject.answerArray[this.deckIndex] = this.answerField;
       localStorage.setItem(this.deckObject.id, JSON.stringify(this.deckObject));
 
     }, 
     addCard: function () {
       this.saveCard();
-      this.questionIndex = this.deckObject.questionArray.length;
+      this.deckIndex = this.deckObject.questionArray.length;
       this.questionField = "";
       this.answerField = "";
       this.addingQuestionBool = true;
@@ -248,16 +249,16 @@ export default {
         this.deleteDeckMessage();
         return;
       }
-      this.deckObject.questionArray.splice(this.questionIndex , 1);
-      this.deckObject.answerArray.splice(this.questionIndex , 1);
+      this.deckObject.questionArray.splice(this.deckIndex , 1);
+      this.deckObject.answerArray.splice(this.deckIndex , 1);
       localStorage.setItem(this.deckObject.id, JSON.stringify(this.deckObject));
 
-      if (this.questionIndex == this.deckObject.answerArray.length) {
-        this.questionIndex--;
+      if (this.deckIndex == this.deckObject.answerArray.length) {
+        this.deckIndex--;
 
       }
-      this.questionField = this.deckObject.questionArray[this.questionIndex];
-      this.answerField = this.deckObject.answerArray[this.questionIndex];
+      this.questionField = this.deckObject.questionArray[this.deckIndex];
+      this.answerField = this.deckObject.answerArray[this.deckIndex];
       
 
 
@@ -288,6 +289,14 @@ export default {
 
 
 <style scoped>
+select {
+  width: 200px;
+  height: 30px;
+  border: 2px solid black;
+  border-radius:5px;
+
+}
+
 
 
 nav {
@@ -304,12 +313,12 @@ nav {
     
   }
 .buttonNav {
+    color: white;
     user-select: none;
     text-transform: uppercase;
     font-size: 0.8rem;
     letter-spacing: 0.1em;
     text-decoration: none;
-    color: black;
     display:flex;
     align-items: center;
     justify-content: center;
@@ -318,10 +327,9 @@ nav {
     background-color: rgb(32, 90, 178);
     cursor: pointer;
     border-radius: 10px;
-  border: 2px solid #000;
-  
-  background-color: #fec89a;
-  transition: box-shadow 300ms ease, transform 500ms ease;
+    border: 2px solid #000;
+    background-color: rgb(32, 90, 178);
+    transition: box-shadow 300ms ease, transform 500ms ease;
     
     
 
@@ -343,16 +351,14 @@ transform: translateY(-10px);
   user-select: none;
   cursor: pointer;
   border-radius: 5px;
-  border: 1px solid gray;
+  border: 1px solid black;
   font-Size: 16px;
-  width:100px;
-  margin:30px;
+  width:110px;
+  margin:35px;
   height: 40px;
+  background-color: rgb(32, 159, 178);
 }
-.prevButton:hover, .nextButton:hover{
-  
-background-color: lightgray;
-}
+
 .prevButton:active {
 transform: translateX(-2px);
 }
@@ -413,23 +419,46 @@ transform: translateX(-2px);
 .active {
   display: block;
 }
+.titleChangeField {
+  background: transparent;
+  font-size: xx-large;
+  
+ 
+  
 
-.questionEditingFields{
-  font-size: 14px;
+}
+.questionEditingFields, .titleChangeField{
+  
+ 
+  border:none;
   text-align: center;
+  
   width:300px;
   /*
   background: transparent;
   border: none;
   */  
 }
+.questionEditingFields {
+  background-color: rgba(235, 251, 255, 0.836);
+  font-size: larger;
+
+}
+
+.questionEditingFields:focus::placeholder {
+  color: transparent;
+  
+}
 
 #questionNumberHeader{
   font-size: 24px;
   text-align: center;
+  margin-top:10px;
+  
 }
 
 @media screen and (max-width:50em) {
+  
   button {
     height: 40px;
    
@@ -437,7 +466,7 @@ transform: translateX(-2px);
   }
  
   nav {
-    margin:10px;
+    margin:10px; 
     position: relative;
     height:100vh;
     top: 3em;
@@ -447,9 +476,11 @@ transform: translateX(-2px);
     grid-template-rows: repeat(auto-fit, 3em);
     transition: 1.5s;
   }
+  
   nav ::v-slotted(a) {
     justify-content: left;
     padding-left: none;
+
     
     
     
@@ -461,10 +492,25 @@ transform: translateX(-2px);
   
 }
 
+
   .hide {
     left: 0;
   }
 }
+
+@media screen and (max-width:20em) {
+  nav {
+    position: absolute;
+    top:65%;
+    transition: 0.1s;
+  }
+  .editPage{
+    
+    overflow: hidden;
+  }
+
+}
+
 
 
 
