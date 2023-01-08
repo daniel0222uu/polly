@@ -1,19 +1,36 @@
 <template>
+  <!--
   <h1>Welcome to Flashcards!</h1>
   <label> 
     Write poll id: 
     <input type="text" v-model="id">
   </label>
-  
-  <br><br><br>
+  -->
 
-  <div>
-    <table class="center" style="width:250px; font-family:Kanit;font-size:26px;padding:10px">
-      <tr><img src="http://localhost:8080/img/score-icon-21.jpeg" width="100" height="100"></tr>
+  <br><br>
+
+  <!-- Div för att layout av startsidan -->
+  <div id="startWrapper">
+
+    <!-- Här visas puff för Flashcard -->
+    <div id="infoFlashcard">
+
+      <p style="font-size:24px;font-weight:bold">Welcome to Flashcard!</p>
+      <p>"The world's most award-winning quiz game."</p>
+      <p>Here you can challenge yourself and other players in quiz games.</p>
+      <p>Flashcard now also includes functionality that lets you create your own decks of flashcards.</p>
+      <p>Good luck!</p>
+
+    </div>
+
+    <!-- Här presenteras Leaderboard -->
+    <div id="viewLeaderboard" class="center">
+    <table class="center" style="width:300px; font-family:Kanit;font-size:26px;padding:10px">
       <tr> <marquee direction="right" behavior="scroll">L E A D E R B O A R D</marquee></tr>
+      <tr><img src="http://localhost:8080/img/score-icon-21.jpeg" width="100" height="100"></tr>
     </table>
    
-      <table class="center" style="width:250px; border: 5px solid black;border-radius: 10px;font-family: Kanit;font-size:20px;background-color: white;padding:10px">
+      <table class="center" style="width:300px; border: 5px solid black;border-radius: 10px;font-family: Kanit;font-size:20px;background-color: white;padding:10px">
         <tr>
           <th style="width: 70%;text-align: left" >Name</th>
           <th style="width: 30%;text-align: right">Score</th>
@@ -24,14 +41,15 @@
         </tr>
       </table>
         
-  </div>
+    </div>
 
+  </div>
+<!-- Här slutar div för startsidan -->
 
 </template>
 
 <script>
 import Decks from "../assetts/Decks.json";
-
 import Scores from "../assetts/Scores.json";
 
 
@@ -80,7 +98,38 @@ export default {
   }
 
 </script>
+
 <style scoped>
+
+
+#startWrapper {
+  width: 100%;
+  float: left;
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  margin: 10px;
+}
+
+#infoFlashcard {
+  width: 40%;
+  background-color: white;
+  border-radius: 10px;
+  padding: 30px;
+  font-family: Kanit;
+  font-size: 20px;
+  text-align: left;
+  margin-left: 30px;
+}
+
+#viewLeaderbord {
+  width: 60%;
+  text-align: center;
+  justify-content: center;
+}
+
+
 @import url('https://fonts.googleapis.com/css2?family=Island+Moments&family=Kanit:ital,wght@1,300&family=Mukta:wght@200&display=swap');
   /*header {
     background-color: gray;
