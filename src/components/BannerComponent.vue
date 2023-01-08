@@ -17,16 +17,14 @@
   </header>
   <ResponsiveNav v-bind:hideNav="hideNav">
 
-   
-    <router-link class="hej" v-bind:to="'/mydecks/'+ lang">{{uiLabels.myDecks}}</router-link>
+    <router-link  v-bind:to="'/'">Home</router-link>
+    <router-link  v-bind:to="'/mydecks/'+ lang">{{uiLabels.myDecks}}</router-link>
     <router-link  v-bind:to="'/play/'+lang">{{uiLabels.play}}</router-link>
-    <router-link  v-bind:to="'/'">{{uiLabels.lobby}}</router-link>
-    <router-link  v-bind:to="'/'">{{uiLabels.FAQ}}</router-link>
-    <router-link  v-bind:to="'/'">{{uiLabels.settings}}</router-link>
+    <router-link  v-bind:to="'/leaderboard/'">Leaderboard</router-link>
     
     
     
-    <button  v-on:click="switchLanguage">{{uiLabels.changeLanguage}}</button>
+    <div style=" height: 30px; width:40px" v-on:click="switchLanguage"><img style="width:100%; height:100%" src="https://upload.wikimedia.org/wikipedia/en/thumb/4/4c/Flag_of_Sweden.svg/383px-Flag_of_Sweden.svg.png"/></div>
     
     
   </ResponsiveNav>
@@ -90,7 +88,8 @@ export default {
 
 <style scoped>
 
-
+button {
+}
 
 
 header {
