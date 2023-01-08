@@ -3,7 +3,7 @@
   <body>
   <div id="container">
     <router-link
-        to="/result/en"
+        to="/singleplayer/en"
         custom
         v-slot="{ navigate }"
     >

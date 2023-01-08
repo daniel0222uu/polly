@@ -105,6 +105,10 @@ export default {
           this.invitationList = listToFill;
         }
       }
+    },
+    lobbyViewEntered: function(){
+        this.expandPlayerList = false;
+        console.log("lobbyViewEntered is", this.lobbyViewEntered)
     }
   },
   mounted() {
@@ -117,7 +121,7 @@ export default {
     filteredPlayers: function () {
       return this.players.filter(player => player.name != this.playerNickName);
     },
-  }
+  },
 }
 </script>
 
