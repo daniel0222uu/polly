@@ -31,6 +31,7 @@
     <img style="width: 37px; height: 37px; " src="http://localhost:8080/img/uppladdningsIkon2.png" >  </button>
 
   </div>
+  </div>
 </template>
 
 <script>
