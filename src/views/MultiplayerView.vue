@@ -43,7 +43,15 @@
           <button id = "likeButton" v-on:click="likeDeck(questionObject.id)">
             <img src="https://freesvg.org/img/Thumbs-Up-Silhouette.png" style="width: 30px; height: 30px;"/>
           </button>
+          <button v-on:click="seeCommentsBool=!seeCommentsBool"> <img src="http://localhost:8080/img/commentIcon.png" style="width: 30px; height: 30px;"/> </button>
         </div>
+        <div v-if="seeCommentsBool">
+          <input v-model="hintString"> <button @click="commentDeck(questionObject.id,hintString)" > Leave hint</button>
+        </div>
+
+
+
+
     <!-- Här visas komponenten FlashcardView -->
       <div id="flashcardWrapperDiv" v-if="joinedBoolean">
         <FlashcardView v-bind:questionProp="myObj_deserialized" @nextClick="onClickChild" @previousClick="onClickChild" v-bind:coop-multiplayer="false"
@@ -136,9 +144,8 @@ export default {
       gameFinishedBoolean: false,
       lobbyCreatedBool: false,
       expandPlayerList: true,
-
-      //buttons: 0,
-
+      hintString: "",
+      seeCommentsBool: false,
       selectorList: idListFromAllDecks
     }
   },
@@ -192,11 +199,31 @@ export default {
         },
         // Function for the like button
         async likeDeck (deckToLike) {
-          console.log("Number of likes:");
           console.log(deckToLike);
           try {
             const response = await axios.post('http://localhost:8080/likeDeck ', {
               data: deckToLike,
+              headers:{
+                'Content-Type': 'application/json'
+              },
+            });
+            console.log(response.data);
+          } catch (error) {
+            console.error(error);
+          }
+        },
+        async commentDeck (deckToComment, commentToSend) {
+          let objectToAppend = {
+            name: this.name,
+            hint: commentToSend,
+            questionPosition: this.questionPosition,
+            likes: 0,
+          };
+          console.log("the object to append is: ", objectToAppend);
+          try {
+            const response = await axios.post('http://localhost:8080/commentDeck ', {
+              data: deckToComment,
+              comment: objectToAppend,
               headers:{
                 'Content-Type': 'application/json'
               },

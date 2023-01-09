@@ -34,11 +34,33 @@ app.post('/likeDeck', (req, res) => { //axios test reveiver
     let jsonOfTheFile = JSON.parse(file);
     for(let deck of jsonOfTheFile){
         if(deck.id == data.data){
-            console.log("found the deck,",deck);
+            console.log("found the deck,",deck.id);
             deck.likes++;
         }
     }
     fs.writeFileSync("src/assetts/Decks.json", JSON.stringify(jsonOfTheFile)); //problem att servern laddar om man
+    //kör detta, men så ska det inte ens vara egentligen. Filen ändras och sparas i NODE.js så
+    // det är därför den blir som den blir
+
+
+
+    res.send({ message: 'Data received' });
+});
+
+app.post('/commentDeck', (req, res) => { //axios test reveiver
+    const data = req.body;
+
+    const file = fs.readFileSync("src/assetts/Decks.json");
+    console.log("the deck i want to comment is",data.data);
+    console.log("the comment is",data.comment);
+    let jsonOfTheFile = JSON.parse(file);
+    for(let deck of jsonOfTheFile){
+        if(deck.id == data.data){
+            console.log("found the deck,",deck.id);
+            deck.hints.push(data.comment);
+        }
+    }
+   fs.writeFileSync("src/assetts/Decks.json", JSON.stringify(jsonOfTheFile)); //problem att servern laddar om man
     //kör detta, men så ska det inte ens vara egentligen. Filen ändras och sparas i NODE.js så
     // det är därför den blir som den blir
 
