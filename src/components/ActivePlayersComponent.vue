@@ -1,13 +1,25 @@
 <template>
-  <button @click="expandPlayerList=!expandPlayerList"> Toggle</button>
-    <div id="verticalRight" v-if="expandPlayerList">
-      <p style="font-size: 16px; font-weight: bold"> Active players</p>
-      <ul style="list-style: none">
+
+
+  <div id="toggleActivePlayer"  >
+    <div>
+      <span> Active players</span>
+    </div>
+    <div>
+      <button id="toggleButton" @click="expandPlayerList=!expandPlayerList">
+      <img style="width: 40px; height: 30px;"
+           src="http://localhost:8080/img/showActivePlayers.png">
+      </button>
+    </div>
+  </div>
+
+  <div id="verticalRight" v-if="expandPlayerList">
+      <ul id="playerList">
         <li v-for="player in filteredPlayers" v-bind:key="player">   <b>{{player.name}}</b>
           <button v-if="lobbyCreatedBool" @click="sendRequest(player.name)">Invite</button>
         </li>
       </ul>
-    </div>
+  </div>
 </template>
 
 <script>
@@ -106,8 +118,22 @@ export default {
   width: 250px;
   height: 600px;
   overflow: auto;
-  font-size: 12px;
+  font-size: 18px;
+  text-align: start;
 }
 #toggleActivePlayer{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+}
+#toggleButton{
+  background-color: ;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+}
+#playerList{
+  list-style: georgian inside;
 }
 </style>

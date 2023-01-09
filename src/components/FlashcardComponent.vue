@@ -70,7 +70,9 @@ export default {
     nextClick: function () {
       if (this.questionPosition < this.questionProp.questionArray.length - 1) {
         setTimeout(() => this.questionPosition++, 500);
-        this.flip();
+        if(this.flipped==true){
+          this.flipped = !this.flipped;
+        }
         this.$emit('nextClick', this.questionPosition);
       } else if (this.questionPosition == this.questionProp.questionArray.length - 1) {
         this.$emit('gameFinished');
@@ -250,5 +252,13 @@ transform: translateX(-2px);
   100% {
     opacity: 1;
   }
+}
+#previousButton {
+  animation: flash 1s fade;
+  margin-right: 20px;
+}
+#nextButton {
+  animation: flash 1s fade;
+  margin-left: 20px;
 }
 </style>

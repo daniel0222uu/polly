@@ -11,9 +11,6 @@ function Data() {
   setInterval( () => {
     this.currentCheck = Date.now();
   }, 3000);
-  setInterval( () => {
-    console.log("active lobbies", this.activeLobbies);
-  }, 4000);
 }
 
 /***********************************************

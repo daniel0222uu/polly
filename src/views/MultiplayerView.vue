@@ -274,7 +274,6 @@ export default {
 }
 #verticalRight{
   height: 400px;
-  overflow: auto;
   width: 250px;
 }
 #flashcardWrapperDiv{
