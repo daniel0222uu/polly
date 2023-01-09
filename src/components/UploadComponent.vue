@@ -1,8 +1,36 @@
 <template>
-  <div>
-  <button @click="testAxiosPost(uploadingObject)">Test axios POST</button>
+  <div  class="uploadTemplate">
+    <br> <br>
+    
+
+    <div class="uploadedDeckList">
+      <h3>Uploaded decks: </h3>
+  <ol>
+      <li  v-for="deck in this.uploadedDeckList" :key="deck">{{ deck }}</li>
+    </ol>
+
+</div>
+
+    <div class="uploadSelector">
+     
+    <select  name="decks" required v-model="selectedDeck" @change="loadDeck(this.selectedDeck)" >
+      <option value="" disabled selected hidden>Pick a deck to upload</option>
+      <option id="deckSelector" v-for="deck in selectorList" v-bind:key="deck">{{deck}}</option>
+    </select>
+  </div>
+
+  <div class="uploadButton">
+  <button class="buttonNav" @click="testAxiosPost(), uploadDeck()">Upload deck:  <h5>{{ this.deckToUpload.id }}</h5></button>
+<br>
+  </div>
+  
+
+   
 
   </div>
+
+   
+  
 </template>
 
 <script>
@@ -13,17 +41,43 @@ import axios from 'axios';
 
 export default {
   name: "UploadComponent",
-  props: ['uploadingObject'],
+
   data: function(){
     return {
-      testing: {}
+      uploadingObject: {
+        id:"",
+        questionArray:[],
+        answerArray:[],
+        likes: 0},
+      uploadedDeckList:["Nordens Huvudstäder", "Historia", "bilar","databasteknik"],
+      testing: {},
+      selectedDeck: "",
+      selectorList: [],
+      deckToUpload: {},
     }
   },
+  created(){
+      for (var i =0, len = localStorage.length; i< len; ++i )
+      {
+        this.selectorList.push(localStorage.key(i));
+      }
+  },
   methods: {
-    async testAxiosPost(sendDeckToServer) {
+    uploadDeck: function() {
+      this.uploadedDeckList.push(this.selectedDeck)
+
+    },
+
+    loadDeck: function (deck) {
+      
+      this.deckToUpload = JSON.parse(localStorage.getItem(deck));
+      
+    },
+
+    async testAxiosPost() {
       try {
         const response = await axios.post('http://localhost:8080/fileTest ', {
-          data: sendDeckToServer,
+          data: this.deckToUpload,
           headers:{
             'Content-Type': 'application/json'
           },
@@ -38,5 +92,125 @@ export default {
 </script>
 
 <style scoped>
+select {
+  
+  width:200px;
+}
+option {
+  
+}
+ol {
+  padding-left:60px;
+  list-style-type: upper-roman;
+  
+  border: 4px ridge   rgb(32, 90, 178);
+  font-size: 20px;
+  
+  
+  overflow: hidden;
+  
+ 
+  
+}
+.uploadTemplate {
+ 
+  margin-left:10%;
+  height: auto;
+  justify-content: left;
+  margin-right:10%;
+  display: grid;
+  grid-template-columns: repeat(3, auto-fit);
+  grid-template-rows: repeat(3, auto);
+ 
+  
+ 
+}
+.uploadSelector {
+  margin-top: 50px;
+  margin-left:100px;
+  
+  grid-column: 2;
+  
+}
+.uploadButton {
+  grid-column: 3;
+  margin-left:100px;
+
+  
+  
+  
+}
+.uploadedDeckList {
+  width:400px;
+  grid-column: 1;
+ 
+}
+
+.buttonNav {
+  
+  
+  font-family: 'Kanit', sans-serif;
+  font-size: 16px;
+ 
+    height: 100px;
+    width:220px;
+   
+    user-select: none;
+    text-transform: uppercase;
+    
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin: 3%;
+    border: 2px solid black;
+    background-color: #fec89a;
+    cursor: pointer;
+    border-radius: 10px;
+    border: 2px solid #000;
+ 
+    transition: box-shadow 300ms ease, transform 300ms ease;
+    
+    
+
+    border-radius: 10px;
+}
+
+.buttonNav:hover{
+
+
+
+
+transform: translateY(-3px);
+
+}
+.buttonNav:active{
+  transform: translateY(10px);
+}
+
+@media screen and (max-width:72em) {
+  .uploadButton {
+    grid-column: 2;
+  }
+
+}
+@media screen and (max-width:51em) {
+  .uploadTemplate {
+    justify-content: center;
+  }
+  .uploadedDeckList{
+    grid-column: 2;
+    grid-row:3;
+  }
+  .uploadButton {
+    grid-row: 2;
+  }
+  .uploadSelector {
+    margin-left:20px;
+  }
+}
+
 
 </style>
