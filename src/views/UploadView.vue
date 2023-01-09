@@ -1,30 +1,47 @@
 <template>
-  <body>
-  <div id="selector">
-    <select  name="decks" required v-model="selectedDeck" @change="loadDeck(this.selectedDeck)" >
-      <option value="" disabled selected hidden></option>
-      <option id="deckSelector" v-for="deck in selectorList" v-bind:key="deck">{{deck}}</option>
-    </select>
+
+
+  <div id="wrapperDiv" >
+
+    <div id="uploadDiv">
+      <div id="selector">
+        <select  name="decks" required v-model="selectedDeck" @change="loadDeck(this.selectedDeck)" >
+          <option value="" disabled selected hidden></option>
+          <option id="deckSelector" v-for="deck in selectorList" v-bind:key="deck">{{deck}}</option>
+        </select>
+      </div>
+
+      <div>
+      <upload-component v-bind:uploading-object="deckToAxios"
+                        @upload-sucessful="successfulUpload"
+      ></upload-component>
+      </div>
+
+    </div>
+
+    <div id="confirmationDiv">
+      <warning-message v-bind:upload-successful="uploadSuccessfulBool"></warning-message>
+    </div>
+
+
   </div>
-  <div>
-    container div
-  </div>
-  <div>
-    <upload-component v-bind:uploading-object="deckToAxios" ></upload-component>
-  </div>
-  </body>
+
+
+
 </template>
 
 <script>
 
 import UploadComponent from "@/components/UploadComponent";
+import WarningMessage from "@/components/WarningMessage";
 
 
 
 export default {
   name: "UploadView",
   components: {
-    UploadComponent
+    UploadComponent,
+    WarningMessage
   },
   data: function(){
     return{
@@ -35,7 +52,10 @@ export default {
         id:"",
         questionArray:[],
         answerArray:[],
-        likes: 0}
+        likes: 0,
+        hints: []
+      },
+      uploadSuccessfulBool: false,
     }
   },
   created(){
@@ -53,11 +73,59 @@ export default {
       this.deckToAxios.questionArray = this.deckToUpload.questionArray;
       this.deckToAxios.answerArray = this.deckToUpload.answerArray;
     },
+    successfulUpload : function(){
+      this.uploadSuccessfulBool = true;
+      setTimeout(() => this.uploadSuccessfulBool=false, 3000);
+    }
   }
 
 }
 </script>
 
 <style scoped>
+
+#wrapperDiv{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#uploadDiv{
+  display: flex;
+  width: 300px;
+  flex-direction: row;
+  height: 120px;
+  justify-content: space-evenly;
+  align-items: center;
+}
+#confirmationDiv{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+select {
+  padding: 1em;
+  width: 100%;
+  border-radius: .2em;
+  border: 1px solid #acacac;
+  color: black;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+
+  background: url('https://cdn1.iconfinder.com/data/icons/arrows-vol-1-4/24/dropdown_arrow-512.png');
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-size: 15px 15px;
+  background-position: right;
+  background-origin: content-box;
+}
+#selector{
+  font-family: 'Nunito', sans-serif;
+  font-size: 16px;
+  width: 200px;
+
+}
 
 </style>

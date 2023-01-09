@@ -1,100 +1,49 @@
 
-
-
-
-
-
-<!--
-
-  Denna commponent används inte längre i createView. Behövs den fortfarande?
-
-
--->
-
-
-
-
-
-
-
-
-
-
-
-
 <template>
-  
-  <div class="positionWarning" id="deckNameWarning" v-if="deckAlert">
-    <p class="text">Please enter a name to continue</p>
-  </div>
-  
-<!--
-
-<transition name="fade">
-  <div class="positionWarning" id="deckNameWarning" v-if="questionFieldAlert">
-    <p class="text">NO EMPTY FIELDS</p>
-  </div>
-  </transition>
-
   <transition name="fade">
-    <div class="positionConfirmation" id="addedConfirmation" v-if="questionWasAdded">
-      <p class="text"> YOU ADDED A QUESTION</p>
+    <div class="positionConfirmation" id="DeckLiked" v-if="uploadSuccessful">
+      <div class="text">
+         Successful upload!
+      </div>
+      <div>
+        <iframe src="https://giphy.com/embed/kwcRp24Wz4lZm" width="60" height="60" frameBorder="0"
+                class="giphy-embed" allowFullScreen></iframe>
+      </div>
     </div>
   </transition>
-
- Popup för likes och användarkommentarer på decks
-
-  <transition name="fade">
-    <div class="positionConfirmation" id="DeckLiked" v-if="DeckWasLiked">
-      <p class="text"> Thank you for liking this deck!</p>
-    </div>
-  </transition>
-
--->
   
 </template>
 
 <script>
 export default {
   name: "WarningMessage",
-  props: ['deckAlert', 'questionFieldAlert', 'questionWasAdded','DeckWasLiked'],
+  props: ['deckAlert', 'questionFieldAlert', 'questionWasAdded','uploadSuccessful'],
+  watch: {
+    uploadSuccessful: function(){
+      console.log("uploadSuccessful är nu: ", this.uploadSuccessful);
+    }
+  }
 }
 </script>
 
 <style scoped>
-
-.positionWarning{
-  
- 
-  z-index: 9;
-  position: fixed;
-
-  right: 20px;
-  background-color: red;
-  width: 300px;
-  height: 150px;
-}
 .positionConfirmation{
   display: flex;
-  z-index: 9;
-  position: fixed;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
   top: 150px;
   left: 20px;
   background-color: mediumspringgreen;
   width: 300px;
-  height: 30px;
-  justify-content: center;
-}
-#deckNameWarning{
-  
-  border: 1px solid;
-  
+  height: 80px;
+  border-radius: 20px;
 }
 .text{
-  text-align: center;
+  font-weight: bold;
+  font-family: 'Kanit', sans-serif;
+  font-size: 20px;
 }
-
-/*
 .fade-enter-from {
   opacity: 0;
 }
@@ -102,7 +51,7 @@ export default {
   opacity: 1;
 }
 .fade-enter-active{
-  transition: all 2s ease;
+  transition: all 4s ease;
 }
 .fade-leave-from{
   opacity: 1;
@@ -111,8 +60,7 @@ export default {
   opacity: 0;
 }
 .fade-leave-active{
-  transition: all 0.5s ease;
+  transition: all 2s ease;
 }
-*/
 
 </style>

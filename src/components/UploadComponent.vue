@@ -1,6 +1,7 @@
 <template>
   <div>
-  <button @click="testAxiosPost(uploadingObject)">Test axios POST</button>
+  <button @click="testAxiosPost(uploadingObject)">
+    <img style="width: 37px; height: 37px; " src="http://localhost:8080/img/uppladdningsIkon2.png" >  </button>
 
   </div>
 </template>
@@ -29,6 +30,7 @@ export default {
           },
         });
         console.log(response.data);
+        this.$emit('uploadSucessful');
       } catch (error) {
         console.error(error);
       }
