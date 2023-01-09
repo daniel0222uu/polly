@@ -133,6 +133,7 @@ export default {
       questionPosition: 0,
       totalQuestionAmount: 5,
       players: [],
+      inviteWatcher: 0,
       inviteInformation: [],
       joinedBoolean: false,
       myObj_deserialized: {},
@@ -157,7 +158,7 @@ export default {
     });
     setInterval( () => {
       socket.emit("playerActive", {name: this.name, activityStamp: Date.now()});
-    }, 3000);
+    }, 1000);
     },
   methods:
       {
@@ -236,7 +237,7 @@ export default {
       },
 
   watch: {
-    inviteInformation: function(){
+    inviteWatcher: function(){
       console.log("inviteInformation is", this.inviteInformation)
       let listToFill = [];
       for (let i = 0, l = this.inviteInformation.length; i < l; i++) {
@@ -253,7 +254,8 @@ export default {
   mounted() {
     this.socket = io();
     this.socket.on('requestReceive',inviteInformation => {
-      this.inviteInformation = inviteInformation;
+      this.inviteInformation.push(inviteInformation);
+      this.inviteWatcher++;
     });
   },
 }

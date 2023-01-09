@@ -72,7 +72,7 @@ function sockets(io, socket, data) {
     console.log("playRequest received:", objectToSend);
     data.appendInviteList(objectToSend);
     //socket.emit('requestReceive', data.getInviteList());
-    io.emit('requestReceive', data.getInviteList());
+    io.emit('requestReceive', objectToSend);
   });
 
   socket.on('lobbyObject', function(d) {

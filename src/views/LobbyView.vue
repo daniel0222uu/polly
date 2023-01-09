@@ -1,18 +1,22 @@
   <template>
-
-
+    Im playing as {{name}}
     <div id="wholeScreen">
       <progress-bar-component v-bind:progress="trueCountProgress"></progress-bar-component>
       {{trueCount}} out of {{trueValuesNeeded}} wants to see the question
       <div id="playersActive">
       </div>
+   <!--   <div>
+        <ul style="list-style: none">
+          <li v-for="invite in invitationList" v-bind:key="invite"> {{invite.requester}} Invites you to play {{invite.lobbyID}}
+            <join-lobby-component v-bind:lobby-id="invite.lobbyID" v-bind:name="name" v-bind:lobby-created="lobbyCreated" ></join-lobby-component>
+          </li>
+        </ul>
+      </div> -->
     <div id="wrapperDiv">
 
       <div id="leftVertical">
-        Players in lobby: <span v-for="player in players" v-bind:key="player" > {{player}} ,  </span>
+        <span v-for="player in players" v-bind:key="player" > {{player}} ,  </span>
         <div>
-
-
           <p> Chat</p>
           <textarea id="chatWindow" readonly  v-model="messages">
         </textarea>
@@ -20,7 +24,6 @@
             <input v-model="newMessage"/>
             <button @click="sendMessage(newMessage)">Send</button></p>
         </div>
-
       </div>
 
       <div id="middleContent">
@@ -51,7 +54,7 @@
 
 
         <ActivePlayersComponent v-bind:player-nick-name="name" v-bind:uniqueLobbyID="pollId"
-                                v-bind:lobby-created-bool="lobbyCreatedBool"
+                                v-bind:lobby-created-bool="inLobbyBool"
         ></ActivePlayersComponent>
 
       </div>
@@ -79,6 +82,7 @@
 import io from 'socket.io-client';
 import FlashcardComponent from "@/components/FlashcardComponent";
 import ActivePlayersComponent from "@/components/ActivePlayersComponent";
+//import JoinLobbyComponent from "@/components/JoinLobbyComponent";
 import Decks from "@/assetts/Decks.json";
 import ProgressBarComponent from "@/components/ProgressBarComponent";
 const socket = io();
@@ -91,11 +95,12 @@ export default {
   components: {
     FlashcardComponent,
     ActivePlayersComponent,
-    ProgressBarComponent
+    ProgressBarComponent,
+    //JoinLobbyComponent
   },
   data: function () {
     return {
-      lobbyCreatedBool: true,
+      inLobbyBool: false,
       name: "",
       haveReceivedName: false,
       pollId: "inactive poll",
@@ -120,6 +125,9 @@ export default {
       showPressToSeeQuestion: false,
       seeFlashcardBool: false,
       clickableFlashcardBool: false,
+      inviteInformation: [],
+      invitationList: [],
+      inviteWatcher: 0,
     }
   },
   created: function () {
@@ -207,6 +215,13 @@ export default {
         console.log("sendMessage ran");
     }
   },
+  mounted() {
+    this.socket = io();
+    this.socket.on('requestReceive',inviteInformation => {
+      this.inviteInformation.push(inviteInformation);
+      this.inviteWatcher++;
+    });
+  },
   watch: {
     trueCount: function () {
       console.log("trueCount has changed");
@@ -216,6 +231,19 @@ export default {
       }
       if (this.trueCount === 0) {
         this.swapSides = false;
+      }
+    },
+    inviteWatcher: function(){
+      console.log("inviteInformation is", this.inviteInformation)
+      let listToFill = [];
+      for (let i = 0, l = this.inviteInformation.length; i < l; i++) {
+        let inviteInfo = this.inviteInformation[i];
+        if(inviteInfo.receiver === this.name){
+          console.log("receiver is me and im invited by ", inviteInfo.requester,
+              "the lobby created is",inviteInfo.lobbyID);
+          listToFill.push(inviteInfo);
+          this.invitationList = listToFill;
+        }
       }
     },
     suggestedDecksChanged: function () { //välidgt dåligt att göra såhär men jag behöver ett värde som uppdateras när suggestedDecks uppdateras
