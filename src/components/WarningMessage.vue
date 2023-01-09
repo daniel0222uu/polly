@@ -10,14 +10,29 @@
                 class="giphy-embed" allowFullScreen></iframe>
       </div>
     </div>
-  </transition>
+    </transition>
+
+    <transition name="fade">
+      <div class="positionConfirmation" v-if="badString">
+        <div class="text">
+          <p>
+            Your deck name has too many spaces somewhere.
+          </p>
+        </div>
+        <div>
+          <iframe src="https://giphy.com/embed/TBCqBLOxH8djXe8ztd" width="50" height="80" frameBorder="0"
+                  class="giphy-embed" allowFullScreen></iframe>
+
+        </div>
+      </div>
+    </transition>
   
 </template>
 
 <script>
 export default {
   name: "WarningMessage",
-  props: ['deckAlert', 'questionFieldAlert', 'questionWasAdded','uploadSuccessful'],
+  props: ['deckAlert', 'questionFieldAlert', 'questionWasAdded','uploadSuccessful','badString'],
   watch: {
     uploadSuccessful: function(){
       console.log("uploadSuccessful är nu: ", this.uploadSuccessful);
