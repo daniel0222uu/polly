@@ -10,7 +10,10 @@ function Data() {
   this.activeLobbies = [];
   setInterval( () => {
     this.currentCheck = Date.now();
-  }, 5000);
+  }, 3000);
+  setInterval( () => {
+    console.log("active lobbies", this.activeLobbies);
+  }, 4000);
 }
 
 /***********************************************

@@ -113,14 +113,6 @@ export default {
 .notActive {
 display: none;
 }
-.active {
-  display: block;
-}
-#choosingParagraph{
-  text-align: center;
-  position: relative;
-  font-size: 24px;
-}
 
 select {
   
@@ -129,17 +121,15 @@ select {
   border-radius: .2em;
   border: 1px solid #acacac;
   color: black;
-  
-  
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
   -ms-appearance: none;
 
-  background: url('https://cdn1.iconfinder.com/data/icons/arrows-vol-1-4/24/dropdown_arrow-512.png'); 
+  background: url('https://cdn1.iconfinder.com/data/icons/arrows-vol-1-4/24/dropdown_arrow-512.png');
   background-color: transparent;
-  background-repeat: no-repeat; 
-  background-size: 15px 15px; 
+  background-repeat: no-repeat;
+  background-size: 15px 15px;
   background-position: right;
   background-origin: content-box;
 }
@@ -177,10 +167,6 @@ header {
   
   width: 200px;
   top: 0;
-  
-  
-  
- 
   
 }
 

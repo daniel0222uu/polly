@@ -1,45 +1,24 @@
 <template>
-  <body>
-  <br>
-  <div>
-    <ul style="list-style: none">
-      <li v-for="invite in invitationList" v-bind:key="invite"> {{invite.requester}} Invites you to play {{invite.lobbyID}}
-        <join-lobby-component v-bind:lobby-id="invite.lobbyID" v-bind:name="playerNickName" ></join-lobby-component>
-      </li>
-    </ul>
-  </div>
-    <!-- Här visas Active Player listan-->
-  <p>
-    <span> Players online</span> <button id="toggleActivePlayer" @click="seeFriendList"> Toggle</button>
-  </p>
+  <button @click="expandPlayerList=!expandPlayerList"> Toggle</button>
     <div id="verticalRight" v-if="expandPlayerList">
       <p style="font-size: 16px; font-weight: bold"> Active players</p>
       <ul style="list-style: none">
         <li v-for="player in filteredPlayers" v-bind:key="player">   <b>{{player.name}}</b>
-          <button @click="sendRequest(player.name)">Invite</button>
+          <button v-if="lobbyCreatedBool" @click="sendRequest(player.name)">Invite</button>
         </li>
       </ul>
     </div>
-
-
-
-
-  </body>
-
 </template>
 
 <script>
 import io from "socket.io-client";
-import joinLobbyComponent from "@/components/JoinLobbyComponent";
 const socket = io();
 
 export default {
   name: "MultiplayerView",
   components: {
-    joinLobbyComponent,
-    //autoLogout
   },
-  props: ["playerNickName",'uniqueLobbyID'],
+  props: ["playerNickName",'uniqueLobbyID','lobbyCreatedBool'],
   data: function(){
     return {
       lang: "en",
@@ -73,7 +52,6 @@ export default {
           socket.emit("numberProgress", {name: this.name, score: this.questionPosition});
         },
         sendRequest: function (playerToRequest) {
-          this.$emit('lobbyCreated', true);
           this.createPoll();
           socket.emit('playRequest', {
             requester: this.playerNickName ,

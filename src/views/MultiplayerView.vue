@@ -29,6 +29,7 @@
             {{name}}
           <button @click="exitPlaying">Quit</button>
         </p>
+        <span v-if="!lobbyCreatedBool"> <button @click="lobbyCreatedBool=true"> create lobby</button></span>
         <span v-if="lobbyCreatedBool"> join the lobby you created: <join-lobby-component v-bind:lobby-id="lobbyId" v-bind:name="name"></join-lobby-component>   </span>
         <div id="selector">Choose deck to play:
           <select name="decks" required v-model="selectedDeck" @change="loadDeck(this.selectedDeck)">
@@ -42,7 +43,15 @@
           <button id = "likeButton" v-on:click="likeDeck(questionObject.id)">
             <img src="https://freesvg.org/img/Thumbs-Up-Silhouette.png" style="width: 30px; height: 30px;"/>
           </button>
+          <button v-on:click="seeCommentsBool=!seeCommentsBool"> <img src="http://localhost:8080/img/commentIcon.png" style="width: 30px; height: 30px;"/> </button>
         </div>
+        <div v-if="seeCommentsBool">
+          <input v-model="hintString"> <button @click="commentDeck(questionObject.id,hintString)" > Leave hint</button>
+        </div>
+
+
+
+
     <!-- Här visas komponenten FlashcardView -->
       <div id="flashcardWrapperDiv" v-if="joinedBoolean">
         <FlashcardView v-bind:questionProp="myObj_deserialized" @nextClick="onClickChild" @previousClick="onClickChild" v-bind:coop-multiplayer="false"
@@ -73,7 +82,9 @@
 
       <!-- Här visas Active Player listan-->
       <div id="verticalRight" >
-        <ActivePlayersComponent v-if="expandPlayerList" @lobbyCreated="setLobbyCreatedBool" v-bind:player-nick-name="name" v-bind:uniqueLobbyID="lobbyId"
+        <ActivePlayersComponent v-if="expandPlayerList" @lobbyCreated="setLobbyCreatedBool"
+                                v-bind:player-nick-name="name" v-bind:uniqueLobbyID="lobbyId"
+                                v-bind:lobby-created-bool="lobbyCreatedBool"
         ></ActivePlayersComponent>
       </div>
 
@@ -122,6 +133,7 @@ export default {
       questionPosition: 0,
       totalQuestionAmount: 5,
       players: [],
+      inviteWatcher: 0,
       inviteInformation: [],
       joinedBoolean: false,
       myObj_deserialized: {},
@@ -133,9 +145,8 @@ export default {
       gameFinishedBoolean: false,
       lobbyCreatedBool: false,
       expandPlayerList: true,
-
-      //buttons: 0,
-
+      hintString: "",
+      seeCommentsBool: false,
       selectorList: idListFromAllDecks
     }
   },
@@ -147,16 +158,13 @@ export default {
     });
     setInterval( () => {
       socket.emit("playerActive", {name: this.name, activityStamp: Date.now()});
-    }, 3000);
+    }, 1000);
     },
   methods:
       {
         startPlaying: function () {
           this.joinedBoolean = true;
           socket.emit("startPlaying", {name: this.name, activityStamp: Date.now()});
-        },
-        setLobbyCreatedBool: function (lobbyCreated) {
-          this.lobbyCreatedBool = lobbyCreated;
         },
         exitPlaying: function () {
           this.joinedBoolean = false;
@@ -192,7 +200,6 @@ export default {
         },
         // Function for the like button
         async likeDeck (deckToLike) {
-          console.log("Number of likes:");
           console.log(deckToLike);
           try {
             const response = await axios.post('http://localhost:8080/likeDeck ', {
@@ -206,10 +213,31 @@ export default {
             console.error(error);
           }
         },
+        async commentDeck (deckToComment, commentToSend) {
+          let objectToAppend = {
+            name: this.name,
+            hint: commentToSend,
+            questionPosition: this.questionPosition,
+            likes: 0,
+          };
+          console.log("the object to append is: ", objectToAppend);
+          try {
+            const response = await axios.post('http://localhost:8080/commentDeck ', {
+              data: deckToComment,
+              comment: objectToAppend,
+              headers:{
+                'Content-Type': 'application/json'
+              },
+            });
+            console.log(response.data);
+          } catch (error) {
+            console.error(error);
+          }
+        },
       },
 
   watch: {
-    inviteInformation: function(){
+    inviteWatcher: function(){
       console.log("inviteInformation is", this.inviteInformation)
       let listToFill = [];
       for (let i = 0, l = this.inviteInformation.length; i < l; i++) {
@@ -226,7 +254,8 @@ export default {
   mounted() {
     this.socket = io();
     this.socket.on('requestReceive',inviteInformation => {
-      this.inviteInformation = inviteInformation;
+      this.inviteInformation.push(inviteInformation);
+      this.inviteWatcher++;
     });
   },
 }
