@@ -1,21 +1,19 @@
 <template>
 
 
-  <div id="wrapperDiv" >
+  <div id="wrapperDiv">
+    <div id="selector">
+      <select name="decks" required v-model="selectedDeck" @change="loadDeck(this.selectedDeck)">
+        <option value="" disabled selected hidden></option>
+        <option id="deckSelector" v-for="deck in selectorList" v-bind:key="deck">{{ deck }}</option>
+      </select>
+    </div>
 
     <div id="uploadDiv">
-      <div id="selector">
-        <select  name="decks" required v-model="selectedDeck" @change="loadDeck(this.selectedDeck)" >
-          <option value="" disabled selected hidden></option>
-          <option id="deckSelector" v-for="deck in selectorList" v-bind:key="deck">{{deck}}</option>
-        </select>
-      </div>
 
-      <div>
-      <upload-component v-bind:uploading-object="deckToAxios"
-                        @upload-sucessful="successfulUpload"
-      ></upload-component>
-      </div>
+        <upload-component v-bind:uploading-object="deckToAxios"
+                          @upload-sucessful="successfulUpload"
+        ></upload-component>
 
     </div>
 
@@ -27,7 +25,6 @@
   </div>
 
 
-
 </template>
 
 <script>
@@ -36,33 +33,31 @@ import UploadComponent from "@/components/UploadComponent";
 import WarningMessage from "@/components/WarningMessage";
 
 
-
 export default {
   name: "UploadView",
   components: {
     UploadComponent,
     WarningMessage
   },
-  data: function(){
-    return{
+  data: function () {
+    return {
       selectedDeck: "",
       selectorList: [],
       deckToUpload: {},
       deckToAxios: {
-        id:"",
-        questionArray:[],
-        answerArray:[],
+        id: "",
+        questionArray: [],
+        answerArray: [],
         likes: 0,
         hints: []
       },
       uploadSuccessfulBool: false,
     }
   },
-  created(){
-      for (var i =0, len = localStorage.length; i< len; ++i )
-      {
-        this.selectorList.push(localStorage.key(i));
-      }
+  created() {
+    for (var i = 0, len = localStorage.length; i < len; ++i) {
+      this.selectorList.push(localStorage.key(i));
+    }
   },
   methods: {
     loadDeck: function (deck) {
@@ -73,9 +68,9 @@ export default {
       this.deckToAxios.questionArray = this.deckToUpload.questionArray;
       this.deckToAxios.answerArray = this.deckToUpload.answerArray;
     },
-    successfulUpload : function(){
+    successfulUpload: function () {
       this.uploadSuccessfulBool = true;
-      setTimeout(() => this.uploadSuccessfulBool=false, 3000);
+      setTimeout(() => this.uploadSuccessfulBool = false, 3000);
     }
   }
 
@@ -84,25 +79,27 @@ export default {
 
 <style scoped>
 
-#wrapperDiv{
+#wrapperDiv {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-#uploadDiv{
-  display: flex;
-  width: 300px;
-  flex-direction: row;
+
+#uploadDiv {
+  flex-direction: column;
   height: 120px;
   justify-content: space-evenly;
   align-items: center;
 }
-#confirmationDiv{
+
+#confirmationDiv {
   display: flex;
+  margin-top: 100px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
+
 select {
   padding: 1em;
   width: 100%;
@@ -121,7 +118,8 @@ select {
   background-position: right;
   background-origin: content-box;
 }
-#selector{
+
+#selector {
   font-family: 'Nunito', sans-serif;
   font-size: 16px;
   width: 200px;

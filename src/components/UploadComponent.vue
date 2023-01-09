@@ -11,26 +11,11 @@
 
 </div>
 
-    <div class="uploadSelector">
-     
-    <select  name="decks" required v-model="selectedDeck" @change="loadDeck(this.selectedDeck)" >
-      <option value="" disabled selected hidden>Pick a deck to upload</option>
-      <option id="deckSelector" v-for="deck in selectorList" v-bind:key="deck">{{deck}}</option>
-    </select>
-  </div>
 
   <div class="uploadButton">
-  <button class="buttonNav" @click="testAxiosPost(), uploadDeck()">Upload deck:  <h5>{{ this.deckToUpload.id }}</h5></button>
-<br>
+  <button class="buttonNav" @click="testAxiosPost(uploadingObject)">Upload deck: {{uploadingObject.id}}</button>
   </div>
-  
 
-   
-  <div>
-  <button @click="testAxiosPost(uploadingObject)">
-    <img style="width: 37px; height: 37px; " src="http://localhost:8080/img/uppladdningsIkon2.png" >  </button>
-
-  </div>
   </div>
 </template>
 
@@ -42,14 +27,9 @@ import axios from 'axios';
 
 export default {
   name: "UploadComponent",
-
+  props: ["uploadingObject"],
   data: function(){
     return {
-      uploadingObject: {
-        id:"",
-        questionArray:[],
-        answerArray:[],
-        likes: 0},
       uploadedDeckList:["Nordens Huvudstäder", "Historia", "bilar","databasteknik"],
       testing: {},
       selectedDeck: "",
