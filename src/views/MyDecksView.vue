@@ -1,7 +1,4 @@
 <template>
- 
-  <body>
-
   <div id="container">
 
     <router-link
@@ -45,7 +42,6 @@
 
   </div>
 
-  </body>
 </template>
 
 <script>
@@ -69,14 +65,17 @@ export default {
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Island+Moments&family=Kanit:ital,wght@1,300&family=Mukta:wght@200&display=swap');
 
+
+
 #container {
-  position: absolute;
   padding: 10px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   display: flex;
   flex-direction: row;
+  justify-content: space-evenly;
+  margin-top: 150px;
+  margin-right: 20%;
+  margin-left: 20%;
+  align-items: center;
   gap: 8rem;
 }
 
@@ -103,7 +102,10 @@ button {
   transform: scale(0.9);
 }
 
-#viewDeckList {
-  border: solid black;
+@media screen and (max-width: 40em) {
+  #container {
+    flex-direction: column;
+  }
+
 }
 </style>
