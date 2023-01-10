@@ -40,12 +40,13 @@
 
         <div>
           <br>
-          <button style="" @click="suggestGame"> Suggest to play this deck</button>
-          <select  name="decks" required v-model="selectedDeck" >
-            <option value="" disabled selected hidden></option>
+          
+          <select  name="decks" required v-model="selectedDeck" @change="suggestGame" >
+            <option value="" disabled selected hidden>Choose a deck to play</option>
             <option id="deckSelector" v-for="deck in selectorList" v-bind:key="deck">{{deck}}</option>
           </select>
         </div>
+        {{ this.suggestedDecks }}
         <ul>
           <li v-for="deck in suggestedDecks" v-bind:key="deck"> <b>{{deck.id}}</b>  was suggested for co-op, votes {{deck.votes}} / {{players.length}}
             <button @click="acceptGame(deck.id)">Accept</button> </li>
@@ -159,6 +160,12 @@ export default {
       let objectToPush = {id: deckName, votes: 0};
       this.suggestedDecks.push(objectToPush);
       this.suggestedDecksChanged++;
+      console.log('hej')
+      console.log(this.suggestedDecks)
+      console.log('hej')
+      console.log(objectToPush)
+
+  
     })
     socket.on('gameAccepted', deckToUpdateVoteCount => {
       console.log("gameAccepted received on the client side");

@@ -25,9 +25,12 @@
           <th style="width: 70%;text-align: left" >Name</th>
           <th style="width: 30%;text-align: right">Score</th>
         </tr>
-        <tr v-for="Item in ScoreData.sort(function(a,b){return b.points-a.points})" :key="Item.points">
+        <tr v-for="Item in DecksData.sort(function(a,b){return b.likes-a.likes})" :key="Item.likes">
+          <td style="text-align:left" >{{ Item.id }}</td>
+          <td style="text-align:right">{{ Item.likes }}</td>
+        <!--<tr v-for="Item in ScoreData.sort(function(a,b){return b.points-a.points})" :key="Item.points">
           <td style="text-align:left" >{{ Item.name }}</td>
-          <td style="text-align:right">{{ Item.points }}</td>
+          <td style="text-align:right">{{ Item.points }}</td>-->
         </tr>
       </table>
         
@@ -60,7 +63,8 @@ export default {
       hideNav: true,
       scoreNameField: "",
       scorePointField: "",
-      ScoreData: Scores
+      ScoreData: Scores,
+      DecksData: Decks,
     }
   },
   methods: {
