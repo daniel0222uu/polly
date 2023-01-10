@@ -110,6 +110,9 @@ export default {
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;700&display=swap');
 
+
+
+
 .notActive {
 display: none;
 }
@@ -135,10 +138,12 @@ select {
 }
 
 #wrapperDiv{
+  z-index: -1;
   position: relative;
   height: 100%;
   display: flex;
   flex-direction: column;
+ 
 
   
   
@@ -169,6 +174,7 @@ header {
   top: 0;
   
 }
+
 
 /*Reaction buttons*/
 button {
@@ -217,6 +223,7 @@ button {
   }
 }
 #centerDiv{
+  
   display: flex;
   justify-content: center;
   align-items: center;

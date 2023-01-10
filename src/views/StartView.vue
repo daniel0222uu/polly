@@ -83,7 +83,7 @@ export default {
 
 
 #startWrapper {
-  width: 100%;
+  width: 95%;
   float: left;
   position: relative;
   height: 100%;
@@ -94,6 +94,7 @@ export default {
 }
 
 #infoFlashcard {
+ z-index: -1;
   width: 50%;
   background-color: white;
   border-radius: 10px;
@@ -102,6 +103,7 @@ export default {
   font-size: 20px;
   text-align: center;
   margin-left: 30px;
+  border: 5px ridge lightseagreen;
 
 }
 
@@ -150,21 +152,16 @@ export default {
 }
 
 @media screen and (max-width:50em) {
-  .logo {
-    font-size: 5vw;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .hamburger::before {
-    content: "☰";
-  }
-  .close::before {
-    content: "✕";
-  }
-  .hide {
-    left:-12em;
-  }
+ #infoFlashcard {
+  font-size: 18px;
+  width:70%
+ }
+}
+@media screen and (max-width:24em) {
+ #infoFlashcard {
+  font-size: 14px;
+  min-width:100%
+ }
 }
 
 
