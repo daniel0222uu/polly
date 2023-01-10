@@ -19,7 +19,9 @@ app.post('/fileTest', (req, res) => { //axios test reveiver
       jsonOfTheFile.push(data.data);
      console.log(jsonOfTheFile);
      console.log(data.data);
-      fs.writeFileSync("src/assetts/Decks.json", JSON.stringify(jsonOfTheFile));
+        setTimeout(() =>
+            fs.writeFileSync("src/assetts/Decks.json",
+                JSON.stringify(jsonOfTheFile)), 6000);
 
 
 
