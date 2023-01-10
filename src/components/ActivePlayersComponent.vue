@@ -7,6 +7,7 @@
     </div>
     <div>
       <button id="toggleButton" @click="expandPlayerList=!expandPlayerList">
+
       <img style="width: 40px; height: 30px;"
            src="http://localhost:8080/img/showActivePlayers.png">
       </button>
@@ -14,9 +15,14 @@
   </div>
 
   <div id="verticalRight" v-if="expandPlayerList">
+    <p v-if="inviteSentBool">
+      <join-lobby-component v-bind:lobby-id="uniqueLobbyID"
+                            v-bind:name="playerNickName"
+      ></join-lobby-component>
+    </p>
       <ul id="playerList">
         <li v-for="player in filteredPlayers" v-bind:key="player">   <b>{{player.name}}</b>
-          <button v-if="lobbyCreatedBool" @click="sendRequest(player.name)">Invite</button>
+          <button @click="sendRequest(player.name)">Invite</button>
         </li>
       </ul>
   </div>
@@ -25,12 +31,14 @@
 <script>
 import io from "socket.io-client";
 const socket = io();
+import JoinLobbyComponent from "@/components/JoinLobbyComponent";
 
 export default {
   name: "MultiplayerView",
   components: {
+    JoinLobbyComponent
   },
-  props: ["playerNickName",'uniqueLobbyID','lobbyCreatedBool'],
+  props: ["playerNickName",'uniqueLobbyID',],
   data: function(){
     return {
       lang: "en",
@@ -40,6 +48,7 @@ export default {
       inviteInformation: [],
       invitationList: [],
       expandPlayerList: true,
+      inviteSentBool: false,
     }
   },
   created: function() {
@@ -74,6 +83,7 @@ export default {
             lobbyID: this.uniqueLobbyID,
             playersInLobby: []
           });
+          this.inviteSentBool = true;
         },
         createPoll: function () { //ett bättre namn hade varit createLobby, men jag är lat
           // this.lobbyId = Math.floor(Math.random() * 1000000 + 100000);
@@ -82,7 +92,6 @@ export default {
       },
   watch: {
     inviteInformation: function(){
-      console.log("inviteInformation is", this.inviteInformation)
       let listToFill = [];
       for (let i = 0, l = this.inviteInformation.length; i < l; i++) {
         let inviteInfo = this.inviteInformation[i];
@@ -128,7 +137,6 @@ export default {
   align-items: center;
 }
 #toggleButton{
-  background-color: ;
   background-repeat: no-repeat;
   border: none;
   cursor: pointer;

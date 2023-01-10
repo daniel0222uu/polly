@@ -27,8 +27,6 @@
             {{name}}
           <button @click="exitPlaying">Quit</button>
         </p>
-        <span v-if="!lobbyCreatedBool"> <button @click="lobbyCreatedBool=true"> create lobby</button></span>
-        <span v-if="lobbyCreatedBool"> join the lobby you created: <join-lobby-component v-bind:lobby-id="lobbyId" v-bind:name="name"></join-lobby-component>   </span>
         <div id="selector">Choose deck to play:
           <select name="decks" required v-model="selectedDeck" @change="loadDeck(this.selectedDeck)">
             <option value="" disabled selected hidden></option>
@@ -80,7 +78,7 @@
 
       <!-- Här visas Active Player listan-->
       <div id="verticalRight" >
-        <ActivePlayersComponent v-if="expandPlayerList" @lobbyCreated="setLobbyCreatedBool"
+        <ActivePlayersComponent v-if="expandPlayerList"
                                 v-bind:player-nick-name="name" v-bind:uniqueLobbyID="lobbyId"
                                 v-bind:lobby-created-bool="lobbyCreatedBool"
         ></ActivePlayersComponent>
@@ -236,7 +234,6 @@ export default {
 
   watch: {
     inviteWatcher: function(){
-      console.log("inviteInformation is", this.inviteInformation)
       let listToFill = [];
       for (let i = 0, l = this.inviteInformation.length; i < l; i++) {
         let inviteInfo = this.inviteInformation[i];

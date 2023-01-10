@@ -14,7 +14,7 @@ import io from "socket.io-client";
 const socket = io();
 export default {
   name: "JoinLobbyComponent",
-  props: ["lobbyId", "name",'lobbyCreated'],
+  props: ["lobbyId", "name",'lobbyCreated','inviteSent'],
   methods: {
     joinLobby: function () {
       socket.emit("joinLobby", {lobbyID: this.lobbyId, name: this.name});
@@ -25,7 +25,7 @@ export default {
     lobbyCreated: function () {
       console.log("lobbyCreated changed and i should've navigated");
       //this.joinLobby();
-    }
+    },
   }
 }
 </script>
