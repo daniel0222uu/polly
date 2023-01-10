@@ -17,27 +17,8 @@
 
 <script>
 import io from 'socket.io-client';
-import Decks from "../assetts/Decks.json";
-
+import EditAndCreateComponent from '@/components/EditAndCreateComponent';
 const socket = io();
-//const items = {localStorage};
-//console.log(items);
-console.log(Decks);
-//let testObj = JSON.stringify(Decks);
-//localStorage.setItem("theDeckObject", testObj)
-//console.log(testObj);
-//let myObj_deserialized = JSON.parse(localStorage.getItem("theDeckObject"));
-//console.log(myObj_deserialized);
-
-//console.log(JSON.parse(localStorage.getItem("daniel")));
-
-
-
-
-
-
-
-
 
 export default {
   name: 'EditingView',
@@ -70,6 +51,9 @@ export default {
       //testingObject: JSON.parse(localStorage.getItem("daniel")),
       //completeDeck: {"id":this.deckName, "questionArray": this.quizQuestions, "answerArray":this.quizAnswers}
     }
+  },
+  components: {
+    EditAndCreateComponent
   },
   created: function () {
     this.lang = this.$route.params.lang;
