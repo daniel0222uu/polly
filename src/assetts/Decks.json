@@ -1,6 +1,4 @@
-<<<<<<< HEAD
-[{"id":"2022 Quizet","questionArray":["Största händelsen för året? ","I vilket land hölls eurovision?","Vem blev Monte negros nya preimärminister?","Covid-19 lades bakom oss, vilken blev nästa stora sjukdom?","Vilken fotbollsklubb vann Champions League?","Israel fick också enn ny statsminister, vad heter han?","Vem besökte Taiwan så att spänning mellan USA och Kina ökade?","Vilket parti ökade procentuellt från föregående val i valet 2022?","Liz Truss slog nytt rekord för kortast tid som premiärminister. Hur länge satt hon vid makten?","Vilket företag köpte Elon Musk?","Många kända personer dog i år. Vilka var de kändaste?"],"answerArray":["Rysslands invasion av Ukraina","Italien"," Dritan Abazović ","Apkoppor (monkey pox) ","Real Madrid","Yair Lapid","Nancy Pelosi","Vänsterpartiet","44 dagar ","Twitter","Queen Elisabeth II, Pelé, Mikhail Gorbachev"],"likes":12,"hints":[{"name":"danne","hint":"Tänk noggrant","questionPosition":0,"likes":0},{"name":"","hint":"asdasffasfa","questionPosition":0,"likes":0},{"name":"adsasffa","hint":"sdgasg","questionPosition":0,"likes":0},{"name":"adsasffa","hint":"Detta är en hint","questionPosition":0,"likes":0},{"name":"adssadas","hint":"asdgasgds","questionPosition":0,"likes":0}]},{"id":"testingUploadDeck","questionArray":["blabla1"],"answerArray":["blabla1"],"likes":0,"hints":[]},{"id":"2022 Quizet","questionArray":["Största händelsen för året? ","I vilket land hölls eurovision?","Vem blev Monte negros nya preimärminister?","Covid-19 lades bakom oss, vilken blev nästa stora sjukdom?","Vilken fotbollsklubb vann Champions League?","Israel fick också enn ny statsminister, vad heter han?","Vem besökte Taiwan så att spänning mellan USA och Kina ökade?","Vilket parti ökade procentuellt från föregående val i valet 2022?","Liz Truss slog nytt rekord för kortast tid som premiärminister. Hur länge satt hon vid makten?","Vilket företag köpte Elon Musk?","Många kända personer dog i år. Vilka var de kändaste?"],"answerArray":["Rysslands invasion av Ukraina","Italien"," Dritan Abazović ","Apkoppor (monkey pox) ","Real Madrid","Yair Lapid","Nancy Pelosi","Vänsterpartiet","44 dagar ","Twitter","Queen Elisabeth II, Pelé, Mikhail Gorbachev"],"likes":8,"hints":[]},{"id":"asda","questionArray":["asdas","asdadad"],"answerArray":["dasdasdsad","adsadsa"],"likes":0,"hints":[]},{"id":"MathQuiz","questionArray":["4+3?","3*5?","6-3?","22+3?","4*8?"],"answerArray":["7","15","3","25","32"],"likes":0,"hints":[]}]
-=======
+
 [
   {
     "id": "testingUploadDeck",
@@ -10,7 +8,7 @@
     "answerArray": [
       "blabla1"
     ],
-    "likes": 0,
+    "likes": 15,
     "hints": []
   },
   {
@@ -41,7 +39,7 @@
       "Twitter",
       "Queen Elisabeth II, Pelé, Mikhail Gorbachev"
     ],
-    "likes": 0,
+    "likes": 64,
     "hints": []
   },
   {
@@ -54,8 +52,7 @@
       "dasdasdsad",
       "adsadsa"
     ],
-    "likes": 0,
+    "likes": 4,
     "hints": []
   }
 ]
->>>>>>> 58b92c6bc23e8fa6871604046142252a28dd3676
