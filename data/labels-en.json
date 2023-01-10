@@ -11,5 +11,6 @@
 	"myDecks": "My decks",
 	"settings":"settings",
 	"FAQ":"FAQ",
-	"lobby":"lobby"
+	"lobby":"lobby",
+	"leaderboard": "leaderboard"
 }

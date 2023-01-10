@@ -12,15 +12,25 @@
   <!-- Div för att layout av startsidan -->
   <div id="startWrapper">
 
-    <!-- Här visas puff för Flashcard -->
-    <div id="infoFlashcard">
 
-      <p style="font-size:24px;font-weight:bold">Welcome to FLASHCARDS!</p>
-      <p>"The world's most award-winning quiz game."</p>
-      <p>Here you can challenge yourself and other players in quiz games.</p>
-      <p>Flashcard now also includes functionality that lets you create your own decks of flashcards.</p>
-      <p>Good luck!</p>
-
+    <!-- Här presenteras Leaderboard -->
+    <div id="viewLeaderboard" class="center">
+    <table class="center" style="width:300px; font-family:Kanit;font-size:26px;padding:10px">
+      <tr> <marquee direction="right" behavior="scroll">L E A D E R B O A R D</marquee></tr>
+      <tr><img src="http://localhost:8080/img/score-icon-21.jpeg" width="100" height="100"></tr>
+    </table>
+   
+      <table class="center" style="width:300px; border: 5px solid black;border-radius: 10px;font-family: Kanit;font-size:20px;background-color: white;padding:10px">
+        <tr>
+          <th style="width: 70%;text-align: left" >Name</th>
+          <th style="width: 30%;text-align: right">Score</th>
+        </tr>
+        <tr v-for="Item in ScoreData.sort(function(a,b){return b.points-a.points})" :key="Item.points">
+          <td style="text-align:left" >{{ Item.name }}</td>
+          <td style="text-align:right">{{ Item.points }}</td>
+        </tr>
+      </table>
+        
     </div>
 
   </div>
@@ -37,7 +47,7 @@ console.log(Decks);
 
 
 export default {
-  name: 'StartView',
+  name: 'LeaderBoard',
 
   components: {
     
@@ -90,19 +100,17 @@ export default {
   display: flex;
   flex-direction: row;
   margin: 10px;
-  justify-content: center;
 }
 
 #infoFlashcard {
-  width: 50%;
+  width: 40%;
   background-color: white;
   border-radius: 10px;
   padding: 30px;
   font-family: Kanit;
   font-size: 20px;
-  text-align: center;
+  text-align: left;
   margin-left: 30px;
-
 }
 
 #viewLeaderbord {
