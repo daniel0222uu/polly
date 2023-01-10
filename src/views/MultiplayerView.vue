@@ -1,5 +1,13 @@
 <template>
   <body>
+
+     <!-- Här fyller användaren i namn och väljer att starta spelet -->
+     
+     <div style="margin-top:100px; ; "  v-if="!joinedBoolean">
+      
+      <input style="padding:5px" v-model="name" type="text" placeholder="Enter your name" />
+      <button style="padding:5px; margin:10px" @click="startPlaying">Start playing!</button>
+    </div>
   
   <!-- Här visas meddelande om att det finns en invite -->
     <div>
@@ -10,54 +18,66 @@
     </ul>
     </div>
 
-  <!-- Här fyller användaren i namn och väljer att starta spelet -->
-    <div v-if="!joinedBoolean">
-      <p style="font-size: 30px; font-weight: bolder">Enter your name:</p>
-      <input v-model="name" type="text" />
-      <button @click="startPlaying">Start playing!</button>
-    </div>
+ 
 
   <!-- Här startar div som visas när joinedBoolean=True -->
-    <div id="wrapperDiv" v-if="joinedBoolean">
+    <div class="wrapperDiv" v-if="joinedBoolean">
 
-    <!-- Här visas namn och användaren kan välja decka att spela-->
-      <div id="horizontalContent">
-
+      <div class="bannerDiv" >
+        <div class="nameAndQuitDiv">
         <p style="font-size:24px;font-weight:bold">
             {{name}}
-          <button @click="exitPlaying">Quit</button>
+          <button style="margin-left:20px" @click="exitPlaying">Quit</button>
         </p>
-        <div id="selector">Choose deck to play:
-          <select name="decks" required v-model="selectedDeck" @change="loadDeck(this.selectedDeck)">
-            <option value="" disabled selected hidden></option>
-            <option id="deckSelector" v-for="deck in selectorList" v-bind:key="deck">{{deck}}</option>
-          </select>
-        </div>
+
+        
+
+      </div>
+      
+    </div>
+
+      <div class="mainContent">
+        <div class="infoFlashcard">
+
+<h3 >Welcome to Multiplayer!</h3>
+<p>Start by inviting a player and joining the lobby.</p>
+<p>Suggest and vote on a deck to play with your fellow players.</p>
+<p>when Everyone is ready the asnwer will be shown for a few seconds and then you will go to the next question.</p>
+<p>Good luck!</p>
+
+</div>
+<div class="activePlayerList" >
+        
+        <ActivePlayersComponent v-if="expandPlayerList"
+                                v-bind:player-nick-name="name" v-bind:uniqueLobbyID="lobbyId"
+                                v-bind:lobby-created-bool="lobbyCreatedBool"
+        ></ActivePlayersComponent>
+      </div>
+
+      </div>
+
+    <!-- Här visas namn och användaren kan välja decka att spela-->
+    
+
+   
+        
+        
       <!--</div>-->
         <!-- Buttons for liking and commenting -->
-        <div class="buttons">
-          <button id = "likeButton" v-on:click="likeDeck(questionObject.id)">
-            <img src="https://freesvg.org/img/Thumbs-Up-Silhouette.png" style="width: 30px; height: 30px;"/>
-          </button>
-          <button v-on:click="seeCommentsBool=!seeCommentsBool"> <img src="http://localhost:8080/img/commentIcon.png" style="width: 30px; height: 30px;"/> </button>
-        </div>
+        
+
         <div v-if="seeCommentsBool">
           <input v-model="hintString"> <button @click="commentDeck(questionObject.id,hintString)" > Leave hint</button>
         </div>
 
 
 
-
-    <!-- Här visas komponenten FlashcardView -->
-      <div id="flashcardWrapperDiv" v-if="joinedBoolean">
-        <FlashcardView v-bind:questionProp="myObj_deserialized" @nextClick="onClickChild" @previousClick="onClickChild" v-bind:coop-multiplayer="false"
-        v-bind:disable-click="true"></FlashcardView>
-        <!-- <button id="FinishGame" @click="finishGame()">Done!</button> -->
-      </div>
+        
+    
 
 
 
-        <div id="viewAfterGame" v-if="gameFinishedBoolean">
+        <div class="viewAfterGame" v-if="gameFinishedBoolean">
           <img src="http://localhost:8080/img/score-icon-21.jpeg" width="100" height="100">
           <P>Congratulation, {{name}}! Well done!</P>
           <P>Your score is: {{score}} points out of {{totalQuestionAmount}}</P>
@@ -70,21 +90,20 @@
           <P><button @click="exitPlaying(name)">I want to exit the game</button></P>
         </div>
 
-    </div> 
+    
 
      <!-- Här avslutas allt som visas när joinBolean=True -->
 
      <!-- Här visas info när användaren spelat klart och klickat Done -->
 
       <!-- Här visas Active Player listan-->
-      <div id="verticalRight" >
-        <ActivePlayersComponent v-if="expandPlayerList"
-                                v-bind:player-nick-name="name" v-bind:uniqueLobbyID="lobbyId"
-                                v-bind:lobby-created-bool="lobbyCreatedBool"
-        ></ActivePlayersComponent>
-      </div>
+      
 
-    </div>
+
+      </div>
+      
+       
+  
 
 
 
@@ -102,7 +121,7 @@ let selectList = Decks;
 const idListFromAllDecks = selectList.map(element => element.id);
 
 import io from "socket.io-client";
-import FlashcardView from "@/components/FlashcardComponent";
+
 import joinLobbyComponent from "@/components/JoinLobbyComponent";
 import ActivePlayersComponent from "@/components/ActivePlayersComponent";
 
@@ -115,7 +134,7 @@ const socket = io();
 export default {
   name: "MultiplayerView",
   components: {
-    FlashcardView,
+   
     joinLobbyComponent,
     ActivePlayersComponent,
     //autoLogout
@@ -258,26 +277,53 @@ export default {
 
 <style scoped>
 
-#wrapperDiv{
-  position: relative;
-  height: 100%;
+.wrapperDiv{
+  
+
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  
+ 
+  
 }
-#horizontalContent{
-  flex: 1;
-}
-#verticalRight{
-  height: 400px;
-  width: 250px;
-}
-#flashcardWrapperDiv{
-  display: flex;
-  justify-content: center;
+.bannerDiv {
+  width:100%; 
+  display: flex; 
+  justify-content: space-evenly;
   align-items: center;
 }
+.mainContent {
+ width: 100%; 
+ display: flex; 
+ justify-content: space-evenly;
+ 
+}
 
-#viewAfterGame {
+
+.activePlayerList{
+  border: 5px ridge lightseagreen;
+ 
+  height: 420px;
+  overflow: scroll;
+  overflow-x: hidden;
+  width: 250px;
+}
+.nameAndQuitDiv {
+ 
+ display: flex;
+ flex-direction: column;
+ justify-content: space-evenly;
+ align-items: center;
+ width:200px;
+ 
+  
+  
+  
+}
+
+
+.viewAfterGame {
+  
   font-size: 24px;
   text-align: left;
 	background-color: white;
@@ -287,12 +333,43 @@ export default {
   padding: 10px;
 }
 
-#likeButton {
+.likeButton {
   height: 40px;
   width: 50px;
   margin-bottom: 20px;
 }
 
 
+.infoFlashcard {
+  height: 400px;
+  text-align: center;
+  
+  
+  width: 40%;
+  background-color: white;
+  border-radius: 10px;
+  border:1px solid black;
+  padding: 30px;
+  font-family: Kanit;
+  font-size: 20px;
+  
+  
+}
+@media screen and (max-width: 42em) {
+  .infoFlashcard{
+    font-size: 14px;
+  }
 
+}
+
+@media screen and (max-width: 30em) {
+  .mainContent{
+    flex-direction: column-reverse;
+    
+    align-items: center;
+  }
+  .infoFlashcard{
+    width: 70%;
+  }
+}
 </style>

@@ -72,7 +72,7 @@ export default {
     },
     nextClick: function () {
       if (this.questionPosition < this.questionProp.questionArray.length - 1) {
-        setTimeout(() => this.questionPosition++, 500);
+        setTimeout(() => this.questionPosition++, 0);
         if(this.flipped==true){
           this.flipped = !this.flipped;
         }
@@ -277,23 +277,26 @@ transform: translateX(-2px);
   margin-left: 20px;
 }
 
-@media screen and (max-width: 40em) {
-  .playDiv{
-    margin-left:50%;
-
-  }
+@media screen and (max-width: 30em) {
+ 
   
   .card {
-    width:50%;
-    margin-left: 10%;
+    width:400px;
+    margin-left:250px;
+   
+    
     height: 600px;
   }
   .prevNextButton {
-    margin-left:10%
+    margin-left: 250px;
   }
+  
   .navH {
     color:black;
     font-size: xx-large;
   }
+  
 }
+
+
 </style>
