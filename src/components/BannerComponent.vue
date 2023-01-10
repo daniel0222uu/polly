@@ -20,7 +20,7 @@
     <router-link  v-bind:to="'/'">Home</router-link>
     <router-link  v-bind:to="'/mydecks/'+ lang">{{uiLabels.myDecks}}</router-link>
     <router-link  v-bind:to="'/play/'+lang">{{uiLabels.play}}</router-link>
-    <router-link  v-bind:to="'/leaderboard/'">Leaderboard</router-link>
+    <router-link  v-bind:to="'/leaderboard/'+lang">{{uiLabels.leaderboard}}</router-link>
     
     
     
