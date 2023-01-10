@@ -1,6 +1,5 @@
 <template>
 
-
   <div id="wrapperDiv">
     <div id="selector">
       <select name="decks" required v-model="selectedDeck" @change="loadDeck(this.selectedDeck)">
@@ -19,8 +18,13 @@
 
     </div>
 
-    <div id="confirmationDiv">
+    <div class="confirmationDiv">
       <warning-message v-bind:upload-successful="uploadSuccessfulBool"></warning-message>
+    </div>
+
+    <div class="confirmationDiv">
+      <warning-message v-bind:deck-name-taken="deckNameTakenBool"
+                       v-bind:deckName="deckToUpload.id"></warning-message>
     </div>
 
 
@@ -55,7 +59,7 @@ export default {
         hints: []
       },
       uploadSuccessfulBool: false,
-      deckRejectedBool   : false,
+      deckNameTakenBool   : false,
     }
   },
   created() {
@@ -68,8 +72,10 @@ export default {
       this.questionPosition = 0;
       console.log("du klickade på en knapp med loadDeck()", deck);
       this.deckToUpload = JSON.parse(localStorage.getItem(deck));
-      if(this.rejectDeck(this.deckToUpload)){
-        this.deckRejectedBool = true;
+      if(this.deckNameTaken(this.deckToUpload)){
+        this.deckNameTakenBool = true;
+        setTimeout(() =>
+            this.deckNameTakenBool = false, 5000);
         return;
       }
       this.deckToAxios.id = this.deckToUpload.id;
@@ -80,7 +86,7 @@ export default {
       this.uploadSuccessfulBool = true;
       setTimeout(() => this.uploadSuccessfulBool = false, 3000);
     },
-    rejectDeck: function(deckToReject){
+    deckNameTaken: function(deckToReject){
       for(let deck of Decks){
         if(deck.id === deckToReject.id){
           return true;
@@ -107,7 +113,7 @@ export default {
   align-items: center;
 }
 
-#confirmationDiv {
+.confirmationDiv {
   display: flex;
   margin-top: 100px;
   flex-direction: column;
