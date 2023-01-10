@@ -4,7 +4,7 @@
   <div id="wrapperDiv">
     <div id="selector">
       <select name="decks" required v-model="selectedDeck" @change="loadDeck(this.selectedDeck)">
-        <option value="" disabled selected hidden></option>
+        <option value="" disabled selected hidden>Choose a deck to upload</option>
         <option id="deckSelector" v-for="deck in selectorList" v-bind:key="deck">{{ deck }}</option>
       </select>
     </div>
