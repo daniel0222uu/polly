@@ -44,21 +44,10 @@ export default {
       }
   },
   methods: {
-    uploadDeck: function() {
-      this.uploadedDeckList.push(this.selectedDeck)
-
-    },
-
-    loadDeck: function (deck) {
-      
-      this.deckToUpload = JSON.parse(localStorage.getItem(deck));
-      
-    },
-
-    async testAxiosPost() {
+    async testAxiosPost(deckToUpload) {
       try {
         const response = await axios.post('http://localhost:8080/fileTest ', {
-          data: this.deckToUpload,
+          data: deckToUpload,
           headers:{
             'Content-Type': 'application/json'
           },
