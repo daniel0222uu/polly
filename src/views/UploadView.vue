@@ -15,6 +15,8 @@
                           @upload-sucessful="successfulUpload"
         ></upload-component>
 
+
+
     </div>
 
     <div id="confirmationDiv">
@@ -31,6 +33,7 @@
 
 import UploadComponent from "@/components/UploadComponent";
 import WarningMessage from "@/components/WarningMessage";
+import Decks from "../assetts/Decks.json";
 
 
 export default {
@@ -52,6 +55,7 @@ export default {
         hints: []
       },
       uploadSuccessfulBool: false,
+      deckRejectedBool   : false,
     }
   },
   created() {
@@ -64,6 +68,10 @@ export default {
       this.questionPosition = 0;
       console.log("du klickade på en knapp med loadDeck()", deck);
       this.deckToUpload = JSON.parse(localStorage.getItem(deck));
+      if(this.rejectDeck(this.deckToUpload)){
+        this.deckRejectedBool = true;
+        return;
+      }
       this.deckToAxios.id = this.deckToUpload.id;
       this.deckToAxios.questionArray = this.deckToUpload.questionArray;
       this.deckToAxios.answerArray = this.deckToUpload.answerArray;
@@ -71,6 +79,13 @@ export default {
     successfulUpload: function () {
       this.uploadSuccessfulBool = true;
       setTimeout(() => this.uploadSuccessfulBool = false, 3000);
+    },
+    rejectDeck: function(deckToReject){
+      for(let deck of Decks){
+        if(deck.id === deckToReject.id){
+          return true;
+        }
+      }
     }
   }
 

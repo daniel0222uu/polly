@@ -24,7 +24,6 @@ export default {
   watch: {
     lobbyCreated: function () {
       console.log("lobbyCreated changed and i should've navigated");
-      //this.joinLobby();
     },
   }
 }
