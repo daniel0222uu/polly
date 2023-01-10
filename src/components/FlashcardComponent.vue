@@ -1,5 +1,5 @@
 <template>
-
+<div class="playDiv">
   <div class="card"  >
     <div class="card-inner" v-on:click="flip" :class="{flipped: flipped}">
       <div :style="{'font-size': adjustingFontSizeQuestion + 'px' }" class="card-front">
@@ -12,14 +12,17 @@
 
     </div>
 
-    <div class="buttonDiv" v-if="!coopMultiplayer">
-      <button id="previousButton" @click="previousCLick" class="prevNextButton"> Previous </button>
-      <a style="color:white">{{ questionPosition+1}}/{{questionProp.questionArray.length}}</a>
-      <button id="nextButton" @click="nextClick" class="prevNextButton"> Next </button>
-    </div>
 
   </div>
 
+  <div class="buttonDiv" v-if="!coopMultiplayer">
+      <button id="previousButton" @click="previousCLick" class="prevNextButton"> Previous </button>
+      <h2 class="navH">{{ questionPosition+1}}/{{questionProp.questionArray.length}}</h2>
+      <button id="nextButton" @click="nextClick" class="prevNextButton"> Next </button>
+    </div>
+
+</div>
+  
 
  
 
@@ -139,9 +142,17 @@ export default {
 </script>
 
 <style scoped>
+.playDiv {
+  display:flex;
+  justify-content:center; 
+  flex-direction:column;
+  align-items:center;
+ 
+}
 .card {
+ 
   height:400px;
-  width: 300px;
+  width: 400px;
   cursor:pointer;
   perspective: 1000px;
 }
@@ -163,7 +174,7 @@ export default {
   justify-content: center;
   align-items: center;
   overflow: auto;
-  padding: 10px;
+
   width: 100%;
   height: 100%;
   border-radius: 4px;
@@ -205,29 +216,33 @@ export default {
     transform: scale(1);
   }
 }
-.prevNextButton{
-  font-size: 10px;
-}
-.buttonDiv{
-  display: flex;
-  justify-content: center;
-  margin-top: 15%;
-  margin-left: 5%;
-  margin-right: 5%;
-  margin-bottom: 5%;
-}
+.navH {
+  color:white
 
-#nextButton, #previousButton {
-  border: none;
+}
+.prevNextButton{
   
+  align-self: flex-end;
+    
   cursor:pointer;
  
-  font-Size: 2vmax;
-  width: 12vmax;
-  height: 4vmax;
+  font-Size: 18px;
+  width: 200px;
+  height: 60px;
   
   border-radius: 5px;
 }
+.buttonDiv{
+  
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  width:1000px;
+  
+ 
+}
+
+
 #previousButton:active {
 transform: translateX(-2px);
 }
@@ -260,5 +275,25 @@ transform: translateX(-2px);
 #nextButton {
   animation: flash 1s fade;
   margin-left: 20px;
+}
+
+@media screen and (max-width: 40em) {
+  .playDiv{
+    margin-left:50%;
+
+  }
+  
+  .card {
+    width:50%;
+    margin-left: 10%;
+    height: 600px;
+  }
+  .prevNextButton {
+    margin-left:10%
+  }
+  .navH {
+    color:black;
+    font-size: xx-large;
+  }
 }
 </style>
