@@ -45,6 +45,9 @@ export default {
   },
   methods: {
     async testAxiosPost(deckToUpload) {
+      if(deckToUpload.id===""){
+        return;
+      }
       try {
         const response = await axios.post('http://localhost:8080/fileTest ', {
           data: deckToUpload,
