@@ -19,7 +19,6 @@
 import io from 'socket.io-client';
 import Decks from "../assetts/Decks.json";
 
-import EditAndCreateComponent from "@/components/EditAndCreateComponent";
 const socket = io();
 //const items = {localStorage};
 //console.log(items);
@@ -71,10 +70,6 @@ export default {
       //testingObject: JSON.parse(localStorage.getItem("daniel")),
       //completeDeck: {"id":this.deckName, "questionArray": this.quizQuestions, "answerArray":this.quizAnswers}
     }
-  },
-  components: {
-   
-    EditAndCreateComponent
   },
   created: function () {
     this.lang = this.$route.params.lang;

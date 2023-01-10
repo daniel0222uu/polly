@@ -1,7 +1,5 @@
 <template>
   <body>
-  <!-- Här visas text om autoLogout-->
-  <!--<div><autoLogout></autoLogout></div> -->
   
   <!-- Här visas meddelande om att det finns en invite -->
     <div>

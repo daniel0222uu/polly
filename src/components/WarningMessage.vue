@@ -1,40 +1,39 @@
-
 <template>
   <transition name="fade">
     <div class="positionConfirmation" id="DeckLiked" v-if="uploadSuccessful">
       <div class="text">
-         Successful upload!
+        Successful upload!
       </div>
       <div>
         <iframe src="https://giphy.com/embed/kwcRp24Wz4lZm" width="60" height="60" frameBorder="0"
                 class="giphy-embed" allowFullScreen></iframe>
       </div>
     </div>
-    </transition>
+  </transition>
 
-    <transition name="fade">
-      <div class="positionConfirmation" v-if="badString">
-        <div class="text">
-          <p>
-            Your deck name has too many spaces somewhere.
-          </p>
-        </div>
-        <div>
-          <iframe src="https://giphy.com/embed/TBCqBLOxH8djXe8ztd" width="50" height="80" frameBorder="0"
-                  class="giphy-embed" allowFullScreen></iframe>
-
-        </div>
+  <transition name="fade">
+    <div class="positionConfirmation" v-if="badString">
+      <div class="text">
+        <p>
+          Your deck name has too many spaces somewhere.
+        </p>
       </div>
-    </transition>
-  
+      <div>
+        <iframe src="https://giphy.com/embed/TBCqBLOxH8djXe8ztd" width="50" height="80" frameBorder="0"
+                class="giphy-embed" allowFullScreen></iframe>
+
+      </div>
+    </div>
+  </transition>
+
 </template>
 
 <script>
 export default {
   name: "WarningMessage",
-  props: ['deckAlert', 'questionFieldAlert', 'questionWasAdded','uploadSuccessful','badString'],
+  props: ['deckAlert', 'questionFieldAlert', 'questionWasAdded', 'uploadSuccessful', 'badString'],
   watch: {
-    uploadSuccessful: function(){
+    uploadSuccessful: function () {
       console.log("uploadSuccessful är nu: ", this.uploadSuccessful);
     }
   }
@@ -42,7 +41,7 @@ export default {
 </script>
 
 <style scoped>
-.positionConfirmation{
+.positionConfirmation {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -54,27 +53,34 @@ export default {
   height: 80px;
   border-radius: 20px;
 }
-.text{
+
+.text {
   font-weight: bold;
   font-family: 'Kanit', sans-serif;
   font-size: 20px;
 }
+
 .fade-enter-from {
   opacity: 0;
 }
-.fade-enter-to{
+
+.fade-enter-to {
   opacity: 1;
 }
-.fade-enter-active{
+
+.fade-enter-active {
   transition: all 4s ease;
 }
-.fade-leave-from{
+
+.fade-leave-from {
   opacity: 1;
 }
-.fade-leave-to{
+
+.fade-leave-to {
   opacity: 0;
 }
-.fade-leave-active{
+
+.fade-leave-active {
   transition: all 2s ease;
 }
 
