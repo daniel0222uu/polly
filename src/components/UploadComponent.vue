@@ -29,7 +29,7 @@
       transition-duration: 0.4s;
       border-radius: 15px;
       box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);"
-      @click="testAxiosPost(uploadingObject)">Upload deck: {{uploadingObject.id}}</button>
+      @click="testAxiosPost(uploadingObject)">{{instantiateuiLabels.uploadDeck}}: {{uploadingObject.id}}</button>
   </div>
 
   </div>
@@ -43,6 +43,8 @@ import Decks from "@/assetts/Decks.json";
 export default {
   name: "UploadComponent",
   props: ["uploadingObject"],
+  
+  inject: ['uiLabels'],
   data: function(){
     return {
       testing: {},
@@ -50,6 +52,7 @@ export default {
       selectorList: [],
       deckToUpload: {},
       uploadedDecks: Decks,
+      instantiateuiLabels: this.uiLabels
     }
   },
   created(){
