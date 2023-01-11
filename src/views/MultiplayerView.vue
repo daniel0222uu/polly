@@ -26,12 +26,14 @@
         box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);"
         @click="startPlaying">Start playing!</button>
     </div>
-  
+     <!-- v-bind:lobby-created="lobbyCreated" -->
   <!-- Här visas meddelande om att det finns en invite -->
     <div>
     <ul style="list-style: none">
       <li v-for="invite in invitationList" v-bind:key="invite"> {{invite.requester}} Invites you to play {{invite.lobbyID}}
-        <join-lobby-component v-bind:lobby-id="invite.lobbyID" v-bind:name="name" v-bind:lobby-created="lobbyCreated" ></join-lobby-component>
+        <join-lobby-component v-bind:lobby-id="invite.lobbyID" v-bind:name="name"  ></join-lobby-component>
+        <br>
+        <button @click="declineInvite(invite.requester)" > Decline</button>
       </li>
     </ul>
     </div>
@@ -83,35 +85,11 @@
         
         <ActivePlayersComponent v-if="expandPlayerList"
                                 v-bind:player-nick-name="name" v-bind:uniqueLobbyID="lobbyId"
-                                v-bind:lobby-created-bool="lobbyCreatedBool"
+
         ></ActivePlayersComponent>
       </div>
 
-      </div>
-
-
-
-
-      <!-- Här avslutas allt som visas när joinBolean=True -->
-
-      <!-- Här visas info när användaren spelat klart och klickat Done -->
-
-
-      <!-- Ska denna va med ? -->
-
-
-      <!--  <div class="viewAfterGame" v-if="gameFinishedBoolean">
-          <img src="http://localhost:8080/img/score-icon-21.jpeg" width="100" height="100">
-          <P>Congratulation, {{name}}! Well done!</P>
-          <P>Your score is: {{score}} points out of {{totalQuestionAmount}}</P>
-          <p>Do you want to challange another player? Select one player from the list below and then click "Challange"!</p>
-          <form @submit="sendRequest(selectedPlayer)">
-            <div v-for="player in players" v-bind:key="player">
-              <input type="radio" name="player" v-model="selectedPlayer">  {{player.name}}</div>
-            <button type="submit">Challange now!</button>
-          </form>
-          <P><button @click="exitPlaying(name)">I want to exit the game</button></P>
-        </div> -->
+      </div> <!--   v-bind:lobby-created-bool="lobbyCreatedBool"  denna som skapa massa errors.-->
 
 
       </div>
@@ -182,6 +160,14 @@ export default {
         exitPlaying: function () {
           this.joinedBoolean = false;
           socket.emit("exitPlaying", {name: this.name});
+        },
+        declineInvite: function (requesterToFilter) {
+          console.log("declineInvite");
+          for(let invite of this.invitationList){
+            if(invite.requester === requesterToFilter){
+              this.invitationList = this.invitationList.filter(invite => invite.requester !== requesterToFilter);
+            }
+          }
         },
         loadDeck: function (deckIdToLoad) {
           this.questionPosition = 0;
