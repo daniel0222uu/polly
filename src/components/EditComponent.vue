@@ -9,7 +9,7 @@
       <div>
 
 <select id = "selector" v-model="selectedDeck" name="decks" required @change="loadDeck">
-  <option value="" disabled selected hidden>Pick a deck to edit</option>
+  <option value="" disabled selected hidden>{{instantiateuiLabels.pickDeckEdit}}</option>
   <option v-for="deck in selectorList" v-bind:key="deck">{{ deck }}</option>
 </select>
 
@@ -41,20 +41,20 @@
 
 <div>
   <div class="prevAndNextDiv">
-    <button @click="previousCLick" class="prevButton"> Previous </button>
+    <button @click="previousCLick" class="prevButton">{{instantiateuiLabels.previous}} </button>
 
  <span style="font-size:x-large; position: absolute;">{{deckIndex + 1 }} / {{this.deckObject.questionArray.length }}</span>
 
- <button @click="nextClick" class="nextButton"> Next </button>
+ <button @click="nextClick" class="nextButton">{{instantiateuiLabels.next}} </button>
 
   </div>
 
 <ResposiveNav v-bind:hideNav="hideNav">
 
-  <button class="buttonNav" @click="addCard">Add new card</button>
-  <button class="buttonNav" @click="deleteCard">Delete card</button>
-  <button class="buttonNav" @click="saveCard" >Save changes</button>
-  <button class="buttonNav" @click="deleteDeckMessage" >Delete deck</button>
+  <button class="buttonNav" @click="addCard">{{instantiateuiLabels.addCard}}</button>
+  <button class="buttonNav" @click="deleteCard">{{instantiateuiLabels.deleteCard}}</button>
+  <button class="buttonNav" @click="saveCard" >{{instantiateuiLabels.saveChanges}}</button>
+  <button class="buttonNav" @click="deleteDeckMessage" >{{instantiateuiLabels.deleteDeck}}</button>
 
 
 
@@ -108,6 +108,8 @@ import ResposiveNav from "./ResponsiveNav";
 export default {
   name: "EditComponent",
 
+  inject: ['uiLabels'],
+
   data: function (){
      return {
       hideNav: true,
@@ -136,6 +138,7 @@ export default {
        selectorList: [],
        addingQuestionBool: false,
        showDeleteMessage:false,
+       instantiateuiLabels: this.uiLabels
      }
 
     },

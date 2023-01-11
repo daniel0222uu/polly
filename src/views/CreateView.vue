@@ -26,7 +26,7 @@
 
     <div>
       <input class="questionEditingFields" :class="{fieldEmpty:showText ,fieldDuplicate:duplicateName}"
-             autocomplete="off" placeholder="Name your deck here" id="namingDeckField" type="text" v-model="deckName">
+             autocomplete="off" placeholder="Name your deck" id="namingDeckField" type="text" v-model="deckName">
 
       <button style="
         background-color: #fec89a;
@@ -44,7 +44,7 @@
         transition-duration: 0.4s;
         border-radius: 15px;
         box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);"
-        @click="createDeck(deckName)">Create new deck</button>
+        @click="createDeck(deckName)">{{instantiateuiLabels.createDeck }}</button>
         {{ questionObject.id }}
       
 
@@ -144,6 +144,7 @@ export default {
   components: {
     WarningMessage,
   },
+  inject: ['uiLabels'],
   data: function () {
     return {
       lang: "",
@@ -164,6 +165,7 @@ export default {
       questionAlert: false,
       answerAlert: false,
       badStringBool: false,
+      instantiateuiLabels: this.uiLabels,
     }
   },
   created: function () {
