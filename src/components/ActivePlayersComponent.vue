@@ -3,7 +3,7 @@
 
   <div id="toggleActivePlayer">
     <div>
-      <span> Active players</span>
+      <span> Players online:</span>
     </div>
     <div>
       <button id="toggleButton" @click="expandPlayerList=!expandPlayerList">
@@ -113,7 +113,7 @@ export default {
   width: 250px;
   height: 600px;
   overflow: auto;
-  font-size: 18px;
+  font-size: 16px;
   text-align: start;
 }
 
@@ -131,6 +131,6 @@ export default {
 }
 
 #playerList {
-  list-style: georgian inside;
+  list-style:square;
 }
 </style>

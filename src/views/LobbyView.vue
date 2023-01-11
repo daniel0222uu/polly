@@ -1,32 +1,37 @@
   <template>
-    Im playing as {{name}}
+  <!--Player name-->
+    <div style="display:flex; justify-content:center; align-items:center">
+       <p style="margin-right:5px">Player:</p> <h3>{{name}}</h3>
+    </div>
+
     <div id="wholeScreen">
-      <progress-bar-component v-bind:progress="trueCountProgress"></progress-bar-component>
-      {{trueCount}} out of {{trueValuesNeeded}} wants to see the question
-      <div id="playersActive">
+
+      <!--Progress bar-->
+      <div v-if="showProgressBar" >
+        <progress-bar-component v-bind:progress="trueCountProgress"></progress-bar-component>
+      {{trueCount}} out of {{trueValuesNeeded}} players wants to flip
+
       </div>
-   <!--   <div>
-        <ul style="list-style: none">
-          <li v-for="invite in invitationList" v-bind:key="invite"> {{invite.requester}} Invites you to play {{invite.lobbyID}}
-            <join-lobby-component v-bind:lobby-id="invite.lobbyID" v-bind:name="name" v-bind:lobby-created="lobbyCreated" ></join-lobby-component>
-          </li>
-        </ul>
-      </div> -->
+      
+      
+   
     <div id="wrapperDiv">
 
-      <div id="leftVertical">
-        <span v-for="player in players" v-bind:key="player" > {{player}} ,  </span>
+      <!--Player chatbox-->
+      <div class="chatBox" :class="{hiddenChatBox:chatOpen}">
+        <span v-for="player in players" v-bind:key="player" > {{player}},  </span>
         <div>
-          <p> Chat</p>
-          <textarea id="chatWindow" readonly  v-model="messages">
+          
+          <textarea id="chatWindow" readonly placeholder="This is a chat room for this lobby! Say hello to the other players!" v-model="messages"> 
         </textarea>
           <p>
-            <input v-model="newMessage"/>
+            <input placeholder="Type in chat" v-model="newMessage"/>
             <button @click="sendMessage(newMessage)">Send</button></p>
         </div>
       </div>
 
-      <div id="middleContent">
+
+      <div v-if="showPressToSeeQuestion" class="playDiv">
 
         <FlashcardComponent v-bind:questionProp="myObj_deserialized" v-bind:show-answer="swapSides"
                             v-bind:poll-id="pollId" v-bind:coop-multiplayer="hideNextButtons" v-bind:deck-loaded="resetQuestionPosition"
@@ -36,12 +41,12 @@
 
       </div>
 
-      <div id="rightVertical">
+      <div class="menu" :class="{hiddenMenu:menuOpen}">
 
         <div>
           <br>
           
-          <select name="decks" required v-model="selectedDeck" @change="suggestGame" >
+          <select style="padding:5px" name="decks" required v-model="selectedDeck" @change="suggestGame" >
             <option value="" disabled selected hidden>Suggest a deck to play</option>
             <option id="deckSelector" v-for="deck in selectorList" v-bind:key="deck">{{deck}}</option>
           </select>
@@ -72,10 +77,18 @@
     </div>
 
     <div id="belowGame">
-
+     <!-- <ResponsivNav></ResponsivNav>--> 
 
       <div>
-        <button v-if="showPressToSeeQuestion" style="width: 100px; height: 70px;" @click="seeQuestion">Press here when you want to see the question </button>
+        <button  style="width: 100px; height: 70px;" @click="openChat"><h3>{{chatbuttonText}}</h3> </button>
+      </div>
+
+      <div>
+        <button v-if="showPressToSeeQuestion" style="width: 100px; height: 70px;" @click="seeQuestion"><h3>Flip card</h3> </button>
+      </div>
+
+      <div>
+        <button  style="width: 100px; height: 70px;" @click="openMenu"><h3>{{menubuttonText}}</h3> </button>
       </div>
 
     </div>
@@ -90,6 +103,7 @@
 import io from 'socket.io-client';
 import FlashcardComponent from "@/components/FlashcardComponent";
 import ActivePlayersComponent from "@/components/ActivePlayersComponent";
+//import ResponsivNav from "@/components/ResponsiveNav.vue";
 //import JoinLobbyComponent from "@/components/JoinLobbyComponent";
 import Decks from "@/assetts/Decks.json";
 import ProgressBarComponent from "@/components/ProgressBarComponent";
@@ -104,10 +118,16 @@ export default {
     FlashcardComponent,
     ActivePlayersComponent,
     ProgressBarComponent,
+    //ResponsivNav
     //JoinLobbyComponent
   },
   data: function () {
     return {
+      chatbuttonText: 'Open chat lobby',
+      chatOpen: true,
+      menubuttonText: 'Close menu',
+      menuOpen: false,
+      showProgressBar: false,
       votedDecks: [],
       inLobbyBool: false,
       name: "",
@@ -198,6 +218,28 @@ export default {
     })
   },
   methods: {
+    openChat: function() {
+      this.chatOpen = !this.chatOpen
+      if (this.chatOpen) {
+        this.chatbuttonText = 'Open chat lobby'
+      }
+      else {
+        this.chatbuttonText = 'Close chat lobby'
+
+      }
+      
+   },
+   openMenu: function() {
+      this.menuOpen = !this.menuOpen
+      if (this.menuOpen) {
+        this.menubuttonText = 'Open menu'
+      }
+      else {
+        this.menubuttonText = 'Close menu'
+
+      }
+      
+   },
     suggestGame: function () {
       socket.emit('suggestGame', {pollId: this.pollId, deckName: this.selectedDeck, playerThatSuggested: this.name})
     },
@@ -237,6 +279,7 @@ export default {
       this.myObj_deserialized = target;
       this.questionObject = this.myObj_deserialized;
       socket.emit("loadDeck", {pollId: this.pollId, deck: this.myObj_deserialized});
+      this.showProgressBar = true;
     },
     sendMessage: function (messageToSend) {
         socket.emit("sendMessage", {pollId: this.pollId, message: messageToSend, player: this.name});
@@ -312,20 +355,18 @@ export default {
 
 
 
-  #playersActive{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-  }
+ 
   #wholeScreen{
     display: flex;
     flex-direction: column;
+    
   }
   #belowGame{
+   
     display: flex;
     flex-direction: row;
     justify-content: center;
-    margin-top: 40px;
+    margin-top: 20px;
     height: 200px;
     width: 100%;
   }
@@ -333,22 +374,48 @@ export default {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
+   
   }
-  #leftVertical{
+  .chatBox{
+    
+    border: 5px ridge steelblue;
+    padding:10px;
+    background-color: steelblue;
+    max-width: 30%;
+    
+    
   }
-  #middleContent{
+  .hiddenChatBox, .hiddenMenu {
+    display:none;
   }
-  #rightVertical{
+  .playDiv{
+   
+  }
+  .menu{
+   
+    border: 5px ridge steelblue;
+    padding:5px;
+    background-color: steelblue;
+    overflow: scroll;
+    
+    
+    height:400px;
     user-select: none;
-    height: 400px;
+    
     width: 300px;
   }
   #chatWindow{
+    background-color: white;
     height: 300px;
-    width: 150px;
+    width: 170px;
     border: 1px solid black;
-    overflow: scroll;
+    
     white-space: pre-wrap;
+  }
+  @media screen and (max-width:40em) {
+    .chatBox {
+      max-width: 80%;
+    }
   }
 
   </style>
