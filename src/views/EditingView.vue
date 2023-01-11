@@ -3,7 +3,7 @@
   <body>
 
   <div>
-    <!----><EditAndCreateComponent/>
+    <!----><EditComponent/>
 
   
   </div>
@@ -17,7 +17,7 @@
 
 <script>
 import io from 'socket.io-client';
-import EditAndCreateComponent from '@/components/EditAndCreateComponent';
+import EditComponent from '@/components/EditComponent';
 const socket = io();
 
 export default {
@@ -27,7 +27,7 @@ export default {
     }
   },
   components: {
-    EditAndCreateComponent
+    EditComponent
   },
   created: function () {
     this.lang = this.$route.params.lang;
