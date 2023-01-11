@@ -11,7 +11,7 @@ const fs = require("fs");
 app.use(bodyParser.json());
 
 
-app.post('/fileTest', (req, res) => { //axios test reveiver
+app.post('/uploadDeck', (req, res) => { //axios test reveiver
     const data = req.body;
 
      const file = fs.readFileSync("src/assetts/Decks.json");  
@@ -19,7 +19,9 @@ app.post('/fileTest', (req, res) => { //axios test reveiver
       jsonOfTheFile.push(data.data);
      console.log(jsonOfTheFile);
      console.log(data.data);
-      fs.writeFileSync("src/assetts/Decks.json", JSON.stringify(jsonOfTheFile));
+        setTimeout(() =>
+            fs.writeFileSync("src/assetts/Decks.json",
+                JSON.stringify(jsonOfTheFile)), 6000);
 
 
 

@@ -40,20 +40,28 @@
 
         <div>
           <br>
-          <button style="" @click="suggestGame"> Suggest to play this deck</button>
-          <select  name="decks" required v-model="selectedDeck" >
-            <option value="" disabled selected hidden></option>
+          
+          <select name="decks" required v-model="selectedDeck" @change="suggestGame" >
+            <option value="" disabled selected hidden>Suggest a deck to play</option>
             <option id="deckSelector" v-for="deck in selectorList" v-bind:key="deck">{{deck}}</option>
           </select>
         </div>
+        
         <ul>
-          <li v-for="deck in suggestedDecks" v-bind:key="deck"> <b>{{deck.id}}</b>  was suggested for co-op, votes {{deck.votes}} / {{players.length}}
-            <button @click="acceptGame(deck.id)">Accept</button> </li>
+          <li v-for="deck in suggestedDecks" v-bind:key="deck"> 
+            
+            <b>{{deck.id}}</b> 
+            <button style="padding:5px; margin:7px" @click="acceptGame(deck.id)">Vote</button>
+            
+            
+            {{deck.votes}} / {{players.length}}
+            
+          </li>
         </ul>
         <br>
 
 
-        <ActivePlayersComponent v-bind:player-nick-name="name" v-bind:uniqueLobbyID="pollId"
+        <ActivePlayersComponent  v-bind:player-nick-name="name" v-bind:uniqueLobbyID="pollId"
                                 v-bind:lobby-created-bool="inLobbyBool"
         ></ActivePlayersComponent>
 
@@ -100,6 +108,7 @@ export default {
   },
   data: function () {
     return {
+      votedDecks: [],
       inLobbyBool: false,
       name: "",
       haveReceivedName: false,
@@ -157,12 +166,24 @@ export default {
     socket.on('gameSuggested', deckThatWasSuggested => {
       let deckName = deckThatWasSuggested;
       let objectToPush = {id: deckName, votes: 0};
+      for (var i = 0, len = this.suggestedDecks.length; i < len; ++i) {
+        if (this.suggestedDecks[i].id ==objectToPush.id) {
+          console.log('Det finns redan en sådan deck')
+          return;
+          
+
+        }
+       
+      }
       this.suggestedDecks.push(objectToPush);
       this.suggestedDecksChanged++;
+      
+
+  
     })
-    socket.on('gameAccepted', deckToUpdateVoteCount => {
+    socket.on('gameAccepted', deckName => {
       console.log("gameAccepted received on the client side");
-      let deckName = deckToUpdateVoteCount;
+      //let deckName = deckToUpdateVoteCount;
       for (let deck of this.suggestedDecks) {
         if (deck.id === deckName) {
           deck.votes++;
@@ -181,8 +202,16 @@ export default {
       socket.emit('suggestGame', {pollId: this.pollId, deckName: this.selectedDeck, playerThatSuggested: this.name})
     },
     acceptGame: function (deckToAccept) {
+      for (var i = 0, len = this.votedDecks.length; i < len; i++) {
+        if (deckToAccept == this.votedDecks[i]) {
+          return;
+        }
+
+      }
+      this.votedDecks.push(deckToAccept) 
       console.log("acceptGame ran and the deck to accept was,", deckToAccept);
       socket.emit('acceptGame', {pollId: this.pollId, deckName: deckToAccept})
+
     },
     startGame: function () {
       socket.emit("startGame", {pollId: this.pollId, players: this.players});
@@ -251,6 +280,7 @@ export default {
         if (deck.votes === this.players.length) {
           this.loadDeck(deck.id);
           this.suggestedDecks = [];
+          this.votedDecks = [];
           this.startGame();
           this.showPressToSeeQuestion = true;
           this.hideNextButtons = true;
@@ -279,6 +309,9 @@ export default {
 
   <style scoped>
 
+
+
+
   #playersActive{
     display: flex;
     flex-direction: row;
@@ -306,6 +339,7 @@ export default {
   #middleContent{
   }
   #rightVertical{
+    user-select: none;
     height: 400px;
     width: 300px;
   }

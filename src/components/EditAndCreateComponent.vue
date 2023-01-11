@@ -2,9 +2,9 @@
 
   <body>
     <div class="editPage">
-    
 
-      
+
+
       <div>
       <div>
 
@@ -18,16 +18,23 @@
 
 <div class="editView" :class="{active: isActive}">
 <div>
-<header id="questionNumberHeader" > <input class=" titleChangeField"   autocomplete="off" id="namingDeckField" type="text" v-model="this.deckObject.id" ></header>
+<header id="questionNumberHeader" >
+  <input class=" titleChangeField"   autocomplete="off"
+         id="namingDeckField" type="text"
+         v-model="this.deckObject.id" ></header>
 
 <br>
 
 
-<textarea class="questionEditingFields" id="questionField" placeholder="Question" v-model="questionField"></textarea>
+<textarea class="questionEditingFields"
+          id="questionField" placeholder="Question"
+          v-model="questionField"></textarea>
 
 <br>
 <br>
-<textarea style="height:50px;" class="questionEditingFields"  id="answerField" placeholder="Answer" v-model="answerField"></textarea>
+<textarea style="height:50px;" class="questionEditingFields"
+          id="answerField" placeholder="Answer"
+          v-model="answerField"></textarea>
 </div>
 
 
@@ -37,20 +44,20 @@
     <button @click="previousCLick" class="prevButton"> Previous </button>
 
  <span style="font-size:x-large; position: absolute;">{{deckIndex + 1 }} / {{this.deckObject.questionArray.length }}</span>
- 
+
  <button @click="nextClick" class="nextButton"> Next </button>
 
   </div>
 
 <ResposiveNav v-bind:hideNav="hideNav">
-  
+
   <button class="buttonNav" @click="addCard">Add new card</button>
   <button class="buttonNav" @click="deleteCard">Delete card</button>
   <button class="buttonNav" @click="saveCard" >Save changes</button>
   <button class="buttonNav" @click="deleteDeckMessage" >Delete deck</button>
-  
-  
-  
+
+
+
 
 </ResposiveNav>
  <div>
@@ -78,13 +85,13 @@ Problem med att hämta namn som har två mellanslag i sig eller mellanslag innan
         <button class="bigButton" @click="deleteDeckMessage">No</button>
 
        </div>
-     
-    </div>
 
     </div>
 
-    
-  
+    </div>
+
+
+
   </body>
 </template>
 
@@ -133,59 +140,29 @@ export default {
        addingQuestionBool: false,
        showDeleteMessage:false,
      }
-     
+
     },
     components: {
       ResposiveNav
 
     },
   methods: {
-    saveDeck: function () {
-      console.log("du klickade på en knapp med say()")
-      let completeDeck = {"id": this.deckName, "questionArray": this.quizQuestions, "answerArray": this.quizAnswers};
-      //defined on render. Inte bra vet inte varför.
-      console.log(completeDeck);
-      localStorage.setItem(completeDeck.id, JSON.stringify(completeDeck));
-    },
-    nameDeck: function (namingTheDeck) {
-      //let id =  '{"id" :' + '"' + namingTheDeck + '" \n  }';
-      console.log(namingTheDeck)
-      this.deckName = namingTheDeck;
-      //let deSerializedid = JSON.parse(id);
-      //console.log(deSerializedid);
-      //localStorage.setItem(namingTheDeck, id)
-      //let myObj_deserialized = JSON.parse(localStorage.getItem(namingTheDeck));
-      //localStorage.setItem(namingTheDeck,id);
-      //console.log(myObj_deserialized);
-    },
-    questionsToDeck: function (questionToAdd) {
-      this.quizQuestions.push(questionToAdd);
-      console.log(this.quizQuestions);
-      //console.log(this.quizQuestions);
-      //let myObj_deserialized = JSON.parse(localStorage.getItem(namingTheDeck));
-      //console.log(myObj_deserialized);
-    },
-    answersToDeck: function (answerToAdd) {
-      this.quizAnswers.push(answerToAdd);
-      console.log(this.quizAnswers);
-    },
-
     loadDeck: function () {
       this.deckIndex = 0;
       // if isActive is true and changes has been made, pop up= do you want to save changes before leaving? yes no
       console.log(this.selectedDeck)
 
       let myObj_deserialized = JSON.parse(localStorage.getItem(this.selectedDeck));
-      
+
       this.deckObject = myObj_deserialized;
-      
+
       this.answerField = this.deckObject.answerArray[this.deckIndex];
       this.questionField = this.deckObject.questionArray[this.deckIndex];
       this.answerField = myObj_deserialized.answerArray[this.deckIndex];
       this.questionField = myObj_deserialized.questionArray[this.deckIndex];
       this.deckObject = myObj_deserialized;
       this.isActive = true;
-      
+
     },
     previousCLick: function () {
       this.saveCard();
@@ -193,7 +170,7 @@ export default {
         this.deckIndex -- ;
       }
       else if (this.deckIndex == 0) {
-        
+
         this.deckIndex = this.deckObject.questionArray.length -1;
 
       }
@@ -219,7 +196,7 @@ export default {
       this.deckObject.answerArray[this.deckIndex] = this.answerField;
       localStorage.setItem(this.deckObject.id, JSON.stringify(this.deckObject));
 
-    }, 
+    },
     addCard: function () {
       this.saveCard();
       this.deckIndex = this.deckObject.questionArray.length;
@@ -228,21 +205,8 @@ export default {
       this.addingQuestionBool = true;
       this.saveCard();
     },
-    /*
-    savingAddedQustion: function () {
-      let question = this.questionField;
-      let answer = this.answerField;
-      
-      this.deckObject.questionArray.push(question);
-      this.deckObject.answerArray.push(answer);
-      localStorage.setItem(this.deckObject.id, JSON.stringify(this.deckObject));
-      this.addingQuestionBool = false;
-    },
-    */
-
     deleteDeckMessage: function() {
       this.showDeleteMessage= !this.showDeleteMessage;
-
     },
     deleteCard: function() {
       if (this.deckObject.answerArray.length == 1) {
@@ -259,9 +223,6 @@ export default {
       }
       this.questionField = this.deckObject.questionArray[this.deckIndex];
       this.answerField = this.deckObject.answerArray[this.deckIndex];
-      
-
-
     },
 
     deleteDeck: function() {
@@ -270,18 +231,9 @@ export default {
       this.selectorList = [];
       for (var i = 0, len = localStorage.length; i < len; ++i) {
         this.selectorList.push(localStorage.key(i));
-      }   
-
-      /*
-      for (var i = 0, len = localStorage.length; i < len; ++i) {
-        this.selectorList.push(localStorage.key(i));
       }
-
-     */
-
       this.isActive = false;
       this.showDeleteMessage= !this.showDeleteMessage;
-
     }
   }
   }
@@ -300,17 +252,17 @@ select {
 
 
 nav {
-   
+
     width:100%;
     height: 160px;
     display: grid;
     grid-template-rows: repeat(auto-fit, 10em);
-   
-    
-   
-    
+
+
+
+
     justify-content: center;
-    
+
   }
 .buttonNav {
     color: white;
@@ -330,15 +282,15 @@ nav {
     border: 2px solid #000;
     background-color: rgb(32, 90, 178);
     transition: box-shadow 300ms ease, transform 500ms ease;
-    
-    
+
+
 
     border-radius: 10px;
 }
 
 .buttonNav:hover{
 color: white;
-border: 2px solid white;  
+border: 2px solid white;
 background-color: rgb(32, 90, 178);
 
 transform: translateY(-10px);
@@ -367,14 +319,14 @@ transform: translateX(-2px);
 }
 
 .prevAndNextDiv {
-  
+
   display:flex;
   justify-content: center;
   height: 100px;
- 
-  
- 
- 
+
+
+
+
 
 }
 
@@ -382,7 +334,7 @@ transform: translateX(-2px);
 .yesAndNoDiv {
   display: flex;
   justify-content: space-around;
-  
+
 
 
 }
@@ -406,7 +358,7 @@ transform: translateX(-2px);
   background-color: white;
   user-select: none;
   border:1px solid black;
-  
+
 }
 
 .editView{
@@ -422,22 +374,22 @@ transform: translateX(-2px);
 .titleChangeField {
   background: transparent;
   font-size: xx-large;
-  
- 
-  
+
+
+
 
 }
 .questionEditingFields, .titleChangeField{
-  
- 
+
+
   border:none;
   text-align: center;
-  
+
   width:300px;
   /*
   background: transparent;
   border: none;
-  */  
+  */
 }
 .questionEditingFields {
   background-color: rgba(235, 251, 255, 0.836);
@@ -447,26 +399,26 @@ transform: translateX(-2px);
 
 .questionEditingFields:focus::placeholder {
   color: transparent;
-  
+
 }
 
 #questionNumberHeader{
   font-size: 24px;
   text-align: center;
   margin-top:10px;
-  
+
 }
 
 @media screen and (max-width:50em) {
-  
+
   button {
     height: 40px;
-   
-    
+
+
   }
- 
+
   nav {
-    margin:10px; 
+    margin:10px;
     position: relative;
     height:100vh;
     top: 3em;
@@ -476,20 +428,20 @@ transform: translateX(-2px);
     grid-template-rows: repeat(auto-fit, 3em);
     transition: 1.5s;
   }
-  
+
   nav ::v-slotted(a) {
     justify-content: left;
     padding-left: none;
 
-    
-    
-    
+
+
+
   }
- 
+
   .deleteMessage {
   width: 100%;
   height: 80%;
-  
+
 }
 
 
@@ -505,7 +457,7 @@ transform: translateX(-2px);
     transition: 0.1s;
   }
   .editPage{
-    
+
     overflow: hidden;
   }
 

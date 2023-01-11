@@ -26,15 +26,30 @@
     </div>
   </transition>
 
+
+  <transition name="fade">
+    <div id="deckNameTaken" class="positionConfirmation" v-if="deckNameTaken">
+      <div>
+        <p>
+          There exists a public deck with the name <span style="font-weight: bold"> {{deckName}}. </span>
+        </p>
+      </div>
+      <div>
+
+      </div>
+    </div>
+  </transition>
+
 </template>
 
 <script>
 export default {
   name: "WarningMessage",
-  props: ['deckAlert', 'questionFieldAlert', 'questionWasAdded', 'uploadSuccessful', 'badString'],
+  props: ['deckAlert', 'questionFieldAlert',
+    'questionWasAdded', 'uploadSuccessful',
+    'badString', 'deckNameTaken', 'deckName'],
   watch: {
     uploadSuccessful: function () {
-      console.log("uploadSuccessful är nu: ", this.uploadSuccessful);
     }
   }
 }
@@ -52,6 +67,12 @@ export default {
   width: 300px;
   height: 80px;
   border-radius: 20px;
+}
+#deckNameTaken{
+  background-color: beige;
+  position: fixed;
+  top: 20%;
+  left: 20%;
 }
 
 .text {

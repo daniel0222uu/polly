@@ -1,9 +1,6 @@
 <template>
   
   <body>
-    
-    
-
   <div id="wrapperDiv">
     
 
@@ -26,7 +23,7 @@
     <div  id="centerDiv">
       <FlashcardView  v-bind:questionProp="myObj_deserialized"
                       v-bind:disable-click="clickableFlashcardBool"
-                     ref="myChild"> </FlashcardView>
+                      ref="myChild"> </FlashcardView>
 
     </div>
     
@@ -110,6 +107,9 @@ export default {
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;700&display=swap');
 
+
+
+
 .notActive {
 display: none;
 }
@@ -135,10 +135,12 @@ select {
 }
 
 #wrapperDiv{
+  
   position: relative;
   height: 100%;
   display: flex;
   flex-direction: column;
+ 
 
   
   
@@ -169,6 +171,7 @@ header {
   top: 0;
   
 }
+
 
 /*Reaction buttons*/
 button {
@@ -217,6 +220,7 @@ button {
   }
 }
 #centerDiv{
+  
   display: flex;
   justify-content: center;
   align-items: center;

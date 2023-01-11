@@ -3,19 +3,14 @@
     <div v-bind:class="['hamburger', {'close': !hideNav}]"
          v-on:click="toggleNav">
     </div>
-    <div class="logo"> 
-      
-      
+    <div class="logo">
+
       <router-link class="logo" v-bind:to="'/'" style="text-decoration:none">flashcards</router-link>
-   
-   
+
     </div>
-    
-    
-   
-    
+
   </header>
-  <ResponsiveNav v-bind:hideNav="hideNav">
+  <ResponsiveNav class="nav"  v-bind:hideNav="hideNav">
 
     <router-link  v-bind:to="'/'">Home</router-link>
     <router-link  v-bind:to="'/mydecks/'+ lang">{{uiLabels.myDecks}}</router-link>
@@ -24,7 +19,15 @@
     
     
     
-    <div style=" height: 30px; width:40px" v-on:click="switchLanguage"><img style="width:100%; height:100%" src="https://upload.wikimedia.org/wikipedia/en/thumb/4/4c/Flag_of_Sweden.svg/383px-Flag_of_Sweden.svg.png"/></div>
+    <div class="flag" v-on:click="switchLanguage">
+      <img v-if="lang=='sv'" style="width:100%; height:100%" 
+      src= 'https://upload.wikimedia.org/wikipedia/en/thumb/4/4c/Flag_of_Sweden.svg/383px-Flag_of_Sweden.svg.png'
+      />
+
+      <img v-if="lang=='en'" style="width:100%; height:100%" 
+      src='https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Flag_of_the_United_Kingdom_%283-5%29.svg/1920px-Flag_of_the_United_Kingdom_%283-5%29.svg.png'
+      />
+    </div>
     
     
   </ResponsiveNav>
@@ -88,8 +91,17 @@ export default {
 
 <style scoped>
 
-button {
+.flag {
+  user-select: none;
+  margin-left:50px; 
+  margin-top:14px;
+  height: 30px; 
+  width: 45px;
+  
+  
+
 }
+
 
 
 header {
@@ -123,6 +135,21 @@ header {
     
 
   }
+  .hamburger {
+    color:rgb(11, 61, 128);
+    z-index: 1;
+    width:1em;
+    display: flex;
+    align-items: center; 
+    justify-content: left; 
+    padding: 0.5rem;
+    margin-bottom:20px;
+    top:0;
+    left:0;
+    height: 2rem;
+    font-size: 1.7rem;
+    
+  }
   
   .logo img {
     height:5rem;
@@ -130,21 +157,19 @@ header {
     margin-right: 0.5rem; 
   }
   
-  .hamburger {
-    color:white;
-    width:1em;
-    display: flex;
-    align-items: center; 
-    justify-content: left; 
-    padding:0.5rem;
-    top:0;
-    left:0;
-    height: 2rem;
-    font-size: 1.5rem;
-    
-  }
+ 
 
 @media screen and (max-width:50em) {
+
+.nav{
+  height:175px;
+  z-index: 1;
+  width:160px;
+}
+.hamburger {
+z-index: 2;
+}
+  
   .logo {
     font-size: 5vw;
     display: flex;
@@ -157,6 +182,7 @@ header {
   }
   .close::before {
     content: "✕";
+    
   }
   .hide {
     left:-12em;

@@ -1,12 +1,4 @@
 <template>
-  <!--
-  <h1>Welcome to Flashcards!</h1>
-  <label> 
-    Write poll id: 
-    <input type="text" v-model="id">
-  </label>
-  -->
-
   <br><br>
 
   <!-- Div för att layout av startsidan -->
@@ -15,7 +7,7 @@
     <!-- Här visas puff för Flashcard -->
     <div id="infoFlashcard">
 
-      <p style="font-size:24px;font-weight:bold">Welcome to FLASHCARDS!</p>
+      <h1 >Welcome to FLASHCARDS!</h1>
       <p>"The world's most award-winning quiz game."</p>
       <p>Here you can challenge yourself and other players in quiz games.</p>
       <p>Flashcard now also includes functionality that lets you create your own decks of flashcards.</p>
@@ -24,7 +16,6 @@
     </div>
 
   </div>
-<!-- Här slutar div för startsidan -->
 
 </template>
 
@@ -83,7 +74,7 @@ export default {
 
 
 #startWrapper {
-  width: 100%;
+  width: 95%;
   float: left;
   position: relative;
   height: 100%;
@@ -94,6 +85,7 @@ export default {
 }
 
 #infoFlashcard {
+ z-index: -1;
   width: 50%;
   background-color: white;
   border-radius: 10px;
@@ -102,6 +94,7 @@ export default {
   font-size: 20px;
   text-align: center;
   margin-left: 30px;
+  border: 5px ridge lightseagreen;
 
 }
 
@@ -131,40 +124,26 @@ export default {
     vertical-align: bottom;
     margin-right: 0.5rem; 
   }
-  .hamburger {
-    color:white;
-    width:1em;
-    display: flex;
-    align-items: center;
-    justify-content: left;
-    padding:0.5rem;
-    top:0;
-    left:0;
-    height: 2rem;
-    
-    font-size: 1.5rem;
- }
+
   .center {
   margin-left: auto;
   margin-right: auto;
 }
 
 @media screen and (max-width:50em) {
-  .logo {
-    font-size: 5vw;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .hamburger::before {
-    content: "☰";
-  }
-  .close::before {
-    content: "✕";
-  }
-  .hide {
-    left:-12em;
-  }
+ #infoFlashcard {
+  font-size: 16px;
+  width:70%
+ }
+}
+@media screen and (max-width:24em) {
+ #infoFlashcard {
+  font-size: 12px;
+  min-width:80%
+ }
+ h1 {
+  font-size: 18px;
+ }
 }
 
 

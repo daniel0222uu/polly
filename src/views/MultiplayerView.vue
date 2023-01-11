@@ -1,5 +1,13 @@
 <template>
   <body>
+
+     <!-- Här fyller användaren i namn och väljer att starta spelet -->
+     
+     <div style="margin-top:100px; ; "  v-if="!joinedBoolean">
+      
+      <input style="padding:5px" v-model="name" type="text" placeholder="Enter your name" />
+      <button style="padding:5px; margin:10px" @click="startPlaying">Start playing!</button>
+    </div>
   
   <!-- Här visas meddelande om att det finns en invite -->
     <div>
@@ -10,54 +18,56 @@
     </ul>
     </div>
 
-  <!-- Här fyller användaren i namn och väljer att starta spelet -->
-    <div v-if="!joinedBoolean">
-      <p style="font-size: 30px; font-weight: bolder">Enter your name:</p>
-      <input v-model="name" type="text" />
-      <button @click="startPlaying">Start playing!</button>
-    </div>
+ 
 
   <!-- Här startar div som visas när joinedBoolean=True -->
-    <div id="wrapperDiv" v-if="joinedBoolean">
+    <div class="wrapperDiv" v-if="joinedBoolean">
 
-    <!-- Här visas namn och användaren kan välja decka att spela-->
-      <div id="horizontalContent">
-
+      <div class="bannerDiv" >
+        <div class="nameAndQuitDiv">
         <p style="font-size:24px;font-weight:bold">
             {{name}}
-          <button @click="exitPlaying">Quit</button>
+          <button style="margin-left:20px" @click="exitPlaying">Quit</button>
         </p>
-        <div id="selector">Choose deck to play:
-          <select name="decks" required v-model="selectedDeck" @change="loadDeck(this.selectedDeck)">
-            <option value="" disabled selected hidden></option>
-            <option id="deckSelector" v-for="deck in selectorList" v-bind:key="deck">{{deck}}</option>
-          </select>
-        </div>
-      <!--</div>-->
-        <!-- Buttons for liking and commenting -->
-        <div class="buttons">
-          <button id = "likeButton" v-on:click="likeDeck(questionObject.id)">
-            <img src="https://freesvg.org/img/Thumbs-Up-Silhouette.png" style="width: 30px; height: 30px;"/>
-          </button>
-          <button v-on:click="seeCommentsBool=!seeCommentsBool"> <img src="http://localhost:8080/img/commentIcon.png" style="width: 30px; height: 30px;"/> </button>
-        </div>
-        <div v-if="seeCommentsBool">
-          <input v-model="hintString"> <button @click="commentDeck(questionObject.id,hintString)" > Leave hint</button>
-        </div>
 
+        
 
+      </div>
+      
+    </div>
 
+      <div class="mainContent">
+        <div class="infoFlashcard">
 
-    <!-- Här visas komponenten FlashcardView -->
-      <div id="flashcardWrapperDiv" v-if="joinedBoolean">
-        <FlashcardView v-bind:questionProp="myObj_deserialized" @nextClick="onClickChild" @previousClick="onClickChild" v-bind:coop-multiplayer="false"
-        v-bind:disable-click="true"></FlashcardView>
-        <!-- <button id="FinishGame" @click="finishGame()">Done!</button> -->
+<h3 >Welcome to Multiplayer!</h3>
+<p>Start by inviting a player and joining the lobby.</p>
+<p>Suggest and vote on a deck to play with your fellow players.</p>
+<p>when Everyone is ready the asnwer will be shown for a few seconds and then you will go to the next question.</p>
+<p>Good luck!</p>
+
+</div>
+<div class="activePlayerList" >
+        
+        <ActivePlayersComponent v-if="expandPlayerList"
+                                v-bind:player-nick-name="name" v-bind:uniqueLobbyID="lobbyId"
+                                v-bind:lobby-created-bool="lobbyCreatedBool"
+        ></ActivePlayersComponent>
+      </div>
+
       </div>
 
 
 
-        <div id="viewAfterGame" v-if="gameFinishedBoolean">
+
+      <!-- Här avslutas allt som visas när joinBolean=True -->
+
+      <!-- Här visas info när användaren spelat klart och klickat Done -->
+
+
+      <!-- Ska denna va med ? -->
+
+
+      <!--  <div class="viewAfterGame" v-if="gameFinishedBoolean">
           <img src="http://localhost:8080/img/score-icon-21.jpeg" width="100" height="100">
           <P>Congratulation, {{name}}! Well done!</P>
           <P>Your score is: {{score}} points out of {{totalQuestionAmount}}</P>
@@ -68,27 +78,10 @@
             <button type="submit">Challange now!</button>
           </form>
           <P><button @click="exitPlaying(name)">I want to exit the game</button></P>
-        </div>
+        </div> -->
 
-    </div> 
 
-     <!-- Här avslutas allt som visas när joinBolean=True -->
-
-     <!-- Här visas info när användaren spelat klart och klickat Done -->
-
-      <!-- Här visas Active Player listan-->
-      <div id="verticalRight" >
-        <ActivePlayersComponent v-if="expandPlayerList"
-                                v-bind:player-nick-name="name" v-bind:uniqueLobbyID="lobbyId"
-                                v-bind:lobby-created-bool="lobbyCreatedBool"
-        ></ActivePlayersComponent>
       </div>
-
-    </div>
-
-
-
-   <!-- </div>-->
   
   </body>
 
@@ -102,7 +95,7 @@ let selectList = Decks;
 const idListFromAllDecks = selectList.map(element => element.id);
 
 import io from "socket.io-client";
-import FlashcardView from "@/components/FlashcardComponent";
+
 import joinLobbyComponent from "@/components/JoinLobbyComponent";
 import ActivePlayersComponent from "@/components/ActivePlayersComponent";
 
@@ -115,7 +108,7 @@ const socket = io();
 export default {
   name: "MultiplayerView",
   components: {
-    FlashcardView,
+   
     joinLobbyComponent,
     ActivePlayersComponent,
     //autoLogout
@@ -126,19 +119,11 @@ export default {
       lang: "en",
       lobbyId: 1337,
       name: "",
-      questionPosition: 0,
-      totalQuestionAmount: 5,
       players: [],
       inviteWatcher: 0,
       inviteInformation: [],
       joinedBoolean: false,
-      myObj_deserialized: {},
-      questionObject:   {"id": "Sveriges huvudstäder",
-        "questionArray": ["Sverige", "Norge", "Finland", "Danmark"],
-        "answerArray": ["Sthlm", "Oslo", "Helsingfors", "CBH"]},
-      selectedDeck: "",
       invitationList: [],
-      gameFinishedBoolean: false,
       lobbyCreatedBool: false,
       expandPlayerList: true,
       hintString: "",
@@ -148,7 +133,6 @@ export default {
   },
   created: function() {
     this.lobbyId = Math.floor(Math.random() * 1000000 + 100000);
-    this.myObj_deserialized = this.questionObject;
     socket.on("multiplayerViewUpdate", playersActive => {
       this.players = playersActive;
     });
@@ -165,23 +149,6 @@ export default {
         exitPlaying: function () {
           this.joinedBoolean = false;
           socket.emit("exitPlaying", {name: this.name});
-          console.log("exitPLaying should've ran");
-        },
-        onClickChild: function (value) {
-          this.questionPosition = value;
-          console.log("parent has", this.questionPosition);
-          socket.emit("numberProgress", {name: this.name, score: this.questionPosition});
-        },
-        sendRequest: function (playerToRequest) {
-          socket.emit('playRequest', {
-            requester: this.name,
-            receiver: playerToRequest,
-            lobbyID: this.lobbyId
-          });
-          socket.emit('lobbyObject', {
-            lobbyID: this.lobbyId,
-            playersInLobby: []
-          });
         },
         loadDeck: function (deckIdToLoad) {
           this.questionPosition = 0;
@@ -191,11 +158,10 @@ export default {
           this.myObj_deserialized = target;
           this.questionObject = this.myObj_deserialized;
         },
-        finishGame: function () {
+     /*   finishGame: function () {
           this.gameFinishedBoolean = true;
-        },
-        // Function for the like button
-        async likeDeck (deckToLike) {
+        }, */
+        async likeDeck (deckToLike) { //denna ska flyttas över till lobbyView
           console.log(deckToLike);
           try {
             const response = await axios.post('http://localhost:8080/likeDeck ', {
@@ -209,14 +175,13 @@ export default {
             console.error(error);
           }
         },
-        async commentDeck (deckToComment, commentToSend) {
+        async commentDeck (deckToComment, commentToSend) { //denna ska flyttas över till lobbyView
           let objectToAppend = {
             name: this.name,
             hint: commentToSend,
             questionPosition: this.questionPosition,
             likes: 0,
           };
-          console.log("the object to append is: ", objectToAppend);
           try {
             const response = await axios.post('http://localhost:8080/commentDeck ', {
               data: deckToComment,
@@ -258,26 +223,53 @@ export default {
 
 <style scoped>
 
-#wrapperDiv{
-  position: relative;
-  height: 100%;
+.wrapperDiv{
+  
+
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  
+ 
+  
 }
-#horizontalContent{
-  flex: 1;
-}
-#verticalRight{
-  height: 400px;
-  width: 250px;
-}
-#flashcardWrapperDiv{
-  display: flex;
-  justify-content: center;
+.bannerDiv {
+  width:100%; 
+  display: flex; 
+  justify-content: space-evenly;
   align-items: center;
 }
+.mainContent {
+ width: 100%; 
+ display: flex; 
+ justify-content: space-evenly;
+ 
+}
 
-#viewAfterGame {
+
+.activePlayerList{
+  border: 5px ridge lightseagreen;
+ 
+  height: 420px;
+  overflow: scroll;
+  overflow-x: hidden;
+  width: 250px;
+}
+.nameAndQuitDiv {
+ 
+ display: flex;
+ flex-direction: column;
+ justify-content: space-evenly;
+ align-items: center;
+ width:200px;
+ 
+  
+  
+  
+}
+
+
+.viewAfterGame {
+  
   font-size: 24px;
   text-align: left;
 	background-color: white;
@@ -287,12 +279,43 @@ export default {
   padding: 10px;
 }
 
-#likeButton {
+.likeButton {
   height: 40px;
   width: 50px;
   margin-bottom: 20px;
 }
 
 
+.infoFlashcard {
+  height: 400px;
+  text-align: center;
+  
+  
+  width: 40%;
+  background-color: white;
+  border-radius: 10px;
+  border:1px solid black;
+  padding: 30px;
+  font-family: Kanit;
+  font-size: 20px;
+  
+  
+}
+@media screen and (max-width: 42em) {
+  .infoFlashcard{
+    font-size: 14px;
+  }
 
+}
+
+@media screen and (max-width: 30em) {
+  .mainContent{
+    flex-direction: column-reverse;
+    
+    align-items: center;
+  }
+  .infoFlashcard{
+    width: 70%;
+  }
+}
 </style>

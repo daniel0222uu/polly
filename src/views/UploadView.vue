@@ -1,10 +1,10 @@
 <template>
 
-
   <div id="wrapperDiv">
+
     <div id="selector">
       <select name="decks" required v-model="selectedDeck" @change="loadDeck(this.selectedDeck)">
-        <option value="" disabled selected hidden></option>
+        <option value="" disabled selected hidden>Choose a deck to upload</option>
         <option id="deckSelector" v-for="deck in selectorList" v-bind:key="deck">{{ deck }}</option>
       </select>
     </div>
@@ -19,8 +19,16 @@
 
     </div>
 
-    <div id="confirmationDiv">
-      <warning-message v-bind:upload-successful="uploadSuccessfulBool"></warning-message>
+    <div class="confirmationDiv">
+      <warning-message
+          v-bind:upload-successful="uploadSuccessfulBool">
+      </warning-message>
+    </div>
+
+    <div class="confirmationDiv">
+      <warning-message v-bind:deck-name-taken="deckNameTakenBool"
+                       v-bind:deckName="deckToUpload.id">
+      </warning-message>
     </div>
 
 
@@ -55,10 +63,11 @@ export default {
         hints: []
       },
       uploadSuccessfulBool: false,
-      deckRejectedBool   : false,
+      deckNameTakenBool   : false,
     }
   },
-  created() {
+  created() { // runs when the component is created and fills selectorList with keys in localStorage which
+    //contains our decks
     for (var i = 0, len = localStorage.length; i < len; ++i) {
       this.selectorList.push(localStorage.key(i));
     }
@@ -68,8 +77,10 @@ export default {
       this.questionPosition = 0;
       console.log("du klickade på en knapp med loadDeck()", deck);
       this.deckToUpload = JSON.parse(localStorage.getItem(deck));
-      if(this.rejectDeck(this.deckToUpload)){
-        this.deckRejectedBool = true;
+      if(this.deckNameTaken(this.deckToUpload)){
+        this.deckNameTakenBool = true;
+        setTimeout(() =>
+            this.deckNameTakenBool = false, 5000);
         return;
       }
       this.deckToAxios.id = this.deckToUpload.id;
@@ -80,7 +91,7 @@ export default {
       this.uploadSuccessfulBool = true;
       setTimeout(() => this.uploadSuccessfulBool = false, 3000);
     },
-    rejectDeck: function(deckToReject){
+    deckNameTaken: function(deckToReject){
       for(let deck of Decks){
         if(deck.id === deckToReject.id){
           return true;
@@ -107,7 +118,7 @@ export default {
   align-items: center;
 }
 
-#confirmationDiv {
+.confirmationDiv {
   display: flex;
   margin-top: 100px;
   flex-direction: column;

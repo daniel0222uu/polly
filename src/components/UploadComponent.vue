@@ -4,9 +4,9 @@
     
 
     <div class="uploadedDeckList">
-      <h3>Uploaded decks: </h3>
+      <h3>Public decks: </h3>
   <ol>
-      <li  v-for="deck in this.uploadedDeckList" :key="deck">{{ deck }}</li>
+      <li  v-for="deck in uploadedDecks" :key="deck">{{ deck.id}}</li>
     </ol>
 
 </div>
@@ -20,9 +20,8 @@
 </template>
 
 <script>
-//import io from "socket.io-client"; bryr mig inte om det jsut nu
 import axios from 'axios';
-//const socket = io();
+import Decks from "@/assetts/Decks.json";
 
 
 export default {
@@ -30,11 +29,11 @@ export default {
   props: ["uploadingObject"],
   data: function(){
     return {
-      uploadedDeckList:["Nordens Huvudstäder", "Historia", "bilar","databasteknik"],
       testing: {},
       selectedDeck: "",
       selectorList: [],
       deckToUpload: {},
+      uploadedDecks: Decks,
     }
   },
   created(){
@@ -49,7 +48,7 @@ export default {
         return;
       }
       try {
-        const response = await axios.post('http://localhost:8080/fileTest ', {
+        const response = await axios.post('http://localhost:8080/uploadDeck ', {
           data: deckToUpload,
           headers:{
             'Content-Type': 'application/json'
@@ -98,13 +97,6 @@ ol {
  
   
  
-}
-.uploadSelector {
-  margin-top: 50px;
-  margin-left:100px;
-  
-  grid-column: 2;
-  
 }
 .uploadButton {
   grid-column: 3;
@@ -180,9 +172,6 @@ transform: translateY(-3px);
   }
   .uploadButton {
     grid-row: 2;
-  }
-  .uploadSelector {
-    margin-left:20px;
   }
 }
 
