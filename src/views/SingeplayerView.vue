@@ -1,8 +1,9 @@
 <template>
   
   <body>
+  {{sprak.DANIELS_INJEKTOR}}
   <div id="wrapperDiv">
-    
+
 
       <div id="questionHeader">
         <div id="selector">
@@ -36,10 +37,6 @@
 // @ is an alias to /src
 // import BarsComponent from '@/components/BarsComponent.vue';
 import FlashcardView from "@/components/FlashcardComponent";
-import io from 'socket.io-client';
-
-
-const socket = io();
 
 export default {
   name: 'ResultView',
@@ -47,12 +44,13 @@ export default {
     FlashcardView,
     // BarsComponent
   },
+  inject: ['uiLabels'],
   data: function () {
     return {
       numberToSend:0,
+      uiLabels: this.uiLabels,
       isActive:false,
       myObj_deserialized: {},
-      uiLabels: {},
       lang: "en",
       hideNav: true,
       selectorList: [],
@@ -66,6 +64,7 @@ export default {
       answerButtonBool: false,
       fontSize: 80,
       clickableFlashcardBool: true,
+      sprak: this.uiLabels
     }
   },
   created() {
@@ -74,28 +73,16 @@ export default {
        this.selectorList.push(localStorage.key(i));
     }
     this.myObj_deserialized = this.questionObject;
-
-    socket.on("init", (labels) => {
-      this.uiLabels = labels
-      console.log(labels);
-       
-
-    })
+    console.log("the language loaded from inject in SinglePlayer is: ", this.uiLabels);
   },
   methods: {
-    
     loadDeck: function(deck){
       this.isActive = false;
-      console.log("du klickade på en knapp med loadDeck()");
-      
       setTimeout (() => {
         this.questionObject = this.myObj_deserialized;
         this.myObj_deserialized = JSON.parse(localStorage.getItem(deck));
         this.isActive = true;
       },1);
-      
-      
-      
     },
   },
 }

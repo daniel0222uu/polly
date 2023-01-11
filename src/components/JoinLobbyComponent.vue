@@ -19,6 +19,7 @@ export default {
     joinLobby: function () {
       socket.emit("joinLobby", {lobbyID: this.lobbyId, name: this.name});
       this.navigate();
+      this.$router.push('/lobby/'+this.lobbyId);
     },
   },
   watch: {

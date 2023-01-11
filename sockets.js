@@ -16,34 +16,14 @@ function sockets(io, socket, data) {
     socket.emit('pollCreated', d.pollId);
 
   });
+
   socket.on("updatePollView", function(d) {
     //console.log("update pollview received:", d.name);
   });
 
-  socket.on('addQuestion', function(d) {
-    data.addQuestion(d.pollId, {q: d.q, a: d.a});
-    socket.emit('dataUpdate', data.getAnswers(d.pollId));
-  });
-
-  socket.on('editQuestion', function(d) {
-    data.editQuestion(d.pollId, d.index, {q: d.q, a: d.a});
-    socket.emit('questionEdited', data.getAllQuestions(d.pollId));
-  });
 
   socket.on('joinPoll', function(pollId) {
     socket.join(pollId);
-    socket.emit('newQuestion', data.getQuestion(pollId))
-    socket.emit('dataUpdate', data.getAnswers(pollId));
-  });
-
-  socket.on('runQuestion', function(d) {
-    io.to(d.pollId).emit('newQuestion', data.getQuestion(d.pollId, d.questionNumber));
-    io.to(d.pollId).emit('dataUpdate', data.getAnswers(d.pollId));
-  });
-
-  socket.on('resetAll', () => {
-    data = new Data();
-    data.initializeData();
   });
 
   socket.on('startPlaying', function(d) {

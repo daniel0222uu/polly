@@ -1,13 +1,35 @@
 <template>
-  <BannerComponent />
+  <BannerComponent  @languageSwitch="uiLabelsSwitch" />
   <router-view/>
 </template>
 
 <script>
 import BannerComponent from '@/components/BannerComponent.vue';
+import defaultLanguage from '/Users/danielceoca/Desktop/projektGränssnitt/polly/data/labels-en.json';
+import { computed } from 'vue'
+
 export default {
   components: {
     BannerComponent
+  },
+  data: function (){
+    return {
+      uiLabels: defaultLanguage
+    }
+  },
+  methods: {
+    uiLabelsSwitch: function (labels) {
+      this.uiLabels = labels;
+      console.log("the language loaded from inject in App is: ",this.uiLabels);
+      console.log("daniels injektor is: ",this.uiLabels.DANIELS_INJEKTOR);
+    }
+  },
+  provide() {
+    const languageToInject =
+        computed(() => this.uiLabels);
+    return {
+      uiLabels: languageToInject
+    }
   }
 }
 </script>
