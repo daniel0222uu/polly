@@ -4,6 +4,7 @@
 	"createPoll": "Create poll",
 	"participatePoll": "Participate in poll",
 	"question": "Question",
+	"answer": "Answer",
 	"changeLanguage": "Byt till svenska",
 	"results": "Results",
 	"chooseAdeck": "Choose a deck!",
@@ -21,6 +22,14 @@
 	"checkResults" : "Now you can check the answers and questions again of the deck",
 	"enterYourDeck" : "Enter your deck here",
 	"warningNoNameDeck" : "Give your deck a name to continue!",
-	"warningSameNameDeck" : "You already have a deck with this name!"
+	"warningSameNameDeck" : "You already have a deck with this name!",
+	"addCard" : "Add card",
+	"enterYourName" : "Enter your name",
+	"startPlaying" : "Start playing!",
+	"quitGame" : "Quit game",
+	"JoinLobbt" : "Join lobby",
+	"mostPoppular" : "Most popular deck",
+	"deck" : "Deck",
+	"likes" : "Likes"
 
 }
