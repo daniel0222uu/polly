@@ -92,10 +92,11 @@ export default {
   watch: {
     showAnswer: function () {
       if (this.showAnswer) {
-        console.log("showAnswer changed because flipped is:", this.flipped);
         this.flipped = true;
-        setTimeout(() => this.flipped = false, 2000);
-        setTimeout(() => this.nextClick(), 3000);
+        console.log("showAnswer is true and answer length is: ", this.questionProp.answerArray[this.questionPosition].length);
+        console.log("time before the flip occurs is: ", this.timeBeforeFlip);
+        setTimeout(() => this.flipped = false, this.timeBeforeFlip);
+        setTimeout(() => this.nextClick(), this.timeBeforeFlip + 1000);
         setTimeout(() => socket.emit('questionSeen', {pollId: this.pollId}), 3500);
       }
     },
@@ -122,7 +123,7 @@ export default {
       }
     },
     adjustingFontSizeQuestion: function() {
-      const length = this.questionProp.questionArray[this.questionPosition].length;
+      const length = this.questionProp.answerArray[this.questionPosition].length;
       if (length > 100) {
         return 20;
       } else if (length > 50) {
@@ -135,6 +136,28 @@ export default {
         return 60;
       } else {
         return 70;
+      }
+    },
+    timeBeforeFlip: function () {
+      const length = this.questionProp.answerArray[this.questionPosition].length;
+      console.log("length is: ", length);
+      if (10> length > 50) {
+        return 4000;
+      } else if (50 > length > 200) {
+        return 7000;
+      } else if (200> length > 300) {
+        return 8000;
+      } else if (300 > length > 400) {
+        return 9000;
+      } else if (400 > length > 500) {
+        return 11000;
+      } else if(500> length > 600) {
+        return 13000;
+      } else if(600 < length ) {
+        return 20000;
+      }
+      else {
+        return 5000;
       }
     }
   }
