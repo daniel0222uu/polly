@@ -49,5 +49,13 @@
 	"nameYourDeck": "Name your deck",
 	"question": "Question",
 	"answer": "Answer",
-	"publicDecks": "Public decks"
+	"publicDecks": "Public decks",
+	"addCard": "Add card",
+	"chooseDeckUpload": "Choose a deck to upload",
+	"startPlay": "Start playing!",
+	"enterYourName": "Enter your name",
+	"quitGame": "Quit game",
+	"chatWelcome": "This is a chat room for this lobby! Say hello to the other players!",
+	"chatbuttonText": "Open chat lobby",
+	"menubuttonText": "Close menu"
 }

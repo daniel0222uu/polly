@@ -31,7 +31,7 @@
         <span v-for="player in players" v-bind:key="player" > {{player}},  </span>
         <div>
           
-          <textarea id="chatWindow" readonly placeholder="This is a chat room for this lobby! Say hello to the other players!" v-model="messages"> 
+          <textarea id="chatWindow" readonly :placeholder="instantiateuiLabels" v-model="messages">
         </textarea>
           <p>
             <input placeholder="Type in chat" v-model="newMessage"/>
@@ -147,6 +147,7 @@ const idListFromAllDecks = selectList.map(element => element.id);
 
 export default {
   name: 'LobbyView',
+  inject: ['uiLabels'],
   components: {
     FlashcardComponent,
     ActivePlayersComponent,
@@ -188,6 +189,7 @@ export default {
       seeFlashcardBool: false,
       clickableFlashcardBool: false,
       congratzMessage: false,
+      instantiateuiLabels: this.uiLabels
     }
   },
   created: function () {

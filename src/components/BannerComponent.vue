@@ -19,11 +19,11 @@
 
 
     <div class="flag" v-on:click="switchLanguage">
-      <img v-if="lang=='sv'" style="width:100%; height:100%"
+      <img v-if="lang=='en'" style="width:100%; height:100%"
            src='https://upload.wikimedia.org/wikipedia/en/thumb/4/4c/Flag_of_Sweden.svg/383px-Flag_of_Sweden.svg.png'
       />
 
-      <img v-if="lang=='en'" style="width:100%; height:100%"
+      <img v-if="lang=='sv'" style="width:100%; height:100%"
            src='https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Flag_of_the_United_Kingdom_%283-5%29.svg/1920px-Flag_of_the_United_Kingdom_%283-5%29.svg.png'
       />
     </div>

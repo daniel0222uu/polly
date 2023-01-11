@@ -6,7 +6,7 @@
      <div style="margin-top:100px; ;"  v-if="!joinedBoolean">
       
       <p>
-      <input style="padding:5px" v-model="name" type="text" placeholder="Enter your name">
+      <input style="padding:5px" v-model="name" type="text" :placeholder="instantiateuiLabels.enterYourName">
       </p>
       <button style="
         background-color: #fec89a;
@@ -24,7 +24,7 @@
         transition-duration: 0.4s;
         border-radius: 15px;
         box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);"
-        @click="startPlaying">Start playing!</button>
+        @click="startPlaying">{{ instantiateuiLabels.startPlay}}</button>
     </div>
      <!-- v-bind:lobby-created="lobbyCreated" -->
   <!-- Här visas meddelande om att det finns en invite -->
@@ -77,7 +77,7 @@
             webkit-transition-duration: 0.4s; /* Safari */
             transition-duration: 0.4s;
             border-radius: 15px;
-            box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);" @click="exitPlaying">Quit game</button>
+            box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);" @click="exitPlaying">{{instantiateuiLabels.quitGame}}</button>
         </p>
 
         
@@ -169,6 +169,9 @@ export default {
   methods:
       {
         startPlaying: function () {
+          if(this.name === ""){
+            return;
+          }
           this.joinedBoolean = true;
           socket.emit("startPlaying", {name: this.name, activityStamp: Date.now()});
         },

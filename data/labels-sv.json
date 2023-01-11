@@ -53,5 +53,11 @@
 	"nameYourDeck": "Döp din kortlek",
 	"question": "Fråga",
 	"answer": "Svar",
-	"publicDecks": "Publika kortlekar"
+	"publicDecks": "Publika kortlekar",
+	"addCard": "Lägg till kort",
+	"chooseDeckUpload": "Välj en kortlek att ladda upp",
+	"startPlay": "Börja spela",
+	"enterYourName": "Ange ditt namn",
+	"quitGame": "Avsluta spel",
+	"chatWelcome": "Detta är chatten, säg hej till dina medspelare"
 }

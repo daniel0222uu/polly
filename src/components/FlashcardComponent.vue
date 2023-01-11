@@ -16,9 +16,9 @@
   </div>
 
   <div class="buttonDiv" v-if="!coopMultiplayer">
-      <button id="previousButton" @click="previousCLick" class="prevNextButton"> Previous </button>
+      <button id="previousButton" @click="previousCLick" class="prevNextButton"> {{instantiateuiLabels.previous}} </button>
       <h2 class="navH">{{ questionPosition+1}}/{{questionProp.questionArray.length}}</h2>
-      <button id="nextButton" @click="nextClick" class="prevNextButton"> Next </button>
+      <button id="nextButton" @click="nextClick" class="prevNextButton"> {{instantiateuiLabels.next}} </button>
     </div>
 
 </div>
@@ -44,6 +44,7 @@ export default {
   name: 'FlashcardView',
   props: ['questionProp','showAnswer','pollId',
     'coopMultiplayer','deckLoaded','disableClick'],
+  inject: ['uiLabels'],
   data: function () {
     return {
       hej:0,
@@ -54,6 +55,7 @@ export default {
       uiLabels: {},
       answerString: "",
       points: 0,
+      instantiateuiLabels: this.uiLabels,
     }
   },
   
