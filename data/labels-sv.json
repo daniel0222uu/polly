@@ -19,13 +19,9 @@
 	"uploadDeck": "Ladda upp kortlek",
 	"congratz" : "Grattis du spela precis klart :",
 	"checkResults" : "Nu kan du kolla genom dina resultat",
-	"welcomeToStart": "Välkommen till Flashcards!",
+	"welcomeTo": "Välkommen till Flashcards!",
 	"worldsMostAward": "\"Världens mest berömda frågespel\"",
 	"challengeOthers": "Här kan du utmana dig själv och andra.",
 	"includesFunctionality": "Flascards inkluderar funktioner som låter dig skapa dina egna decks",
-	"goodLuck": "Lycka till!",
-	"welcomeToMultiplayer": "Välkommen till Multiplayer!",
-	"startByInviting": "Bjud in spelare och anslut till lobbyn.",
-	"suggestAndVote": "När alla är redo kommer svaret att visas i några sekunder och därefter visas nästa fråga.",
-	"whenEveryoneReady": "När alla är redo kommer svaret att visas i några sekunder och därefter visas nästa fråga."
+	"goodLuck": "Lycka till!"
 }
