@@ -282,13 +282,7 @@ transform: translateX(-2px);
   
   .card {
     width:400px;
-    margin-left:250px;
-   
-    
-    height: 600px;
-  }
-  .prevNextButton {
-    margin-left: 250px;
+ 
   }
   
   .navH {
@@ -296,6 +290,24 @@ transform: translateX(-2px);
     font-size: xx-large;
   }
   
+}
+@media screen and (max-width: 20em) {
+ 
+  
+ .card {
+   width:300px
+
+ }
+ 
+}
+@media screen and (max-width: 15em) {
+ 
+  
+ .card {
+   width:200px
+
+ }
+ 
 }
 
 

@@ -3,7 +3,7 @@
 
   <div id="toggleActivePlayer">
     <div>
-      <span> Players online:</span>
+      <span> Players online</span>
     </div>
     <div>
       <button id="toggleButton" @click="expandPlayerList=!expandPlayerList">
@@ -113,7 +113,7 @@ export default {
   width: 250px;
   height: 600px;
   overflow: auto;
-  font-size: 16px;
+  font-size: 18px;
   text-align: start;
 }
 
@@ -133,4 +133,23 @@ export default {
 #playerList {
   list-style:square;
 }
+@media screen and (max-width:60em) {
+  #verticalRight {
+    font-size: 15px;
+  }
+  
+}
+@media screen and (max-width:40em) {
+  #verticalRight {
+    font-size: 13px;
+  }
+  
+}
+@media screen and (max-width:30em) {
+  #verticalRight {
+    font-size: 12px;
+  }
+  
+}
+
 </style>

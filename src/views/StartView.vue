@@ -72,14 +72,14 @@ export default {
 #infoFlashcard {
  z-index: -1;
   width: 40%;
-  background-color: rgb(107, 168, 218);
+  background-color: rgba(70, 131, 180, 0.941);
  
   padding: 30px;
   font-family: Kanit;
   font-size: 20px;
   text-align: center;
   margin-left: 30px;
-  border: 5px ridge steelblue;
+  border: 5px ridge rgb(99, 151, 193);
 
 }
 
