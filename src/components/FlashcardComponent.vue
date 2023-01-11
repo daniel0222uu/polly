@@ -125,17 +125,17 @@ export default {
     adjustingFontSizeQuestion: function() {
       const length = this.questionProp.answerArray[this.questionPosition].length;
       if (length > 100) {
-        return 20;
-      } else if (length > 50) {
+        return 25;
+      } else if (20 > length > 50) {
         return 30;
-      } else if (length > 20) {
+      } else if (15> length > 20) {
         return 40;
-      } else if (length > 15) {
+      } else if (10 > length > 15) {
         return 50;
       } else if (length < this.questionProp.questionArray[this.questionPosition].length) {
-        return 60;
+        return 55;
       } else {
-        return 70;
+        return 60;
       }
     },
     timeBeforeFlip: function () {

@@ -7,11 +7,11 @@
     <!-- Här visas puff för Flashcard -->
     <div id="infoFlashcard">
 
-      <h1 >Welcome to FLASHCARDS!</h1>
-      <p>"The world's most award-winning quiz game."</p>
-      <p>Here you can challenge yourself and other players in quiz games.</p>
-      <p>Flashcard now also includes functionality that lets you create your own decks of flashcards.</p>
-      <p>Good luck!</p>
+      <h1 >{{instantiateuiLabels.welcomeTo}}</h1>
+      <p>{{instantiateuiLabels.worldsMostAward}}</p>
+      <p>{{instantiateuiLabels.challengeOthers}}</p>
+      <p>{{instantiateuiLabels.includesFunctionality}}</p>
+      <p>{{instantiateuiLabels.goodLuck}}</p>
 
     </div>
 
@@ -32,16 +32,15 @@ export default {
 
   components: {
   },
-
+  inject: ['uiLabels'],
   data: function () {
     return {
-     
       id: "",
-      
       hideNav: true,
       scoreNameField: "",
       scorePointField: "",
-      ScoreData: Scores
+      ScoreData: Scores,
+      instantiateuiLabels: this.uiLabels
     }
   },
   methods: {

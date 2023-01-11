@@ -18,5 +18,10 @@
 	"editDeck": "Edit deck",
 	"uploadDeck": "Upload deck",
 	"congratz" : "Congratulations you finsihed: ",
-	"checkResults" : "Now you can check the answers and questions again of the deck"
+	"checkResults" : "Now you can check the answers and questions again of the deck",
+	"welcomeTo": "Welcome to FLASHCARDS!",
+	"worldsMostAward": "\"The world's most award-winning quiz game.\"",
+	"challengeOthers": "Here you can challenge yourself and other players in quiz games.",
+	"includesFunctionality": "Flashcard now also includes functionality that lets you create your own decks of flashcards.",
+	"goodLuck": "Good luck!"
 }
