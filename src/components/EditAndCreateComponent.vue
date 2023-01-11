@@ -302,13 +302,15 @@ transform: translateY(-10px);
 .prevButton, .nextButton{
   user-select: none;
   cursor: pointer;
-  border-radius: 5px;
+  border-radius: 15px;
   border: 1px solid black;
   font-Size: 16px;
+  font-family: 'Kanit', sans-serif;
   width:110px;
   margin:35px;
   height: 40px;
-  background-color: rgb(32, 159, 178);
+  background-color: #fec89a;
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
 }
 
 .prevButton:active {

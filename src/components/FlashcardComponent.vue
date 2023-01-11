@@ -202,20 +202,24 @@ export default {
   height: 100%;
   border-radius: 4px;
   backface-visibility: hidden;
-  border: 2px solid black;
-  background-color: rgb(74, 91, 205);
+  
+  
+  
 }
 .card-front {
   color: black;
   font-size: 18px;
-  background-color: rgb(32, 159, 178);
+  background-color: #eccf95;
+  border: 10px inset #9aa4fe;
+  
   
 }
 .card-back {
   font-size: 14px;
-  color: white;
+ 
   transform: rotateY(180deg);
-  background-color: rgb(74, 91, 205);
+  background-color: #9aa4fe;
+  border: 10px inset #ffe1a6;
 }
 @keyframes pulse {
   0% {
@@ -294,10 +298,40 @@ transform: translateX(-2px);
 #previousButton {
   animation: flash 1s fade;
   margin-right: 20px;
+  background-color: #fec89a;
+  border: solid black;
+  color: black;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  font-family: 'Kanit', sans-serif;
+  margin: 4px 2px;
+  cursor: pointer;
+  webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  border-radius: 15px;
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
 }
 #nextButton {
   animation: flash 1s fade;
   margin-left: 20px;
+  background-color: #fec89a;
+  border: solid black;
+  color: black;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  font-family: 'Kanit', sans-serif;
+  margin: 4px 2px;
+  cursor: pointer;
+  webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  border-radius: 15px;
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
 }
 
 @media screen and (max-width: 30em) {
