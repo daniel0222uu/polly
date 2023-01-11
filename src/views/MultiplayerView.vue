@@ -78,6 +78,14 @@
 <p>when Everyone is ready the asnwer will be shown for a few seconds and then you will go to the next question.</p>
 <p>Good luck!</p>
 
+<!-- 
+  Välkommen till Multiplayer!
+  Bjud in spelare och anslut till lobbyn.
+  Föreslå och rösta på en kortlek och utmana din medspelare.
+  När alla är redo kommer svaret att visas i några sekunder och därefter visas nästa fråga.
+  Lycka till!
+-->
+
 </div>
 <div class="activePlayerList" >
         
