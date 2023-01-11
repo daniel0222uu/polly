@@ -23,5 +23,9 @@
 	"worldsMostAward": "\"The world's most award-winning quiz game.\"",
 	"challengeOthers": "Here you can challenge yourself and other players in quiz games.",
 	"includesFunctionality": "Flashcard now also includes functionality that lets you create your own decks of flashcards.",
-	"goodLuck": "Good luck!"
+	"goodLuck": "Good luck!",
+	"welcomeToMultiplayer": "Welcome to Multiplayer!",
+	"startByInviting" : "Invite friends to play with you!",
+	"suggestAndVote": "Suggest and vote for a deck to play with your friends!",
+	"whenEveryoneReady": "When everyone is ready the answer will load to everyone in the lobby."
 }
