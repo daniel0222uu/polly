@@ -9,7 +9,7 @@
       <div>
 
 <select id = "selector" v-model="selectedDeck" name="decks" required @change="loadDeck">
-  <option value="" disabled selected hidden>Pick a deck to edit</option>
+  <option value="" disabled selected hidden>{{instantiateuiLabels.pickDeckEdit}}</option>
   <option v-for="deck in selectorList" v-bind:key="deck">{{ deck }}</option>
 </select>
 
@@ -108,6 +108,8 @@ import ResposiveNav from "./ResponsiveNav";
 export default {
   name: "EditComponent",
 
+  inject: ['uiLabels'],
+
   data: function (){
      return {
       hideNav: true,
@@ -136,6 +138,7 @@ export default {
        selectorList: [],
        addingQuestionBool: false,
        showDeleteMessage:false,
+       instantiateuiLabels: this.uiLabels
      }
 
     },

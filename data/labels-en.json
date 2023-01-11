@@ -30,6 +30,7 @@
 	"JoinLobbt" : "Join lobby",
 	"mostPoppular" : "Most popular deck",
 	"deck" : "Deck",
-	"likes" : "Likes"
+	"likes" : "Likes",
+	"pickDeckEdit" : "Pick a deck to edit"
 
 }
