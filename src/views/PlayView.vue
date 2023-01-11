@@ -82,4 +82,10 @@ button {
 #shadow:active {
   transform: scale(0.9);
 }
+
+@media screen and (max-width: 40em) {
+  #container {
+    flex-direction: column;
+  }
+}
 </style>

@@ -4,9 +4,9 @@
     
 
     <div class="uploadedDeckList">
-      <h3>Uploaded decks: </h3>
+      <h3>Public decks: </h3>
   <ol>
-      <li  v-for="deck in this.uploadedDeckList" :key="deck">{{ deck }}</li>
+      <li  v-for="deck in uploadedDecks" :key="deck">{{ deck.id}}</li>
     </ol>
 
 </div>
@@ -22,6 +22,7 @@
 <script>
 //import io from "socket.io-client"; bryr mig inte om det jsut nu
 import axios from 'axios';
+import Decks from "@/assetts/Decks.json";
 //const socket = io();
 
 
@@ -30,11 +31,11 @@ export default {
   props: ["uploadingObject"],
   data: function(){
     return {
-      uploadedDeckList:["Nordens Huvudstäder", "Historia", "bilar","databasteknik"],
       testing: {},
       selectedDeck: "",
       selectorList: [],
       deckToUpload: {},
+      uploadedDecks: Decks,
     }
   },
   created(){
