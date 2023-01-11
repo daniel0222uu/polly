@@ -11,7 +11,7 @@ const fs = require("fs");
 app.use(bodyParser.json());
 
 
-app.post('/fileTest', (req, res) => { //axios test reveiver
+app.post('/uploadDeck', (req, res) => { //axios test reveiver
     const data = req.body;
 
      const file = fs.readFileSync("src/assetts/Decks.json");  

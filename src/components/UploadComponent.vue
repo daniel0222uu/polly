@@ -48,7 +48,7 @@ export default {
         return;
       }
       try {
-        const response = await axios.post('http://localhost:8080/fileTest ', {
+        const response = await axios.post('http://localhost:8080/uploadDeck ', {
           data: deckToUpload,
           headers:{
             'Content-Type': 'application/json'
