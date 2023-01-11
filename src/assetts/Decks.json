@@ -1,1 +1,111 @@
-[{"id":"2022 Quizet","questionArray":["Största händelsen för året? ","I vilket land hölls eurovision?","Vem blev Monte negros nya preimärminister?","Covid-19 lades bakom oss, vilken blev nästa stora sjukdom?","Vilken fotbollsklubb vann Champions League?","Israel fick också enn ny statsminister, vad heter han?","Vem besökte Taiwan så att spänning mellan USA och Kina ökade?","Vilket parti ökade procentuellt från föregående val i valet 2022?","Liz Truss slog nytt rekord för kortast tid som premiärminister. Hur länge satt hon vid makten?","Vilket företag köpte Elon Musk?","Många kända personer dog i år. Vilka var de kändaste?"],"answerArray":["Rysslands invasion av Ukraina","Italien"," Dritan Abazović ","Apkoppor (monkey pox) ","Real Madrid","Yair Lapid","Nancy Pelosi","Vänsterpartiet","44 dagar ","Twitter","Queen Elisabeth II, Pelé, Mikhail Gorbachev"],"likes":12,"hints":[{"name":"danne","hint":"Tänk noggrant","questionPosition":0,"likes":0},{"name":"","hint":"asdasffasfa","questionPosition":0,"likes":0},{"name":"adsasffa","hint":"sdgasg","questionPosition":0,"likes":0},{"name":"adsasffa","hint":"Detta är en hint","questionPosition":0,"likes":0},{"name":"adssadas","hint":"asdgasgds","questionPosition":0,"likes":0}]},{"id":"Huvudstäder","questionArray":["Vad heter huvudstaden i Storbritanien?","Vad heter huvudstaden i Spanien?","Vad heter huvudstaden i Frankrike?","Vad heter huvudstaden i Tyskland","Vad heter huvudstaden i Ryssland","Vad heter huvudstaden i Italien?"],"answerArray":["London","Madrid","Paris","Berlin","Moskva","Rom"],"likes":7,"hints":[]},{"id":"Spanska fraser","questionArray":["När man är sen","När man vill fråga om vad klockan är","När man vill fråga om hur vädret är idag","När man vill be om menyn på en restaurang","När man vill fråga om vad klockan är","När man vill be om ursäkt"],"answerArray":["Perdón por llegar tarde","¿Qué hora es?","¿Qué tiempo hace hoy?","¿Puedo ver el menú, por favor?","Lo siento"],"likes":11,"hints":[]},{"id":"Tennisspelare","questionArray":["Vem vann Wimbledon 2022?","I vilken stad spelas US Open?","På vilket underlag spelas French Open?","Vad heter grand slam tävlingen i Australien?"],"answerArray":["Djokovic","New York","Grus","Australian Open"],"likes":0,"hints":[]},{"id":"Fotbollslag","questionArray":["Från vilken stad kommer Arsenal?","I vilket lag spelar Messi?"],"answerArray":["London","PSG"],"likes":0,"hints":[]},{"id":"MathQuiz","questionArray":["4+3?","3*5?","6-3?","22+3?","4*8?"],"answerArray":["7","15","3","25","32"],"likes":0,"hints":[]},{"id":"tjabba","questionArray":["hfe uf"],"answerArray":["ijsf is"],"likes":0,"hints":[]},{"id":"tjabba","questionArray":["hfe uf"],"answerArray":["ijsf is"],"likes":0,"hints":[]}]
+[
+    {
+        "id": "2022 Quizet",
+        "questionArray": [
+            "Största händelsen för året? ",
+            "I vilket land hölls eurovision?",
+            "Vem blev Monte negros nya preimärminister?",
+            "Covid-19 lades bakom oss, vilken blev nästa stora sjukdom?",
+            "Vilken fotbollsklubb vann Champions League?",
+            "Israel fick också enn ny statsminister, vad heter han?",
+            "Vem besökte Taiwan så att spänning mellan USA och Kina ökade?",
+            "Vilket parti ökade procentuellt från föregående val i valet 2022?",
+            "Liz Truss slog nytt rekord för kortast tid som premiärminister. Hur länge satt hon vid makten?",
+            "Vilket företag köpte Elon Musk?",
+            "Många kända personer dog i år. Vilka var de kändaste?"
+        ],
+        "answerArray": [
+            "Rysslands invasion av Ukraina",
+            "Italien",
+            " Dritan Abazović ",
+            "Apkoppor (monkey pox) ",
+            "Real Madrid",
+            "Yair Lapid",
+            "Nancy Pelosi",
+            "Vänsterpartiet",
+            "44 dagar ",
+            "Twitter",
+            "Queen Elisabeth II, Pelé, Mikhail Gorbachev"
+        ],
+        "likes": 12,
+        "hints": [
+            {
+                "name": "danne",
+                "hint": "Tänk noggrant",
+                "questionPosition": 0,
+                "likes": 0
+            },
+            {
+                "name": "",
+                "hint": "asdasffasfa",
+                "questionPosition": 0,
+                "likes": 0
+            },
+            {
+                "name": "adsasffa",
+                "hint": "sdgasg",
+                "questionPosition": 0,
+                "likes": 0
+            },
+            {
+                "name": "adsasffa",
+                "hint": "Detta är en hint",
+                "questionPosition": 0,
+                "likes": 0
+            },
+            {
+                "name": "adssadas",
+                "hint": "asdgasgds",
+                "questionPosition": 0,
+                "likes": 0
+            }
+        ]
+    },
+    {
+        "id": "Huvudstäder",
+        "questionArray": [
+            "Vad heter huvudstaden i Storbritanien?",
+            "Vad heter huvudstaden i Spanien?",
+            "Vad heter huvudstaden i Frankrike?",
+            "Vad heter huvudstaden i Tyskland",
+            "Vad heter huvudstaden i Ryssland",
+            "Vad heter huvudstaden i Italien?"
+        ],
+        "answerArray": [
+            "London",
+            "Madrid",
+            "Paris",
+            "Berlin",
+            "Moskva",
+            "Rom"
+
+
+
+
+        ],
+        "likes": 7,
+        "hints": []
+    },
+    {
+        "id": "Spanska fraser",
+        "questionArray": [
+            "När man är sen",
+            "När man vill fråga om vad klockan är",
+            "När man vill fråga om hur vädret är idag",
+            "När man vill be om menyn på en restaurang",
+            "När man vill fråga om vad klockan är",
+            "När man vill be om ursäkt"
+
+        ],
+        "answerArray": [
+            "Perdón por llegar tarde",
+            "¿Qué hora es?",
+            "¿Qué tiempo hace hoy?",
+            "¿Puedo ver el menú, por favor?",
+            "Lo siento"
+
+        ],
+        "likes": 11,
+        "hints": []
+    }
+]

@@ -40,6 +40,22 @@
     </div>
   </transition>
 
+
+
+  <transition name="fade">
+    <div id="congratz" class="congratsPosition" v-if="gameFinished">
+      <div>
+        <p>
+          {{instantiateuiLabels.congratz}} <span style="font-weight: bold"> {{deckName}}. </span>
+          {{instantiateuiLabels.checkResults}}
+        </p>
+      </div>
+      <div>
+
+      </div>
+    </div>
+  </transition>
+
 </template>
 
 <script>
@@ -47,7 +63,16 @@ export default {
   name: "WarningMessage",
   props: ['deckAlert', 'questionFieldAlert',
     'questionWasAdded', 'uploadSuccessful',
-    'badString', 'deckNameTaken', 'deckName'],
+    'badString', 'deckNameTaken', 'deckName',
+  'gameFinished'],
+  inject: ['uiLabels'],
+
+
+  data: function () {
+    return {
+      instantiateuiLabels: this.uiLabels
+    }
+  },
   watch: {
     uploadSuccessful: function () {
     }
@@ -56,6 +81,12 @@ export default {
 </script>
 
 <style scoped>
+.congratsPosition{
+  position: fixed;
+  left: 50%;
+  width: 200px;
+  height: 200px;
+}
 .positionConfirmation {
   display: flex;
   flex-direction: row;
