@@ -4,7 +4,7 @@
 
     <div id="selector">
       <select name="decks" required v-model="selectedDeck" @change="loadDeck(this.selectedDeck)">
-        <option value="" disabled selected hidden>Choose a deck to upload</option>
+        <option value="" disabled selected hidden>{{instantiateuiLabels.chooseDeckUpload}}</option>
         <option id="deckSelector" v-for="deck in selectorList" v-bind:key="deck">{{ deck }}</option>
       </select>
     </div>
@@ -50,6 +50,7 @@ export default {
     UploadComponent,
     WarningMessage
   },
+  inject: ['uiLabels'],
   data: function () {
     return {
       selectedDeck: "",
@@ -64,6 +65,7 @@ export default {
       },
       uploadSuccessfulBool: false,
       deckNameTakenBool   : false,
+      instantiateuiLabels: this.uiLabels,
     }
   },
   created() { // runs when the component is created and fills selectorList with keys in localStorage which
