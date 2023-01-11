@@ -18,15 +18,11 @@
 	"editDeck": "Edit deck",
 	"uploadDeck": "Upload deck",
 	"congratz" : "Congratulations you finsihed: ",
-<<<<<<< HEAD
+
 	"checkResults" : "Now you can look back at the cards and leave a like if you enjoyed! ",
-=======
+
 	"checkResults" : "Now you can check the answers and questions again of the deck",
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> 58f6b6d75de83e131834e0faee8249104e7a3bfa
-=======
->>>>>>> 3547cc7abec889a30296cff2d29ae4e910fd015a
+
 	"enterYourDeck" : "Enter your deck here",
 	"warningNoNameDeck" : "Give your deck a name to continue!",
 	"warningSameNameDeck" : "You already have a deck with this name!",

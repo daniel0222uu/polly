@@ -18,15 +18,11 @@
 	"editDeck": "Redigera kortlek",
 	"uploadDeck": "Ladda upp kortlek",
 	"congratz" : "Grattis du spela precis klart :",
-<<<<<<< HEAD
+
 	"checkResults" : "Nu kan du kolla genom dina resultat och lämna en like om du uppskattade spelet!",
-=======
+
 	"checkResults" : "Nu kan du kolla genom dina resultat",
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> 58f6b6d75de83e131834e0faee8249104e7a3bfa
-=======
->>>>>>> 3547cc7abec889a30296cff2d29ae4e910fd015a
+
 	"enterYourDeck" : "Ange namnet på kortleken",
 	"warningNoNameDeck" : "Ange ett namn på din kortlek för att kunna forsätta!",
 	"warningSameNameDeck" : "Du har redan en kortlek med detta namn!",
