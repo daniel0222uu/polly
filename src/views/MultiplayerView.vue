@@ -32,8 +32,23 @@
     <ul style="list-style: none">
       <li v-for="invite in invitationList" v-bind:key="invite"> {{invite.requester}} Invites you to play {{invite.lobbyID}}
         <join-lobby-component v-bind:lobby-id="invite.lobbyID" v-bind:name="name"  ></join-lobby-component>
-        <br>
-        <button @click="declineInvite(invite.requester)" > Decline</button>
+        
+        <button style="
+        background-color: #fec89a;
+        border: solid black;
+        color: black;
+        padding: 5px 10px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 12px;
+        font-family: 'Kanit', sans-serif;
+        margin: 4px 2px;
+        cursor: pointer;
+        webkit-transition-duration: 0.4s; /* Safari */
+        transition-duration: 0.4s;
+        border-radius: 15px;
+        box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);" @click="declineInvite(invite.requester)" > Decline</button>
       </li>
     </ul>
     </div>
