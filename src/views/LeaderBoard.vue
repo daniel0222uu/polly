@@ -16,14 +16,14 @@
     <!-- Här presenteras Leaderboard -->
     <div id="viewLeaderboard" class="center">
     <table class="center" style="width:300px; font-family:Kanit;font-size:26px;padding:10px">
-      <tr> <marquee direction="right" behavior="scroll">MOST POPULAR DECKS</marquee></tr>
+      <tr> <marquee direction="right" behavior="scroll">{{instantiateuiLabels.mostPoppular}}</marquee></tr>
       <tr><img src="http://localhost:8080/img/score-icon-21.jpeg" width="100" height="100"></tr>
     </table>
    
       <table class="center" style="width:300px; border: 5px solid black;border-radius: 10px;font-family: Kanit;font-size:20px;background-color: white;padding:10px">
         <tr>
-          <th style="width: 70%;text-align: left" >Deck</th>
-          <th style="width: 30%;text-align: right">Likes</th>
+          <th style="width: 70%;text-align: left" >{{instantiateuiLabels.deck}}</th>
+          <th style="width: 30%;text-align: right">{{instantiateuiLabels.likes}}</th>
         </tr>
         <tr v-for="Item in DecksData.sort(function(a,b){return b.likes-a.likes})" :key="Item.likes">
           <td style="text-align:left" >{{ Item.id }}</td>
@@ -55,6 +55,9 @@ export default {
   components: {
     
   },
+
+  inject: ['uiLabels'],
+
   data: function () {
     return {
      
@@ -65,6 +68,7 @@ export default {
       scorePointField: "",
       ScoreData: Scores,
       DecksData: Decks,
+      instantiateuiLabels: this.uiLabels
     }
   },
   methods: {
