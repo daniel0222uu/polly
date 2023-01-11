@@ -18,14 +18,33 @@
 	"editDeck": "Redigera kortlek",
 	"uploadDeck": "Ladda upp kortlek",
 	"congratz" : "Grattis du spela precis klart :",
+
+	"checkResults" : "Nu kan du kolla genom dina resultat och lämna en like om du uppskattade spelet!",
+
 	"checkResults" : "Nu kan du kolla genom dina resultat",
+
+	"enterYourDeck" : "Ange namnet på kortleken",
+	"warningNoNameDeck" : "Ange ett namn på din kortlek för att kunna forsätta!",
+	"warningSameNameDeck" : "Du har redan en kortlek med detta namn!",
+	"addCard" : "Lägg till kort",
+	"enterYourName" : "Ange ditt namn",
+	"startPlaying" : "Börja spela!",
+	"quitGame" : "Avsluta spel",
+	"joinLobby" : "Join lobby",
+	"mostPoppular" : "Mest populära kortlek",
+	"deck" : "Kortlek",
+	"likes" : "Likes",
+	"pickDeckEdit" : "Välj kortlek att ändra",
+	"previous" : "Föregående",
+	"next" : "Nästa",
+	"addNewCard" : "Lägg till kort",
+	"deleteCard" : "Ta bort kort",
+	"saveChanges" : "Spara ändringar",
+	"deleteDeck" : "Ta bort kortlek",
 	"welcomeTo": "Välkommen till Flashcards!",
 	"worldsMostAward": "\"Världens mest berömda frågespel\"",
 	"challengeOthers": "Här kan du utmana dig själv och andra.",
 	"includesFunctionality": "Flascards inkluderar funktioner som låter dig skapa dina egna decks",
-	"goodLuck": "Lycka till!",
-	"welcomeToMultiplayer": "Välkommen till Multiplayer!",
-	"startByInviting" : "Bjud in spelare och anslut till lobbyn.",
-	"suggestAndVote": "Föreslå och rösta på en kortlek och utmana din medspelare.",
-	"whenEveryoneReady": "När alla är redo kommer svaret att visas i några sekunder och därefter visas nästa fråga."
+	"goodLuck": "Lycka till!"
+
 }
