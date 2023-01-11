@@ -13,5 +13,8 @@
 	"FAQ":"FAQ",
 	"lobby":"lobby",
 	"leaderboard": "leaderboard",
-	"DANIELS_INJEKTOR": "DANIELS_INJEKTOR PÅ ENGELSKA"
+	"DANIELS_INJEKTOR": "DANIELS_INJEKTOR PÅ ENGELSKA",
+	"createDeck": "Create deck",
+	"editDeck": "Edit deck",
+	"uploadDeck": "Upload deck"
 }

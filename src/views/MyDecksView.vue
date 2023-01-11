@@ -10,7 +10,7 @@
               @click="navigate"
               role="link"
       >
-        Create deck
+        {{instantiateuiLabels.createDeck}}
       </button>
     </router-link>
 
@@ -23,7 +23,7 @@
               @click="navigate"
               role="link"
       >
-        Edit deck
+        {{instantiateuiLabels.editDeck}}
       </button>
     </router-link>
 
@@ -36,7 +36,7 @@
               @click="navigate"
               role="link"
       >
-        Upload deck
+        {{instantiateuiLabels.uploadDeck}}
       </button>
     </router-link>
 
@@ -49,11 +49,13 @@
 
 export default {
   name: "MyDecksView",
+  inject: ["uiLabels"],
   components: {
     
   },
   data: function () {
     return {
+      instantiateuiLabels: this.uiLabels,
     }
   },
   created: function(){

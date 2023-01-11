@@ -13,5 +13,8 @@
 	"FAQ":"FAQ",
 	"lobby":"lobby",
 	"leaderboard": "Topplista",
-	"DANIELS_INJEKTOR": "DANIELS_INJEKTOR PÅ SVENSKA"
+	"DANIELS_INJEKTOR": "DANIELS_INJEKTOR PÅ SVENSKA",
+	"createDeck": "Skapa kortlek",
+	"editDeck": "Redigera kortlek",
+	"uploadDeck": "Ladda upp kortlek"
 }
