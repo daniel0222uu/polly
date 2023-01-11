@@ -15,7 +15,7 @@
    
     
   </header>
-  <ResponsiveNav v-bind:hideNav="hideNav">
+  <ResponsiveNav class="nav"  v-bind:hideNav="hideNav">
 
     <router-link  v-bind:to="'/'">Home</router-link>
     <router-link  v-bind:to="'/mydecks/'+ lang">{{uiLabels.myDecks}}</router-link>
@@ -147,11 +147,11 @@ header {
     align-items: center; 
     justify-content: left; 
     padding: 0.5rem;
-    margin-bottom:12px;
+    margin-bottom:20px;
     top:0;
     left:0;
     height: 2rem;
-    font-size: 2rem;
+    font-size: 1.7rem;
     
   }
   
@@ -164,6 +164,16 @@ header {
  
 
 @media screen and (max-width:50em) {
+
+.nav{
+  height:175px;
+  z-index: 1;
+  width:160px;
+}
+.hamburger {
+z-index: 2;
+}
+  
   .logo {
     font-size: 5vw;
     display: flex;
@@ -176,6 +186,7 @@ header {
   }
   .close::before {
     content: "✕";
+    
   }
   .hide {
     left:-12em;

@@ -15,7 +15,7 @@
     <!-- Här visas puff för Flashcard -->
     <div id="infoFlashcard">
 
-      <p style="font-size:24px;font-weight:bold">Welcome to FLASHCARDS!</p>
+      <h1 >Welcome to FLASHCARDS!</h1>
       <p>"The world's most award-winning quiz game."</p>
       <p>Here you can challenge yourself and other players in quiz games.</p>
       <p>Flashcard now also includes functionality that lets you create your own decks of flashcards.</p>
@@ -133,19 +133,7 @@ export default {
     vertical-align: bottom;
     margin-right: 0.5rem; 
   }
-  .hamburger {
-    color:white;
-    width:1em;
-    display: flex;
-    align-items: center;
-    justify-content: left;
-    padding:0.5rem;
-    top:0;
-    left:0;
-    height: 2rem;
-    
-    font-size: 1.5rem;
- }
+
   .center {
   margin-left: auto;
   margin-right: auto;
@@ -153,14 +141,17 @@ export default {
 
 @media screen and (max-width:50em) {
  #infoFlashcard {
-  font-size: 18px;
+  font-size: 16px;
   width:70%
  }
 }
 @media screen and (max-width:24em) {
  #infoFlashcard {
-  font-size: 14px;
-  min-width:100%
+  font-size: 12px;
+  min-width:80%
+ }
+ h1 {
+  font-size: 18px;
  }
 }
 
