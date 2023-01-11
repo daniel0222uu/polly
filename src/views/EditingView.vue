@@ -3,7 +3,7 @@
   <body>
 
   <div>
-    <!----><EditComponent/>
+    <EditComponent/>
 
   
   </div>
