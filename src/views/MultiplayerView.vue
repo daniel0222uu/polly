@@ -89,15 +89,15 @@
       <div class="mainContent">
         <div class="infoFlashcard">
 
-<h3 >Welcome to Multiplayer!</h3>
-<p>Start by inviting a player and joining the lobby.</p>
-<p>Suggest and vote on a deck to play with your fellow players.</p>
-<p>when Everyone is ready the asnwer will be shown for a few seconds and then you will go to the next question.</p>
-<p>Good luck!</p>
+<h3 >{{instantiateuiLabels.welcomeToMultiplayer}}</h3>
+<p>{{instantiateuiLabels.startByInviting}}</p>
+<p>{{instantiateuiLabels.suggestAndVote}}</p>
+<p>{{instantiateuiLabels.whenEveryoneReady}}</p>
+<p>{{instantiateuiLabels.goodLuck}}</p>
 
-<!-- 
+<!--
   Välkommen till Multiplayer!
-  Bjud in spelare och anslut till lobbyn.
+    Bjud in spelare och anslut till lobbyn.
   Föreslå och rösta på en kortlek och utmana din medspelare.
   När alla är redo kommer svaret att visas i några sekunder och därefter visas nästa fråga.
   Lycka till!
@@ -147,7 +147,7 @@ export default {
     ActivePlayersComponent,
     //autoLogout
   },
-  
+  inject: ['uiLabels'],
   data: function(){
     return {
       lang: "en",
@@ -162,7 +162,8 @@ export default {
       expandPlayerList: true,
       hintString: "",
       seeCommentsBool: false,
-      selectorList: idListFromAllDecks
+      selectorList: idListFromAllDecks,
+      instantiateuiLabels: this.uiLabels
     }
   },
   created: function() {

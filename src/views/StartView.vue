@@ -7,7 +7,7 @@
     <!-- Här visas puff för Flashcard -->
     <div id="infoFlashcard">
 
-      <h1 >{{instantiateuiLabels.welcomeTo}}</h1>
+      <h1 >{{instantiateuiLabels.welcomeToStart}}</h1>
       <p>{{instantiateuiLabels.worldsMostAward}}</p>
       <p>{{instantiateuiLabels.challengeOthers}}</p>
       <p>{{instantiateuiLabels.includesFunctionality}}</p>
