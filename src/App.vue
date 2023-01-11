@@ -5,7 +5,7 @@
 
 <script>
 import BannerComponent from '@/components/BannerComponent.vue';
-import defaultLanguage from '/Users/danielceoca/Desktop/projektGränssnitt/polly/data/labels-en.json';
+import defaultLanguage from '../data/labels-en.json';
 import { computed } from 'vue'
 
 export default {
