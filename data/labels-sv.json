@@ -49,5 +49,9 @@
 	"welcomeToMultiplayer": "Välkommen till Multiplayer!",
 	"startByInviting": "Bjud in spelare och anslut till lobbyn.",
 	"suggestAndVote": "Föreslå och rösta på en kortlek och utmana din medspelare.",
-	"whenEveryoneReady": "När alla är redo kommer svaret att visas i några sekunder och därefter visas nästa fråga."
+	"whenEveryoneReady": "När alla är redo kommer svaret att visas i några sekunder och därefter visas nästa fråga.",
+	"nameYourDeck": "Döp din kortlek",
+	"question": "Fråga",
+	"answer": "Svar",
+	"publicDecks": "Publika kortlekar"
 }

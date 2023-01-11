@@ -45,5 +45,9 @@
 	"welcomeToMultiplayer": "Welcome to multiplayer!",
 	"startByInviting": "Start by inviting your friends to play with you.",
 	"suggestAndVote": "Suggest and vote on which deck to play with other players in lobby.",
-	"whenEveryoneReady": "When everyone is ready to see the answer, the answer will show and thejn the quiz will proceed to the next card."
+	"whenEveryoneReady": "When everyone is ready to see the answer, the answer will show and thejn the quiz will proceed to the next card.",
+	"nameYourDeck": "Name your deck",
+	"question": "Question",
+	"answer": "Answer",
+	"publicDecks": "Public decks"
 }

@@ -4,7 +4,7 @@
     
 
     <div class="uploadedDeckList">
-      <h3>Public decks: </h3>
+      <h3>{{ instantiateuiLabels.publicDecks }} </h3>
   <ol>
       <li  v-for="deck in uploadedDecks" :key="deck">{{ deck.id}}</li>
     </ol>

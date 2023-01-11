@@ -26,7 +26,7 @@
 
     <div>
       <input class="questionEditingFields" :class="{fieldEmpty:showText ,fieldDuplicate:duplicateName}"
-             autocomplete="off" placeholder="Name your deck" id="namingDeckField" type="text" v-model="deckName">
+             autocomplete="off" :placeholder="instantiateuiLabels.nameYourDeck" id="namingDeckField" type="text" v-model="deckName">
 
       <button style="
         background-color: #fec89a;
@@ -90,12 +90,12 @@
           <!-- Här lägger man till kort (frågor och svar)-->
 
           <textarea style="height:50px;" class="questionEditingFields" :class="{fieldEmpty:questionAlert}"
-                    placeholder="Question" v-model="questionField"></textarea>
+                    :placeholder="instantiateuiLabels.question" v-model="questionField"></textarea>
           <br>
 
 
           <textarea style="height:100px;" class="questionEditingFields" :class="{fieldEmpty:answerAlert}"
-                    placeholder="Answer" v-model="answerField"></textarea>
+                    :placeholder="instantiateuiLabels.answer" v-model="answerField"></textarea>
 
           <!--<button class="buttonPosition" @click="saveCard">Add card</button>-->
           <button style="

@@ -94,15 +94,6 @@
 <p>{{instantiateuiLabels.suggestAndVote}}</p>
 <p>{{instantiateuiLabels.whenEveryoneReady}}</p>
 <p>{{instantiateuiLabels.goodLuck}}</p>
-
-<!--
-  Välkommen till Multiplayer!
-    Bjud in spelare och anslut till lobbyn.
-  Föreslå och rösta på en kortlek och utmana din medspelare.
-  När alla är redo kommer svaret att visas i några sekunder och därefter visas nästa fråga.
-  Lycka till!
--->
-
 </div>
 <div class="activePlayerList" >
         
