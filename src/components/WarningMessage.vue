@@ -44,11 +44,14 @@
 
   <transition name="fade">
     <div id="congratz" class="congratsPosition" v-if="gameFinished">
-      <div>
-        <p>
-          {{instantiateuiLabels.congratz}} <span style="font-weight: bold"> {{deckName}}. </span>
+      <div style="width:500px;height:300px; background-color:white; border: 2px solid black; text-align: center;">
+        <h3>
+          {{instantiateuiLabels.congratz}}
+          </h3> <h1 style="font-weight: bold"> {{deckName}}. </h1>
+          
+        <h3>
           {{instantiateuiLabels.checkResults}}
-        </p>
+        </h3>
       </div>
       <div>
 
@@ -82,10 +85,16 @@ export default {
 
 <style scoped>
 .congratsPosition{
-  position: fixed;
-  left: 50%;
-  width: 200px;
-  height: 200px;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  width: 100%;
+  height: 100%;
+ 
+  
+  z-index: 2;
 }
 .positionConfirmation {
   display: flex;
@@ -113,7 +122,7 @@ export default {
 }
 
 .fade-enter-from {
-  opacity: 0;
+  opacity: 0.95;
 }
 
 .fade-enter-to {
@@ -121,7 +130,7 @@ export default {
 }
 
 .fade-enter-active {
-  transition: all 4s ease;
+  transition: all 6s;
 }
 
 .fade-leave-from {
