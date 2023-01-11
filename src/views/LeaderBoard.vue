@@ -16,7 +16,7 @@
     <!-- Här presenteras Leaderboard -->
     <div id="viewLeaderboard" class="center">
     <table class="center" style="width:300px; font-family:Kanit;font-size:26px;padding:10px">
-      <tr> <marquee direction="right" behavior="scroll">L E A D E R B O A R D</marquee></tr>
+      <tr> <marquee direction="right" behavior="scroll">MOST POPULAR DECKS</marquee></tr>
       <tr><img src="http://localhost:8080/img/score-icon-21.jpeg" width="100" height="100"></tr>
     </table>
    

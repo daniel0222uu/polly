@@ -100,14 +100,11 @@
 <script>
 import io from 'socket.io-client';
 import WarningMessage from "@/components/WarningMessage";
-
 const socket = io();
-
 let listToFill = [];
 for (var i = 0, len = localStorage.length; i < len; ++i) {
   listToFill.push(localStorage.key(i));
 }
-
 export default {
   name: 'CreateView',
   components: {
@@ -235,127 +232,79 @@ export default {
 </script>
 
 <style scoped>
-
 ol {
   margin-right: 20px;
   list-style-type: upper-roman;
-
   border: 5px ridge lightseagreen;
   font-size: 20px;
-
-
   overflow: hidden;
-
-
 }
-
 .deckNameWarning {
   color: transparent;
   user-select: none;
   font-family: Helvetica;
   font-size: 16px;
-
-
 }
-
 .showText {
   color: black;
 }
-
 .fieldEmpty {
   border: 1px solid red;
 }
-
 .fieldDuplicate {
   border: 1px solid blue;
-
 }
-
-
 .questionEditingFields:focus::placeholder {
   color: transparent;
 }
-
-
 .inputFields {
   grid-column: 3;
-
   width: 300px;
-
-
 }
-
-
 .firstView {
   margin-top: 5%;
   display: flex;
-
   align-items: center;
   flex-direction: column;
-
 }
-
 .horizontalDiv {
   display: grid;
   grid-template-columns: repeat(5, 20%);
-
-
 }
-
 .notActive {
   display: none;
-
 }
-
 .buttonPosition {
   width: 90%;
   height: 30%;
 }
-
 .questionList {
-
   grid-column: 2;
-
-
 }
-
 .questionEditingFields {
   width: 90%;
   height: 40px;
   font-size: 14px;
   margin-bottom: 10px;
   text-align: center;
-
-
 }
-
-
 @media screen and (max-width: 40em) {
   .horizontalDiv {
     display: flex;
     align-items: center;
     flex-direction: column-reverse;
-
-
   }
-
   .questionList {
     margin-top: 10px;
-
     color: white;
     max-width: 300px;
   }
-
   .firstView {
     margin-top: none;
   }
-
   .buttonPosition {
     width: 90%;
     height: 50px;
   }
-
 }
-
-
 </style>
