@@ -3,10 +3,28 @@
 
      <!-- Här fyller användaren i namn och väljer att starta spelet -->
      
-     <div style="margin-top:100px; ; "  v-if="!joinedBoolean">
+     <div style="margin-top:100px; ;"  v-if="!joinedBoolean">
       
-      <input style="padding:5px" v-model="name" type="text" placeholder="Enter your name" />
-      <button style="padding:5px; margin:10px" @click="startPlaying">Start playing!</button>
+      <p>
+      <input style="padding:5px" v-model="name" type="text" placeholder="Enter your name">
+      </p>
+      <button style="
+        background-color: #fec89a;
+        border: solid black;
+        color: black;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        font-family: 'Kanit', sans-serif;
+        margin: 4px 2px;
+        cursor: pointer;
+        webkit-transition-duration: 0.4s; /* Safari */
+        transition-duration: 0.4s;
+        border-radius: 15px;
+        box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);"
+        @click="startPlaying">Start playing!</button>
     </div>
   
   <!-- Här visas meddelande om att det finns en invite -->
@@ -27,7 +45,22 @@
         <div class="nameAndQuitDiv">
         <p style="font-size:24px;font-weight:bold">
             {{name}}
-          <button style="margin-left:20px" @click="exitPlaying">Quit</button>
+          <button style="
+            background-color: #fec89a;
+            border: solid black;
+            color: black;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            font-family: 'Kanit', sans-serif;
+            margin: 4px 2px;
+            cursor: pointer;
+            webkit-transition-duration: 0.4s; /* Safari */
+            transition-duration: 0.4s;
+            border-radius: 15px;
+            box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);" @click="exitPlaying">Quit game</button>
         </p>
 
         
@@ -317,6 +350,24 @@ export default {
   }
   .infoFlashcard{
     width: 70%;
+  }
+
+  .actionButton {
+        background-color: #fec89a;
+        border: solid black;
+        color: black;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        font-family: 'Kanit', sans-serif;
+        margin: 4px 2px;
+        cursor: pointer;
+        webkit-transition-duration: 0.4s; /* Safari */
+        transition-duration: 0.4s;
+        border-radius: 15px;
+        box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
   }
 }
 </style>
