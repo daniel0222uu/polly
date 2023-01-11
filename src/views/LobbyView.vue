@@ -21,10 +21,10 @@
       
    
     <div id="wrapperDiv" >
-      <div id="likeDiv">
-        <button @click="likeDeck(myObj_deserialized.id)"> Like</button>
+      
+        
 
-      </div>
+      
 
       <!--Player chatbox-->
       <div class="chatBox" :class="{hiddenChatBox:!chatOpen, playingChat:showPressToSeeQuestion}">
@@ -51,7 +51,7 @@
 
       </div>
 
-
+      <!--Viktig för att hålla knapparna på plats!-->
       <div class="placeHolder" v-if="!menuOpen && !showPressToSeeQuestion"></div>
 
       <div class="menu" :class="{hiddenMenu:!menuOpen, playingMenu:showPressToSeeQuestion}">
@@ -109,15 +109,13 @@
     <div id="belowGame">
       <ResponsivNav>
         
+      
+        <button class="buttonNav" v-if="clickableFlashcardBool" @click="likeDeck(myObj_deserialized.id)"> Like deck</button>
         <button  class="buttonNav" @click="chatClick">{{chatbuttonText}} </button>
-      
-
-      
         <button class="buttonNav" v-if="showPressToSeeQuestion"  @click="seeQuestion">Flip card </button>
-      
-
-      
         <button class="buttonNav"  @click="menuClick">{{menubuttonText}} </button>
+        
+
       
 
       </ResponsivNav>
@@ -251,6 +249,10 @@ export default {
     })
   },
   methods: {
+    exitPlaying: function () {
+          this.joinedBoolean = false;
+          socket.emit("exitPlaying", {name: this.name});
+        },
     closeChat: function() {
       this.chatbuttonText = 'Open chat lobby'
       this.chatOpen = false
@@ -458,7 +460,7 @@ transform: translateY(-10px);
     flex-direction: column;
   }
   .playDiv {
-    z-index: -1;
+    z-index: 0;
   }
   #belowGame{
     display: flex;

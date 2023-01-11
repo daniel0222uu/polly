@@ -335,6 +335,13 @@ transform: translateX(-2px);
 }
 
 @media screen and (max-width: 30em) {
+  .buttonDiv{
+    margin-left:5%
+
+  }
+  .prevNextButton{
+    width:140px
+  }
  
   
   .card {

@@ -13,6 +13,14 @@
       <p>{{instantiateuiLabels.includesFunctionality}}</p>
       <p>{{instantiateuiLabels.goodLuck}}</p>
 
+    <!--
+      Välkommen till FLASHCARDS!
+      "Världens mest prisbelönta frågesport"
+      Här kan du utmana dig själv och andra spelare i frågesport.
+      Flazhcards innehåller nu också funktionalitet för att skapa egna kortlekar.
+      Lycka till!
+    -->
+
     </div>
 
   </div>
