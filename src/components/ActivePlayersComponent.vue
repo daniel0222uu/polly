@@ -3,7 +3,7 @@
 
   <div id="toggleActivePlayer">
     <div>
-      <span> Players online:</span>
+      <span> Players online</span>
     </div>
     <div>
       <button id="toggleButton" @click="expandPlayerList=!expandPlayerList">
@@ -15,14 +15,19 @@
   </div>
 
   <div id="verticalRight" v-if="expandPlayerList">
+    <div v-if="!inLobby">
+
+
     <p v-if="inviteSentBool">
       <join-lobby-component v-bind:lobby-id="uniqueLobbyID"
                             v-bind:name="playerNickName"
       ></join-lobby-component>
     </p>
+    </div>
     <ul id="playerList">
       <li v-for="player in filteredPlayers" v-bind:key="player"><b>{{ player.name }}</b>
-        <button style="
+
+        <button v-if="!inLobby" style="
           background-color: #fec89a;
           border: solid black;
           color: black;
@@ -55,7 +60,7 @@ export default {
   components: {
     JoinLobbyComponent
   },
-  props: ["playerNickName", 'uniqueLobbyID',],
+  props: ["playerNickName", 'uniqueLobbyID','inLobby'],
   data: function () {
     return {
       lang: "en",
@@ -129,7 +134,7 @@ export default {
   width: 250px;
   height: 600px;
   overflow: auto;
-  font-size: 16px;
+  font-size: 18px;
   text-align: start;
 }
 
@@ -149,4 +154,23 @@ export default {
 #playerList {
   list-style:square;
 }
+@media screen and (max-width:60em) {
+  #verticalRight {
+    font-size: 15px;
+  }
+  
+}
+@media screen and (max-width:40em) {
+  #verticalRight {
+    font-size: 13px;
+  }
+  
+}
+@media screen and (max-width:30em) {
+  #verticalRight {
+    font-size: 12px;
+  }
+  
+}
+
 </style>

@@ -280,8 +280,8 @@ export default {
 
 
 .activePlayerList{
-  border: 5px ridge steelblue;
-  background-color: steelblue;
+  border: 5px ridge rgb(48, 90, 124);
+  background-color: rgba(70, 131, 180, 0.941);
  
   height: 420px;
   overflow: scroll;
@@ -322,13 +322,13 @@ export default {
 
 .infoFlashcard {
   
-background-color: rgb(107, 168, 218);
+  background-color: rgba(70, 131, 180, 0.941);
   height: 400px;
   text-align: center;
   width: 40%;
   
   
-  border:5px ridge steelblue;
+  border: 5px ridge rgb(99, 151, 193);
   padding: 30px;
   font-family: Kanit;
   font-size: 20px;

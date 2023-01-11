@@ -9,16 +9,16 @@
       <!--Progress bar-->
       <div v-if="showProgressBar" >
         <progress-bar-component v-bind:progress="trueCountProgress"></progress-bar-component>
-      {{trueCount}} out of {{trueValuesNeeded}} players wants to flip
+      {{trueCount}} out of {{trueValuesNeeded}} players wants to flip the card
 
       </div>
       
       
    
-    <div id="wrapperDiv">
+    <div id="wrapperDiv" >
 
       <!--Player chatbox-->
-      <div class="chatBox" :class="{hiddenChatBox:chatOpen}">
+      <div class="chatBox" :class="{hiddenChatBox:!chatOpen, playingChat:showPressToSeeQuestion}">
         <span v-for="player in players" v-bind:key="player" > {{player}},  </span>
         <div>
           
@@ -41,7 +41,10 @@
 
       </div>
 
-      <div class="menu" :class="{hiddenMenu:menuOpen}">
+
+      <div class="placeHolder" v-if="!menuOpen && !showPressToSeeQuestion"></div>
+
+      <div class="menu" :class="{hiddenMenu:!menuOpen, playingMenu:showPressToSeeQuestion}">
 
         <div>
           <br>
@@ -67,29 +70,33 @@
 
 
         <ActivePlayersComponent  v-bind:player-nick-name="name" v-bind:uniqueLobbyID="pollId"
-                                v-bind:lobby-created-bool="inLobbyBool"
+                                v-bind:in-lobby="inLobbyBool"
         ></ActivePlayersComponent>
 
       </div>
+    
 
 
 
     </div>
 
     <div id="belowGame">
-     <!-- <ResponsivNav></ResponsivNav>--> 
+      <ResponsivNav>
+        
+        <button  class="buttonNav" @click="chatClick">{{chatbuttonText}} </button>
+      
 
-      <div>
-        <button  style="width: 100px; height: 70px;" @click="openChat"><h3>{{chatbuttonText}}</h3> </button>
-      </div>
+      
+        <button class="buttonNav" v-if="showPressToSeeQuestion"  @click="seeQuestion">Flip card </button>
+      
 
-      <div>
-        <button v-if="showPressToSeeQuestion" style="width: 100px; height: 70px;" @click="seeQuestion"><h3>Flip card</h3> </button>
-      </div>
+      
+        <button class="buttonNav"  @click="menuClick">{{menubuttonText}} </button>
+      
 
-      <div>
-        <button  style="width: 100px; height: 70px;" @click="openMenu"><h3>{{menubuttonText}}</h3> </button>
-      </div>
+      </ResponsivNav>
+
+      
 
     </div>
 
@@ -103,7 +110,7 @@
 import io from 'socket.io-client';
 import FlashcardComponent from "@/components/FlashcardComponent";
 import ActivePlayersComponent from "@/components/ActivePlayersComponent";
-//import ResponsivNav from "@/components/ResponsiveNav.vue";
+import ResponsivNav from "@/components/ResponsiveNav.vue";
 //import JoinLobbyComponent from "@/components/JoinLobbyComponent";
 import Decks from "@/assetts/Decks.json";
 import ProgressBarComponent from "@/components/ProgressBarComponent";
@@ -118,18 +125,18 @@ export default {
     FlashcardComponent,
     ActivePlayersComponent,
     ProgressBarComponent,
-    //ResponsivNav
+    ResponsivNav
     //JoinLobbyComponent
   },
   data: function () {
     return {
+      inLobbyBool: true,
       chatbuttonText: 'Open chat lobby',
-      chatOpen: true,
+      chatOpen: false,
       menubuttonText: 'Close menu',
-      menuOpen: false,
+      menuOpen: true,
       showProgressBar: false,
       votedDecks: [],
-      inLobbyBool: false,
       name: "",
       haveReceivedName: false,
       pollId: "inactive poll",
@@ -154,9 +161,6 @@ export default {
       showPressToSeeQuestion: false,
       seeFlashcardBool: false,
       clickableFlashcardBool: false,
-      inviteInformation: [],
-      invitationList: [],
-      inviteWatcher: 0,
     }
   },
   created: function () {
@@ -218,24 +222,35 @@ export default {
     })
   },
   methods: {
-    openChat: function() {
-      this.chatOpen = !this.chatOpen
+    closeChat: function() {
+      this.chatbuttonText = 'Open chat lobby'
+      this.chatOpen = false
+
+    },
+    chatClick: function() {
+      
       if (this.chatOpen) {
-        this.chatbuttonText = 'Open chat lobby'
+        this.closeChat()
       }
       else {
+        this.chatOpen = true
         this.chatbuttonText = 'Close chat lobby'
-
       }
       
    },
-   openMenu: function() {
-      this.menuOpen = !this.menuOpen
+   closeMenu: function(){
+    this.menubuttonText = 'Open menu'
+    this.menuOpen = false
+
+   },
+   menuClick: function() {
+      
       if (this.menuOpen) {
-        this.menubuttonText = 'Open menu'
+        this.closeMenu()
       }
       else {
         this.menubuttonText = 'Close menu'
+        this.menuOpen = true
 
       }
       
@@ -322,6 +337,8 @@ export default {
       for (let deck of this.suggestedDecks) {
         if (deck.votes === this.players.length) {
           this.loadDeck(deck.id);
+          this.closeMenu()
+          this.closeChat()
           this.suggestedDecks = [];
           this.votedDecks = [];
           this.startGame();
@@ -351,22 +368,58 @@ export default {
 
 
   <style scoped>
+  nav {
+    width:100%;
+    height: 160px;
+    display: grid;
+    grid-template-rows: repeat(auto-fit, 7em);
+    justify-content: center;
+  }
+.buttonNav {
+    color: white;
+    user-select: none;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    margin: 3%;
+    border: 2px solid black;
+    background-color: rgb(32, 90, 178);
+    cursor: pointer;
+    border-radius: 10px;
+    border: 2px solid #000;
+    background-color: rgb(32, 90, 178);
+    transition: box-shadow 300ms ease, transform 500ms ease;
+    border-radius: 10px;
+}
+
+.buttonNav:hover{
+color: white;
+border: 2px solid white;
+background-color: rgb(32, 90, 178);
+transform: translateY(-10px);
+}
+
+.buttonNav:active{
+  transform: translateY(10px);
+}
 
 
-
-
- 
   #wholeScreen{
     display: flex;
     flex-direction: column;
-    
+  }
+  .playDiv {
+    z-index: -1;
   }
   #belowGame{
-   
     display: flex;
     flex-direction: row;
     justify-content: center;
-    margin-top: 20px;
+    margin-top: 25px;
     height: 200px;
     width: 100%;
   }
@@ -374,47 +427,104 @@ export default {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
-   
   }
   .chatBox{
-    
-    border: 5px ridge steelblue;
+    border: 5px ridge rgb(99, 151, 193);
     padding:10px;
-    background-color: steelblue;
     max-width: 30%;
-    
+    background-color: rgba(70, 131, 180, 0.941);
+    z-index: 1;
     
   }
   .hiddenChatBox, .hiddenMenu {
     display:none;
   }
-  .playDiv{
-   
-  }
+  
   .menu{
-   
-    border: 5px ridge steelblue;
+    border: 5px ridge rgb(48, 90, 124);
     padding:5px;
-    background-color: steelblue;
+    background-color: rgba(70, 131, 180, 0.941);
     overflow: scroll;
-    
-    
-    height:400px;
+    height:350px;
     user-select: none;
-    
     width: 300px;
+    
+  }
+  .placeHolder {
+    height: 370px;
+    width: 12.001rem;
   }
   #chatWindow{
-    background-color: white;
-    height: 300px;
+    background-color: rgba(235, 251, 255, 0.836);
+    height: 250px;
     width: 170px;
-    border: 1px solid black;
+    border: none;
+    
     
     white-space: pre-wrap;
   }
+
+  @media screen and (max-width:60em) {
+    .playingMenu {
+      position: absolute;
+      right: 0;
+}
+.playingChat {
+  position: absolute;
+  left:0;
+}
+  }
+  @media screen and (max-width:50em) {
+
+
+
+nav {
+  
+  position: relative;
+  height:100vh;
+  top: 2em;
+  left: 0;
+  width:95%;
+  display: grid;
+  grid-template-rows: repeat(auto-fit, 4em);
+  transition: 1.5s;
+}
+
+nav ::v-slotted(a) {
+  justify-content: left;
+  padding-left: none;
+
+}
+
+
+}
+
   @media screen and (max-width:40em) {
     .chatBox {
       max-width: 80%;
+    }
+  }
+
+  @media screen and (max-width:36em) {
+    .playingMenu {
+      position: absolute;
+      right:auto;
+}
+.playingChat {
+  position: absolute;
+  left:auto;
+}
+  }
+
+ 
+  @media screen and (max-width:32em) {
+    #belowGame {
+      
+      
+    }
+    .chatBox {
+     
+      position: absolute;
     }
   }
 

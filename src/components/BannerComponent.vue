@@ -119,7 +119,7 @@ header {
 
 .hamburger {
   color: rgb(11, 61, 128);
-  z-index: 1;
+  z-index: 2;
   width: 1em;
   display: flex;
   align-items: center;
@@ -144,7 +144,7 @@ header {
 
   .nav {
     height: 175px;
-    z-index: 1;
+    z-index: 2;
     width: 160px;
   }
 
