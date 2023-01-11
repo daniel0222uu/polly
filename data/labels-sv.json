@@ -31,7 +31,13 @@
 	"mostPoppular" : "Mest populära kortlek",
 	"deck" : "Kortlek",
 	"likes" : "Likes",
-	"pickDeckEdit" : "Välj kortlek att ändra"
+	"pickDeckEdit" : "Välj kortlek att ändra",
+	"previous" : "Föregående",
+	"next" : "Nästa",
+	"addNewCard" : "Lägg till kort",
+	"deleteCard" : "Ta bort kort",
+	"saveChanges" : "Spara ändringar",
+	"deleteDeck" : "Ta bort kortlek"
 
 
 

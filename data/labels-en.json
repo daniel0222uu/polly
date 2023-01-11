@@ -31,6 +31,13 @@
 	"mostPoppular" : "Most popular deck",
 	"deck" : "Deck",
 	"likes" : "Likes",
-	"pickDeckEdit" : "Pick a deck to edit"
+	"pickDeckEdit" : "Pick a deck to edit",
+	"previous" : "Previous",
+	"next" : "Next",
+	"addNewCard" : "Add new card",
+	"deleteCard" : "Delete card",
+	"saveChanges" : "Save changes",
+	"deleteDeck" : "Delete deck"
+
 
 }
