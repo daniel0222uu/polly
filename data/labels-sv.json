@@ -4,6 +4,7 @@
 	"createPoll": "Skapa röstning",
 	"participatePoll": "Delta i röstning",
 	"question": "Fråga",
+	"answer": "Svar",
 	"changeLanguage": "Change to English",
 	"results": "Resultat",
 	"chooseAdeck": "Välj en kortlek",
@@ -21,6 +22,16 @@
 	"checkResults" : "Nu kan du kolla genom dina resultat",
 	"enterYourDeck" : "Ange namnet på kortleken",
 	"warningNoNameDeck" : "Ange ett namn på din kortlek för att kunna forsätta!",
-	"warningSameNameDeck" : "Du har redan en kortlek med detta namn!"
+	"warningSameNameDeck" : "Du har redan en kortlek med detta namn!",
+	"addCard" : "Lägg till kort",
+	"enterYourName" : "Ange ditt namn",
+	"startPlaying" : "Börja spela!",
+	"quitGame" : "Avsluta spel",
+	"joinLobby" : "Join lobby",
+	"mostPoppular" : "Mest populära kortlek",
+	"deck" : "Kortlek",
+	"likes" : "Likes"
+
+
 
 }
