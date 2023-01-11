@@ -21,7 +21,7 @@
      
        </div>
     <div  id="centerDiv">
-      <FlashcardView  v-bind:questionProp="myObj_deserialized"
+      <FlashcardView v-bind:questionProp="myObj_deserialized"
                       v-bind:disable-click="clickableFlashcardBool"
                       ref="myChild"> </FlashcardView>
 
@@ -169,6 +169,21 @@ button {
   border-radius: 20px;
   border: white ;
 }
+#centerDiv{
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media screen and (max-width:28em) {
+  #centerDiv{
+  
+  margin-left: 10%;
+  
+}
+
+}
 
 /*Adjusted for an Iphone 12 Pro screen*/
 @media only screen and (max-width: 390px) {
@@ -205,11 +220,6 @@ button {
     visibility: visible;
   }
 }
-#centerDiv{
-  
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+
 
 </style>

@@ -21,10 +21,10 @@
       
    
     <div id="wrapperDiv" >
-      <div id="likeDiv">
-        <button @click="likeDeck(myObj_deserialized.id)"> Like</button>
+      
+        
 
-      </div>
+      
 
       <!--Player chatbox-->
       <div class="chatBox" :class="{hiddenChatBox:!chatOpen, playingChat:showPressToSeeQuestion}">
@@ -51,7 +51,7 @@
 
       </div>
 
-
+      <!--Viktig för att hålla knapparna på plats!-->
       <div class="placeHolder" v-if="!menuOpen && !showPressToSeeQuestion"></div>
 
       <div class="menu" :class="{hiddenMenu:!menuOpen, playingMenu:showPressToSeeQuestion}">
@@ -108,15 +108,10 @@
 
     <div id="belowGame">
       <ResponsivNav>
-        
-        <button  class="buttonNav" @click="chatClick">{{chatbuttonText}} </button>
-      
-
-      
         <button class="buttonNav" v-if="showPressToSeeQuestion"  @click="seeQuestion">Flip card </button>
       
-
-      
+        <button class="buttonNav" v-if="showPressToSeeQuestion" @click="likeDeck(myObj_deserialized.id)"> Like deck</button>
+        <button  class="buttonNav" @click="chatClick">{{chatbuttonText}} </button>
         <button class="buttonNav"  @click="menuClick">{{menubuttonText}} </button>
       
 
