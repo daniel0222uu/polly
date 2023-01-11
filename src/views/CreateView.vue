@@ -142,11 +142,6 @@ export default {
     socket.on("init", (labels) => {
       this.uiLabels = labels
     })
-    socket.on("dataUpdate", (data) =>
-        this.data = data
-    )
-    socket.on("pollCreated", (data) =>
-        this.data = data)
   },
   methods: {
     createDeck: function (deckName) {
@@ -161,7 +156,6 @@ export default {
         }
       }
       if (deckName === "") {
-        console.log("Please name your deck");
         this.noNameAlert();
         return;
       }
@@ -173,7 +167,6 @@ export default {
       let stringToCheck = stringInput;
       let spaceAfterAnotherCount = 0;
       if(stringToCheck[stringToCheck.length - 1]===" "){
-        console.log("bad string");
         this.badStringBool = true;
         setTimeout(() => this.badStringBool = false, 3000);
         return true;

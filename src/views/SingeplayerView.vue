@@ -1,9 +1,6 @@
 <template>
   
   <body>
-    
-    
-
   <div id="wrapperDiv">
     
 
@@ -26,7 +23,7 @@
     <div  id="centerDiv">
       <FlashcardView  v-bind:questionProp="myObj_deserialized"
                       v-bind:disable-click="clickableFlashcardBool"
-                     ref="myChild"> </FlashcardView>
+                      ref="myChild"> </FlashcardView>
 
     </div>
     

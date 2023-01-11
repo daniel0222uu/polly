@@ -1,6 +1,7 @@
 <template>
 
   <div id="wrapperDiv">
+
     <div id="selector">
       <select name="decks" required v-model="selectedDeck" @change="loadDeck(this.selectedDeck)">
         <option value="" disabled selected hidden>Choose a deck to upload</option>
@@ -19,12 +20,15 @@
     </div>
 
     <div class="confirmationDiv">
-      <warning-message v-bind:upload-successful="uploadSuccessfulBool"></warning-message>
+      <warning-message
+          v-bind:upload-successful="uploadSuccessfulBool">
+      </warning-message>
     </div>
 
     <div class="confirmationDiv">
       <warning-message v-bind:deck-name-taken="deckNameTakenBool"
-                       v-bind:deckName="deckToUpload.id"></warning-message>
+                       v-bind:deckName="deckToUpload.id">
+      </warning-message>
     </div>
 
 
@@ -62,7 +66,8 @@ export default {
       deckNameTakenBool   : false,
     }
   },
-  created() {
+  created() { // runs when the component is created and fills selectorList with keys in localStorage which
+    //contains our decks
     for (var i = 0, len = localStorage.length; i < len; ++i) {
       this.selectorList.push(localStorage.key(i));
     }

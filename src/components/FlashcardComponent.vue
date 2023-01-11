@@ -42,8 +42,8 @@ const socket = io();
 
 export default {
   name: 'FlashcardView',
-  props: ['questionProp','showAnswer','pollId','coopMultiplayer','deckLoaded','disableClick'],
-  components: {},
+  props: ['questionProp','showAnswer','pollId',
+    'coopMultiplayer','deckLoaded','disableClick'],
   data: function () {
     return {
       hej:0,

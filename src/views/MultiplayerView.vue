@@ -56,28 +56,18 @@
 
       </div>
 
-    <!-- Här visas namn och användaren kan välja decka att spela-->
-    
-
-   
-        
-        
-      <!--</div>-->
-        <!-- Buttons for liking and commenting -->
-        
-
-        <div v-if="seeCommentsBool">
-          <input v-model="hintString"> <button @click="commentDeck(questionObject.id,hintString)" > Leave hint</button>
-        </div>
 
 
 
-        
-    
+      <!-- Här avslutas allt som visas när joinBolean=True -->
+
+      <!-- Här visas info när användaren spelat klart och klickat Done -->
 
 
+      <!-- Ska denna va med ? -->
 
-        <div class="viewAfterGame" v-if="gameFinishedBoolean">
+
+      <!--  <div class="viewAfterGame" v-if="gameFinishedBoolean">
           <img src="http://localhost:8080/img/score-icon-21.jpeg" width="100" height="100">
           <P>Congratulation, {{name}}! Well done!</P>
           <P>Your score is: {{score}} points out of {{totalQuestionAmount}}</P>
@@ -88,26 +78,10 @@
             <button type="submit">Challange now!</button>
           </form>
           <P><button @click="exitPlaying(name)">I want to exit the game</button></P>
-        </div>
-
-    
-
-     <!-- Här avslutas allt som visas när joinBolean=True -->
-
-     <!-- Här visas info när användaren spelat klart och klickat Done -->
-
-      <!-- Här visas Active Player listan-->
-      
+        </div> -->
 
 
       </div>
-      
-       
-  
-
-
-
-   <!-- </div>-->
   
   </body>
 
@@ -145,19 +119,11 @@ export default {
       lang: "en",
       lobbyId: 1337,
       name: "",
-      questionPosition: 0,
-      totalQuestionAmount: 5,
       players: [],
       inviteWatcher: 0,
       inviteInformation: [],
       joinedBoolean: false,
-      myObj_deserialized: {},
-      questionObject:   {"id": "Sveriges huvudstäder",
-        "questionArray": ["Sverige", "Norge", "Finland", "Danmark"],
-        "answerArray": ["Sthlm", "Oslo", "Helsingfors", "CBH"]},
-      selectedDeck: "",
       invitationList: [],
-      gameFinishedBoolean: false,
       lobbyCreatedBool: false,
       expandPlayerList: true,
       hintString: "",
@@ -167,7 +133,6 @@ export default {
   },
   created: function() {
     this.lobbyId = Math.floor(Math.random() * 1000000 + 100000);
-    this.myObj_deserialized = this.questionObject;
     socket.on("multiplayerViewUpdate", playersActive => {
       this.players = playersActive;
     });
@@ -184,23 +149,6 @@ export default {
         exitPlaying: function () {
           this.joinedBoolean = false;
           socket.emit("exitPlaying", {name: this.name});
-          console.log("exitPLaying should've ran");
-        },
-        onClickChild: function (value) {
-          this.questionPosition = value;
-          console.log("parent has", this.questionPosition);
-          socket.emit("numberProgress", {name: this.name, score: this.questionPosition});
-        },
-        sendRequest: function (playerToRequest) {
-          socket.emit('playRequest', {
-            requester: this.name,
-            receiver: playerToRequest,
-            lobbyID: this.lobbyId
-          });
-          socket.emit('lobbyObject', {
-            lobbyID: this.lobbyId,
-            playersInLobby: []
-          });
         },
         loadDeck: function (deckIdToLoad) {
           this.questionPosition = 0;
@@ -210,11 +158,10 @@ export default {
           this.myObj_deserialized = target;
           this.questionObject = this.myObj_deserialized;
         },
-        finishGame: function () {
+     /*   finishGame: function () {
           this.gameFinishedBoolean = true;
-        },
-        // Function for the like button
-        async likeDeck (deckToLike) {
+        }, */
+        async likeDeck (deckToLike) { //denna ska flyttas över till lobbyView
           console.log(deckToLike);
           try {
             const response = await axios.post('http://localhost:8080/likeDeck ', {
@@ -228,14 +175,13 @@ export default {
             console.error(error);
           }
         },
-        async commentDeck (deckToComment, commentToSend) {
+        async commentDeck (deckToComment, commentToSend) { //denna ska flyttas över till lobbyView
           let objectToAppend = {
             name: this.name,
             hint: commentToSend,
             questionPosition: this.questionPosition,
             likes: 0,
           };
-          console.log("the object to append is: ", objectToAppend);
           try {
             const response = await axios.post('http://localhost:8080/commentDeck ', {
               data: deckToComment,

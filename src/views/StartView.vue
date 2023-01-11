@@ -1,12 +1,4 @@
 <template>
-  <!--
-  <h1>Welcome to Flashcards!</h1>
-  <label> 
-    Write poll id: 
-    <input type="text" v-model="id">
-  </label>
-  -->
-
   <br><br>
 
   <!-- Div för att layout av startsidan -->
@@ -24,7 +16,6 @@
     </div>
 
   </div>
-<!-- Här slutar div för startsidan -->
 
 </template>
 

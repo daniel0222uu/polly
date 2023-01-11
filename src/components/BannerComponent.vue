@@ -3,17 +3,12 @@
     <div v-bind:class="['hamburger', {'close': !hideNav}]"
          v-on:click="toggleNav">
     </div>
-    <div class="logo"> 
-      
-      
+    <div class="logo">
+
       <router-link class="logo" v-bind:to="'/'" style="text-decoration:none">flashcards</router-link>
-   
-   
+
     </div>
-    
-    
-   
-    
+
   </header>
   <ResponsiveNav class="nav"  v-bind:hideNav="hideNav">
 

@@ -50,7 +50,6 @@ export default {
     'badString', 'deckNameTaken', 'deckName'],
   watch: {
     uploadSuccessful: function () {
-      console.log("uploadSuccessful är nu: ", this.uploadSuccessful);
     }
   }
 }

@@ -20,10 +20,8 @@
 </template>
 
 <script>
-//import io from "socket.io-client"; bryr mig inte om det jsut nu
 import axios from 'axios';
 import Decks from "@/assetts/Decks.json";
-//const socket = io();
 
 
 export default {
@@ -100,13 +98,6 @@ ol {
   
  
 }
-.uploadSelector {
-  margin-top: 50px;
-  margin-left:100px;
-  
-  grid-column: 2;
-  
-}
 .uploadButton {
   grid-column: 3;
   margin-left:100px;
@@ -181,9 +172,6 @@ transform: translateY(-3px);
   }
   .uploadButton {
     grid-row: 2;
-  }
-  .uploadSelector {
-    margin-left:20px;
   }
 }
 
