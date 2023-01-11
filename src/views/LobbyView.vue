@@ -21,6 +21,10 @@
       
    
     <div id="wrapperDiv" >
+      <div id="likeDiv">
+        <button @click="likeDeck(myObj_deserialized.id)"> Like</button>
+
+      </div>
 
       <!--Player chatbox-->
       <div class="chatBox" :class="{hiddenChatBox:!chatOpen, playingChat:showPressToSeeQuestion}">
@@ -37,6 +41,7 @@
 
 
       <div v-if="showPressToSeeQuestion" class="playDiv">
+
 
         <FlashcardComponent v-bind:questionProp="myObj_deserialized" v-bind:show-answer="swapSides"
                             v-bind:poll-id="pollId" v-bind:coop-multiplayer="hideNextButtons" v-bind:deck-loaded="resetQuestionPosition"
@@ -136,6 +141,7 @@ import ResponsivNav from "@/components/ResponsiveNav.vue";
 import Decks from "@/assetts/Decks.json";
 import ProgressBarComponent from "@/components/ProgressBarComponent";
 import WarningMessage from "@/components/WarningMessage";
+import axios from "axios";
 const socket = io();
 
 let selectList = Decks;
@@ -248,7 +254,6 @@ export default {
     closeChat: function() {
       this.chatbuttonText = 'Open chat lobby'
       this.chatOpen = false
-
     },
     chatClick: function() {
       
@@ -326,7 +331,21 @@ export default {
         socket.emit("sendMessage", {pollId: this.pollId, message: messageToSend, player: this.name});
         this.newMessage = "";
         console.log("sendMessage ran");
-    }
+    },
+    async likeDeck (deckToLike) { //denna ska flyttas över till lobbyView
+      console.log(deckToLike);
+      try {
+        const response = await axios.post('http://localhost:8080/likeDeck ', {
+          data: deckToLike,
+          headers:{
+            'Content-Type': 'application/json'
+          },
+        });
+        console.log(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    },
   },
   mounted() {
     this.socket = io();

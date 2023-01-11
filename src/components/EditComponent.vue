@@ -74,7 +74,7 @@
 </div>
 
 </div>
-Problem med att hämta namn som har två mellanslag i sig eller mellanslag innan/efter namnet. Vet inte hur man löser.
+
 </div>
 
 
@@ -102,14 +102,11 @@ import ResposiveNav from "./ResponsiveNav";
 
 
 
-let listToFill = [];
-for (var i = 0, len = localStorage.length; i < len; ++i) {
-  listToFill.push(localStorage.key(i));
-}
+
 
 
 export default {
-  name: "EditAndCreateComponent",
+  name: "EditComponent",
 
   data: function (){
      return {
@@ -136,7 +133,7 @@ export default {
        deckName: "",
        quizQuestions: [],
        quizAnswers: [],
-       selectorList: listToFill,
+       selectorList: [],
        addingQuestionBool: false,
        showDeleteMessage:false,
      }
@@ -144,6 +141,14 @@ export default {
     },
     components: {
       ResposiveNav
+
+    },
+    created: function() {
+      
+      
+for (var i = 0, len = localStorage.length; i < len; ++i) {
+  this.selectorList.push(localStorage.key(i));
+}
 
     },
   methods: {
@@ -191,10 +196,15 @@ export default {
 
     },
     saveCard: function () {
-
+      localStorage.removeItem(this.selectedDeck);
       this.deckObject.questionArray[this.deckIndex] = this.questionField;
       this.deckObject.answerArray[this.deckIndex] = this.answerField;
       localStorage.setItem(this.deckObject.id, JSON.stringify(this.deckObject));
+      this.selectorList = [];
+      for (var i = 0, len = localStorage.length; i < len; ++i) {
+        this.selectorList.push(localStorage.key(i));
+      }
+
 
     },
     addCard: function () {

@@ -3,7 +3,6 @@
 
   <div id="toggleActivePlayer">
     <div>
-      <span> Players online</span>
     </div>
     <div>
       <button id="toggleButton" @click="expandPlayerList=!expandPlayerList">
@@ -25,8 +24,9 @@
     </p>
     </div>
     <ul id="playerList">
-      <li v-for="player in filteredPlayers" v-bind:key="player"><b>{{ player.name }}</b>
+      <li v-for="player in filteredPlayers" v-bind:key="player" ><b>{{ player.name }}</b>
 
+        <span v-if="!isPlayerInvited(player.name)">
         <button v-if="!inLobby" style="
           background-color: #fec89a;
           border: solid black;
@@ -43,7 +43,8 @@
           transition-duration: 0.4s;
           border-radius: 15px;
           box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);"
-          @click="sendRequest(player.name)">Invite</button>
+
+           @click="sendRequest(player.name),inviteSentLocal=true"> Invite </button> </span>
       </li>
     </ul>
   </div>
@@ -71,6 +72,7 @@ export default {
       invitationList: [],
       expandPlayerList: true,
       inviteSentBool: false,
+      playersInvited: [],
     }
   },
   created: function () {
@@ -81,6 +83,8 @@ export default {
   methods:
       {
         sendRequest: function (playerToRequest) {
+          let invitedObjectToAppend = {name: playerToRequest, invited: true};
+          this.playersInvited.push(invitedObjectToAppend);
           this.createPoll();
           socket.emit('playRequest', {
             requester: this.playerNickName,
@@ -96,6 +100,13 @@ export default {
         createPoll: function () {
           socket.emit("createPoll", {pollId: this.uniqueLobbyID, lang: this.lang});
         },
+        isPlayerInvited: function(nameToCheck) {
+          for (let i = 0; i < this.playersInvited.length; i++) {
+            if (this.playersInvited[i].name === nameToCheck) {
+              return true;
+            }
+          }
+        }
       },
   watch: {
     inviteInformation: function () {
