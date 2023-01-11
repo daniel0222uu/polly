@@ -22,8 +22,8 @@
    
       <table class="center" style="width:300px; border: 5px solid black;border-radius: 10px;font-family: Kanit;font-size:20px;background-color: white;padding:10px">
         <tr>
-          <th style="width: 70%;text-align: left" >Name</th>
-          <th style="width: 30%;text-align: right">Score</th>
+          <th style="width: 70%;text-align: left" >Deck</th>
+          <th style="width: 30%;text-align: right">Likes</th>
         </tr>
         <tr v-for="Item in DecksData.sort(function(a,b){return b.likes-a.likes})" :key="Item.likes">
           <td style="text-align:left" >{{ Item.id }}</td>
