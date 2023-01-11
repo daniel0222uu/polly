@@ -138,7 +138,7 @@ select {
 }
 
 #wrapperDiv{
-  z-index: -1;
+  
   position: relative;
   height: 100%;
   display: flex;

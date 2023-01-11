@@ -97,7 +97,7 @@ export default {
 
 
 #startWrapper {
-  z-index: -1;
+  
   width: 100%;
   float: left;
   position: relative;
