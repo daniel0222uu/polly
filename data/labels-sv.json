@@ -23,7 +23,10 @@
 =======
 	"checkResults" : "Nu kan du kolla genom dina resultat",
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> 58f6b6d75de83e131834e0faee8249104e7a3bfa
+=======
+>>>>>>> 3547cc7abec889a30296cff2d29ae4e910fd015a
 	"enterYourDeck" : "Ange namnet på kortleken",
 	"warningNoNameDeck" : "Ange ett namn på din kortlek för att kunna forsätta!",
 	"warningSameNameDeck" : "Du har redan en kortlek med detta namn!",
@@ -41,15 +44,11 @@
 	"addNewCard" : "Lägg till kort",
 	"deleteCard" : "Ta bort kort",
 	"saveChanges" : "Spara ändringar",
-	"deleteDeck" : "Ta bort kortlek"
-
-
-
-=======
+	"deleteDeck" : "Ta bort kortlek",
 	"welcomeTo": "Välkommen till Flashcards!",
 	"worldsMostAward": "\"Världens mest berömda frågespel\"",
 	"challengeOthers": "Här kan du utmana dig själv och andra.",
 	"includesFunctionality": "Flascards inkluderar funktioner som låter dig skapa dina egna decks",
 	"goodLuck": "Lycka till!"
->>>>>>> 9419b75e6222e4277e1aea154a0ecaea818ace52
+
 }
