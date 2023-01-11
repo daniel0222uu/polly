@@ -15,14 +15,18 @@
   </div>
 
   <div id="verticalRight" v-if="expandPlayerList">
+    <div v-if="!inLobby">
+
+
     <p v-if="inviteSentBool">
       <join-lobby-component v-bind:lobby-id="uniqueLobbyID"
                             v-bind:name="playerNickName"
       ></join-lobby-component>
     </p>
+    </div>
     <ul id="playerList">
       <li v-for="player in filteredPlayers" v-bind:key="player"><b>{{ player.name }}</b>
-        <button @click="sendRequest(player.name)">Invite</button>
+        <button v-if="!inLobby" @click="sendRequest(player.name)">Invite</button>
       </li>
     </ul>
   </div>
@@ -39,7 +43,7 @@ export default {
   components: {
     JoinLobbyComponent
   },
-  props: ["playerNickName", 'uniqueLobbyID',],
+  props: ["playerNickName", 'uniqueLobbyID','inLobby'],
   data: function () {
     return {
       lang: "en",

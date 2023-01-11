@@ -70,7 +70,7 @@
 
 
         <ActivePlayersComponent  v-bind:player-nick-name="name" v-bind:uniqueLobbyID="pollId"
-                                v-bind:lobby-created-bool="inLobbyBool"
+                                v-bind:in-lobby="inLobbyBool"
         ></ActivePlayersComponent>
 
       </div>
@@ -130,13 +130,13 @@ export default {
   },
   data: function () {
     return {
+      inLobbyBool: true,
       chatbuttonText: 'Open chat lobby',
       chatOpen: false,
       menubuttonText: 'Close menu',
       menuOpen: true,
       showProgressBar: false,
       votedDecks: [],
-      inLobbyBool: false,
       name: "",
       haveReceivedName: false,
       pollId: "inactive poll",
@@ -161,9 +161,6 @@ export default {
       showPressToSeeQuestion: false,
       seeFlashcardBool: false,
       clickableFlashcardBool: false,
-      inviteInformation: [],
-      invitationList: [],
-      inviteWatcher: 0,
     }
   },
   created: function () {
