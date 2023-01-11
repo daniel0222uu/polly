@@ -202,20 +202,24 @@ export default {
   height: 100%;
   border-radius: 4px;
   backface-visibility: hidden;
-  border: 2px solid black;
-  background-color: rgb(74, 91, 205);
+  
+  
+  
 }
 .card-front {
   color: black;
   font-size: 18px;
-  background-color: rgb(32, 159, 178);
+  background-color: #eccf95;
+  border: 10px inset #9aa4fe;
+  
   
 }
 .card-back {
   font-size: 14px;
-  color: white;
+ 
   transform: rotateY(180deg);
-  background-color: rgb(74, 91, 205);
+  background-color: #9aa4fe;
+  border: 10px inset #ffe1a6;
 }
 @keyframes pulse {
   0% {
