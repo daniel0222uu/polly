@@ -31,8 +31,8 @@ export default {
   name: 'StartView',
 
   components: {
-    
   },
+
   data: function () {
     return {
      
@@ -49,24 +49,9 @@ export default {
     toggleNav: function () {
       this.hideNav = ! this.hideNav;
     },
-    addToLeaderboard: function () {
-      let name = this.scoreNameField;
-      let points = this.scorePointField;
-      if (name === "" || points === "") {
-        console.log("Please fill in both fields")
-        this.fieldAlert()
-        return;
-      }
-      console.log(name);
-      console.log(points);
-      
-      Scores.push({
-        "name": name,
-        "points": points
-      });
-    }
-  },
-  }
+
+    },
+  };
 
 </script>
 
@@ -86,7 +71,7 @@ export default {
 
 #infoFlashcard {
  z-index: -1;
-  width: 50%;
+  width: 40%;
   background-color: white;
   border-radius: 10px;
   padding: 30px;

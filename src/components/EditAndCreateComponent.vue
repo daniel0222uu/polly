@@ -8,7 +8,7 @@
       <div>
       <div>
 
-<select v-model="selectedDeck" name="decks" required @change="loadDeck">
+<select id = "selector" v-model="selectedDeck" name="decks" required @change="loadDeck">
   <option value="" disabled selected hidden>Pick a deck to edit</option>
   <option v-for="deck in selectorList" v-bind:key="deck">{{ deck }}</option>
 </select>
@@ -460,6 +460,13 @@ transform: translateX(-2px);
 
     overflow: hidden;
   }
+
+}
+
+#selector {
+  font-family: 'Nunito', sans-serif;
+  font-size: 16px;
+  width: 200px;
 
 }
 
