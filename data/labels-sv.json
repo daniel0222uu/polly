@@ -16,5 +16,7 @@
 	"DANIELS_INJEKTOR": "DANIELS_INJEKTOR PÅ SVENSKA",
 	"createDeck": "Skapa kortlek",
 	"editDeck": "Redigera kortlek",
-	"uploadDeck": "Ladda upp kortlek"
+	"uploadDeck": "Ladda upp kortlek",
+	"congratz" : "Grattis du spela precis klart :",
+	"checkResults" : "Nu kan du kolla genom dina resultat"
 }

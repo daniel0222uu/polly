@@ -154,10 +154,10 @@ export default {
       } else if(500> length > 600) {
         return 13000;
       } else if(600 < length ) {
-        return 20000;
+        return 5000;
       }
       else {
-        return 5000;
+        return 3300;
       }
     }
   }

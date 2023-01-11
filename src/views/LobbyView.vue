@@ -1,4 +1,9 @@
   <template>
+
+    <WarningMessage
+        v-bind:game-finished="congratzMessage" v-bind:deck-name="myObj_deserialized.id"
+    >
+    </WarningMessage>
   <!--Player name-->
     <div style="display:flex; justify-content:center; align-items:center">
        <p style="margin-right:5px">Player:</p> <h3>{{name}}</h3>
@@ -114,6 +119,7 @@ import ResponsivNav from "@/components/ResponsiveNav.vue";
 //import JoinLobbyComponent from "@/components/JoinLobbyComponent";
 import Decks from "@/assetts/Decks.json";
 import ProgressBarComponent from "@/components/ProgressBarComponent";
+import WarningMessage from "@/components/WarningMessage";
 const socket = io();
 
 let selectList = Decks;
@@ -125,8 +131,8 @@ export default {
     FlashcardComponent,
     ActivePlayersComponent,
     ProgressBarComponent,
-    ResponsivNav
-    //JoinLobbyComponent
+    ResponsivNav,
+    WarningMessage
   },
   data: function () {
     return {
@@ -161,6 +167,7 @@ export default {
       showPressToSeeQuestion: false,
       seeFlashcardBool: false,
       clickableFlashcardBool: false,
+      congratzMessage: false,
     }
   },
   created: function () {
@@ -284,8 +291,11 @@ export default {
       console.log("parent has", this.questionPosition);
     },
     gameWasFinished: function () {
+      const timeCongratsFade = 4000;
       this.hideNextButtons = false;
       this.clickableFlashcardBool = true;
+      this.congratzMessage = true;
+      setTimeout(() => this.congratzMessage = false, timeCongratsFade);
     },
     loadDeck: function (deckIdToLoad) {
       this.resetQuestionPosition = !this.resetQuestionPosition;

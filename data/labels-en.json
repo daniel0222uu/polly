@@ -16,5 +16,7 @@
 	"DANIELS_INJEKTOR": "DANIELS_INJEKTOR PÅ ENGELSKA",
 	"createDeck": "Create deck",
 	"editDeck": "Edit deck",
-	"uploadDeck": "Upload deck"
+	"uploadDeck": "Upload deck",
+	"congratz" : "Congratulations you finsihed: ",
+	"checkResults" : "Now you can check the answers and questions again of the deck"
 }
